@@ -1,5 +1,5 @@
 # OMSI-Content-Tool beta!
-Tool to develop buses, cars and objects for OMSI-Bussimulator
+Tool to develop buses, cars, splines and objects for OMSI-Bussimulator
 
 <b>English below!</b>
 
