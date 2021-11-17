@@ -11,6 +11,7 @@ Wir suchen:
 - Verschlüsselungsexperten
 - Project Manager
 - ...
+- für Betatester ist es noch zu früh!
 
 Trello board für die nächsten Entwicklungsziele: <i>noch nicht verfügbar</i>
 
@@ -23,5 +24,6 @@ We need some help in:
 - Cryptographie experts
 - Project manager
 - ...
+- to early for beta tester!
 
 Trello board for next development steps: <i>not yet available</i>
