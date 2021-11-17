@@ -1,0 +1,493 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2BD388CB-1197-4A7A-BBE0-93D6DD4334A3}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>O3D_Test.My.MyApplication</StartupObject>
+    <RootNamespace>O3D_Test</RootNamespace>
+    <AssemblyName>OMSI-Content-Tool</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>OMSI-Content-Tool.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>OMSI-Content-Tool.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>OCT.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Arrow.vb" />
+    <Compile Include="BoundingBox.vb" />
+    <Compile Include="ColorSelector.Designer.vb">
+      <DependentUpon>ColorSelector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ColorSelector.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataBase.vb" />
+    <Compile Include="DDS_Tool.vb" />
+    <Compile Include="Exporter.vb" />
+    <Compile Include="Filename.vb" />
+    <Compile Include="FileWriter.vb" />
+    <Compile Include="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Ampel.Designer.vb">
+      <DependentUpon>Frm_Ampel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Ampel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_AnimGrp.Designer.vb">
+      <DependentUpon>Frm_AnimGrp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_AnimGrp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Eig_Mesh.Designer.vb">
+      <DependentUpon>Frm_Eig_Mesh.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Eig_Mesh.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Eig_Sco.Designer.vb">
+      <DependentUpon>Frm_Eig_Sco.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Eig_Sco.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Eig_Sli.Designer.vb">
+      <DependentUpon>Frm_Eig_Sli.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Eig_Sli.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Export.Designer.vb">
+      <DependentUpon>Frm_Export.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Export.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_FindMesh.Designer.vb">
+      <DependentUpon>Frm_FindMesh.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_FindMesh.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Fonts.Designer.vb">
+      <DependentUpon>Frm_Fonts.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Fonts.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Help.Designer.vb">
+      <DependentUpon>Frm_Help.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Help.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Hof.Designer.vb">
+      <DependentUpon>Frm_Hof.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Hof.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_lod.Designer.vb">
+      <DependentUpon>Frm_lod.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_lod.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Math.Designer.vb">
+      <DependentUpon>Frm_Math.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Math.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Rep.Designer.vb">
+      <DependentUpon>Frm_Rep.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Rep.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Save.Designer.vb">
+      <DependentUpon>Frm_Save.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Save.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Sounds.Designer.vb">
+      <DependentUpon>Frm_Sounds.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Sounds.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_TextTex.Designer.vb">
+      <DependentUpon>Frm_TextTex.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_TextTex.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Vars.Designer.vb">
+      <DependentUpon>Frm_Vars.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Vars.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_VarTest.Designer.vb">
+      <DependentUpon>Frm_VarTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_VarTest.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="helper.vb" />
+    <Compile Include="History.vb" />
+    <Compile Include="Importer.vb" />
+    <Compile Include="KI_Path.vb" />
+    <Compile Include="Log.vb" />
+    <Compile Include="Local3DObjekt.vb" />
+    <Compile Include="Modifier.vb" />
+    <Compile Include="OMSI_Attachment.vb" />
+    <Compile Include="OMSI_Bone.vb" />
+    <Compile Include="OMSI_Cabin.vb" />
+    <Compile Include="OMSI_Const.vb" />
+    <Compile Include="OMSI_Door.vb" />
+    <Compile Include="OMSI_Font.vb" />
+    <Compile Include="OMSI_Illumination.vb" />
+    <Compile Include="OMSI_IntLicht.vb" />
+    <Compile Include="OMSI_Maplight.vb" />
+    <Compile Include="OMSI_Paths.vb" />
+    <Compile Include="OMSI_Repaint.vb" />
+    <Compile Include="OMSI_Rep_Var.vb" />
+    <Compile Include="OMSI_Seat.vb" />
+    <Compile Include="OMSI_Spot.vb" />
+    <Compile Include="OMSI_TicketPnt.vb" />
+    <Compile Include="OMSI_traffic_light.vb" />
+    <Compile Include="OMSI_Tree.vb" />
+    <Compile Include="PointSelector.Designer.vb">
+      <DependentUpon>PointSelector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PointSelector.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Proj_Bus.vb" />
+    <Compile Include="Frm_Eig_Bus.Designer.vb">
+      <DependentUpon>Frm_Eig_Bus.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Eig_Bus.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Einst.Designer.vb">
+      <DependentUpon>Frm_Einst.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Einst.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Listen.Designer.vb">
+      <DependentUpon>Frm_Listen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Listen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Neu.Designer.vb">
+      <DependentUpon>Frm_Neu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Neu.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Texture.Designer.vb">
+      <DependentUpon>Frm_Texture.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Texture.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OMSI_Model.vb" />
+    <Compile Include="OMSI_Anim.vb" />
+    <Compile Include="OMSI_Licht.vb" />
+    <Compile Include="OMSI_Matl.vb" />
+    <Compile Include="OMSI_Mesh.vb" />
+    <Compile Include="OMSI_Rauch.vb" />
+    <Compile Include="Proj_Emt.vb" />
+    <Compile Include="Proj_Sco.vb" />
+    <Compile Include="Proj_Ovh.vb" />
+    <Compile Include="Proj_Sli.vb" />
+    <Compile Include="Reflex_Kamera.vb" />
+    <Compile Include="Kamera.vb" />
+    <Compile Include="Frm_Main.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Main.Designer.vb">
+      <DependentUpon>Frm_Main.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LocalTexture.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="OMSI_Achse.vb" />
+    <Compile Include="Point3D.vb" />
+    <Compile Include="rendertypes.vb" />
+    <Compile Include="RGBColor.vb" />
+    <Compile Include="ProfilePnt.vb" />
+    <Compile Include="ScriptTexture.vb" />
+    <Compile Include="Settings.vb" />
+    <Compile Include="Sli_PatchworkChain.vb" />
+    <Compile Include="Sli_Profile.vb" />
+    <Compile Include="splinehelper.vb" />
+    <Compile Include="TextTexture.vb" />
+    <Compile Include="Texture_Change.vb" />
+    <Compile Include="TGA_Tool.vb" />
+    <Compile Include="traffic_light_phase.vb" />
+    <Compile Include="VarSelector.Designer.vb">
+      <DependentUpon>VarSelector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VarSelector.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ColorSelector.resx">
+      <DependentUpon>ColorSelector.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Ampel.resx">
+      <DependentUpon>Frm_Ampel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_AnimGrp.resx">
+      <DependentUpon>Frm_AnimGrp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Eig_Bus.resx">
+      <DependentUpon>Frm_Eig_Bus.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Eig_Mesh.resx">
+      <DependentUpon>Frm_Eig_Mesh.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Eig_Sco.resx">
+      <DependentUpon>Frm_Eig_Sco.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Eig_Sli.resx">
+      <DependentUpon>Frm_Eig_Sli.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Einst.resx">
+      <DependentUpon>Frm_Einst.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Export.resx">
+      <DependentUpon>Frm_Export.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_FindMesh.resx">
+      <DependentUpon>Frm_FindMesh.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Fonts.resx">
+      <DependentUpon>Frm_Fonts.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Help.resx">
+      <DependentUpon>Frm_Help.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Hof.resx">
+      <DependentUpon>Frm_Hof.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Listen.resx">
+      <DependentUpon>Frm_Listen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_lod.resx">
+      <DependentUpon>Frm_lod.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Main.resx">
+      <DependentUpon>Frm_Main.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Math.resx">
+      <DependentUpon>Frm_Math.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Neu.resx">
+      <DependentUpon>Frm_Neu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Rep.resx">
+      <DependentUpon>Frm_Rep.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Save.resx">
+      <DependentUpon>Frm_Save.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Sounds.resx">
+      <DependentUpon>Frm_Sounds.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_TextTex.resx">
+      <DependentUpon>Frm_TextTex.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Texture.resx">
+      <DependentUpon>Frm_Texture.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Vars.resx">
+      <DependentUpon>Frm_Vars.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_VarTest.resx">
+      <DependentUpon>Frm_VarTest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PointSelector.resx">
+      <DependentUpon>PointSelector.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VarSelector.resx">
+      <DependentUpon>VarSelector.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="OCT.ico" />
+    <Content Include="OpenTK.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenTK.GLControl.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Bus.bmp" />
+    <None Include="Resources\Image_Background.jpg" />
+    <None Include="Resources\pink2.png" />
+    <None Include="Resources\pink2.jpg" />
+    <None Include="Resources\hof.bmp" />
+    <None Include="Resources\map.bmp" />
+    <None Include="Resources\sli.bmp" />
+    <None Include="Resources\Sco.bmp" />
+    <None Include="Resources\Ovh.bmp" />
+    <None Include="Resources\pink.bmp" />
+    <None Include="Resources\weiss.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 und x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>
