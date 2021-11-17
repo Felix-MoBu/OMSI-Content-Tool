@@ -13,7 +13,7 @@ Wir suchen:
 - ...
 - für Betatester ist es noch zu früh!
 
-Trello board für die nächsten Entwicklungsziele: <i>noch nicht verfügbar</i>
+Trello board für die nächsten Entwicklungsziele: https://trello.com/b/fux4laFJ/omsi-content-tool
 
 ## ENG
 Latest build download: <i>not yet available</i>
@@ -26,4 +26,4 @@ We need some help in:
 - ...
 - to early for beta tester!
 
-Trello board for next development steps: <i>not yet available</i>
+Trello board for next development steps: https://trello.com/b/fux4laFJ/omsi-content-tool
