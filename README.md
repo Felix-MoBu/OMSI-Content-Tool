@@ -27,3 +27,5 @@ We need some help in:
 - to early for beta tester!
 
 Trello board for next development steps: https://trello.com/b/fux4laFJ/omsi-content-tool
+#
+![screenshot](Screenshot.png)
