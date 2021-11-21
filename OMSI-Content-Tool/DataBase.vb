@@ -20,4 +20,5 @@
         Log.Add("Projektdatenbank speichern ist noch nicht möglich", Log.TYPE_DEBUG)
     End Sub
 
+    'Kommentar
 End Class
