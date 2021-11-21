@@ -16,11 +16,7 @@
 # Mono auto generated files
 mono_crash.*
 
-# Spezial project settings
-!/Debug/help.html
 
-# Build results
-[Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
