@@ -17,7 +17,7 @@
 mono_crash.*
 
 # Spezial project settings
-!Debug/help.html
+!/Debug/help.html
 
 # Build results
 [Dd]ebug/
