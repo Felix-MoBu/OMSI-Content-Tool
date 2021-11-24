@@ -1,4 +1,5 @@
-﻿Public Class OMSI_Mesh
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class OMSI_Mesh
     Public index As Integer = 0
     Public isProtected As Boolean = True
 

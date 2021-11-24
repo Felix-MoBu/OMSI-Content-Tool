@@ -1,4 +1,5 @@
-﻿Public Class Reflex_Kamera
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Reflex_Kamera
     Public typ As Byte = 0
     Public index As Byte
     Public position As Point3D

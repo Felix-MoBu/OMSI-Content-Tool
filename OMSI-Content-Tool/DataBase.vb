@@ -1,4 +1,5 @@
-﻿Public Class DataBase
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class DataBase
     Public filename As Filename
 
     Public Sub LoadFile(name As Filename)

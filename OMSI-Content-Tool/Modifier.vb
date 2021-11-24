@@ -1,4 +1,5 @@
-﻿Module Modifier
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Module Modifier
     Public Sub flipZ(Objekt As Local3DObjekt)
         With Objekt
             For i = 0 To .vertices.Count - 1 Step 3

@@ -1,4 +1,5 @@
-﻿Imports System.ComponentModel
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Imports System.ComponentModel
 
 Public Class Frm_Eig_Sco
     Public Projekt_Sco As Proj_Sco

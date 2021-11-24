@@ -1,4 +1,5 @@
-﻿Public Class Arrow
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Arrow
     Private position_int As Point3D
     Private vector_int As Point3D
     Private direction_int As Boolean

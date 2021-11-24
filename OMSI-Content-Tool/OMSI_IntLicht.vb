@@ -1,4 +1,5 @@
-﻿Public Class OMSI_IntLicht
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class OMSI_IntLicht
     Public name As String
     Public var As String
     Public reichweite As Double

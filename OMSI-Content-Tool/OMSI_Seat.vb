@@ -1,4 +1,5 @@
-﻿Public Class OMSI_Seat
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class OMSI_Seat
     Private position_int As New Point3D
     Private sitheight_int As Single = 0
     Private rot_int As Single

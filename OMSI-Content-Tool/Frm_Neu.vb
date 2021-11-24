@@ -1,4 +1,5 @@
-﻿Public Class Frm_Neu
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Frm_Neu
     Public ProjTyp As Byte
 
 

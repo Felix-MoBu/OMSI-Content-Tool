@@ -1,4 +1,5 @@
-﻿Public Class TextTexture
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class TextTexture
     Public index As Integer
     Public enh As Boolean = False
     Public name As String

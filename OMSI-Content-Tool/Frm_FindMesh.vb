@@ -1,4 +1,5 @@
-﻿Public Class Frm_FindMesh
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Frm_FindMesh
     Private Sub Frm_FindMesh_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Location = New Point(Convert.ToInt16(Frm_Main.Width / 2 - Me.Width / 2), Convert.ToInt16(Frm_Main.Height / 2 - Me.Height / 2))
     End Sub

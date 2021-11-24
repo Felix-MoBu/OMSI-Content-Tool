@@ -1,4 +1,5 @@
-﻿Public Class OMSI_Font
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class OMSI_Font
     Public name As String
 
     Public filename As Filename

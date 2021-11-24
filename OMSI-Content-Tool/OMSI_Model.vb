@@ -1,4 +1,5 @@
-﻿Imports System.Text
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Imports System.Text
 
 Public Class OMSI_Model
     Public filename As Filename

@@ -1,4 +1,5 @@
-﻿Public Class Proj_Ovh
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Proj_Ovh
     Public Const TYPE = Frm_Main.PROJ_TYPE_OVH
 
     Public isloaded As Boolean

@@ -1,4 +1,4 @@
-﻿
+﻿'by Felix Modellbusse ;) (MoBu) 2019
 Namespace My
     
     'Diese Klasse ermöglicht die Behandlung bestimmter Ereignisse der Einstellungsklasse:

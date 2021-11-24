@@ -1,4 +1,5 @@
-﻿Public Class OMSI_Licht
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class OMSI_Licht
     Public name As String
     Private position_int As New Point3D
     Public richtung As New Point3D

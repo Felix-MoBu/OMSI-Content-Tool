@@ -1,4 +1,5 @@
-﻿Public Class OMSI_Anim
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class OMSI_Anim
     Public var As String
 
     Private origin_trans_int As New Point3D

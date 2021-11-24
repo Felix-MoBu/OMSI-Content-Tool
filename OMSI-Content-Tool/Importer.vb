@@ -1,4 +1,5 @@
-﻿Imports System.Xml
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Imports System.Xml
 Imports System.IO
 
 Module Importer

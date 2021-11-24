@@ -1,4 +1,5 @@
-﻿Public Class Frm_Help
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Frm_Help
     Private Sub Frm_Help_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Location = New Point(Frm_Main.Width / 2 - Me.Width / 2, Frm_Main.Height / 2 - Me.Height / 2)
         WBMain.Document.Write(IO.File.ReadAllText(Application.StartupPath & "\help.html"))

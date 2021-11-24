@@ -1,4 +1,5 @@
-﻿Module OMSI_Const
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Module OMSI_Const
     Public Const PathAirOneway As String = "helper_path_air_1.bmp"
     Public Const PathAir As String = "helper_path_air_2.bmp"
     Public Const PathCarOneway As String = "helper_path_cars_1.bmp"

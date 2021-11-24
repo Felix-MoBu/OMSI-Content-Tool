@@ -1,4 +1,5 @@
-﻿Imports System.Text
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Imports System.Text
 
 Public Class Proj_Bus
     Public Const TYPE As Byte = Frm_Main.PROJ_TYPE_BUS

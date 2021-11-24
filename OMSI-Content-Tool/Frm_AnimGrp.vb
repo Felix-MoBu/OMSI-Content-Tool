@@ -1,4 +1,5 @@
-﻿Public Class Frm_AnimGrp
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Frm_AnimGrp
     Dim automatic As Boolean
 
     Private Sub Frm_AnimGrp_Load(sender As Object, e As EventArgs) Handles MyBase.Load

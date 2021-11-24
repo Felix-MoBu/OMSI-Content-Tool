@@ -1,4 +1,5 @@
-﻿Public Class Frm_Eig_Mesh
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Frm_Eig_Mesh
     Public actMesh As OMSI_Mesh
     Private Sub Frm_Eig_Mesh_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If Not actMesh Is Nothing Then

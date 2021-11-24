@@ -1,4 +1,5 @@
-﻿Public Class Texture_Change
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Texture_Change
     Public Var As String
     Public file As String
 

@@ -1,4 +1,5 @@
-﻿Public Class OMSI_Achse
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class OMSI_Achse
     Private achse_long_int As Single
     Private achse_maxwidth_int As Single
     Private achse_minwidth_int As Single

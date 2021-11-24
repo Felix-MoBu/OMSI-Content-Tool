@@ -1,4 +1,5 @@
-﻿Module History
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Module History
     Private liste As New List(Of Item)
 
     Public Sub add(obj As Object, prop As String, val_old As String, val_new As String)

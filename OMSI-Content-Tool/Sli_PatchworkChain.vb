@@ -1,4 +1,5 @@
-﻿Public Class Sli_PatchworkChain
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Sli_PatchworkChain
     Public index As Integer
 
     Public length As Double

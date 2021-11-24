@@ -1,4 +1,5 @@
-﻿Imports System.Text.RegularExpressions 'Für ColorFromData
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Imports System.Text.RegularExpressions 'Für ColorFromData
 
 Module helper
     Dim allowedKeys As Integer() = {3, 8, 22, 24}

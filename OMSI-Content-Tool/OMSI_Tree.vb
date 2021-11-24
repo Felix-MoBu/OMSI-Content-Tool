@@ -1,4 +1,5 @@
-﻿Public Class OMSI_Tree
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class OMSI_Tree
     Public texture As String
     Public minheight As Single
     Public maxheight As Single

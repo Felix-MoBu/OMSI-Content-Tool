@@ -1,4 +1,5 @@
-﻿Imports System.Text
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Imports System.Text
 
 Public Class Frm_Rep
     Dim repaints As New List(Of OMSI_Repaint)

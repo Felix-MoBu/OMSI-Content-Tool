@@ -1,4 +1,5 @@
-﻿Public Module rendertypes
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Module rendertypes
     Public PRESURFACE As String = "presurface"
     Public SURFACE As String = "surface"
     Public ON_SURFACE As String = "on_surface"

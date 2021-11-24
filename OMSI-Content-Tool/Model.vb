@@ -1,4 +1,5 @@
-﻿Public Class Model
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Model
     Public filename As String
 
     Public bbox As List(Of Point3D)

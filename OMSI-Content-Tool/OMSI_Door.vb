@@ -1,4 +1,5 @@
-﻿Public Class OMSI_Door
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class OMSI_Door
     Public pathindex As Integer
 
     Public direction As Boolean

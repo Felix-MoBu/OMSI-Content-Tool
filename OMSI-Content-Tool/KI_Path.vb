@@ -1,4 +1,5 @@
-﻿Public Class KI_Path
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class KI_Path
     Public position As Point3D
 
     Public vertices As Double()

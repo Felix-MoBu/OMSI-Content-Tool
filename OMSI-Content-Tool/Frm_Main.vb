@@ -1,4 +1,5 @@
-﻿'Option Strict On   'No Way of doing this shit!
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+'Option Strict On   'No Way of doing this shit!
 
 Imports System.ComponentModel
 Imports System.ComponentModel.Design

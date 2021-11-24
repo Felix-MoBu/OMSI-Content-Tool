@@ -1,4 +1,5 @@
-﻿Public Class OMSI_BBox
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class OMSI_BBox
     Public position As Point3D()
     Public expansion As Point3D()
 

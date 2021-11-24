@@ -1,4 +1,5 @@
-﻿Public Class OMSI_Repaint
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class OMSI_Repaint
     Public name As String
     Public var As String
     Public file As String

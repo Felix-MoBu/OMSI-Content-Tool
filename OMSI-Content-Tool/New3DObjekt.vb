@@ -1,4 +1,5 @@
-﻿Public Class New3DObjekt
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class New3DObjekt
     Public path As String
     Public name As String
     Public vertices As Double()

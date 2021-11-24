@@ -1,4 +1,5 @@
-﻿Public Class OMSI_Matl
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class OMSI_Matl
     Public name As String
     Public index As Byte
 

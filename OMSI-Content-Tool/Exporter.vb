@@ -1,4 +1,5 @@
-﻿Module Exporter
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Module Exporter
     Public Sub write(Objekt As Local3DObjekt, filename As Filename)
         Select Case filename.extension
             Case "o3d"
@@ -73,9 +74,9 @@
             'Muss da rein, warum auch immer
             .Add(&H26)
 
-            .AddRange(intToHex(Objekt.Texturen.Count))
+            .AddRange(intToHex(Objekt.texturen.Count))
 
-            For Each texture In Objekt.Texturen
+            For Each texture In Objekt.texturen
                 .AddRange(ToHex(texture.diffuse.R / 255))
                 .AddRange(ToHex(texture.diffuse.G / 255))
                 .AddRange(ToHex(texture.diffuse.B / 255))
@@ -203,13 +204,13 @@
             .Add("      }")
 
             .Add("      MeshMaterialList {")
-            .Add("        " & Objekt.Texturen.Count & ";")
+            .Add("        " & Objekt.texturen.Count & ";")
             .Add("        " & faceCount & ";")
 
             zeilenEnde = ","
             Dim counter As Integer = 0
             For Each subobjekt In Objekt.subObjekte
-                For Each x In Objekt.Texturen
+                For Each x In Objekt.texturen
                     If x.id - 1 = counter Then
                         For i As Integer = 0 To subobjekt.Count - 1 Step 3
                             If counter = Objekt.subObjekte.Count - 1 And i >= subobjekt.Count - 3 Then zeilenEnde = ";"
@@ -220,7 +221,7 @@
                 counter += 1
             Next
 
-            For Each Texture In Objekt.Texturen
+            For Each Texture In Objekt.texturen
                 If Texture.matName <> "" Then
                     .Add("        Material " & Texture.matName & " {")
                 Else

@@ -1,4 +1,5 @@
-﻿Imports System.ComponentModel
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Imports System.ComponentModel
 
 Public Class Frm_VarTest
     Dim ListCount As Integer = 0

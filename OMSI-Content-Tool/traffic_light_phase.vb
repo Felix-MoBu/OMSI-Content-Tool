@@ -1,4 +1,5 @@
-﻿Public Class traffic_light_phase
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class traffic_light_phase
     Public type As Integer
     Public length As Single
 

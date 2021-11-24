@@ -1,4 +1,5 @@
-﻿Public Class Filename
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Filename
     Public path As String
     Public name As String
 
@@ -66,8 +67,8 @@
             End If
             If projectpath.Substring(projectpath.Length - 1) = "\" Then projectpath = projectpath.Substring(0, projectpath.Length - 1)
             Me.path = projectpath
-            Else
-                Dim tempPath = Split(filename, "\")
+        Else
+            Dim tempPath = Split(filename, "\")
             Me.name = tempPath(tempPath.Count - 1)
 
             Dim tempPath2 As String() = Split(filename, "\")
@@ -79,32 +80,32 @@
     End Sub
 
     Public Shared Operator <>(ByVal obj1 As Filename, ByVal obj2 As Filename) As Boolean
-        If obj1.toString <> obj2.toString Then Return True
+        If obj1.ToString <> obj2.ToString Then Return True
         Return False
     End Operator
 
     Public Shared Operator =(ByVal obj1 As Filename, ByVal obj2 As Filename) As Boolean
-        If obj1.toString = obj2.toString Then Return True
+        If obj1.ToString = obj2.ToString Then Return True
         Return False
     End Operator
 
     Public Shared Operator <>(ByVal obj1 As String, ByVal obj2 As Filename) As Boolean
-        If obj1 <> obj2.toString Then Return True
+        If obj1 <> obj2.ToString Then Return True
         Return False
     End Operator
 
     Public Shared Operator =(ByVal obj1 As String, ByVal obj2 As Filename) As Boolean
-        If obj1 = obj2.toString Then Return True
+        If obj1 = obj2.ToString Then Return True
         Return False
     End Operator
 
     Public Shared Operator <>(ByVal obj1 As Filename, ByVal obj2 As String) As Boolean
-        If obj1.toString <> obj2 Then Return True
+        If obj1.ToString <> obj2 Then Return True
         Return False
     End Operator
 
     Public Shared Operator =(ByVal obj1 As Filename, ByVal obj2 As String) As Boolean
-        If obj1.toString = obj2 Then Return True
+        If obj1.ToString = obj2 Then Return True
         Return False
     End Operator
 
@@ -122,7 +123,7 @@
     End Operator
 
     Public Shared Operator &(ByVal obj1 As String, ByVal obj2 As Filename) As String
-        Return obj1 & obj2.toString()
+        Return obj1 & obj2.ToString()
     End Operator
 
 

@@ -1,4 +1,5 @@
-﻿Public Class Local3DObjekt
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Local3DObjekt
     Public id As Integer
     Public position As New Point3D
     Public center As New Point3D

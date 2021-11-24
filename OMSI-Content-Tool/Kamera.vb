@@ -1,4 +1,5 @@
-﻿Public Class Kamera
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Kamera
     Public name As String
     Public position As Point3D
     Public type As Byte

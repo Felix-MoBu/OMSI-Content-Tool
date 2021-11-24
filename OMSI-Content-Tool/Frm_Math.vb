@@ -1,4 +1,5 @@
-﻿Public Class Frm_Math
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Frm_Math
     Private Sub BTAbstand_Click(sender As Object, e As EventArgs) Handles BTAbstand.Click
         TBAbstand.Text = PSA.Point.dist(PSB.Point)
     End Sub

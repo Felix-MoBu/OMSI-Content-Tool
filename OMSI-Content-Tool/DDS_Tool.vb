@@ -1,4 +1,5 @@
-﻿Imports System.Drawing.Imaging
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Imports System.Drawing.Imaging
 Imports System.Drawing.Imaging.PixelFormat
 
 

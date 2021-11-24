@@ -1,4 +1,5 @@
-﻿Public Class OMSI_Paths
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class OMSI_Paths
     Public isloaded As Boolean
     Public filename As Filename
     Public changed As Boolean = True '#####  Wieder raus nehmen!  ######

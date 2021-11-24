@@ -1,4 +1,5 @@
-﻿Public Class Proj_Interface
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Proj_Interface
 
     Public Const TYPE = Frm_Main.PROJ_TYPE_HOF
 

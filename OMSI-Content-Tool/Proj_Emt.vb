@@ -1,4 +1,5 @@
-﻿Public Class Proj_Emt
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Proj_Emt
     Public Const TYPE = Frm_Main.PROJ_TYPE_EMT
 
     Public filename As New Filename

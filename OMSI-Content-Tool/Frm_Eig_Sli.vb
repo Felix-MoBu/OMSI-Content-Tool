@@ -1,4 +1,5 @@
-﻿Public Class Frm_Eig_Sli
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Frm_Eig_Sli
     Public Projekt_Sli As Proj_Sli
 
     Private Sub Frm_Eig_Sli_Load(sender As Object, e As EventArgs) Handles MyBase.Load

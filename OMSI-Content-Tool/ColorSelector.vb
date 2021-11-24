@@ -1,4 +1,5 @@
-﻿Public Class ColorSelector
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class ColorSelector
     Public WidthOfTB As Integer = 100
     Public StartOfTB As Integer = 59
 

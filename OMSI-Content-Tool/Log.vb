@@ -1,4 +1,5 @@
-﻿Module Log
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Module Log
     Public Const logfile As String = "\Logfile.txt"
 
     Public Const TYPE_INFO As Byte = 0

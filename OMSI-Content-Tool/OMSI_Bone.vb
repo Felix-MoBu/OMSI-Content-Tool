@@ -1,4 +1,5 @@
-﻿Public Class OMSI_Bone
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class OMSI_Bone
     Public var As String
     Public val As Integer
 

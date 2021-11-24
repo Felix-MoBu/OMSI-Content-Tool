@@ -1,4 +1,5 @@
-﻿Public Class Frm_Hof
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Frm_Hof
     Dim files() As String
 
     Private Sub Frm_Hof_Load(sender As Object, e As EventArgs) Handles MyBase.Load

@@ -1,4 +1,5 @@
-﻿Public Class Proj_Sli
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Proj_Sli
     Public Const TYPE = Frm_Main.PROJ_TYPE_SLI
 
     Public isloaded As Boolean

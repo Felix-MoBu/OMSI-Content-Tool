@@ -1,4 +1,5 @@
-﻿Public Class Frm_Export
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Frm_Export
     Public choice As Byte = CHOICE_ERROR
 
     Public Const CHOICE_ERROR = 0

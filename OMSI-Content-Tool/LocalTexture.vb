@@ -1,4 +1,5 @@
-﻿Public Class LocalTexture
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class LocalTexture
     Public filename As Filename
     Public matName As String
     Public id As Integer

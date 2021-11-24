@@ -1,4 +1,5 @@
-﻿Public Class RGBColor
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class RGBColor
     Public R As Byte
     Public G As Byte
     Public B As Byte

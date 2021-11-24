@@ -1,4 +1,5 @@
-﻿Public Class Form1
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class Form1
     Private Sub BTTauschen_Click(sender As Object, e As EventArgs) Handles BTTauschen.Click
         Dim newlines As New List(Of String)
         Dim lines As List(Of String) = TextBox1.Text.Split(vbCrLf).ToList

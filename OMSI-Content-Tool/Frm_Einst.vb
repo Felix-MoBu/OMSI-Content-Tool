@@ -1,4 +1,5 @@
-﻿Option Strict On
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Option Strict On
 
 Public Class Frm_Einst
     Public ReadOnly stdMail As String = "tjtb@go.ru"

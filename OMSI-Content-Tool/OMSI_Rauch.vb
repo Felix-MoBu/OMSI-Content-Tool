@@ -1,4 +1,5 @@
-﻿Public Class OMSI_Rauch
+﻿'by Felix Modellbusse ;) (MoBu) 2019
+Public Class OMSI_Rauch
     Public name As String
     Public position As New Point3D
     Public richtung As New Point3D
