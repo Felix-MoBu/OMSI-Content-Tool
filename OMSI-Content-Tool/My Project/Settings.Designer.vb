@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.6.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -248,7 +248,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("C:\Program Files (x86)\Steam\steamapps\common\OMSI 2")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\Programme\Steam\steamapps\common\OMSI 2")>  _
         Public Property OmsiPfad() As String
             Get
                 Return CType(Me("OmsiPfad"),String)
@@ -639,6 +639,42 @@ Namespace My
             End Get
             Set
                 Me("ShowAlpha") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property nickname() As String
+            Get
+                Return CType(Me("nickname"),String)
+            End Get
+            Set
+                Me("nickname") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("120")>  _
+        Public Property fpsLimit() As Integer
+            Get
+                Return CType(Me("fpsLimit"),Integer)
+            End Get
+            Set
+                Me("fpsLimit") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property Einstellung() As String
+            Get
+                Return CType(Me("Einstellung"),String)
+            End Get
+            Set
+                Me("Einstellung") = value
             End Set
         End Property
     End Class

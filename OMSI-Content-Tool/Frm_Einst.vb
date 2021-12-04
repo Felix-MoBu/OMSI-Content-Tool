@@ -15,6 +15,7 @@ Public Class Frm_Einst
             .LogDebug = CBLogDebug.Checked
             .AutoConvertO3D = CBautoO3d.Checked
             .CreatorID = Convert.ToInt32(TBCreatorID.Text)
+            .nickname = TBNickname.Text
             Frm_Main.TimerReset()
 
             'Page "OMSI"
@@ -38,6 +39,8 @@ Public Class Frm_Einst
             .PassColor = TBColorPassengers.BackColor
             .DriverColor = TBColorDriver.BackColor
             .AchsenColor = TBColorAchsen.BackColor
+
+            .fpsLimit = Convert.ToInt32(TBMaxFPS.Text)
 
             '3D-Formate
             .o3dRemoveSpec = CBO3dRemSpec.Checked
@@ -68,6 +71,7 @@ Public Class Frm_Einst
             CBLogDebug.Checked = .LogDebug
             CBautoO3d.Checked = .AutoConvertO3D
             TBCreatorID.Text = Convert.ToString(.CreatorID)
+            TBNickname.Text = .nickname
 
             'Page "OMSI"
             TBOmsiPfad.Text = .OmsiPfad
@@ -81,6 +85,7 @@ Public Class Frm_Einst
             TBColorDriver.BackColor = .DriverColor
             TBColorPassengers.BackColor = .PassColor
             TBColorAchsen.BackColor = .AchsenColor
+            TBMaxFPS.Text = Convert.ToString(.fpsLimit)
 
             'Page 3D-Formate
             CBO3dRemSpec.Checked = .o3dRemoveSpec

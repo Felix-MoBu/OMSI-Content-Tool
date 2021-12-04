@@ -197,7 +197,11 @@ Public Class OMSI_Model
                         Case "[mesh]"
                             Dim mesh As New OMSI_Mesh
                             With mesh
-                                .filename = New Filename(allLines(linect + 1), filename.path)
+                                If LCase(filename.name.Substring(0, 5)) = "model" Then
+                                    .filename = New Filename(allLines(linect + 1), filename.path & "\" & filename.name.Substring(0, 5))
+                                Else
+                                    .filename = New Filename(allLines(linect + 1), filename.path)
+                                End If
                                 .center = New Point3D
                                 .lodMin = tempLODMin
                                 .lodMax = tempLODMax

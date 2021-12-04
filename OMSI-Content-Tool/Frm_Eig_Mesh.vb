@@ -4,6 +4,8 @@ Public Class Frm_Eig_Mesh
     Private Sub Frm_Eig_Mesh_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If Not actMesh Is Nothing Then
             addProp("Name", actMesh.filename.name)
+            addProp("Erstellt", IO.File.GetCreationTime(actMesh.filename))
+            addProp("Geändert", IO.File.GetLastWriteTime(actMesh.filename))
             addProp("Protected", actMesh.isProtected.ToString)
             For Each objekt In Frm_Main.AlleObjekte
                 If actMesh.ObjIds.Contains(objekt.id) Then
@@ -15,7 +17,8 @@ Public Class Frm_Eig_Mesh
                             subObjekteCount += subObjekt.Count
                         Next
                         addProp("Flächen", subObjekteCount)
-                        addProp("", "")
+
+                        addEmptProp()
                         For i As Integer = 0 To .Texturen.Count - 1
                             addProp("Texture_" & i, .Texturen(i).filename.name)
                         Next
@@ -30,11 +33,20 @@ Public Class Frm_Eig_Mesh
         LBProps.Items.Add(val)
     End Sub
 
+    Private Sub addEmptProp()
+        LBLabels.Items.Add("")
+        LBProps.Items.Add("")
+    End Sub
+
     Private Sub LBLabels_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBLabels.SelectedIndexChanged
         LBProps.SelectedIndex = LBLabels.SelectedIndex
     End Sub
 
     Private Sub LBProps_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBProps.SelectedIndexChanged
         LBLabels.SelectedIndex = LBProps.SelectedIndex
+    End Sub
+
+    Private Sub KopierenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles KopierenToolStripMenuItem.Click
+        Clipboard.SetText(LBProps.SelectedItem)
     End Sub
 End Class

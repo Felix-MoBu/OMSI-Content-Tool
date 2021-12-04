@@ -13,14 +13,19 @@ Public Class Frm_Eig_Bus
         DDSprache.Items.Clear()
         DDSprache.Items.Add("Andere")
         DDSprache.SelectedIndex = 0
-        Dim files() As String = IO.Directory.GetFiles(My.Settings.OmsiPfad & "\Languages")
-        For Each file As String In files
-            Dim s1 As String() = Split(file, "\")
-            Dim s2 As String = Split(s1(s1.Count - 1), "_")(0)
-            If Not DDSprache.Items.Contains(s2) Then
-                DDSprache.Items.Add(s2)
-            End If
-        Next
+
+        If IO.Directory.Exists(My.Settings.OmsiPfad) Then
+            Dim files() As String = IO.Directory.GetFiles(My.Settings.OmsiPfad & "\Languages")
+            For Each file As String In files
+                Dim s1 As String() = Split(file, "\")
+                Dim s2 As String = Split(s1(s1.Count - 1), "_")(0)
+                If Not DDSprache.Items.Contains(s2) Then
+                    DDSprache.Items.Add(s2)
+                End If
+            Next
+        Else
+            MsgBox("OMSI-Pfad wurde nicht gefunden. Einige Optionen sind dadurch nicht vollstädnig!")
+        End If
 
         With Projekt_Bus
 
@@ -332,9 +337,13 @@ Public Class Frm_Eig_Bus
 
     Private Sub BTOrdner_Click(sender As Object, e As EventArgs) Handles BTOrdner.Click
         If TBPath.Text <> "" Then
-            Process.Start(TBPath.Text)
+            If IO.Directory.Exists(TBPath.Text) Then
+                Process.Start(TBPath.Text)
+            Else
+                MsgBox("Dieser Ordner existiert nicht!")
+            End If
         Else
-            MsgBox("Bitte erst ein Projekt öffnen oder erstellen!")
+                MsgBox("Bitte erst ein Projekt öffnen oder erstellen!")
         End If
     End Sub
 

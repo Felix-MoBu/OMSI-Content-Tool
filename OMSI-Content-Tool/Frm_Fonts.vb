@@ -171,7 +171,7 @@ Public Class Frm_Fonts
                 With LB
                     .Top = 95
                     .Left = 5
-                    .Text = "weitere..."
+                    .Text = "weitere laden..."
                     .Width = 190
                     .Height = 30
                     .TextAlign = ContentAlignment.TopCenter

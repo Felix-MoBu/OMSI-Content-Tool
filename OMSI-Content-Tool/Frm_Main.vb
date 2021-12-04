@@ -158,7 +158,7 @@ Class Frm_Main
     Private Sub Frm_Main_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         'If exitApplication() = False Then e.Cancel = True
         Log.Add("Editor normal beendet!")
-        Log.close()
+        Log.Close()
     End Sub
 
     Private Function getFilePath(path As String) As String
@@ -344,6 +344,7 @@ Class Frm_Main
             loadTextures(newObjekt.texturen, newMesh.filename.path)
             ModelLoaded = True
 
+
             Return newMesh
         Else
             Log.Add("Datei nicht geaden! (Datei: " & filename.name & ")", Log.TYPE_DEBUG)
@@ -484,7 +485,7 @@ Class Frm_Main
         Dim ctsub As Integer
         Dim tmppath = Split(objektpfad, "\")
         objektpfad = ""
-        For i = 0 To tmppath.Count - 1
+        For i = 0 To tmppath.Count - 1 'HIER!!!!!!!!!!!!!!!!!!!!!!!!!!!
             If LCase(tmppath(i)) = "model" Then ctsub = i
         Next i
         For i = 0 To ctsub - 1
@@ -515,7 +516,7 @@ Class Frm_Main
             Case 0
                 saveMeshProbs(getSelectedMesh)
             Case 2
-                SaveLightProps(LBLichter.SelectedIndex)
+                saveLightProps(LBLichter.SelectedIndex)
         End Select
 
         getProj.save()
@@ -544,7 +545,6 @@ Class Frm_Main
         End If
         Return False
     End Function
-
 
     '#####  Timer  #####
     Private Sub TSave_Tick(sender As Object, e As EventArgs) Handles TSave.Tick
@@ -800,7 +800,7 @@ Class Frm_Main
         Text = filename & " - " & My.Application.Info.Title
     End Sub
 
-    Private Sub addProjectlist(filename As String)
+    Public Sub addProjectlist(filename As String)
         If My.Settings.Letzte = filename Then Exit Sub
 
         Dim tempList As String = filename
@@ -876,6 +876,7 @@ Class Frm_Main
                     'mesh.ObjIds.Add(newObjekt.id)
 
                     LBMeshes.Items.Add(Projekt_Sli.filename.name & "_" & i)
+                    LBMeshes.SetItemChecked(LBMeshes.Items.Count - 1, True)
                 End With
                 i += 1
             Next
@@ -968,14 +969,16 @@ Class Frm_Main
 
 
             'DDAlleTexturen.Items.Clear()
-            For Each file In IO.Directory.GetFiles(Projekt_Bus_temp.filename.path & "/Texture", "*.*", IO.SearchOption.TopDirectoryOnly)
-                Dim tmpname As New Filename(file)
-                If OMSI_ImageFormats.Contains(tmpname.extension) Then
-                    If Not DDAlleTexturen.Items.Contains(tmpname.name) Then
-                        DDAlleTexturen.Items.Add(tmpname.name)
+            If IO.Directory.Exists(Projekt_Bus_temp.filename.path & "/Texture") Then
+                For Each file In IO.Directory.GetFiles(Projekt_Bus_temp.filename.path & "/Texture", "*.*", IO.SearchOption.TopDirectoryOnly)
+                    Dim tmpname As New Filename(file)
+                    If OMSI_ImageFormats.Contains(tmpname.extension) Then
+                        If Not DDAlleTexturen.Items.Contains(tmpname.name) Then
+                            DDAlleTexturen.Items.Add(tmpname.name)
+                        End If
                     End If
-                End If
-            Next
+                Next
+            End If
 
             loadPathsPrefs(.paths)
             loadModelPrefs(.model)
@@ -1050,7 +1053,7 @@ Class Frm_Main
         End If
     End Sub
 
-    Private Sub showModel(meshes As List(Of OMSI_Mesh))
+    Private Sub showModel(ByRef meshes As List(Of OMSI_Mesh))
         AlleObjekte.Clear()
         LBMeshes.Items.Clear()
         Parent_CBParent.Items.Clear()
@@ -1173,12 +1176,12 @@ Class Frm_Main
         AlleVarValues.Clear()
 
         Select Case getProjTyp()
-            Case Proj_Bus.TYPE
+            Case PROJ_TYPE_BUS
                 AlleVariablen.AddRange(OMSI_BUS_VARS)
                 For i = 0 To OMSI_BUS_VARS.Count - 1
                     AlleVarValues.Add(0)
                 Next
-            Case Proj_Sco.TYPE
+            Case PROJ_TYPE_SCO
                 AlleVariablen.AddRange(OMSI_SCO_VARS)
                 For i = 0 To OMSI_SCO_VARS.Count - 1
                     AlleVarValues.Add(0)
@@ -1487,25 +1490,25 @@ Class Frm_Main
     End Sub
 
     Private Sub VarlistsToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles VarlistsToolStripMenuItem.Click
-        If getProjTyp() = Proj_Bus.TYPE Or getProjTyp() = Proj_Ovh.TYPE Or getProjTyp() = Proj_Sco.TYPE Then
+        If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_OVH Or getProjTyp() = PROJ_TYPE_SCO Then
             Frm_Listen.LoadFilled(getProj(), "Varlists", getProj().filename.path, "txt")
         End If
     End Sub
 
     Private Sub VarnamelistToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles StringvarlistToolStripMenuItem.Click
-        If getProjTyp() = Proj_Bus.TYPE Or getProjTyp() = Proj_Ovh.TYPE Or getProjTyp() = Proj_Sco.TYPE Then
+        If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_OVH Or getProjTyp() = PROJ_TYPE_SCO Then
             Frm_Listen.LoadFilled(getProj(), "Stringvarlists", getProj().filename.path, "txt")
         End If
     End Sub
 
     Private Sub ScriptsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ScriptsToolStripMenuItem.Click
-        If getProjTyp() = Proj_Bus.TYPE Or getProjTyp() = Proj_Ovh.TYPE Or getProjTyp() = Proj_Sco.TYPE Then
+        If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_OVH Or getProjTyp() = PROJ_TYPE_SCO Then
             Frm_Listen.LoadFilled(getProj(), "Scripts", getProj().filename.path, "osc")
         End If
     End Sub
 
     Private Sub ConstfilesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConstfilesToolStripMenuItem.Click
-        If getProjTyp() = Proj_Bus.TYPE Or getProjTyp() = Proj_Ovh.TYPE Or getProjTyp() = Proj_Sco.TYPE Then
+        If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_OVH Or getProjTyp() = PROJ_TYPE_SCO Then
             Frm_Listen.LoadFilled(getProj(), "Constfiles", getProj().filename.path, "txt")
         End If
     End Sub
@@ -1574,7 +1577,7 @@ Class Frm_Main
     End Sub
 
     Private Sub LichtToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LichtToolStripMenuItem.Click
-        If getProjTyp() = Proj_Bus.TYPE Or getProjTyp() = Proj_Sco.TYPE Then
+        If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_SCO Then
             Dim newName As String = InputBox("Licht benennen:", "Neues Licht", "Licht_" & getProj.model.lichter.count)
 
             If newName = "" Then
@@ -1612,7 +1615,7 @@ Class Frm_Main
     End Sub
 
     Private Sub SpotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SpotToolStripMenuItem.Click
-        If getProjTyp() = Proj_Bus.TYPE Or getProjTyp() = Proj_Sco.TYPE Then
+        If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_SCO Then
             Dim newName As String = InputBox("Spot benennen: (leer = laufende Nummer)", "Neuer Spot", "Spot_" & getProj.model.spots.count)
 
             If newName = "" Then
@@ -1871,6 +1874,24 @@ Class Frm_Main
         Next
     End Sub
 
+    Private Sub DateiLöschenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DateiLöschenToolStripMenuItem.Click
+        If MsgBox("Soll die Datei unwiderruflich gelöscht werden?", vbYesNo) = vbYes Then
+            Dim meshname As String = ""
+            For Each objekt In AlleObjekte
+                For Each mesh In getProj.model.meshes
+                    If mesh.filename.name = LBMeshes.SelectedItem Then
+                        meshname = mesh.filename.ToString
+                        Exit For
+                    End If
+                Next
+            Next
+            CMSObjekteEntfernen_Click(sender, e)
+            If meshname <> "" And IO.File.Exists(meshname) Then
+                IO.File.Delete(meshname)
+            End If
+        End If
+    End Sub
+
     Private Sub BTObjekteResize_MouseDown(sender As Object, e As MouseEventArgs) Handles BTObjekteResize.MouseDown
         resizePanelObjekte = True
         BTObjekteResize.Size = New Point(0, 0)
@@ -1954,7 +1975,7 @@ Class Frm_Main
     '####  Achse  ####
 
     Private Function getSelectedAchse() As OMSI_Achse
-        If getProjTyp() = Proj_Bus.TYPE Or getProjTyp() = Proj_Ovh.TYPE Then
+        If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_OVH Then
             If TVHelper.SelectedNode.FullPath.Contains("\") Then
                 If TVHelper.SelectedNode.FullPath.Split("\")(0) = TVHelper.Nodes(0).Text Then
                     If TVHelper.SelectedNode.Index > -1 Then
@@ -1967,7 +1988,7 @@ Class Frm_Main
     End Function
 
     Private Sub AchseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AchseToolStripMenuItem.Click
-        If getProjTyp() = Proj_Bus.TYPE Or getProjTyp() = Proj_Ovh.TYPE Then
+        If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_OVH Then
             Dim newAchse As New OMSI_Achse
             With newAchse
                 .achse_maxwidth = 2.5
@@ -2198,7 +2219,7 @@ Class Frm_Main
     '####  Kupplung  ####
 
     Private Function isKupplSelected(direction As String) As Boolean
-        If getProjTyp() = Proj_Bus.TYPE Or getProjTyp() = Proj_Ovh.TYPE Then
+        If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_OVH Then
             If TVHelper.SelectedNode.FullPath.Contains("\") Then
                 If LCase(TVHelper.SelectedNode.FullPath.Split("\")(1)) = LCase(direction) Then
                     Return True
@@ -2399,9 +2420,6 @@ Class Frm_Main
                 Case TVHelper.Nodes(0).Text     'Achsen
                     Projekt_Bus.achsen.RemoveAt(index)
 
-                Case TVHelper.Nodes(1).Text     'Attachpoint
-                    'Noch nix
-
                 Case TVHelper.Nodes(2).Text     'Kameras
                     If TVHelper.SelectedNode.FullPath.Split("\")(1) = TVHelper.Nodes(2).Nodes(0).Text Then
                         getProj.driver_cam_list.RemoveAt(index)
@@ -2432,6 +2450,10 @@ Class Frm_Main
                 Case TVHelper.Nodes(7).Text     'Sitz-/Stehplatz
                     getProj.cabin.passPos.RemoveAt(index)
 
+                                                'Tickets
+
+                                                'Attachpoints
+
                 Case TVHelper.Nodes(10).Text     'Splinehelper
                     getProj.splinehelpers.RemoveAt(index)
 
@@ -2441,6 +2463,13 @@ Class Frm_Main
 
             TVHelper.Nodes.Remove(TVHelper.SelectedNode)
             GlMain.Invalidate()
+        Else
+            Select Case TVHelper.SelectedNode.FullPath
+                Case TVHelper.Nodes(1).Text     'Boundingbox
+                    BBox_PSSize.Point = New Point3D()
+                    PSPos.Point = New Point3D
+                    Projekt_Bus.bbox = Nothing
+            End Select
         End If
     End Sub
 
@@ -2503,7 +2532,12 @@ Class Frm_Main
             Case 2
                 showSettings({GBParent, GBLicht})
             Case 3
-                showSettings({GBPfade})
+                If Not getProjTyp() = PROJ_TYPE_SLI Then
+                    showSettings({GBPfade})
+                Else
+                    showSettings({GBPfad})
+                End If
+
         End Select
         GlMain.Invalidate()
     End Sub
@@ -3027,15 +3061,17 @@ Class Frm_Main
 
     Private Function getSelectedObjektId() As List(Of Int16)
         If LBMeshes.SelectedIndex >= 0 Then
-            If Not getProj().model Is Nothing Then
-                For Each mesh In getProj.model.meshes
-                    For Each Objekt In LBMeshes.SelectedItems
-                        If Objekt = mesh.filename.name Then
-                            Return mesh.ObjIds
-                            Exit Function
-                        End If
+            If Not getProjTyp() = PROJ_TYPE_SLI Then
+                If Not getProj.model Is Nothing Then
+                    For Each mesh In getProj.model.meshes
+                        For Each Objekt In LBMeshes.SelectedItems
+                            If Objekt = mesh.filename.name Then
+                                Return mesh.ObjIds
+                                Exit Function
+                            End If
+                        Next
                     Next
-                Next
+                End If
             End If
         End If
         Dim temlist As New List(Of Int16)
@@ -3405,12 +3441,16 @@ Class Frm_Main
 
     'Wichtig sonst funktionieren die Pfeiltasten nicht!
     Protected Overrides Function ProcessCmdKey(ByRef msg As Message, keyData As Keys) As Boolean
-        If keyData = Keys.Left Then
-            GlMain_KeyDown(GlMain, New KeyEventArgs(Keys.Left))
-            Return True
-        ElseIf keyData = Keys.Right Then
-            GlMain_KeyDown(GlMain, New KeyEventArgs(Keys.Right))
-            Return True
+        If ActiveControl Is GlMain Then
+            If viewPoint = 1 Or viewPoint = 2 Then
+                If keyData = Keys.Left Then
+                    GlMain_KeyDown(GlMain, New KeyEventArgs(Keys.Left))
+                    Return True
+                ElseIf keyData = Keys.Right Then
+                    GlMain_KeyDown(GlMain, New KeyEventArgs(Keys.Right))
+                    Return True
+                End If
+            End If
         End If
         Return MyBase.ProcessCmdKey(msg, keyData)
     End Function
@@ -3552,8 +3592,14 @@ Class Frm_Main
         GlLoaded = True
     End Sub
 
+
+    Dim last_draw As Long = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
     Private Sub GlMain_Paint(sender As Object, e As PaintEventArgs, Optional mirrorRender As Boolean = False, Optional mirrorID As Integer = 0) Handles GlMain.Paint
         If Not GlLoaded Then Exit Sub
+
+        'FPS Limiter
+        If DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - last_draw < 1000 / My.Settings.fpsLimit Then Exit Sub
+        last_draw = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
 
         GL.Clear(ClearBufferMask.ColorBufferBit)
         GL.Clear(ClearBufferMask.DepthBufferBit)
@@ -4050,7 +4096,7 @@ Class Frm_Main
     End Sub
 
     Private Sub HofDateienToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HofDateienToolStripMenuItem.Click
-        If getProjTyp() = Proj_Bus.TYPE Then
+        If getProjTyp() = PROJ_TYPE_BUS Then
             Frm_Hof.ShowDialog()
         Else
             MsgBox("Dieser Projekttyp unterstützt keine Hofdateien!")
@@ -4724,14 +4770,16 @@ Class Frm_Main
 
     Private Sub LBMeshes_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles LBMeshes.ItemCheck
         If LBMeshes.SelectedIndex > -1 Then
-            If Not getProj.model.meshes Is Nothing Then
-                For Each objektIDs In getProj.model.meshes(e.Index).ObjIds
-                    If e.NewValue Then
-                        AlleObjekte(objektIDs).tempHidden = False
-                    Else
-                        AlleObjekte(objektIDs).tempHidden = True
-                    End If
-                Next
+            If Not getProjTyp() = PROJ_TYPE_SLI Then
+                If Not getProj.model.meshes Is Nothing Then
+                    For Each objektIDs In getProj.model.meshes(e.Index).ObjIds
+                        If e.NewValue Then
+                            AlleObjekte(objektIDs).tempHidden = False
+                        Else
+                            AlleObjekte(objektIDs).tempHidden = True
+                        End If
+                    Next
+                End If
             End If
         End If
     End Sub
@@ -4739,7 +4787,5 @@ Class Frm_Main
     Private Sub PSPos_KeyPress(sender As Object, e As EventArgs) Handles PSPos.KeyPress
 
     End Sub
-
-
 End Class
 

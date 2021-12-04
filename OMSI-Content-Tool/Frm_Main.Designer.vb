@@ -444,6 +444,7 @@ Partial Class Frm_Main
         Me.FD2 = New System.Windows.Forms.OpenFileDialog()
         Me.TSave = New System.Windows.Forms.Timer(Me.components)
         Me.BWSortMeshes = New System.ComponentModel.BackgroundWorker()
+        Me.DateiLöschenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VarSelector1 = New O3D_Test.VarSelector()
         Me.PointSelector2 = New O3D_Test.PointSelector()
         Me.BBox_PSSize = New O3D_Test.PointSelector()
@@ -915,41 +916,42 @@ Partial Class Frm_Main
         'ToDoListToolStripMenuItem
         '
         Me.ToDoListToolStripMenuItem.Name = "ToDoListToolStripMenuItem"
-        Me.ToDoListToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+        Me.ToDoListToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
         Me.ToDoListToolStripMenuItem.Text = "To-Do-List"
         '
         'ReadmetxtToolStripMenuItem
         '
         Me.ReadmetxtToolStripMenuItem.Name = "ReadmetxtToolStripMenuItem"
-        Me.ReadmetxtToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+        Me.ReadmetxtToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
         Me.ReadmetxtToolStripMenuItem.Text = "Readme.txt"
         '
         'RechnerToolStripMenuItem
         '
         Me.RechnerToolStripMenuItem.Name = "RechnerToolStripMenuItem"
-        Me.RechnerToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+        Me.RechnerToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
         Me.RechnerToolStripMenuItem.Text = "Rechner"
         '
         'ToolStripMenuItem17
         '
         Me.ToolStripMenuItem17.Name = "ToolStripMenuItem17"
-        Me.ToolStripMenuItem17.Size = New System.Drawing.Size(181, 6)
+        Me.ToolStripMenuItem17.Size = New System.Drawing.Size(225, 6)
         '
         'StatistikToolStripMenuItem
         '
         Me.StatistikToolStripMenuItem.Name = "StatistikToolStripMenuItem"
-        Me.StatistikToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+        Me.StatistikToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
         Me.StatistikToolStripMenuItem.Text = "Statistik"
         '
         'ToolStripMenuItem12
         '
         Me.ToolStripMenuItem12.Name = "ToolStripMenuItem12"
-        Me.ToolStripMenuItem12.Size = New System.Drawing.Size(181, 6)
+        Me.ToolStripMenuItem12.Size = New System.Drawing.Size(225, 6)
         '
         'ProjektordnerÖffnenToolStripMenuItem
         '
         Me.ProjektordnerÖffnenToolStripMenuItem.Name = "ProjektordnerÖffnenToolStripMenuItem"
-        Me.ProjektordnerÖffnenToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+        Me.ProjektordnerÖffnenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.D), System.Windows.Forms.Keys)
+        Me.ProjektordnerÖffnenToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
         Me.ProjektordnerÖffnenToolStripMenuItem.Text = "Projektordner öffnen"
         '
         'ModifikationToolStripMenuItem
@@ -1030,14 +1032,14 @@ Partial Class Frm_Main
         'AchseToolStripMenuItem
         '
         Me.AchseToolStripMenuItem.Name = "AchseToolStripMenuItem"
-        Me.AchseToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.AchseToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.AchseToolStripMenuItem.Text = "Achse"
         '
         'KameraToolStripMenuItem
         '
         Me.KameraToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FahrerkameraToolStripMenuItem, Me.FahrgastkameraToolStripMenuItem})
         Me.KameraToolStripMenuItem.Name = "KameraToolStripMenuItem"
-        Me.KameraToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.KameraToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.KameraToolStripMenuItem.Text = "Kamera"
         '
         'FahrerkameraToolStripMenuItem
@@ -1056,7 +1058,7 @@ Partial Class Frm_Main
         '
         Me.KupplungspunktToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FrontToolStripMenuItem, Me.HeckToolStripMenuItem})
         Me.KupplungspunktToolStripMenuItem.Name = "KupplungspunktToolStripMenuItem"
-        Me.KupplungspunktToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.KupplungspunktToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.KupplungspunktToolStripMenuItem.Text = "Kupplungspunkt"
         '
         'FrontToolStripMenuItem
@@ -1074,32 +1076,32 @@ Partial Class Frm_Main
         'InnenlichtToolStripMenuItem
         '
         Me.InnenlichtToolStripMenuItem.Name = "InnenlichtToolStripMenuItem"
-        Me.InnenlichtToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.InnenlichtToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.InnenlichtToolStripMenuItem.Text = "Innenlicht"
         '
         'RauchToolStripMenuItem
         '
         Me.RauchToolStripMenuItem.Name = "RauchToolStripMenuItem"
-        Me.RauchToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.RauchToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.RauchToolStripMenuItem.Text = "Rauch"
         '
         'SpiegelToolStripMenuItem
         '
         Me.SpiegelToolStripMenuItem.Name = "SpiegelToolStripMenuItem"
-        Me.SpiegelToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.SpiegelToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SpiegelToolStripMenuItem.Text = "Spiegel"
         '
         'SitzplatzToolStripMenuItem
         '
         Me.SitzplatzToolStripMenuItem.Name = "SitzplatzToolStripMenuItem"
-        Me.SitzplatzToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.SitzplatzToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SitzplatzToolStripMenuItem.Text = "Sitz-/ Stehplatz"
         '
         'TicketblockToolStripMenuItem
         '
         Me.TicketblockToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EntwerterToolStripMenuItem, Me.TicketblockToolStripMenuItem1, Me.RückgabefeldToolStripMenuItem, Me.GeldrückgabeToolStripMenuItem})
         Me.TicketblockToolStripMenuItem.Name = "TicketblockToolStripMenuItem"
-        Me.TicketblockToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.TicketblockToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.TicketblockToolStripMenuItem.Text = "Tickes"
         '
         'EntwerterToolStripMenuItem
@@ -1129,37 +1131,37 @@ Partial Class Frm_Main
         'AttachpointsToolStripMenuItem
         '
         Me.AttachpointsToolStripMenuItem.Name = "AttachpointsToolStripMenuItem"
-        Me.AttachpointsToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.AttachpointsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.AttachpointsToolStripMenuItem.Text = "Attachpoint"
         '
         'SplinehelperToolStripMenuItem
         '
         Me.SplinehelperToolStripMenuItem.Enabled = False
         Me.SplinehelperToolStripMenuItem.Name = "SplinehelperToolStripMenuItem"
-        Me.SplinehelperToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.SplinehelperToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SplinehelperToolStripMenuItem.Text = "Splinehelper"
         '
         'SpotToolStripMenuItem
         '
         Me.SpotToolStripMenuItem.Name = "SpotToolStripMenuItem"
-        Me.SpotToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.SpotToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SpotToolStripMenuItem.Text = "Spot"
         '
         'ToolStripMenuItem15
         '
         Me.ToolStripMenuItem15.Name = "ToolStripMenuItem15"
-        Me.ToolStripMenuItem15.Size = New System.Drawing.Size(159, 6)
+        Me.ToolStripMenuItem15.Size = New System.Drawing.Size(177, 6)
         '
         'LichtToolStripMenuItem
         '
         Me.LichtToolStripMenuItem.Name = "LichtToolStripMenuItem"
-        Me.LichtToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.LichtToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.LichtToolStripMenuItem.Text = "Licht"
         '
         'PfadToolStripMenuItem
         '
         Me.PfadToolStripMenuItem.Name = "PfadToolStripMenuItem"
-        Me.PfadToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.PfadToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.PfadToolStripMenuItem.Text = "Pfad(punkt)"
         '
         'ImportierenToolStripMenuItem
@@ -2484,7 +2486,7 @@ Partial Class Frm_Main
         Me.GBSpline.Controls.Add(Me.Spline_MinMax)
         Me.GBSpline.Location = New System.Drawing.Point(4, 819)
         Me.GBSpline.Name = "GBSpline"
-        Me.GBSpline.Size = New System.Drawing.Size(327, 151)
+        Me.GBSpline.Size = New System.Drawing.Size(327, 114)
         Me.GBSpline.TabIndex = 26
         Me.GBSpline.TabStop = False
         Me.GBSpline.Text = "Spline"
@@ -3658,21 +3660,21 @@ Partial Class Frm_Main
         'CMSMeshes
         '
         Me.CMSMeshes.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.CMSMeshes.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CMSObjekteNeuladen, Me.CMSObjekteBearbeiten, Me.ToolStripMenuItem3, Me.CMSObjekteImport, Me.ErsetzenToolStripMenuItem, Me.CMSObjekteExport, Me.ToolStripMenuItem4, Me.CMSObjekteEntfernen, Me.ToolStripMenuItem16, Me.EigenschaftenToolStripMenuItem1})
+        Me.CMSMeshes.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CMSObjekteNeuladen, Me.CMSObjekteBearbeiten, Me.ToolStripMenuItem3, Me.CMSObjekteImport, Me.ErsetzenToolStripMenuItem, Me.CMSObjekteExport, Me.ToolStripMenuItem4, Me.CMSObjekteEntfernen, Me.DateiLöschenToolStripMenuItem, Me.ToolStripMenuItem16, Me.EigenschaftenToolStripMenuItem1})
         Me.CMSMeshes.Name = "CMSObjekte"
-        Me.CMSMeshes.Size = New System.Drawing.Size(149, 176)
+        Me.CMSMeshes.Size = New System.Drawing.Size(156, 198)
         '
         'CMSObjekteNeuladen
         '
         Me.CMSObjekteNeuladen.Name = "CMSObjekteNeuladen"
-        Me.CMSObjekteNeuladen.Size = New System.Drawing.Size(148, 22)
+        Me.CMSObjekteNeuladen.Size = New System.Drawing.Size(155, 22)
         Me.CMSObjekteNeuladen.Text = "Neu laden"
         '
         'CMSObjekteBearbeiten
         '
         Me.CMSObjekteBearbeiten.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ZUpToolStripMenuItem, Me.LeftRightHandedToolStripMenuItem, Me.ToolStripMenuItem11, Me.UmbenennenToolStripMenuItem})
         Me.CMSObjekteBearbeiten.Name = "CMSObjekteBearbeiten"
-        Me.CMSObjekteBearbeiten.Size = New System.Drawing.Size(148, 22)
+        Me.CMSObjekteBearbeiten.Size = New System.Drawing.Size(155, 22)
         Me.CMSObjekteBearbeiten.Text = "Bearbeiten"
         '
         'ZUpToolStripMenuItem
@@ -3701,46 +3703,46 @@ Partial Class Frm_Main
         'ToolStripMenuItem3
         '
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(145, 6)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(152, 6)
         '
         'CMSObjekteImport
         '
         Me.CMSObjekteImport.Name = "CMSObjekteImport"
-        Me.CMSObjekteImport.Size = New System.Drawing.Size(148, 22)
+        Me.CMSObjekteImport.Size = New System.Drawing.Size(155, 22)
         Me.CMSObjekteImport.Text = "Importieren"
         '
         'ErsetzenToolStripMenuItem
         '
         Me.ErsetzenToolStripMenuItem.Name = "ErsetzenToolStripMenuItem"
-        Me.ErsetzenToolStripMenuItem.Size = New System.Drawing.Size(148, 22)
+        Me.ErsetzenToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
         Me.ErsetzenToolStripMenuItem.Text = "Ersetzen"
         '
         'CMSObjekteExport
         '
         Me.CMSObjekteExport.Name = "CMSObjekteExport"
-        Me.CMSObjekteExport.Size = New System.Drawing.Size(148, 22)
+        Me.CMSObjekteExport.Size = New System.Drawing.Size(155, 22)
         Me.CMSObjekteExport.Text = "Exportieren"
         '
         'ToolStripMenuItem4
         '
         Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
-        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(145, 6)
+        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(152, 6)
         '
         'CMSObjekteEntfernen
         '
         Me.CMSObjekteEntfernen.Name = "CMSObjekteEntfernen"
-        Me.CMSObjekteEntfernen.Size = New System.Drawing.Size(148, 22)
-        Me.CMSObjekteEntfernen.Text = "Entfernen"
+        Me.CMSObjekteEntfernen.Size = New System.Drawing.Size(155, 22)
+        Me.CMSObjekteEntfernen.Text = "Datei entfernen"
         '
         'ToolStripMenuItem16
         '
         Me.ToolStripMenuItem16.Name = "ToolStripMenuItem16"
-        Me.ToolStripMenuItem16.Size = New System.Drawing.Size(145, 6)
+        Me.ToolStripMenuItem16.Size = New System.Drawing.Size(152, 6)
         '
         'EigenschaftenToolStripMenuItem1
         '
         Me.EigenschaftenToolStripMenuItem1.Name = "EigenschaftenToolStripMenuItem1"
-        Me.EigenschaftenToolStripMenuItem1.Size = New System.Drawing.Size(148, 22)
+        Me.EigenschaftenToolStripMenuItem1.Size = New System.Drawing.Size(155, 22)
         Me.EigenschaftenToolStripMenuItem1.Text = "Eigenschaften"
         '
         'TCObjektePHelfer
@@ -3823,25 +3825,25 @@ Partial Class Frm_Main
         '
         Me.CMSHelfer.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NeuToolStripMenuItem1, Me.DuplizierenToolStripMenuItem, Me.EntfernenToolStripMenuItem})
         Me.CMSHelfer.Name = "CMSHelfer"
-        Me.CMSHelfer.Size = New System.Drawing.Size(134, 70)
+        Me.CMSHelfer.Size = New System.Drawing.Size(181, 92)
         '
         'NeuToolStripMenuItem1
         '
         Me.NeuToolStripMenuItem1.Name = "NeuToolStripMenuItem1"
-        Me.NeuToolStripMenuItem1.Size = New System.Drawing.Size(133, 22)
+        Me.NeuToolStripMenuItem1.Size = New System.Drawing.Size(180, 22)
         Me.NeuToolStripMenuItem1.Text = "Neu"
         '
         'DuplizierenToolStripMenuItem
         '
         Me.DuplizierenToolStripMenuItem.Enabled = False
         Me.DuplizierenToolStripMenuItem.Name = "DuplizierenToolStripMenuItem"
-        Me.DuplizierenToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.DuplizierenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.DuplizierenToolStripMenuItem.Text = "Duplizieren"
         '
         'EntfernenToolStripMenuItem
         '
         Me.EntfernenToolStripMenuItem.Name = "EntfernenToolStripMenuItem"
-        Me.EntfernenToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.EntfernenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.EntfernenToolStripMenuItem.Text = "Entfernen"
         '
         'TCObjektePLichter
@@ -3983,6 +3985,12 @@ Partial Class Frm_Main
         '
         'BWSortMeshes
         '
+        '
+        'DateiLöschenToolStripMenuItem
+        '
+        Me.DateiLöschenToolStripMenuItem.Name = "DateiLöschenToolStripMenuItem"
+        Me.DateiLöschenToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.DateiLöschenToolStripMenuItem.Text = "Datei löschen"
         '
         'VarSelector1
         '
@@ -4606,4 +4614,5 @@ Partial Class Frm_Main
     Friend WithEvents MitOriginalVergleichenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Kuppl_LBHeck As Label
     Friend WithEvents Kuppl_LBFront As Label
+    Friend WithEvents DateiLöschenToolStripMenuItem As ToolStripMenuItem
 End Class

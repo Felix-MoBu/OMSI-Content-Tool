@@ -39,7 +39,7 @@ Partial Class Frm_Neu
         Me.LBHersteller = New System.Windows.Forms.Label()
         Me.CBTyp = New System.Windows.Forms.ComboBox()
         Me.CBHersteller = New System.Windows.Forms.ComboBox()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.BTTestName = New System.Windows.Forms.Button()
         Me.GBAblageort = New System.Windows.Forms.GroupBox()
         Me.BTDurchsuchen = New System.Windows.Forms.Button()
         Me.BTErstellen = New System.Windows.Forms.Button()
@@ -154,7 +154,7 @@ Partial Class Frm_Neu
         Me.GroupBox2.Controls.Add(Me.LBHersteller)
         Me.GroupBox2.Controls.Add(Me.CBTyp)
         Me.GroupBox2.Controls.Add(Me.CBHersteller)
-        Me.GroupBox2.Controls.Add(Me.Button1)
+        Me.GroupBox2.Controls.Add(Me.BTTestName)
         Me.GroupBox2.Location = New System.Drawing.Point(12, 175)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(545, 100)
@@ -215,14 +215,15 @@ Partial Class Frm_Neu
         Me.CBHersteller.Sorted = True
         Me.CBHersteller.TabIndex = 7
         '
-        'Button1
+        'BTTestName
         '
-        Me.Button1.Location = New System.Drawing.Point(450, 71)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(89, 23)
-        Me.Button1.TabIndex = 6
-        Me.Button1.Text = "Testen"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.BTTestName.Enabled = False
+        Me.BTTestName.Location = New System.Drawing.Point(450, 71)
+        Me.BTTestName.Name = "BTTestName"
+        Me.BTTestName.Size = New System.Drawing.Size(89, 23)
+        Me.BTTestName.TabIndex = 6
+        Me.BTTestName.Text = "Testen"
+        Me.BTTestName.UseVisualStyleBackColor = True
         '
         'GBAblageort
         '
@@ -309,7 +310,7 @@ Partial Class Frm_Neu
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents GroupBox2 As GroupBox
     Friend WithEvents GBAblageort As GroupBox
-    Friend WithEvents Button1 As Button
+    Friend WithEvents BTTestName As Button
     Friend WithEvents BTDurchsuchen As Button
     Friend WithEvents BTErstellen As Button
     Friend WithEvents BTAbbrechen As Button

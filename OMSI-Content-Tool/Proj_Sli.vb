@@ -215,7 +215,7 @@ Public Class Proj_Sli
         End If
     End Sub
 
-    Public Sub SaveFile()
+    Public Sub Save()
         If filename = "" Then
             Log.Add("Kein Speicherort für Bus-Datei festgelegt!", Log.TYPE_ERROR)
             Exit Sub
@@ -235,7 +235,7 @@ Public Class Proj_Sli
                 .Add(halfcantwidth, True)
             End If
 
-            If length <> 10 Then
+            If length > 0 Then
                 .Add("[length]")
                 .Add(length, True)
             End If

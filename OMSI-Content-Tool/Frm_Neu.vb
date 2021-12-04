@@ -63,6 +63,7 @@ Public Class Frm_Neu
 
     Private Sub BTDurchsuchen_Click(sender As Object, e As EventArgs) Handles BTDurchsuchen.Click
         Dim fd As New FolderBrowserDialog
+        fd.SelectedPath = TBSpeicherort.Text
         If fd.ShowDialog Then
             TBSpeicherort.Text = fd.SelectedPath
         End If
@@ -140,12 +141,14 @@ Public Class Frm_Neu
 
         Proj_temp.filename = New Filename(TBName.Text, TBSpeicherort.Text)
         Frm_Main.ProjNew(Proj_temp)
+        Frm_Main.addProjectlist(Proj_temp.filename.ToString)
 
         Frm_Main.EigenschaftenToolStripMenuItem_Click(New Object, Nothing)
 
 
         Frm_Main.Text = TBName.Text & " - " & My.Application.Info.Title
         Frm_Main.SpeichernToolStripMenuItem.Enabled = True
+
         Me.Close()
     End Sub
 
@@ -171,4 +174,5 @@ Public Class Frm_Neu
             If Split(TBName.Text, ".")(0) = "_" Then TBName.Text = "." & Split(TBName.Text, ".")(1)
         End If
     End Sub
+
 End Class

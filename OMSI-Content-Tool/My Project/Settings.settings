@@ -51,7 +51,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="OmsiPfad" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Program Files (x86)\Steam\steamapps\common\OMSI 2</Value>
+      <Value Profile="(Default)">C:\Programme\Steam\steamapps\common\OMSI 2</Value>
     </Setting>
     <Setting Name="PEigenschaftenX" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">410</Value>
@@ -148,6 +148,15 @@
     </Setting>
     <Setting Name="ShowAlpha" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="nickname" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="fpsLimit" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">120</Value>
+    </Setting>
+    <Setting Name="Einstellung" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

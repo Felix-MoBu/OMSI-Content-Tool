@@ -22,13 +22,18 @@ Partial Class Frm_Eig_Mesh
     'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Eig_Mesh))
         Me.LBLabels = New System.Windows.Forms.ListBox()
         Me.LBProps = New System.Windows.Forms.ListBox()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.KopierenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'LBLabels
         '
+        Me.LBLabels.ContextMenuStrip = Me.ContextMenuStrip1
         Me.LBLabels.FormattingEnabled = True
         Me.LBLabels.Location = New System.Drawing.Point(12, 12)
         Me.LBLabels.Name = "LBLabels"
@@ -37,11 +42,25 @@ Partial Class Frm_Eig_Mesh
         '
         'LBProps
         '
+        Me.LBProps.ContextMenuStrip = Me.ContextMenuStrip1
         Me.LBProps.FormattingEnabled = True
         Me.LBProps.Location = New System.Drawing.Point(158, 12)
         Me.LBProps.Name = "LBProps"
         Me.LBProps.Size = New System.Drawing.Size(165, 433)
         Me.LBProps.TabIndex = 1
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.KopierenToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 26)
+        '
+        'KopierenToolStripMenuItem
+        '
+        Me.KopierenToolStripMenuItem.Name = "KopierenToolStripMenuItem"
+        Me.KopierenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
+        Me.KopierenToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+        Me.KopierenToolStripMenuItem.Text = "Wert kopieren"
         '
         'Frm_Eig_Mesh
         '
@@ -54,10 +73,13 @@ Partial Class Frm_Eig_Mesh
         Me.MaximizeBox = False
         Me.Name = "Frm_Eig_Mesh"
         Me.Text = "Mesh Eigenschaften"
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents LBLabels As ListBox
     Friend WithEvents LBProps As ListBox
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents KopierenToolStripMenuItem As ToolStripMenuItem
 End Class

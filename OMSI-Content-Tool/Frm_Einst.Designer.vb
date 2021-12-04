@@ -31,6 +31,8 @@ Partial Class Frm_Einst
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.TBNickname = New System.Windows.Forms.TextBox()
+        Me.Label20 = New System.Windows.Forms.Label()
         Me.TBCreatorID = New System.Windows.Forms.TextBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.BTEinstReset = New System.Windows.Forms.Button()
@@ -69,6 +71,19 @@ Partial Class Frm_Einst
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TBColorDriverCam = New System.Windows.Forms.TextBox()
+        Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.TBX3dScale = New System.Windows.Forms.TextBox()
+        Me.DDX3dUp = New System.Windows.Forms.ComboBox()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.GroupBox8 = New System.Windows.Forms.GroupBox()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.DDXUp = New System.Windows.Forms.ComboBox()
+        Me.TBXScale = New System.Windows.Forms.TextBox()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.GroupBox7 = New System.Windows.Forms.GroupBox()
+        Me.CBO3dRemSpec = New System.Windows.Forms.CheckBox()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.BTAbmelden = New System.Windows.Forms.Button()
@@ -86,19 +101,9 @@ Partial Class Frm_Einst
         Me.CDColorAchsen = New System.Windows.Forms.ColorDialog()
         Me.BTEinstExp = New System.Windows.Forms.Button()
         Me.BTEinstImport = New System.Windows.Forms.Button()
-        Me.TabPage5 = New System.Windows.Forms.TabPage()
-        Me.GroupBox7 = New System.Windows.Forms.GroupBox()
-        Me.GroupBox8 = New System.Windows.Forms.GroupBox()
-        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.TBXScale = New System.Windows.Forms.TextBox()
-        Me.CBO3dRemSpec = New System.Windows.Forms.CheckBox()
-        Me.DDXUp = New System.Windows.Forms.ComboBox()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.DDX3dUp = New System.Windows.Forms.ComboBox()
-        Me.TBX3dScale = New System.Windows.Forms.TextBox()
-        Me.Label19 = New System.Windows.Forms.Label()
+        Me.GBPerformance = New System.Windows.Forms.GroupBox()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.TBMaxFPS = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -108,12 +113,13 @@ Partial Class Frm_Einst
         Me.TabPage3.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        Me.TabPage5.SuspendLayout()
+        Me.GroupBox9.SuspendLayout()
+        Me.GroupBox8.SuspendLayout()
+        Me.GroupBox7.SuspendLayout()
         Me.TabPage4.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
-        Me.TabPage5.SuspendLayout()
-        Me.GroupBox7.SuspendLayout()
-        Me.GroupBox8.SuspendLayout()
-        Me.GroupBox9.SuspendLayout()
+        Me.GBPerformance.SuspendLayout()
         Me.SuspendLayout()
         '
         'OBUebernehmen
@@ -189,6 +195,8 @@ Partial Class Frm_Einst
         '
         'GroupBox6
         '
+        Me.GroupBox6.Controls.Add(Me.TBNickname)
+        Me.GroupBox6.Controls.Add(Me.Label20)
         Me.GroupBox6.Controls.Add(Me.TBCreatorID)
         Me.GroupBox6.Controls.Add(Me.Label15)
         Me.GroupBox6.Location = New System.Drawing.Point(8, 162)
@@ -197,6 +205,22 @@ Partial Class Frm_Einst
         Me.GroupBox6.TabIndex = 8
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Content-Management"
+        '
+        'TBNickname
+        '
+        Me.TBNickname.Location = New System.Drawing.Point(67, 45)
+        Me.TBNickname.Name = "TBNickname"
+        Me.TBNickname.Size = New System.Drawing.Size(124, 20)
+        Me.TBNickname.TabIndex = 3
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Location = New System.Drawing.Point(6, 48)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(55, 13)
+        Me.Label20.TabIndex = 2
+        Me.Label20.Text = "Nickname"
         '
         'TBCreatorID
         '
@@ -367,6 +391,7 @@ Partial Class Frm_Einst
         '
         'TabPage3
         '
+        Me.TabPage3.Controls.Add(Me.GBPerformance)
         Me.TabPage3.Controls.Add(Me.GroupBox4)
         Me.TabPage3.Controls.Add(Me.TBColor3D)
         Me.TabPage3.Controls.Add(Me.Label5)
@@ -574,6 +599,137 @@ Partial Class Frm_Einst
         Me.TBColorDriverCam.Size = New System.Drawing.Size(100, 20)
         Me.TBColorDriverCam.TabIndex = 0
         '
+        'TabPage5
+        '
+        Me.TabPage5.Controls.Add(Me.GroupBox9)
+        Me.TabPage5.Controls.Add(Me.GroupBox8)
+        Me.TabPage5.Controls.Add(Me.GroupBox7)
+        Me.TabPage5.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage5.Name = "TabPage5"
+        Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage5.Size = New System.Drawing.Size(646, 324)
+        Me.TabPage5.TabIndex = 4
+        Me.TabPage5.Text = "3D-Formate"
+        Me.TabPage5.UseVisualStyleBackColor = True
+        '
+        'GroupBox9
+        '
+        Me.GroupBox9.Controls.Add(Me.Label18)
+        Me.GroupBox9.Controls.Add(Me.TBX3dScale)
+        Me.GroupBox9.Controls.Add(Me.DDX3dUp)
+        Me.GroupBox9.Controls.Add(Me.Label19)
+        Me.GroupBox9.Location = New System.Drawing.Point(400, 6)
+        Me.GroupBox9.Name = "GroupBox9"
+        Me.GroupBox9.Size = New System.Drawing.Size(190, 315)
+        Me.GroupBox9.TabIndex = 2
+        Me.GroupBox9.TabStop = False
+        Me.GroupBox9.Text = "X3D"
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(6, 48)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(54, 13)
+        Me.Label18.TabIndex = 6
+        Me.Label18.Text = "Up-Achse"
+        '
+        'TBX3dScale
+        '
+        Me.TBX3dScale.Location = New System.Drawing.Point(84, 19)
+        Me.TBX3dScale.Name = "TBX3dScale"
+        Me.TBX3dScale.Size = New System.Drawing.Size(100, 20)
+        Me.TBX3dScale.TabIndex = 5
+        Me.TBX3dScale.Text = "1"
+        '
+        'DDX3dUp
+        '
+        Me.DDX3dUp.FormattingEnabled = True
+        Me.DDX3dUp.Items.AddRange(New Object() {"X", "Y", "Z"})
+        Me.DDX3dUp.Location = New System.Drawing.Point(84, 45)
+        Me.DDX3dUp.Name = "DDX3dUp"
+        Me.DDX3dUp.Size = New System.Drawing.Size(100, 21)
+        Me.DDX3dUp.TabIndex = 4
+        Me.DDX3dUp.Text = "Z"
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Location = New System.Drawing.Point(6, 22)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(57, 13)
+        Me.Label19.TabIndex = 3
+        Me.Label19.Text = "Skalierung"
+        '
+        'GroupBox8
+        '
+        Me.GroupBox8.Controls.Add(Me.Label17)
+        Me.GroupBox8.Controls.Add(Me.DDXUp)
+        Me.GroupBox8.Controls.Add(Me.TBXScale)
+        Me.GroupBox8.Controls.Add(Me.Label16)
+        Me.GroupBox8.Location = New System.Drawing.Point(204, 6)
+        Me.GroupBox8.Name = "GroupBox8"
+        Me.GroupBox8.Size = New System.Drawing.Size(190, 315)
+        Me.GroupBox8.TabIndex = 1
+        Me.GroupBox8.TabStop = False
+        Me.GroupBox8.Text = "X"
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(6, 48)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(54, 13)
+        Me.Label17.TabIndex = 2
+        Me.Label17.Text = "Up-Achse"
+        '
+        'DDXUp
+        '
+        Me.DDXUp.FormattingEnabled = True
+        Me.DDXUp.Items.AddRange(New Object() {"X", "Y", "Z"})
+        Me.DDXUp.Location = New System.Drawing.Point(84, 45)
+        Me.DDXUp.Name = "DDXUp"
+        Me.DDXUp.Size = New System.Drawing.Size(100, 21)
+        Me.DDXUp.TabIndex = 1
+        Me.DDXUp.Text = "Z"
+        '
+        'TBXScale
+        '
+        Me.TBXScale.Location = New System.Drawing.Point(84, 19)
+        Me.TBXScale.Name = "TBXScale"
+        Me.TBXScale.Size = New System.Drawing.Size(100, 20)
+        Me.TBXScale.TabIndex = 1
+        Me.TBXScale.Text = "1"
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(6, 22)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(57, 13)
+        Me.Label16.TabIndex = 0
+        Me.Label16.Text = "Skalierung"
+        '
+        'GroupBox7
+        '
+        Me.GroupBox7.Controls.Add(Me.CBO3dRemSpec)
+        Me.GroupBox7.Location = New System.Drawing.Point(8, 6)
+        Me.GroupBox7.Name = "GroupBox7"
+        Me.GroupBox7.Size = New System.Drawing.Size(190, 315)
+        Me.GroupBox7.TabIndex = 0
+        Me.GroupBox7.TabStop = False
+        Me.GroupBox7.Text = "O3D"
+        '
+        'CBO3dRemSpec
+        '
+        Me.CBO3dRemSpec.AutoSize = True
+        Me.CBO3dRemSpec.Location = New System.Drawing.Point(6, 21)
+        Me.CBO3dRemSpec.Name = "CBO3dRemSpec"
+        Me.CBO3dRemSpec.Size = New System.Drawing.Size(111, 17)
+        Me.CBO3dRemSpec.TabIndex = 0
+        Me.CBO3dRemSpec.Text = "Remove Specular"
+        Me.CBO3dRemSpec.UseVisualStyleBackColor = True
+        '
         'TabPage4
         '
         Me.TabPage4.Controls.Add(Me.GroupBox2)
@@ -683,136 +839,32 @@ Partial Class Frm_Einst
         Me.BTEinstImport.Text = "Einst. Import"
         Me.BTEinstImport.UseVisualStyleBackColor = True
         '
-        'TabPage5
+        'GBPerformance
         '
-        Me.TabPage5.Controls.Add(Me.GroupBox9)
-        Me.TabPage5.Controls.Add(Me.GroupBox8)
-        Me.TabPage5.Controls.Add(Me.GroupBox7)
-        Me.TabPage5.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage5.Name = "TabPage5"
-        Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(646, 324)
-        Me.TabPage5.TabIndex = 4
-        Me.TabPage5.Text = "3D-Formate"
-        Me.TabPage5.UseVisualStyleBackColor = True
+        Me.GBPerformance.Controls.Add(Me.Label21)
+        Me.GBPerformance.Controls.Add(Me.TBMaxFPS)
+        Me.GBPerformance.Location = New System.Drawing.Point(8, 224)
+        Me.GBPerformance.Name = "GBPerformance"
+        Me.GBPerformance.Size = New System.Drawing.Size(251, 56)
+        Me.GBPerformance.TabIndex = 8
+        Me.GBPerformance.TabStop = False
+        Me.GBPerformance.Text = "Performance"
         '
-        'GroupBox7
+        'Label21
         '
-        Me.GroupBox7.Controls.Add(Me.CBO3dRemSpec)
-        Me.GroupBox7.Location = New System.Drawing.Point(8, 6)
-        Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.Size = New System.Drawing.Size(190, 315)
-        Me.GroupBox7.TabIndex = 0
-        Me.GroupBox7.TabStop = False
-        Me.GroupBox7.Text = "O3D"
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(9, 22)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(73, 13)
+        Me.Label21.TabIndex = 0
+        Me.Label21.Text = "maximale FPS"
         '
-        'GroupBox8
+        'TBMaxFPS
         '
-        Me.GroupBox8.Controls.Add(Me.Label17)
-        Me.GroupBox8.Controls.Add(Me.DDXUp)
-        Me.GroupBox8.Controls.Add(Me.TBXScale)
-        Me.GroupBox8.Controls.Add(Me.Label16)
-        Me.GroupBox8.Location = New System.Drawing.Point(204, 6)
-        Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.Size = New System.Drawing.Size(190, 315)
-        Me.GroupBox8.TabIndex = 1
-        Me.GroupBox8.TabStop = False
-        Me.GroupBox8.Text = "X"
-        '
-        'GroupBox9
-        '
-        Me.GroupBox9.Controls.Add(Me.Label18)
-        Me.GroupBox9.Controls.Add(Me.TBX3dScale)
-        Me.GroupBox9.Controls.Add(Me.DDX3dUp)
-        Me.GroupBox9.Controls.Add(Me.Label19)
-        Me.GroupBox9.Location = New System.Drawing.Point(400, 6)
-        Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(190, 315)
-        Me.GroupBox9.TabIndex = 2
-        Me.GroupBox9.TabStop = False
-        Me.GroupBox9.Text = "X3D"
-        '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(6, 22)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(57, 13)
-        Me.Label16.TabIndex = 0
-        Me.Label16.Text = "Skalierung"
-        '
-        'TBXScale
-        '
-        Me.TBXScale.Location = New System.Drawing.Point(84, 19)
-        Me.TBXScale.Name = "TBXScale"
-        Me.TBXScale.Size = New System.Drawing.Size(100, 20)
-        Me.TBXScale.TabIndex = 1
-        Me.TBXScale.Text = "1"
-        '
-        'CBO3dRemSpec
-        '
-        Me.CBO3dRemSpec.AutoSize = True
-        Me.CBO3dRemSpec.Location = New System.Drawing.Point(6, 21)
-        Me.CBO3dRemSpec.Name = "CBO3dRemSpec"
-        Me.CBO3dRemSpec.Size = New System.Drawing.Size(111, 17)
-        Me.CBO3dRemSpec.TabIndex = 0
-        Me.CBO3dRemSpec.Text = "Remove Specular"
-        Me.CBO3dRemSpec.UseVisualStyleBackColor = True
-        '
-        'DDXUp
-        '
-        Me.DDXUp.FormattingEnabled = True
-        Me.DDXUp.Items.AddRange(New Object() {"X", "Y", "Z"})
-        Me.DDXUp.Location = New System.Drawing.Point(84, 45)
-        Me.DDXUp.Name = "DDXUp"
-        Me.DDXUp.Size = New System.Drawing.Size(100, 21)
-        Me.DDXUp.TabIndex = 1
-        Me.DDXUp.Text = "Z"
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(6, 48)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(54, 13)
-        Me.Label17.TabIndex = 2
-        Me.Label17.Text = "Up-Achse"
-        '
-        'Label18
-        '
-        Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(6, 48)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(54, 13)
-        Me.Label18.TabIndex = 6
-        Me.Label18.Text = "Up-Achse"
-        '
-        'DDX3dUp
-        '
-        Me.DDX3dUp.FormattingEnabled = True
-        Me.DDX3dUp.Items.AddRange(New Object() {"X", "Y", "Z"})
-        Me.DDX3dUp.Location = New System.Drawing.Point(84, 45)
-        Me.DDX3dUp.Name = "DDX3dUp"
-        Me.DDX3dUp.Size = New System.Drawing.Size(100, 21)
-        Me.DDX3dUp.TabIndex = 4
-        Me.DDX3dUp.Text = "Z"
-        '
-        'TBX3dScale
-        '
-        Me.TBX3dScale.Location = New System.Drawing.Point(84, 19)
-        Me.TBX3dScale.Name = "TBX3dScale"
-        Me.TBX3dScale.Size = New System.Drawing.Size(100, 20)
-        Me.TBX3dScale.TabIndex = 5
-        Me.TBX3dScale.Text = "1"
-        '
-        'Label19
-        '
-        Me.Label19.AutoSize = True
-        Me.Label19.Location = New System.Drawing.Point(6, 22)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(57, 13)
-        Me.Label19.TabIndex = 3
-        Me.Label19.Text = "Skalierung"
+        Me.TBMaxFPS.Location = New System.Drawing.Point(139, 19)
+        Me.TBMaxFPS.Name = "TBMaxFPS"
+        Me.TBMaxFPS.Size = New System.Drawing.Size(100, 20)
+        Me.TBMaxFPS.TabIndex = 0
         '
         'Frm_Einst
         '
@@ -845,16 +897,18 @@ Partial Class Frm_Einst
         Me.GroupBox4.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        Me.TabPage5.ResumeLayout(False)
+        Me.GroupBox9.ResumeLayout(False)
+        Me.GroupBox9.PerformLayout()
+        Me.GroupBox8.ResumeLayout(False)
+        Me.GroupBox8.PerformLayout()
+        Me.GroupBox7.ResumeLayout(False)
+        Me.GroupBox7.PerformLayout()
         Me.TabPage4.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
-        Me.TabPage5.ResumeLayout(False)
-        Me.GroupBox7.ResumeLayout(False)
-        Me.GroupBox7.PerformLayout()
-        Me.GroupBox8.ResumeLayout(False)
-        Me.GroupBox8.PerformLayout()
-        Me.GroupBox9.ResumeLayout(False)
-        Me.GroupBox9.PerformLayout()
+        Me.GBPerformance.ResumeLayout(False)
+        Me.GBPerformance.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -935,4 +989,9 @@ Partial Class Frm_Einst
     Friend WithEvents Label19 As Label
     Friend WithEvents Label17 As Label
     Friend WithEvents DDXUp As ComboBox
+    Friend WithEvents TBNickname As TextBox
+    Friend WithEvents Label20 As Label
+    Friend WithEvents GBPerformance As GroupBox
+    Friend WithEvents Label21 As Label
+    Friend WithEvents TBMaxFPS As TextBox
 End Class

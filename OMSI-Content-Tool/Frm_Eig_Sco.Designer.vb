@@ -390,10 +390,10 @@ Partial Class Frm_Eig_Sco
         'CBNightMapMode
         '
         Me.CBNightMapMode.FormattingEnabled = True
-        Me.CBNightMapMode.Items.AddRange(New Object() {"wie Straßenbeleuchtung", "Gebäude mit durchgehender Beleuchtung", "Wohngebäude (nicht zwischen ungefähr 23 und 6 Uhr inkl. Variation)", "Gewerbegebäude (nicht zwischen ungefähr 18 und 7 Uhr inkl. Variation)", "Schule (nicht zwischen ungefähr 15 und 7 Uhr inkl. Variation)"})
+        Me.CBNightMapMode.Items.AddRange(New Object() {"wie Straßenbeleuchtung", "Gebäude mit durchgehender Beleuchtung", "Wohngebäude (nicht zwischen ca. 23 und 6 Uhr)", "Gewerbegebäude (nicht zwischen ca. 18 und 7 Uhr)", "Schule (nicht zwischen ca. 15 und 7 Uhr)"})
         Me.CBNightMapMode.Location = New System.Drawing.Point(106, 88)
         Me.CBNightMapMode.Name = "CBNightMapMode"
-        Me.CBNightMapMode.Size = New System.Drawing.Size(241, 21)
+        Me.CBNightMapMode.Size = New System.Drawing.Size(319, 21)
         Me.CBNightMapMode.TabIndex = 2
         '
         'Label3
