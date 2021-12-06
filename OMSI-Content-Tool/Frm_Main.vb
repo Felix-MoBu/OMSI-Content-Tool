@@ -2717,45 +2717,6 @@ Class Frm_Main
         End Try
     End Function
 
-    Dim idCanges As New Point
-    Private Sub BWSortMeshes_DoWork(sender As Object, e As DoWorkEventArgs) Handles BWSortMeshes.DoWork
-        If LBMeshes.Items.Count > 0 Then
-
-            If Not idCanges = New Point Or idCanges.Y = idCanges.Y Then
-                'Dim newMeshlist As New List(Of OMSI_Mesh)
-
-                If idCanges.X < idCanges.Y Then                 'nach oben sortieren
-                    For Each mesh In getProj.model.meshes
-                        If mesh.index > idCanges.X Then      'oberhalb der alten ID
-                            If mesh.index <= idCanges.Y Then      'unterhalb der neuen ID
-                                mesh.index -= 1
-                            End If
-                            'Sonst keine Veränderung
-                        End If
-
-                        If mesh.index = idCanges.X Then
-                            mesh.index = idCanges.Y
-                        End If
-                    Next
-                Else                                            'nach unten sortieren
-                    For i As Integer = 0 To getProj.model.meshes.count
-                        If i = idCanges.X Then      'alte ID
-
-                        End If
-
-                        If i = idCanges.Y Then      'neue ID
-
-                        End If
-                    Next
-                End If
-
-
-                'getProj.model.meshes = newMeshlist
-                idCanges = New Point
-            End If
-        End If
-    End Sub
-
     Private Sub LBMeshes_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBMeshes.SelectedIndexChanged
         selectedMeshesChanged = True
         If Not getSelectedMesh() Is Nothing Then
@@ -2900,17 +2861,17 @@ Class Frm_Main
         savePositions()
     End Sub
 
-    Private Sub LBPanelTexture_MouseDown(sender As Object, e As MouseEventArgs) Handles LBPanelTexture.MouseDown, MenuStrip1.MouseDown
+    Private Sub LBPanelTexture_MouseDown(sender As Object, e As MouseEventArgs) Handles LBPanelTexture.MouseDown, MSTexturen.MouseDown
         movePanelTexture = True
     End Sub
 
-    Private Sub LBPanelTexture_MouseUp(sender As Object, e As MouseEventArgs) Handles LBPanelTexture.MouseUp, MenuStrip1.MouseUp
+    Private Sub LBPanelTexture_MouseUp(sender As Object, e As MouseEventArgs) Handles LBPanelTexture.MouseUp, MSTexturen.MouseUp
         movePanelTexture = False
         checkPanelPosition(PanelTexture)
         savePositions()
     End Sub
 
-    Private Sub LBPanelTexture_MouseMove(sender As Object, e As MouseEventArgs) Handles LBPanelTexture.MouseMove, MenuStrip1.MouseMove
+    Private Sub LBPanelTexture_MouseMove(sender As Object, e As MouseEventArgs) Handles LBPanelTexture.MouseMove, MSTexturen.MouseMove
         If movePanelTexture Then
             Dim ctl As Control = CType(PanelTexture, Control)
             ctl.Location = PointToClient(Cursor.Position - New Point(ctl.Width \ 2, 30))
@@ -3422,7 +3383,7 @@ Class Frm_Main
                     mausPos2D = New Point(e.X + tempPos2D.X, e.Y + tempPos2D.Y)
                 End If
             End If
-            SSLBStatus.Text = (Math.Sin((mausPos2D.X - 225) / 180 * Math.PI) * -1)
+            'SSLBStatus.Text = (Math.Sin((mausPos2D.X - 225) / 180 * Math.PI) * -1)
             GlMain.Invalidate()
         End If
     End Sub
@@ -3814,7 +3775,7 @@ Class Frm_Main
                         For index As Integer = 0 To Projekt_Bus.driver_cam_list.Count - 1
                             With Projekt_Bus.driver_cam_list(index)
                                 If TVHelper.SelectedNode.FullPath.Contains("Fahrerkameras") And index = TVHelper.SelectedNode.Index Then
-                                    GL.Color3(Color.Orange)
+                                    GL.Color3(My.Settings.SelectionColor)
                                 Else
                                     GL.Color3(My.Settings.CamDriverColor)
                                 End If
@@ -3827,7 +3788,7 @@ Class Frm_Main
                         For index As Integer = 0 To Projekt_Bus.pax_cam_list.Count - 1
                             With Projekt_Bus.pax_cam_list(index)
                                 If TVHelper.SelectedNode.FullPath.Contains("Fahrgastkameras") And index = TVHelper.SelectedNode.Index Then
-                                    GL.Color3(Color.Orange)
+                                    GL.Color3(My.Settings.SelectionColor)
                                 Else
                                     GL.Color3(My.Settings.CamDriverColor)
                                 End If
@@ -3836,9 +3797,10 @@ Class Frm_Main
                             End With
                         Next
 
-                        GL.Color3(My.Settings.AchsenColor)
-                        For Each achse In Projekt_Bus.achsen
-                            With achse
+                        For i As Integer = 0 To Projekt_Bus.achsen.Count - 1
+                            GL.Color3(My.Settings.AchsenColor)
+                            If InStr(TVHelper.SelectedNode.FullPath, TVHelper.Nodes(0).Text & "\") And i = TVHelper.SelectedNode.Index Then GL.Color3(My.Settings.SelectionColor)
+                            With Projekt_Bus.achsen(i)
                                 GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                 GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
                             End With
@@ -3931,7 +3893,7 @@ Class Frm_Main
 
                                     For i = 0 To .dots.Count - 1
                                         If i = LBPfade.SelectedIndex Then
-                                            GL.Color3(Color.Orange)
+                                            GL.Color3(My.Settings.SelectionColor)
                                         ElseIf InStr(GBPfade.Tag, ";" & i & ";") Then
                                             GL.Color3(Color.Violet)
                                         Else
@@ -4011,7 +3973,7 @@ Class Frm_Main
                 If Not getSelectedMeshes() Is Nothing Then
                     For Each mesh In getSelectedMeshes()
                         If mesh.ObjIds.Contains(objekt.id) Then
-                            GL.Color3(Color.Orange)
+                            GL.Color3(My.Settings.SelectionColor)
                             GL.LineWidth(2)
                             GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
                             GL.LineWidth(1)

@@ -14,7 +14,9 @@ Public Class Frm_Sounds
     End Sub
 
     Private Sub LBGruppen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBGruppen.SelectedIndexChanged
-        LBDateien.Items.Clear()
-        LBDateien.Items.AddRange(Frm_Main.getProj.paths.soundpacks(LBGruppen.SelectedIndex).toarray)
+        If LBGruppen.SelectedIndex > -1 Then
+            LBDateien.Items.Clear()
+            LBDateien.Items.AddRange(Frm_Main.getProj.paths.soundpacks(LBGruppen.SelectedIndex).toarray)
+        End If
     End Sub
 End Class

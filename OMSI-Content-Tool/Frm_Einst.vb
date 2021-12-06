@@ -39,6 +39,7 @@ Public Class Frm_Einst
             .PassColor = TBColorPassengers.BackColor
             .DriverColor = TBColorDriver.BackColor
             .AchsenColor = TBColorAchsen.BackColor
+            .SelectionColor = TBColorSelectedObj.BackColor
 
             .fpsLimit = Convert.ToInt32(TBMaxFPS.Text)
 
@@ -85,6 +86,7 @@ Public Class Frm_Einst
             TBColorDriver.BackColor = .DriverColor
             TBColorPassengers.BackColor = .PassColor
             TBColorAchsen.BackColor = .AchsenColor
+            TBColorSelectedObj.BackColor = .SelectionColor
             TBMaxFPS.Text = Convert.ToString(.fpsLimit)
 
             'Page 3D-Formate
@@ -134,10 +136,7 @@ Public Class Frm_Einst
     End Sub
 
     Private Sub TBColorDriverCam_Click(sender As Object, e As EventArgs) Handles TBColorDriverCam.Click
-        CDCamDriver.Color = TBColorDriverCam.BackColor
-        If CDCamDriver.ShowDialog = DialogResult.OK Then
-            TBColorDriverCam.BackColor = CDCamDriver.Color
-        End If
+        colorSelect(TBColorDriverCam)
     End Sub
 
     Private Sub TBColorDriverCam_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBColorDriverCam.KeyPress
@@ -145,10 +144,7 @@ Public Class Frm_Einst
     End Sub
 
     Private Sub TBColorPaxCam_Click(sender As Object, e As EventArgs) Handles TBColorPaxCam.Click
-        CDCamPax.Color = TBColorPaxCam.BackColor
-        If CDCamPax.ShowDialog = DialogResult.OK Then
-            TBColorPaxCam.BackColor = CDCamPax.Color
-        End If
+        colorSelect(TBColorPaxCam)
     End Sub
 
     Private Sub TBColorPaxCam_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBColorPaxCam.KeyPress
@@ -156,10 +152,7 @@ Public Class Frm_Einst
     End Sub
 
     Private Sub TBColorReflexCam_Click(sender As Object, e As EventArgs) Handles TBColorReflexCam.Click
-        CDCamReflex.Color = TBColorReflexCam.BackColor
-        If CDCamReflex.ShowDialog = DialogResult.OK Then
-            TBColorReflexCam.BackColor = CDCamReflex.Color
-        End If
+        colorSelect(TBColorReflexCam)
     End Sub
 
     Private Sub TBColorReflexCam_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBColorReflexCam.KeyPress
@@ -167,10 +160,7 @@ Public Class Frm_Einst
     End Sub
 
     Private Sub TBColor3D_Click(sender As Object, e As EventArgs) Handles TBColor3D.Click
-        CDColor3D.Color = TBColor3D.BackColor
-        If CDColor3D.ShowDialog = DialogResult.OK Then
-            TBColor3D.BackColor = CDColor3D.Color
-        End If
+        colorSelect(TBColor3D)
     End Sub
 
     Private Sub TBColor3D_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBColor3D.KeyPress
@@ -178,10 +168,7 @@ Public Class Frm_Einst
     End Sub
 
     Private Sub TBColorPassengers_Click(sender As Object, e As EventArgs) Handles TBColorPassengers.Click
-        CDColorPassenger.Color = TBColorPassengers.BackColor
-        If CDColorPassenger.ShowDialog = DialogResult.OK Then
-            TBColorPassengers.BackColor = CDColorPassenger.Color
-        End If
+        colorSelect(TBColorPassengers)
     End Sub
 
     Private Sub TBColorPassengers_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBColorPassengers.KeyPress
@@ -189,14 +176,27 @@ Public Class Frm_Einst
     End Sub
 
     Private Sub TBColorDriver_Click(sender As Object, e As EventArgs) Handles TBColorDriver.Click
-        CDColorDriver.Color = TBColorDriver.BackColor
-        If CDColorDriver.ShowDialog = DialogResult.OK Then
-            TBColorDriver.BackColor = CDColorDriver.Color
-        End If
+        colorSelect(TBColorDriver)
     End Sub
 
     Private Sub TBColorDriver_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBColorDriver.KeyPress
         e.Handled = True
+    End Sub
+
+    Private Sub TBColorSelectedObj_Click(sender As Object, e As EventArgs) Handles TBColorSelectedObj.Click
+        colorSelect(TBColorSelectedObj)
+    End Sub
+
+    Private Sub TBColorSelectedObj_Keypress(sender As Object, e As KeyPressEventArgs) Handles TBColorSelectedObj.KeyPress
+        e.Handled = True
+    End Sub
+
+    Private Sub colorSelect(ByRef sender As TextBox)
+        Dim cd As New ColorDialog
+        cd.Color = sender.BackColor
+        If cd.ShowDialog = DialogResult.OK Then
+            sender.BackColor = cd.Color
+        End If
     End Sub
 
 
@@ -331,5 +331,9 @@ Public Class Frm_Einst
         If TBCreatorID.Text.Length >= 8 Then
             e.Handled = True
         End If
+    End Sub
+
+    Private Sub TBMaxFPS_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBMaxFPS.KeyPress
+        e.Handled = helper.NumbersOnly(e, TBMaxFPS, , 0, 1000)
     End Sub
 End Class

@@ -390,7 +390,7 @@ Partial Class Frm_Main
         Me.PanelTextureFill = New System.Windows.Forms.Button()
         Me.LBPanelTexture = New System.Windows.Forms.Label()
         Me.BTPanelTextureClose = New System.Windows.Forms.Button()
-        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.MSTexturen = New System.Windows.Forms.MenuStrip()
         Me.AnsichtToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.FrühlingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SommernormalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -415,6 +415,7 @@ Partial Class Frm_Main
         Me.CMSObjekteExport = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripSeparator()
         Me.CMSObjekteEntfernen = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DateiLöschenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem16 = New System.Windows.Forms.ToolStripSeparator()
         Me.EigenschaftenToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.TCObjektePHelfer = New System.Windows.Forms.TabPage()
@@ -441,10 +442,7 @@ Partial Class Frm_Main
         Me.EntfernenToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
         Me.GlMain = New OpenTK.GLControl()
         Me.FDÖffnen = New System.Windows.Forms.OpenFileDialog()
-        Me.FD2 = New System.Windows.Forms.OpenFileDialog()
         Me.TSave = New System.Windows.Forms.Timer(Me.components)
-        Me.BWSortMeshes = New System.ComponentModel.BackgroundWorker()
-        Me.DateiLöschenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VarSelector1 = New O3D_Test.VarSelector()
         Me.PointSelector2 = New O3D_Test.PointSelector()
         Me.BBox_PSSize = New O3D_Test.PointSelector()
@@ -487,7 +485,7 @@ Partial Class Frm_Main
         Me.GBAnimation.SuspendLayout()
         Me.PanelTexture.SuspendLayout()
         CType(Me.PBTexture, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.MenuStrip1.SuspendLayout()
+        Me.MSTexturen.SuspendLayout()
         Me.PanelObjekte.SuspendLayout()
         Me.TCObjekte.SuspendLayout()
         Me.TCObjektePMeshes.SuspendLayout()
@@ -634,6 +632,7 @@ Partial Class Frm_Main
         'RarArchivToolStripMenuItem
         '
         Me.RarArchivToolStripMenuItem.Name = "RarArchivToolStripMenuItem"
+        Me.RarArchivToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
         Me.RarArchivToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
         Me.RarArchivToolStripMenuItem.Text = "*.rar Archiv"
         '
@@ -676,50 +675,54 @@ Partial Class Frm_Main
         '
         Me.SuchenToolStripMenuItem.Name = "SuchenToolStripMenuItem"
         Me.SuchenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.F), System.Windows.Forms.Keys)
-        Me.SuchenToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.SuchenToolStripMenuItem.Size = New System.Drawing.Size(273, 22)
         Me.SuchenToolStripMenuItem.Text = "Suchen"
         '
         'ToolStripMenuItem18
         '
         Me.ToolStripMenuItem18.Name = "ToolStripMenuItem18"
-        Me.ToolStripMenuItem18.Size = New System.Drawing.Size(152, 6)
+        Me.ToolStripMenuItem18.Size = New System.Drawing.Size(270, 6)
         '
         'EigenschaftenToolStripMenuItem
         '
         Me.EigenschaftenToolStripMenuItem.Name = "EigenschaftenToolStripMenuItem"
-        Me.EigenschaftenToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.EigenschaftenToolStripMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
+            Or System.Windows.Forms.Keys.E), System.Windows.Forms.Keys)
+        Me.EigenschaftenToolStripMenuItem.Size = New System.Drawing.Size(273, 22)
         Me.EigenschaftenToolStripMenuItem.Text = "Eigenschaften"
         '
         'TextToolStripMenuItem
         '
         Me.TextToolStripMenuItem.Name = "TextToolStripMenuItem"
-        Me.TextToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.TextToolStripMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
+            Or System.Windows.Forms.Keys.T), System.Windows.Forms.Keys)
+        Me.TextToolStripMenuItem.Size = New System.Drawing.Size(273, 22)
         Me.TextToolStripMenuItem.Text = "Text-Texturen"
         '
         'ToolStripMenuItem13
         '
         Me.ToolStripMenuItem13.Name = "ToolStripMenuItem13"
-        Me.ToolStripMenuItem13.Size = New System.Drawing.Size(152, 6)
+        Me.ToolStripMenuItem13.Size = New System.Drawing.Size(270, 6)
         '
         'AmpelphaseToolStripMenuItem
         '
         Me.AmpelphaseToolStripMenuItem.Enabled = False
         Me.AmpelphaseToolStripMenuItem.Name = "AmpelphaseToolStripMenuItem"
-        Me.AmpelphaseToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.AmpelphaseToolStripMenuItem.Size = New System.Drawing.Size(273, 22)
         Me.AmpelphaseToolStripMenuItem.Text = "Ampelphasen"
         '
         'HofDateienToolStripMenuItem
         '
         Me.HofDateienToolStripMenuItem.Enabled = False
         Me.HofDateienToolStripMenuItem.Name = "HofDateienToolStripMenuItem"
-        Me.HofDateienToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.HofDateienToolStripMenuItem.Size = New System.Drawing.Size(273, 22)
         Me.HofDateienToolStripMenuItem.Text = "Hof-Dateien"
         '
         'RepaintToolStripMenuItem
         '
         Me.RepaintToolStripMenuItem.Enabled = False
         Me.RepaintToolStripMenuItem.Name = "RepaintToolStripMenuItem"
-        Me.RepaintToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.RepaintToolStripMenuItem.Size = New System.Drawing.Size(273, 22)
         Me.RepaintToolStripMenuItem.Text = "Repaints"
         '
         'AnsichtToolStripMenuItem
@@ -896,14 +899,14 @@ Partial Class Frm_Main
         '
         Me.EntfernenToolStripMenuItem2.Name = "EntfernenToolStripMenuItem2"
         Me.EntfernenToolStripMenuItem2.ShortcutKeys = System.Windows.Forms.Keys.Delete
-        Me.EntfernenToolStripMenuItem2.Size = New System.Drawing.Size(175, 22)
+        Me.EntfernenToolStripMenuItem2.Size = New System.Drawing.Size(180, 22)
         Me.EntfernenToolStripMenuItem2.Text = "Entfernen"
         '
         'VersteckenToolStripMenuItem
         '
         Me.VersteckenToolStripMenuItem.Name = "VersteckenToolStripMenuItem"
         Me.VersteckenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.H), System.Windows.Forms.Keys)
-        Me.VersteckenToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.VersteckenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.VersteckenToolStripMenuItem.Text = "Verstecken"
         '
         'DevelopmentToolStripMenuItem
@@ -938,6 +941,7 @@ Partial Class Frm_Main
         '
         'StatistikToolStripMenuItem
         '
+        Me.StatistikToolStripMenuItem.Enabled = False
         Me.StatistikToolStripMenuItem.Name = "StatistikToolStripMenuItem"
         Me.StatistikToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
         Me.StatistikToolStripMenuItem.Text = "Statistik"
@@ -990,36 +994,36 @@ Partial Class Frm_Main
         'VarlistsToolStripMenuItem
         '
         Me.VarlistsToolStripMenuItem.Name = "VarlistsToolStripMenuItem"
-        Me.VarlistsToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.VarlistsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.VarlistsToolStripMenuItem.Text = "Varlists"
         '
         'StringvarlistToolStripMenuItem
         '
         Me.StringvarlistToolStripMenuItem.Name = "StringvarlistToolStripMenuItem"
-        Me.StringvarlistToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.StringvarlistToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.StringvarlistToolStripMenuItem.Text = "Stringvarlsits"
         '
         'ScriptsToolStripMenuItem
         '
         Me.ScriptsToolStripMenuItem.Name = "ScriptsToolStripMenuItem"
-        Me.ScriptsToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.ScriptsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ScriptsToolStripMenuItem.Text = "Scripts"
         '
         'ConstfilesToolStripMenuItem
         '
         Me.ConstfilesToolStripMenuItem.Name = "ConstfilesToolStripMenuItem"
-        Me.ConstfilesToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.ConstfilesToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ConstfilesToolStripMenuItem.Text = "Constfiles"
         '
         'ToolStripMenuItem10
         '
         Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
-        Me.ToolStripMenuItem10.Size = New System.Drawing.Size(144, 6)
+        Me.ToolStripMenuItem10.Size = New System.Drawing.Size(177, 6)
         '
         'VariablenTestToolStripMenuItem
         '
         Me.VariablenTestToolStripMenuItem.Name = "VariablenTestToolStripMenuItem"
-        Me.VariablenTestToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.VariablenTestToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.VariablenTestToolStripMenuItem.Text = "Variablen-Test"
         '
         'ErstellenToolStripMenuItem
@@ -1188,25 +1192,25 @@ Partial Class Frm_Main
         'ForumToolStripMenuItem
         '
         Me.ForumToolStripMenuItem.Name = "ForumToolStripMenuItem"
-        Me.ForumToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
+        Me.ForumToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ForumToolStripMenuItem.Text = "Info"
         '
         'ForumToolStripMenuItem1
         '
         Me.ForumToolStripMenuItem1.Name = "ForumToolStripMenuItem1"
-        Me.ForumToolStripMenuItem1.Size = New System.Drawing.Size(136, 22)
+        Me.ForumToolStripMenuItem1.Size = New System.Drawing.Size(180, 22)
         Me.ForumToolStripMenuItem1.Text = "Forum"
         '
         'WebseiteToolStripMenuItem
         '
         Me.WebseiteToolStripMenuItem.Name = "WebseiteToolStripMenuItem"
-        Me.WebseiteToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
+        Me.WebseiteToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.WebseiteToolStripMenuItem.Text = "Webseite"
         '
         'LokaleHilfeToolStripMenuItem
         '
         Me.LokaleHilfeToolStripMenuItem.Name = "LokaleHilfeToolStripMenuItem"
-        Me.LokaleHilfeToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
+        Me.LokaleHilfeToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.LokaleHilfeToolStripMenuItem.Text = "Lokale Hilfe"
         '
         'TestToolStripMenuItem
@@ -1229,14 +1233,16 @@ Partial Class Frm_Main
         '
         Me.NächsterWagenToolStripMenuItem.Enabled = False
         Me.NächsterWagenToolStripMenuItem.Name = "NächsterWagenToolStripMenuItem"
-        Me.NächsterWagenToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.NächsterWagenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Right), System.Windows.Forms.Keys)
+        Me.NächsterWagenToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
         Me.NächsterWagenToolStripMenuItem.Text = "nächster Wagen"
         '
         'VorherigerWagenToolStripMenuItem
         '
         Me.VorherigerWagenToolStripMenuItem.Enabled = False
         Me.VorherigerWagenToolStripMenuItem.Name = "VorherigerWagenToolStripMenuItem"
-        Me.VorherigerWagenToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.VorherigerWagenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Left), System.Windows.Forms.Keys)
+        Me.VorherigerWagenToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
         Me.VorherigerWagenToolStripMenuItem.Text = "vorheriger Wagen"
         '
         'PanelMain
@@ -3427,7 +3433,7 @@ Partial Class Frm_Main
         Me.PanelTexture.Controls.Add(Me.PanelTextureFill)
         Me.PanelTexture.Controls.Add(Me.LBPanelTexture)
         Me.PanelTexture.Controls.Add(Me.BTPanelTextureClose)
-        Me.PanelTexture.Controls.Add(Me.MenuStrip1)
+        Me.PanelTexture.Controls.Add(Me.MSTexturen)
         Me.PanelTexture.Location = New System.Drawing.Point(294, 3)
         Me.PanelTexture.Name = "PanelTexture"
         Me.PanelTexture.Size = New System.Drawing.Size(392, 338)
@@ -3533,15 +3539,15 @@ Partial Class Frm_Main
         Me.BTPanelTextureClose.Text = "✕"
         Me.BTPanelTextureClose.UseVisualStyleBackColor = False
         '
-        'MenuStrip1
+        'MSTexturen
         '
-        Me.MenuStrip1.BackColor = System.Drawing.Color.Transparent
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AnsichtToolStripMenuItem1})
-        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
-        Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(392, 24)
-        Me.MenuStrip1.TabIndex = 11
-        Me.MenuStrip1.Text = "MenuStrip1"
+        Me.MSTexturen.BackColor = System.Drawing.Color.Transparent
+        Me.MSTexturen.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AnsichtToolStripMenuItem1})
+        Me.MSTexturen.Location = New System.Drawing.Point(0, 0)
+        Me.MSTexturen.Name = "MSTexturen"
+        Me.MSTexturen.Size = New System.Drawing.Size(392, 24)
+        Me.MSTexturen.TabIndex = 11
+        Me.MSTexturen.Text = "MenuStrip1"
         '
         'AnsichtToolStripMenuItem1
         '
@@ -3734,6 +3740,12 @@ Partial Class Frm_Main
         Me.CMSObjekteEntfernen.Size = New System.Drawing.Size(155, 22)
         Me.CMSObjekteEntfernen.Text = "Datei entfernen"
         '
+        'DateiLöschenToolStripMenuItem
+        '
+        Me.DateiLöschenToolStripMenuItem.Name = "DateiLöschenToolStripMenuItem"
+        Me.DateiLöschenToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.DateiLöschenToolStripMenuItem.Text = "Datei löschen"
+        '
         'ToolStripMenuItem16
         '
         Me.ToolStripMenuItem16.Name = "ToolStripMenuItem16"
@@ -3825,25 +3837,25 @@ Partial Class Frm_Main
         '
         Me.CMSHelfer.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NeuToolStripMenuItem1, Me.DuplizierenToolStripMenuItem, Me.EntfernenToolStripMenuItem})
         Me.CMSHelfer.Name = "CMSHelfer"
-        Me.CMSHelfer.Size = New System.Drawing.Size(181, 92)
+        Me.CMSHelfer.Size = New System.Drawing.Size(134, 70)
         '
         'NeuToolStripMenuItem1
         '
         Me.NeuToolStripMenuItem1.Name = "NeuToolStripMenuItem1"
-        Me.NeuToolStripMenuItem1.Size = New System.Drawing.Size(180, 22)
+        Me.NeuToolStripMenuItem1.Size = New System.Drawing.Size(133, 22)
         Me.NeuToolStripMenuItem1.Text = "Neu"
         '
         'DuplizierenToolStripMenuItem
         '
         Me.DuplizierenToolStripMenuItem.Enabled = False
         Me.DuplizierenToolStripMenuItem.Name = "DuplizierenToolStripMenuItem"
-        Me.DuplizierenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.DuplizierenToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
         Me.DuplizierenToolStripMenuItem.Text = "Duplizieren"
         '
         'EntfernenToolStripMenuItem
         '
         Me.EntfernenToolStripMenuItem.Name = "EntfernenToolStripMenuItem"
-        Me.EntfernenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.EntfernenToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
         Me.EntfernenToolStripMenuItem.Text = "Entfernen"
         '
         'TCObjektePLichter
@@ -3982,15 +3994,6 @@ Partial Class Frm_Main
         'TSave
         '
         Me.TSave.Interval = 1000
-        '
-        'BWSortMeshes
-        '
-        '
-        'DateiLöschenToolStripMenuItem
-        '
-        Me.DateiLöschenToolStripMenuItem.Name = "DateiLöschenToolStripMenuItem"
-        Me.DateiLöschenToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
-        Me.DateiLöschenToolStripMenuItem.Text = "Datei löschen"
         '
         'VarSelector1
         '
@@ -4191,8 +4194,8 @@ Partial Class Frm_Main
         Me.PanelTexture.ResumeLayout(False)
         Me.PanelTexture.PerformLayout()
         CType(Me.PBTexture, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.MenuStrip1.ResumeLayout(False)
-        Me.MenuStrip1.PerformLayout()
+        Me.MSTexturen.ResumeLayout(False)
+        Me.MSTexturen.PerformLayout()
         Me.PanelObjekte.ResumeLayout(False)
         Me.TCObjekte.ResumeLayout(False)
         Me.TCObjektePMeshes.ResumeLayout(False)
@@ -4297,7 +4300,6 @@ Partial Class Frm_Main
     Friend WithEvents ToolStripMenuItem9 As ToolStripSeparator
     Friend WithEvents LogfileToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents FDÖffnen As OpenFileDialog
-    Friend WithEvents FD2 As OpenFileDialog
     Friend WithEvents ToolStripMenuItem10 As ToolStripSeparator
     Friend WithEvents VariablenTestToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents PBMain As ToolStripProgressBar
@@ -4507,7 +4509,6 @@ Partial Class Frm_Main
     Friend WithEvents ErsetzenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents BTTexOkay As Button
     Friend WithEvents Button2 As Button
-    Friend WithEvents BWSortMeshes As System.ComponentModel.BackgroundWorker
     Friend WithEvents Anim_TBAnimGrp As TextBox
     Friend WithEvents Mesh_TBMeshident As TextBox
     Friend WithEvents Label17 As Label
@@ -4586,7 +4587,7 @@ Partial Class Frm_Main
     Friend WithEvents TicketblockToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents RückgabefeldToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents GeldrückgabeToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents MSTexturen As MenuStrip
     Friend WithEvents AnsichtToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents FrühlingToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SommernormalToolStripMenuItem As ToolStripMenuItem
