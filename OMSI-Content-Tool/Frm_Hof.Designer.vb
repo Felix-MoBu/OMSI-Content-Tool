@@ -58,13 +58,15 @@ Partial Class Frm_Hof
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(256, 512)
+        Me.ClientSize = New System.Drawing.Size(256, 507)
         Me.Controls.Add(Me.BTEntfernen)
         Me.Controls.Add(Me.BTImport)
         Me.Controls.Add(Me.LBHofdateien)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
+        Me.MaximumSize = New System.Drawing.Size(272, 1080)
         Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(272, 136)
         Me.Name = "Frm_Hof"
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.Text = "Hofdateien"

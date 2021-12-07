@@ -48,6 +48,7 @@ Partial Class Frm_Main
         Dim Point3D5 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim Point3D6 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim RgbColor1 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
+        Dim Point3D7 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Main))
         Me.SS1 = New System.Windows.Forms.StatusStrip()
         Me.PBMain = New System.Windows.Forms.ToolStripProgressBar()
@@ -455,6 +456,13 @@ Partial Class Frm_Main
         Me.Licht_PSRichtung = New O3D_Test.PointSelector()
         Me.Licht_CSFarbe = New O3D_Test.ColorSelector()
         Me.Anim_VSVar = New O3D_Test.VarSelector()
+        Me.Anim_PSRotPnt = New O3D_Test.PointSelector()
+        Me.Anim_RBCenter = New System.Windows.Forms.RadioButton()
+        Me.Anim_RBPoint = New System.Windows.Forms.RadioButton()
+        Me.Label75 = New System.Windows.Forms.Label()
+        Me.Label76 = New System.Windows.Forms.Label()
+        Me.Label77 = New System.Windows.Forms.Label()
+        Me.Label78 = New System.Windows.Forms.Label()
         Me.SS1.SuspendLayout()
         Me.MS1.SuspendLayout()
         Me.PanelMain.SuspendLayout()
@@ -899,14 +907,14 @@ Partial Class Frm_Main
         '
         Me.EntfernenToolStripMenuItem2.Name = "EntfernenToolStripMenuItem2"
         Me.EntfernenToolStripMenuItem2.ShortcutKeys = System.Windows.Forms.Keys.Delete
-        Me.EntfernenToolStripMenuItem2.Size = New System.Drawing.Size(180, 22)
+        Me.EntfernenToolStripMenuItem2.Size = New System.Drawing.Size(175, 22)
         Me.EntfernenToolStripMenuItem2.Text = "Entfernen"
         '
         'VersteckenToolStripMenuItem
         '
         Me.VersteckenToolStripMenuItem.Name = "VersteckenToolStripMenuItem"
         Me.VersteckenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.H), System.Windows.Forms.Keys)
-        Me.VersteckenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.VersteckenToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
         Me.VersteckenToolStripMenuItem.Text = "Verstecken"
         '
         'DevelopmentToolStripMenuItem
@@ -994,36 +1002,36 @@ Partial Class Frm_Main
         'VarlistsToolStripMenuItem
         '
         Me.VarlistsToolStripMenuItem.Name = "VarlistsToolStripMenuItem"
-        Me.VarlistsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.VarlistsToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
         Me.VarlistsToolStripMenuItem.Text = "Varlists"
         '
         'StringvarlistToolStripMenuItem
         '
         Me.StringvarlistToolStripMenuItem.Name = "StringvarlistToolStripMenuItem"
-        Me.StringvarlistToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.StringvarlistToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
         Me.StringvarlistToolStripMenuItem.Text = "Stringvarlsits"
         '
         'ScriptsToolStripMenuItem
         '
         Me.ScriptsToolStripMenuItem.Name = "ScriptsToolStripMenuItem"
-        Me.ScriptsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ScriptsToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
         Me.ScriptsToolStripMenuItem.Text = "Scripts"
         '
         'ConstfilesToolStripMenuItem
         '
         Me.ConstfilesToolStripMenuItem.Name = "ConstfilesToolStripMenuItem"
-        Me.ConstfilesToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ConstfilesToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
         Me.ConstfilesToolStripMenuItem.Text = "Constfiles"
         '
         'ToolStripMenuItem10
         '
         Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
-        Me.ToolStripMenuItem10.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem10.Size = New System.Drawing.Size(144, 6)
         '
         'VariablenTestToolStripMenuItem
         '
         Me.VariablenTestToolStripMenuItem.Name = "VariablenTestToolStripMenuItem"
-        Me.VariablenTestToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.VariablenTestToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
         Me.VariablenTestToolStripMenuItem.Text = "Variablen-Test"
         '
         'ErstellenToolStripMenuItem
@@ -1036,14 +1044,14 @@ Partial Class Frm_Main
         'AchseToolStripMenuItem
         '
         Me.AchseToolStripMenuItem.Name = "AchseToolStripMenuItem"
-        Me.AchseToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AchseToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.AchseToolStripMenuItem.Text = "Achse"
         '
         'KameraToolStripMenuItem
         '
         Me.KameraToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FahrerkameraToolStripMenuItem, Me.FahrgastkameraToolStripMenuItem})
         Me.KameraToolStripMenuItem.Name = "KameraToolStripMenuItem"
-        Me.KameraToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.KameraToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.KameraToolStripMenuItem.Text = "Kamera"
         '
         'FahrerkameraToolStripMenuItem
@@ -1062,7 +1070,7 @@ Partial Class Frm_Main
         '
         Me.KupplungspunktToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FrontToolStripMenuItem, Me.HeckToolStripMenuItem})
         Me.KupplungspunktToolStripMenuItem.Name = "KupplungspunktToolStripMenuItem"
-        Me.KupplungspunktToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.KupplungspunktToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.KupplungspunktToolStripMenuItem.Text = "Kupplungspunkt"
         '
         'FrontToolStripMenuItem
@@ -1080,32 +1088,32 @@ Partial Class Frm_Main
         'InnenlichtToolStripMenuItem
         '
         Me.InnenlichtToolStripMenuItem.Name = "InnenlichtToolStripMenuItem"
-        Me.InnenlichtToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.InnenlichtToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.InnenlichtToolStripMenuItem.Text = "Innenlicht"
         '
         'RauchToolStripMenuItem
         '
         Me.RauchToolStripMenuItem.Name = "RauchToolStripMenuItem"
-        Me.RauchToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.RauchToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.RauchToolStripMenuItem.Text = "Rauch"
         '
         'SpiegelToolStripMenuItem
         '
         Me.SpiegelToolStripMenuItem.Name = "SpiegelToolStripMenuItem"
-        Me.SpiegelToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SpiegelToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.SpiegelToolStripMenuItem.Text = "Spiegel"
         '
         'SitzplatzToolStripMenuItem
         '
         Me.SitzplatzToolStripMenuItem.Name = "SitzplatzToolStripMenuItem"
-        Me.SitzplatzToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SitzplatzToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.SitzplatzToolStripMenuItem.Text = "Sitz-/ Stehplatz"
         '
         'TicketblockToolStripMenuItem
         '
         Me.TicketblockToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EntwerterToolStripMenuItem, Me.TicketblockToolStripMenuItem1, Me.RückgabefeldToolStripMenuItem, Me.GeldrückgabeToolStripMenuItem})
         Me.TicketblockToolStripMenuItem.Name = "TicketblockToolStripMenuItem"
-        Me.TicketblockToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.TicketblockToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.TicketblockToolStripMenuItem.Text = "Tickes"
         '
         'EntwerterToolStripMenuItem
@@ -1135,37 +1143,37 @@ Partial Class Frm_Main
         'AttachpointsToolStripMenuItem
         '
         Me.AttachpointsToolStripMenuItem.Name = "AttachpointsToolStripMenuItem"
-        Me.AttachpointsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AttachpointsToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.AttachpointsToolStripMenuItem.Text = "Attachpoint"
         '
         'SplinehelperToolStripMenuItem
         '
         Me.SplinehelperToolStripMenuItem.Enabled = False
         Me.SplinehelperToolStripMenuItem.Name = "SplinehelperToolStripMenuItem"
-        Me.SplinehelperToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SplinehelperToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.SplinehelperToolStripMenuItem.Text = "Splinehelper"
         '
         'SpotToolStripMenuItem
         '
         Me.SpotToolStripMenuItem.Name = "SpotToolStripMenuItem"
-        Me.SpotToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SpotToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.SpotToolStripMenuItem.Text = "Spot"
         '
         'ToolStripMenuItem15
         '
         Me.ToolStripMenuItem15.Name = "ToolStripMenuItem15"
-        Me.ToolStripMenuItem15.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem15.Size = New System.Drawing.Size(159, 6)
         '
         'LichtToolStripMenuItem
         '
         Me.LichtToolStripMenuItem.Name = "LichtToolStripMenuItem"
-        Me.LichtToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.LichtToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.LichtToolStripMenuItem.Text = "Licht"
         '
         'PfadToolStripMenuItem
         '
         Me.PfadToolStripMenuItem.Name = "PfadToolStripMenuItem"
-        Me.PfadToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.PfadToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.PfadToolStripMenuItem.Text = "Pfad(punkt)"
         '
         'ImportierenToolStripMenuItem
@@ -1192,25 +1200,25 @@ Partial Class Frm_Main
         'ForumToolStripMenuItem
         '
         Me.ForumToolStripMenuItem.Name = "ForumToolStripMenuItem"
-        Me.ForumToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ForumToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
         Me.ForumToolStripMenuItem.Text = "Info"
         '
         'ForumToolStripMenuItem1
         '
         Me.ForumToolStripMenuItem1.Name = "ForumToolStripMenuItem1"
-        Me.ForumToolStripMenuItem1.Size = New System.Drawing.Size(180, 22)
+        Me.ForumToolStripMenuItem1.Size = New System.Drawing.Size(136, 22)
         Me.ForumToolStripMenuItem1.Text = "Forum"
         '
         'WebseiteToolStripMenuItem
         '
         Me.WebseiteToolStripMenuItem.Name = "WebseiteToolStripMenuItem"
-        Me.WebseiteToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.WebseiteToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
         Me.WebseiteToolStripMenuItem.Text = "Webseite"
         '
         'LokaleHilfeToolStripMenuItem
         '
         Me.LokaleHilfeToolStripMenuItem.Name = "LokaleHilfeToolStripMenuItem"
-        Me.LokaleHilfeToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.LokaleHilfeToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
         Me.LokaleHilfeToolStripMenuItem.Text = "Lokale Hilfe"
         '
         'TestToolStripMenuItem
@@ -3288,6 +3296,13 @@ Partial Class Frm_Main
         '
         'GBAnimation
         '
+        Me.GBAnimation.Controls.Add(Me.Label78)
+        Me.GBAnimation.Controls.Add(Me.Label77)
+        Me.GBAnimation.Controls.Add(Me.Label76)
+        Me.GBAnimation.Controls.Add(Me.Label75)
+        Me.GBAnimation.Controls.Add(Me.Anim_RBPoint)
+        Me.GBAnimation.Controls.Add(Me.Anim_RBCenter)
+        Me.GBAnimation.Controls.Add(Me.Anim_PSRotPnt)
         Me.GBAnimation.Controls.Add(Me.Anim_TBAnimGrp)
         Me.GBAnimation.Controls.Add(Me.Anim_MinMax)
         Me.GBAnimation.Controls.Add(Me.Anim_TBValue)
@@ -3300,9 +3315,9 @@ Partial Class Frm_Main
         Me.GBAnimation.Controls.Add(Me.Anim_BTNeu)
         Me.GBAnimation.Controls.Add(Me.Anim_DDList)
         Me.GBAnimation.Controls.Add(Me.Label9)
-        Me.GBAnimation.Location = New System.Drawing.Point(4, 2375)
+        Me.GBAnimation.Location = New System.Drawing.Point(4, 2352)
         Me.GBAnimation.Name = "GBAnimation"
-        Me.GBAnimation.Size = New System.Drawing.Size(327, 189)
+        Me.GBAnimation.Size = New System.Drawing.Size(327, 212)
         Me.GBAnimation.TabIndex = 6
         Me.GBAnimation.TabStop = False
         Me.GBAnimation.Text = "Animation"
@@ -4129,6 +4144,79 @@ Partial Class Frm_Main
         Me.Anim_VSVar.TabIndex = 32
         Me.Anim_VSVar.Variable = ""
         '
+        'Anim_PSRotPnt
+        '
+        Me.Anim_PSRotPnt.BackColor = System.Drawing.Color.Transparent
+        Me.Anim_PSRotPnt.Enabled = False
+        Me.Anim_PSRotPnt.Location = New System.Drawing.Point(69, 174)
+        Me.Anim_PSRotPnt.Max = 0R
+        Me.Anim_PSRotPnt.Min = 0R
+        Me.Anim_PSRotPnt.Name = "Anim_PSRotPnt"
+        Me.Anim_PSRotPnt.Point = Point3D7
+        Me.Anim_PSRotPnt.Size = New System.Drawing.Size(225, 20)
+        Me.Anim_PSRotPnt.TabIndex = 39
+        Me.Anim_PSRotPnt.X = 0R
+        Me.Anim_PSRotPnt.Y = 0R
+        Me.Anim_PSRotPnt.Z = 0R
+        '
+        'Anim_RBCenter
+        '
+        Me.Anim_RBCenter.AutoSize = True
+        Me.Anim_RBCenter.Location = New System.Drawing.Point(69, 151)
+        Me.Anim_RBCenter.Name = "Anim_RBCenter"
+        Me.Anim_RBCenter.Size = New System.Drawing.Size(56, 17)
+        Me.Anim_RBCenter.TabIndex = 40
+        Me.Anim_RBCenter.TabStop = True
+        Me.Anim_RBCenter.Text = "Center"
+        Me.Anim_RBCenter.UseVisualStyleBackColor = True
+        '
+        'Anim_RBPoint
+        '
+        Me.Anim_RBPoint.AutoSize = True
+        Me.Anim_RBPoint.Location = New System.Drawing.Point(152, 151)
+        Me.Anim_RBPoint.Name = "Anim_RBPoint"
+        Me.Anim_RBPoint.Size = New System.Drawing.Size(49, 17)
+        Me.Anim_RBPoint.TabIndex = 41
+        Me.Anim_RBPoint.TabStop = True
+        Me.Anim_RBPoint.Text = "Point"
+        Me.Anim_RBPoint.UseVisualStyleBackColor = True
+        '
+        'Label75
+        '
+        Me.Label75.AutoSize = True
+        Me.Label75.Location = New System.Drawing.Point(4, 178)
+        Me.Label75.Name = "Label75"
+        Me.Label75.Size = New System.Drawing.Size(57, 13)
+        Me.Label75.TabIndex = 42
+        Me.Label75.Text = "Drehpunkt"
+        '
+        'Label76
+        '
+        Me.Label76.AutoSize = True
+        Me.Label76.Location = New System.Drawing.Point(4, 52)
+        Me.Label76.Name = "Label76"
+        Me.Label76.Size = New System.Drawing.Size(46, 13)
+        Me.Label76.TabIndex = 43
+        Me.Label76.Text = "Nummer"
+        '
+        'Label77
+        '
+        Me.Label77.AutoSize = True
+        Me.Label77.Location = New System.Drawing.Point(4, 78)
+        Me.Label77.Name = "Label77"
+        Me.Label77.Size = New System.Drawing.Size(20, 13)
+        Me.Label77.TabIndex = 44
+        Me.Label77.Text = "Art"
+        '
+        'Label78
+        '
+        Me.Label78.AutoSize = True
+        Me.Label78.Location = New System.Drawing.Point(4, 153)
+        Me.Label78.Name = "Label78"
+        Me.Label78.Size = New System.Drawing.Size(35, 13)
+        Me.Label78.TabIndex = 45
+        Me.Label78.Text = "Anker"
+        '
         'Frm_Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -4616,4 +4704,11 @@ Partial Class Frm_Main
     Friend WithEvents Kuppl_LBHeck As Label
     Friend WithEvents Kuppl_LBFront As Label
     Friend WithEvents DateiLöschenToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Label78 As Label
+    Friend WithEvents Label77 As Label
+    Friend WithEvents Label76 As Label
+    Friend WithEvents Label75 As Label
+    Friend WithEvents Anim_RBPoint As RadioButton
+    Friend WithEvents Anim_RBCenter As RadioButton
+    Friend WithEvents Anim_PSRotPnt As PointSelector
 End Class

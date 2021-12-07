@@ -18,7 +18,7 @@ Class Frm_Main
 
     Public Shared ReadOnly OMSI_SYS_VARS As String() = {"Timegap", "GetTime", "NoSound", "Pause", "Time", "Day", "Month", "Year", "DayOfYear", "mouse_x", "mouse_y", "PrecipType", "PrecipRate", "coll_pos_x", "coll_pos_y", "coll_pos_z", "coll_energy", "Weather_Temperature", "Weather_AbsHum", "AutoClutch", "wearlifespan", "SunAlt"}
     Public Shared ReadOnly OMSI_SCO_VARS As String() = {"NightLightA", "InUse", "TrafficLightPhase", "TrafficLightApproach", "Colorscheme", "Signal", "NextSignal", "Refresh_Strings", "Switch"}
-    Public Shared ReadOnly OMSI_BUS_VARS As String() = {"Refresh_Strings", "Envir_Brightness", "StreetCond", "Spot_Select", "Colorscheme", "M_Wheel", "n_Wheel", "Throttle", "Brake", "Clutch", "Brakeforce", "Velocity", "Velocity_Ground", "tank_percent", "kmcounter_km", "kmcounter_m", "relrange", "Driver_Seat_VertTransl", "Wheel_Rotation_#_L", "Wheel_Rotation_#_L", "Wheel_RotationSpeed_#_L", "Wheel_RotationSpeed_#_R", "Axle_Suspension_#_L", "Axle_Suspension_#_R", "Axle_Steering_#_L", "Axle_Steering_#_R", "Axle_Springfactor_#_L", "Axle_Springfactor_#_R", "Axle_Brakeforce_#_L", "Axle_Brakeforce_#_R", "Axle_SurfaceID_#_L", "Axle_SurfaceID_#__R", "Debug_#", "A_Trans_X", "A_Trans_Z", "AI_Blinker_L", "AI_Blinker_R", "AI_Light", "AI_Interiorlight", "AI_Brakelight", "AI_Engine", "AI_target_index", "target_index_int", "AI_Scheduled_AtStation", "AI_Scheduled_AtStation_Side", "AI", "PAX_Entry#_Open", "PAX_Exit#_Open", "PAX_Entry#_Req", "PAX_Exit#_Req", "GivenTicket", "humans_count", "FF_Vib_Period", "FF_Vib_Amp", "Snd_OutsideVol", "Snd_Microphone", "Snd_Radio", "Cabinair_Temp", "Cabinair_absHum", "Cabinair_relHum", "PrecipRate", "PrecipType", "Dirt_Norm", "DirtRate", "schedule_active", "train_frontcoupling", "train_backcoupling", "train_me_reverse", "TrafficPriority", "wearlifespan", "articulation_#_alpha", "articulation_#_beta", "boogie_#_wheel_at_limit", "boogie_#_invradius", "contactshoe_#_rail_pos_x", "contactshoe_#_rail_pos_y", "contactshoe_#_rail_index", "contactshoe_#_volt_rail", "contactshoe_#_volt_veh", "contactshoe_#_freq"}
+    Public Shared ReadOnly OMSI_BUS_VARS As String() = {"Refresh_Strings", "Envir_Brightness", "StreetCond", "Spot_Select", "Colorscheme", "M_Wheel", "n_Wheel", "Throttle", "Brake", "Clutch", "Brakeforce", "Velocity", "Velocity_Ground", "tank_percent", "kmcounter_km", "kmcounter_m", "relrange", "Driver_Seat_VertTransl", "Wheel_Rotation_#_L", "Wheel_Rotation_#_R", "Wheel_RotationSpeed_#_L", "Wheel_RotationSpeed_#_R", "Axle_Suspension_#_L", "Axle_Suspension_#_R", "Axle_Steering_#_L", "Axle_Steering_#_R", "Axle_Springfactor_#_L", "Axle_Springfactor_#_R", "Axle_Brakeforce_#_L", "Axle_Brakeforce_#_R", "Axle_SurfaceID_#_L", "Axle_SurfaceID_#__R", "Debug_#", "A_Trans_X", "A_Trans_Z", "AI_Blinker_L", "AI_Blinker_R", "AI_Light", "AI_Interiorlight", "AI_Brakelight", "AI_Engine", "AI_target_index", "target_index_int", "AI_Scheduled_AtStation", "AI_Scheduled_AtStation_Side", "AI", "PAX_Entry#_Open", "PAX_Exit#_Open", "PAX_Entry#_Req", "PAX_Exit#_Req", "GivenTicket", "humans_count", "FF_Vib_Period", "FF_Vib_Amp", "Snd_OutsideVol", "Snd_Microphone", "Snd_Radio", "Cabinair_Temp", "Cabinair_absHum", "Cabinair_relHum", "PrecipRate", "PrecipType", "Dirt_Norm", "DirtRate", "schedule_active", "train_frontcoupling", "train_backcoupling", "train_me_reverse", "TrafficPriority", "wearlifespan", "articulation_#_alpha", "articulation_#_beta", "boogie_#_wheel_at_limit", "boogie_#_invradius", "contactshoe_#_rail_pos_x", "contactshoe_#_rail_pos_y", "contactshoe_#_rail_index", "contactshoe_#_volt_rail", "contactshoe_#_volt_veh", "contactshoe_#_freq"}
     Public Shared ReadOnly OMSI_STR_VARS As String() = {"ident", "number", "act_route", "act_busstop", "SetLineTo", "yard", "file_schedule"}
     Public Shared ReadOnly OMSI_HUM_VARS As String() = {"LastMovedDist", "PAX_State", "HeightOfSeat", "Colorscheme"}
 
@@ -359,10 +359,6 @@ Class Frm_Main
         AlleTexturen.Clear()
         DDAlleTexturen.Items.Clear()
     End Sub
-
-
-
-
 
 
     Private Sub calcMirrors(mirrorID As Integer)
@@ -1063,14 +1059,15 @@ Class Frm_Main
         Dim ctMesh As Integer = 0
         Dim items_temp As New List(Of String)
 
-        For Each mesh In meshes
+        For i As Integer = 0 To meshes.Count - 1
             'If mesh.filename.extension = "o3d" Then
-            Dim newMesh As OMSI_Mesh = fileimport2(New Filename(mesh.filename.name, getProj.filename.path & "\Model"))
+            Dim newMesh As OMSI_Mesh = fileimport2(New Filename(meshes(i).filename.name, getProj.filename.path & "\Model"))
             If Not newMesh Is Nothing Then
                 items_temp.Add(newMesh.filename.name)
-                mesh.index = newMesh.index
-                mesh.ObjIds = newMesh.ObjIds
-                If mesh.lodMin <= lodVal And mesh.lodMax >= lodVal Then
+                meshes(i).index = newMesh.index
+                meshes(i).ObjIds = newMesh.ObjIds
+                meshes(i).center = newMesh.center
+                If meshes(i).lodMin <= lodVal And meshes(i).lodMax >= lodVal Then
                     AlleObjekte(AlleObjekte.Count - 1).visible = True
                 Else
                     AlleObjekte(AlleObjekte.Count - 1).visible = False
@@ -2828,7 +2825,20 @@ Class Frm_Main
 
             Anim_VSVar.Variable = .animations(id).anim_var
             Anim_TBValue.Text = .animations(id).anim_val
+            If Not .animations(id).origin_trans = New Point3D Then
+                Anim_RBCenter.Checked = False
+                Anim_RBPoint.Checked = True
+                Anim_PSRotPnt.Point = .animations(id).origin_trans
+            Else
+                Anim_RBCenter.Checked = True
+                Anim_RBPoint.Checked = False
+                Anim_PSRotPnt.Point = New Point3D
+            End If
         End With
+    End Sub
+
+    Private Sub Anim_RBPoint_CheckedChanged(sender As Object, e As EventArgs) Handles Anim_RBPoint.CheckedChanged
+        Anim_PSRotPnt.Enabled = Anim_RBPoint.Checked
     End Sub
 
     'Panel Texture ##########
@@ -2962,21 +2972,12 @@ Class Frm_Main
         End If
 
         If LBMeshes.SelectedIndex >= 0 Then
-            If getProj() Is Projekt_Bus Or getProj() Is Projekt_Emt Or getProj() Is Projekt_Sco Then
+            If Not getProjTyp() = PROJ_TYPE_SLI Then
                 If Not getProj().model Is Nothing Then
                     selectedMesh = getProj().model.meshes(LBMeshes.SelectedIndex)
                     Return selectedMesh
-                    'For Each mesh In getProj.model.meshes
-                    '    If mesh.filename.name = LBMeshes.SelectedItem Then
-                    '        selectedMesh = mesh
-                    '        Return mesh
-                    '    End If
-                    'Next
                 End If
-            End If
-
-
-            If getProj() Is Projekt_Sli Then
+            Else
                 Dim newMesh As New OMSI_Mesh
                 With newMesh
                     .filename = New Filename(LBMeshes.SelectedItem, getProj.filename.path)
