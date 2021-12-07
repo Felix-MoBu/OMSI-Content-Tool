@@ -527,6 +527,8 @@ Class Frm_Main
             TimerReset()
             TSave.Start()
         End If
+
+        SSLBStatus.Text = "Speichern abgeschlossen"
     End Sub
 
     Private Function exitApplication() As Boolean
@@ -1344,27 +1346,32 @@ Class Frm_Main
 
     Private Sub NurProjektbusovhscoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NurProjektbusovhscoToolStripMenuItem.Click
         getProj.save(True)
+        SSLBStatus.Text = "Projektdatei gespeichert"
     End Sub
 
     Private Sub NurModelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NurModelToolStripMenuItem.Click
         getProj.model.save()
+        SSLBStatus.Text = "Model-Datei gespeichert"
     End Sub
 
     Private Sub NurCabinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NurCabinToolStripMenuItem.Click
         If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_OVH Then
             getProj.cabin.save()
+            SSLBStatus.Text = "Cabin-Datei gespeichert"
         End If
     End Sub
 
     Private Sub NurPathsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NurPathsToolStripMenuItem.Click
         If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_OVH Then
             getProj.paths.save()
+            SSLBStatus.Text = "Path-Datei gespeichert"
         End If
     End Sub
 
     Private Sub SpeichernUnterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SpeichernUnterToolStripMenuItem.Click
         Frm_Save.ShowDialog()
         Me.Text = getProj.filename.ToString & " - " & My.Application.Info.Title
+        SSLBStatus.Text = "Speichern abgeschlossen"
     End Sub
 
     Private Sub EinstellungenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EinstellungenToolStripMenuItem.Click
@@ -3936,8 +3943,6 @@ Class Frm_Main
 
         GlMain.SwapBuffers()
 
-
-
     End Sub
 
 
@@ -3956,10 +3961,11 @@ Class Frm_Main
                         GL.Color3(Color.White)
                     End If
 
-                    If Not origTexturen.Contains(.texturen(i).filename) Then
+                    If Not origTexturen.Contains(.texturen(i).filename, StringComparer.OrdinalIgnoreCase) Then '-> Hier CaseInsensitiveComparer einfügen!
                         GL.BindTexture(TextureTarget.Texture2D, .texturen(i).id)
                     Else
-                        GL.BindTexture(TextureTarget.Texture2D, overWriteTextures(origTexturen.IndexOf(.texturen(i).filename)).id)
+                        'GL.BindTexture(TextureTarget.Texture2D, overWriteTextures(origTexturen.IndexOf(.texturen(i).filename)).id)
+                        GL.BindTexture(TextureTarget.Texture2D, overWriteTextures(origTexturen.FindIndex(Function(s) s.Equals(.texturen(i).filename, StringComparison.CurrentCultureIgnoreCase))).id)
                     End If
 
                     'GL.BindTexture(TextureTarget.Texture2D, .Texturen(i).id)
