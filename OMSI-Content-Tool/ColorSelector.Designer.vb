@@ -34,7 +34,7 @@ Partial Class ColorSelector
         '
         'CBBColor
         '
-        Me.CBBColor.Location = New System.Drawing.Point(240, 2)
+        Me.CBBColor.Location = New System.Drawing.Point(238, 2)
         Me.CBBColor.Name = "CBBColor"
         Me.CBBColor.Size = New System.Drawing.Size(26, 21)
         Me.CBBColor.TabIndex = 33

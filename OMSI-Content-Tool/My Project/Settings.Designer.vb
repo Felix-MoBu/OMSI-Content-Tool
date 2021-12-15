@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -81,12 +81,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property PObjekteVis() As Boolean
+        Public Property PObjekteV() As Boolean
             Get
-                Return CType(Me("PObjekteVis"),Boolean)
+                Return CType(Me("PObjekteV"),Boolean)
             End Get
             Set
-                Me("PObjekteVis") = value
+                Me("PObjekteV") = value
             End Set
         End Property
         
@@ -141,12 +141,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property PTextureVis() As Boolean
+        Public Property PTextureV() As Boolean
             Get
-                Return CType(Me("PTextureVis"),Boolean)
+                Return CType(Me("PTextureV"),Boolean)
             End Get
             Set
-                Me("PTextureVis") = value
+                Me("PTextureV") = value
             End Set
         End Property
         
@@ -675,6 +675,18 @@ Namespace My
             End Get
             Set
                 Me("SelectionColor") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property TexAutoReload() As Boolean
+            Get
+                Return CType(Me("TexAutoReload"),Boolean)
+            End Get
+            Set
+                Me("TexAutoReload") = value
             End Set
         End Property
     End Class

@@ -33,6 +33,13 @@ Public Class Frm_Einst
                 .LineColor3D = Color.White
             End If
 
+            .TexAutoReload = CBTexAutoReload.Checked
+            If CBTexAutoReload.Checked Then
+                Frm_Main.TReloadTextures.Start()
+            Else
+                Frm_Main.TReloadTextures.Stop()
+            End If
+
             .CamDriverColor = TBColorDriverCam.BackColor
             .CamPaxColor = TBColorPaxCam.BackColor
             .CamReflexColor = TBColorReflexCam.BackColor
@@ -80,6 +87,7 @@ Public Class Frm_Einst
 
             'Page "Darstellung"
             TBColor3D.BackColor = .BackColor3D
+            CBTexAutoReload.Checked = .TexAutoReload
             TBColorDriverCam.BackColor = .CamDriverColor
             TBColorPaxCam.BackColor = .CamPaxColor
             TBColorReflexCam.BackColor = .CamReflexColor
@@ -244,7 +252,7 @@ Public Class Frm_Einst
 
     Private Sub BTResetObj_Click(sender As Object, e As EventArgs) Handles BTResetObj.Click
         With My.Settings
-            .PObjekteVis = True
+            .PObjekteV = True
             .PObjekteH = 350
             .PObjekteW = 300
             .PObjekteX = 10
@@ -255,7 +263,7 @@ Public Class Frm_Einst
 
     Private Sub BTResetTex_Click(sender As Object, e As EventArgs) Handles BTResetTex.Click
         With My.Settings
-            .PTextureVis = True
+            .PTextureV = True
             .PTextureH = 337
             .PTextureW = 392
             .PTextureX = 10

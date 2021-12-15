@@ -45,7 +45,7 @@ Public Class ColorSelector
         ColorB.Left = StartOfTB + (tempWidth * 3) + 18
         ColorB.Width = tempWidth
 
-        CBBColor.Left = StartOfTB + (tempWidth * 4) + 24
+        CBBColor.Left = StartOfTB + (tempWidth * 4) + 20
         recalcColor()
     End Sub
 

@@ -124,9 +124,12 @@ Class Frm_Main
         loadPositions()
 
         Licht_CSFarbe.WidthOfTB = 226
-        Licht_CSFarbe.StartOfTB = 57
+        Licht_CSFarbe.StartOfTB = 64
         Licht_CSFarbe.Reload()
 
+        Spot_CSFarbe.WidthOfTB = 226
+        Spot_CSFarbe.StartOfTB = 64
+        Spot_CSFarbe.Reload()
 
         If My.Settings.eMail = Frm_Einst.stdMail Then
             TestToolStripMenuItem.Visible = True
@@ -145,6 +148,8 @@ Class Frm_Main
 
         redrawLetzte()
 
+        If My.Settings.TexAutoReload Then TReloadTextures.Start()
+
         'SoftDot nicht vergessen!
         'dotTexture = New LocalTexture
         'dotTexture.filename = New Filename("Dot.png", New Filename(Application.ExecutablePath).path)
@@ -152,6 +157,8 @@ Class Frm_Main
         'AlleTexturen.Add(dotTexture.filename)
 
     End Sub
+
+
 
 
 
@@ -1673,13 +1680,13 @@ Class Frm_Main
             .PObjekteY = PanelObjekte.Top
             .PObjekteW = PanelObjekte.Width
             .PObjekteH = PanelObjekte.Height
-            .PObjekteVis = PanelObjekte.Visible
+            .PObjekteV = PanelObjekte.Visible
 
             .PTextureX = PanelTexture.Left
             .PTextureY = PanelTexture.Top
             .PTextureW = PanelTexture.Width
             .PTextureH = PanelTexture.Height
-            .PTextureVis = PanelTexture.Visible
+            .PTextureV = PanelTexture.Visible
 
             .PEigenschaftenX = PanelEigenschaften.Left
             .PEigenschaftenY = PanelEigenschaften.Top
@@ -1698,6 +1705,8 @@ Class Frm_Main
     End Sub
 
     Public Sub loadPositions()
+        checkForStdPos()
+
         With My.Settings
             PanelObjekte.Left = .PObjekteX
             PanelObjekte.Top = .PObjekteY
@@ -1705,13 +1714,13 @@ Class Frm_Main
             PanelObjekte.Height = .PObjekteH
             BTObjekteResize.Left = .PObjekteW - 5
             BTObjekteResize.Top = .PObjekteH - 5
-            PanelObjekte.Visible = .PObjekteVis
+            PanelObjekte.Visible = .PObjekteV
 
             PanelTexture.Left = .PTextureX
             PanelTexture.Top = .PTextureY
             PanelTexture.Width = .PTextureW
             PanelTexture.Height = .PTextureH
-            PanelTexture.Visible = .PTextureVis
+            PanelTexture.Visible = .PTextureV
 
             PanelEigenschaften.Left = .PEigenschaftenX
             PanelEigenschaften.Top = .PEigenschaftenY
@@ -1728,8 +1737,30 @@ Class Frm_Main
             EigenschaftenFensterToolStripMenuItem.Checked = PanelEigenschaften.Visible
 
             PfadeInOriginalbreiteToolStripMenuItem.Checked = .PfadeOrigBreite
+
+            checkPanelPosition(PanelEigenschaften)
+            checkPanelPosition(PanelTexture)
+            checkPanelPosition(PanelObjekte)
         End With
     End Sub
+
+    Private Sub checkForStdPos()
+        With My.Settings
+            If .PEigenschaftenV Then
+                If .PEigenschaftenX = 410 Then
+                    .PEigenschaftenX = Width - PanelEigenschaften.Width - 3
+                End If
+            End If
+
+            If .PTextureV Then
+                If .PTextureY = 338 Then
+                    .PTextureY = Height - PanelTexture.Height - 3
+                End If
+            End If
+        End With
+        My.Settings.Save()
+    End Sub
+
 
     Private Sub checkPanelPosition(e As Panel)
         If e.Visible = False Then Exit Sub
@@ -2408,8 +2439,17 @@ Class Frm_Main
                         Splinehelper_TBSpline.Text = .spline.name
                     End With
                 Case TVHelper.Nodes(11).Text    'Spots
-                    showSettings({GBLicht})
-                    PSPos.Point = getProj.model.spots(index).position
+                    showSettings({GBParent, GBSpot})
+                    With Projekt_Bus.model.spots(index) 'getProj.model.spots(index)
+                        PSPos.Point = .position
+                        GBParent.Text = .parent
+                        Spot_PSRichtung.Point = .richtung
+                        Spot_CSFarbe.SelectedColor = .color
+                        Spot_TBAussen.Text = .outerCone
+                        Spot_TBInner.Text = .innerCone
+                        Spot_TBLeuchtweite.Text = .range
+                    End With
+
             End Select
         End If
         GlMain.Invalidate()
@@ -2565,44 +2605,7 @@ Class Frm_Main
 
     Private Sub LBLichter_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBLichter.SelectedIndexChanged
         If LBLichter.SelectedIndex > -1 Then
-            If LBLichter.SelectedIndex > getProj.model.lichter.Count - 1 Then
-                Dim index As Integer
-                index = LBLichter.SelectedIndex - getProj().model.lichter.Count
-                With getProj().model.spots(index)
-                    TBName.Text = LBLichter.SelectedItem.ToString
-                    PSPos.Point = .position
-                    Licht_PSRichtung.Point = .richtung
-                    Licht_CSFarbe.SelectedColor = .color
-                    Licht_TBGroesse.Text = .range
-                    Licht_TBInnerCone.Text = .innerCone
-                    Licht_TBOuterCone.Text = .outerCone
-
-                    Licht_VSVar.Enabled = False
-                    Licht_TBTexture.Enabled = False
-                    Licht_PSVector.Enabled = False
-                    Licht_CBAusr.Enabled = False
-                    Licht_CBRotAusr.Enabled = False
-                    Licht_TBFaktor.Enabled = False
-                    Licht_TBOffset.Enabled = False
-                    Licht_CBEffekt.Enabled = False
-                    Licht_TBKegel.Enabled = False
-                    Licht_TBZeitkonst.Enabled = False
-
-                    Licht_VSVar.Variable = ""
-                    Licht_TBTexture.Text = ""
-                    Licht_PSVector.Point = New Point3D()
-                    Licht_CBAusr.Text = ""
-                    Licht_CBRotAusr.Text = ""
-                    Licht_TBFaktor.Text = ""
-                    Licht_TBOffset.Text = ""
-                    Licht_CBEffekt.Text = ""
-                    Licht_TBKegel.Text = ""
-                    Licht_TBZeitkonst.Text = ""
-                    Parent_CBParent.Text = ""
-                End With
-
-
-            Else
+            If LBLichter.SelectedIndex < getProj.model.lichter.Count Then
                 Licht_VSVar.Enabled = True
                 Licht_TBTexture.Enabled = True
                 Licht_PSVector.Enabled = True
@@ -2947,6 +2950,9 @@ Class Frm_Main
             If Not IO.File.GetLastWriteTime(texture.filename) = texture.lastChangeDate Then
                 texture.lastChangeDate = IO.File.GetLastWriteTime(texture.filename)
                 loadTexture(texture, True)
+                If texture.filename.name = DDAlleTexturen.Text Then
+                    SelectedTextureChanged(DDAlleTexturen.Text)
+                End If
             End If
         End If
     End Sub
@@ -3145,13 +3151,32 @@ Class Frm_Main
             GB.BackColor = Form.DefaultBackColor
         End If
 
+        Dim tempGBList As New List(Of GroupBox)
         Dim top As Integer = GBAllgemein.Height + GBAllgemein.Top + 6
-        Dim newlist As New List(Of GroupBox)
-        For Each control In PanelEigenschaften1.Controls
-            If Not control.text = "Allgemein" Then
+        For i = 0 To PanelEigenschaften1.Controls.Count - 1
+            Dim minTop As Integer = Height + 500
+            For Each control In PanelEigenschaften1.Controls
                 If control.visible Then
-                    control.top = top
-                    top += control.height + 6
+                    If Not tempGBList.Contains(control) Then
+                        If control.top < minTop Then
+                            minTop = control.top
+                        End If
+                    End If
+                End If
+            Next
+            For Each control In PanelEigenschaften1.Controls
+                If control.top = minTop Then
+                    tempGBList.Add(control)
+                    Exit For
+                End If
+            Next
+        Next
+
+        For Each control In tempGBList
+            If Not control.Text = "Allgemein" Then
+                If control.Visible Then
+                    control.Top = top
+                    top += control.Height + 6
                 End If
             End If
         Next
@@ -3853,6 +3878,18 @@ Class Frm_Main
                             End If
                         End If
 
+                        If Not Projekt_Bus.model.spots Is Nothing Then
+                            If InStr(TVHelper.SelectedNode.FullPath, TVHelper.Nodes(11).Text & "\") Then
+                                If TVHelper.SelectedNode.Index < Projekt_Bus.model.spots.Count Then
+                                    With Projekt_Bus.model.spots(TVHelper.SelectedNode.Index)
+                                        GL.Color3(.color.R, .color.G, .color.B)
+                                        GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
+                                        GL.DrawElements(PrimitiveType.Triangles, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                    End With
+                                End If
+                            End If
+                        End If
+
                     Case 2
                         GL.BindTexture(TextureTarget.Texture2D, 0)
                         Dim i As Integer = 0
@@ -3867,20 +3904,6 @@ Class Frm_Main
 
                                 GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                 GL.DrawElements(PrimitiveType.Triangles, .edges.Count, DrawElementsType.UnsignedInt, .edges)
-                            End With
-                            i += 1
-                        Next
-
-                        For Each spot In Projekt_Bus.model.spots
-                            With spot
-                                GL.Color3(.color.R, .color.G, .color.B)
-                                If i = LBLichter.SelectedIndex Then
-                                    If timerBool Then
-                                        GL.Color3(Color.Black)
-                                    End If
-                                    GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                    GL.DrawElements(PrimitiveType.Triangles, .edges.Count, DrawElementsType.UnsignedInt, .edges)
-                                End If
                             End With
                             i += 1
                         Next
@@ -4252,7 +4275,8 @@ Class Frm_Main
     End Sub
 
     Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
-        MsgBox(ToDouble("8180003F"))
+        checkForStdPos()
+        'MsgBox(ToDouble("8180003F"))
 
         'MsgBox(AlleTexturen.Count)
     End Sub
@@ -4755,6 +4779,18 @@ Class Frm_Main
 
     Private Sub PSPos_KeyPress(sender As Object, e As EventArgs) Handles PSPos.KeyPress
 
+    End Sub
+
+    Private Sub TReloadTextures_Tick(sender As Object, e As EventArgs) Handles TReloadTextures.Tick
+        For Each localObject In AlleObjekte
+            For Each texture In localObject.texturen
+                TexturecheckLastChange(texture)
+            Next
+        Next
+        For Each texture In overWriteTextures
+            TexturecheckLastChange(texture)
+        Next
+        GlMain.Invalidate()
     End Sub
 End Class
 

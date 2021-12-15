@@ -106,6 +106,7 @@ Partial Class Frm_Einst
         Me.CDColorAchsen = New System.Windows.Forms.ColorDialog()
         Me.BTEinstExp = New System.Windows.Forms.Button()
         Me.BTEinstImport = New System.Windows.Forms.Button()
+        Me.CBTexAutoReload = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -393,6 +394,7 @@ Partial Class Frm_Einst
         '
         'TabPage3
         '
+        Me.TabPage3.Controls.Add(Me.CBTexAutoReload)
         Me.TabPage3.Controls.Add(Me.GBPerformance)
         Me.TabPage3.Controls.Add(Me.GroupBox4)
         Me.TabPage3.Controls.Add(Me.TBColor3D)
@@ -888,6 +890,16 @@ Partial Class Frm_Einst
         Me.BTEinstImport.Text = "Einst. Import"
         Me.BTEinstImport.UseVisualStyleBackColor = True
         '
+        'CBTexAutoReload
+        '
+        Me.CBTexAutoReload.AutoSize = True
+        Me.CBTexAutoReload.Location = New System.Drawing.Point(265, 8)
+        Me.CBTexAutoReload.Name = "CBTexAutoReload"
+        Me.CBTexAutoReload.Size = New System.Drawing.Size(178, 17)
+        Me.CBTexAutoReload.TabIndex = 9
+        Me.CBTexAutoReload.Text = "Texturen automatisch neu laden"
+        Me.CBTexAutoReload.UseVisualStyleBackColor = True
+        '
         'Frm_Einst
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1018,4 +1030,5 @@ Partial Class Frm_Einst
     Friend WithEvents TBMaxFPS As TextBox
     Friend WithEvents Label22 As Label
     Friend WithEvents TBColorSelectedObj As TextBox
+    Friend WithEvents CBTexAutoReload As CheckBox
 End Class
