@@ -3849,9 +3849,11 @@ Class Frm_Main
 
 
                         If Not Projekt_Bus.bbox Is Nothing Then
-                            GL.Color3(Color.Black)
-                            GL.VertexPointer(3, VertexPointerType.Double, 0, Projekt_Bus.bbox.vertices)
-                            GL.DrawElements(PrimitiveType.Lines, Projekt_Bus.bbox.edges.Count, DrawElementsType.UnsignedInt, Projekt_Bus.bbox.edges)
+                            With Projekt_Bus.bbox
+                                GL.Color3(Color.Black)
+                                GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
+                                GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                            End With
                         End If
 
 
@@ -3868,13 +3870,13 @@ Class Frm_Main
                             Next
 
                             If Not Projekt_Bus.cabin.driverPos Is Nothing Then
-                                GL.Color3(My.Settings.DriverColor)
-                                GL.VertexPointer(3, VertexPointerType.Double, 0, Projekt_Bus.cabin.driverPos.vertices)
-                                GL.DrawElements(PrimitiveType.Triangles, Projekt_Bus.cabin.driverPos.edges.Count, DrawElementsType.UnsignedInt, Projekt_Bus.cabin.driverPos.edges)
-                                GL.Color3(Color.Black)
-                                GL.DrawElements(PrimitiveType.Lines, Projekt_Bus.cabin.driverPos.lines.Count, DrawElementsType.UnsignedInt, Projekt_Bus.cabin.driverPos.lines)
-
-                                GL.LineWidth(3)
+                                With Projekt_Bus.cabin.driverPos
+                                    GL.Color3(My.Settings.DriverColor)
+                                    GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
+                                    GL.DrawElements(PrimitiveType.Triangles, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                    GL.Color3(Color.Black)
+                                    GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
+                                End With
                             End If
                         End If
 
@@ -3885,6 +3887,8 @@ Class Frm_Main
                                         GL.Color3(.color.R, .color.G, .color.B)
                                         GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                         GL.DrawElements(PrimitiveType.Triangles, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                        GL.Color3(Color.Black)
+                                        GL.DrawElements(PrimitiveType.LineLoop, .lines.Count, DrawElementsType.UnsignedInt, .lines)
                                     End With
                                 End If
                             End If

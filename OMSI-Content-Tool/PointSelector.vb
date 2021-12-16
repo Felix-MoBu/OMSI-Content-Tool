@@ -3,8 +3,8 @@ Option Strict On
 
 Public Class PointSelector
     Dim intPoint As New Point3D
-    Dim intMin As Double
-    Dim intMax As Double
+    Dim intMin As Double = Double.MinValue
+    Dim intMax As Double = Double.MaxValue
 
     Public Property Min As Double
         Get
