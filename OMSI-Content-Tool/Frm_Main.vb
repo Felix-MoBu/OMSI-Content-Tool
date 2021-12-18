@@ -40,18 +40,6 @@ Class Frm_Main
     Dim CamLocation As New Point3D
     Dim CamLocationOld As New Point3D
 
-
-    Dim achsenVis As Boolean
-    Dim spiegelVis As Boolean
-    Dim kameraVis As Boolean
-    Dim lichterVis As Boolean
-    Dim bboxVis As Boolean
-    Dim rauchVis As Boolean
-    Dim sitzeVis As Boolean
-    Dim stehVis As Boolean
-    Dim pfadeVis As Boolean
-    Dim KupplungVis As Boolean
-
     Public AlleObjekte As New List(Of Local3DObjekt)
     Public AlleTexturen As New List(Of String)
     Public AlleVariablen As New List(Of String)
@@ -566,7 +554,6 @@ Class Frm_Main
                     If My.Settings.SaveIntervalAuto Then
                         save()
                     Else
-                        TSave.Stop()
                         TBTimer.ForeColor = Color.Red
                         TBTimer.Text = "Jetzt speichern!"
                         Exit Sub
@@ -580,7 +567,6 @@ Class Frm_Main
             If timerSec < 10 Then TBTimer.Text &= "0"
             TBTimer.Text &= timerSec
         Else
-            TSave.Stop()
             TBTimer.Text = ""
         End If
     End Sub
@@ -773,9 +759,23 @@ Class Frm_Main
         Next
     End Sub
 
+    Private Sub resetProj()
+        Projekt_Bus = Nothing
+        Projekt_Ovh = Nothing
+        Projekt_Sco = Nothing
+        Projekt_Sli = Nothing
+        AlleObjekte = New List(Of Local3DObjekt)
+        AlleTexturen = New List(Of String)
+        AlleVariablen = New List(Of String)
+        AlleVarValues = New List(Of Double)
+        HofDateienToolStripMenuItem.Enabled = False     'Nur Busse haben Hof-Dateien
+        RepaintToolStripMenuItem.Enabled = False        'Splines haben keine Repaints
+        Text = My.Application.Info.Title
+    End Sub
+
     Private Sub ProjÖffnen(filename As String)
 
-        HofDateienToolStripMenuItem.Enabled = False     'Nur Busse haben Hof-Dateien
+        resetProj()
 
         Select Case LCase(filename.Substring(filename.Length - 3))
             Case "bus"
@@ -802,7 +802,10 @@ Class Frm_Main
         addProjectlist(filename)
         GlMain.Invalidate()
         TCObjekte_SelectedIndexChanged(TCObjekte, Nothing)
-        Text = filename & " - " & My.Application.Info.Title
+        If Not Importer.stopImport Then
+            Text = filename & " - " & My.Application.Info.Title
+        End If
+        Importer.stopImport = False
     End Sub
 
     Public Sub addProjectlist(filename As String)
@@ -989,7 +992,7 @@ Class Frm_Main
             loadModelPrefs(.model)
             If Not .model Is Nothing Then
                 showModel(.model.meshes)
-
+                If Importer.stopImport Then Exit Sub
                 For Each mesh In .model.meshes
                     For Each anim In mesh.animations
                         If anim.origin_from_mesh Then
@@ -1068,6 +1071,10 @@ Class Frm_Main
 
         For i As Integer = 0 To meshes.Count - 1
             'If mesh.filename.extension = "o3d" Then
+            If Importer.stopImport Then
+                resetProj()
+                Exit Sub
+            End If
             Dim newMesh As OMSI_Mesh = fileimport2(New Filename(meshes(i).filename.name, getProj.filename.path & "\Model"))
             If Not newMesh Is Nothing Then
                 items_temp.Add(newMesh.filename.name)
@@ -2916,6 +2923,9 @@ Class Frm_Main
                 Next
             Next
             PBTexture.Image = My.Resources.pink
+            If IO.File.Exists(Projekt_Bus.filename.path & "\Texture\" & file) Then
+                PBTexture.Tag = Projekt_Bus.filename.path & "\Texture\" & file
+            End If
         End If
     End Sub
 
@@ -3907,7 +3917,7 @@ Class Frm_Main
                                 End If
 
                                 GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                GL.DrawElements(PrimitiveType.Triangles, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                GL.DrawElements(PrimitiveType.TriangleFan, .edges.Count, DrawElementsType.UnsignedInt, .edges)
                             End With
                             i += 1
                         Next
@@ -3923,8 +3933,6 @@ Class Frm_Main
                                     GL.Color3(Color.Black)
                                     GL.PointSize(20)
                                     GL.BindTexture(TextureTarget.Texture2D, 0) 'dotTexture.id)
-
-
 
                                     For i = 0 To .dots.Count - 1
                                         If i = LBPfade.SelectedIndex Then

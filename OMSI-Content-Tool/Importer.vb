@@ -3,7 +3,10 @@ Imports System.Xml
 Imports System.IO
 
 Module Importer
+    Public stopImport As Boolean = False
+
     Public Function readFile(filename As Filename)
+        stopImport = False
         If checkIfExist(filename) Then
             Return Nothing
         End If
@@ -41,14 +44,22 @@ Module Importer
         Return Nothing
     End Function
 
+    Private Sub importWarnung(msg As String, fehler As String, filename As String, grund As String)
+        If Not ignoreImportFail Then
+            Dim result = MsgBox(msg & vbCrLf & "(Feher: " & fehler & ", Datei: " & filename & ") " & grund, vbAbortRetryIgnore)
+            If result = vbIgnore Then ignoreImportFail = True
+            If result = vbAbort Then stopImport = True
+        End If
+    End Sub
+
     Private Function readX3D(filename As Filename) As Local3DObjekt
         Dim document As New XmlDocument
 
         Try
             document.Load(filename)
         Catch ex As Exception
-            MsgBox("Import fehlgeschlagen! (Fehler: I003, Datei: " & filename & ") falsches Dateiformat oder bschädigte Datei")
             Log.Add("Import fehlgeschlagen! (Fehler: I003, Datei: " & filename & ")", Log.TYPE_ERROR)
+            importWarnung("Import fehlgeschlagen!", "I003", filename, "falsches Dateiformat oder bschädigte Datei")
             Frm_Main.SSLBStatus.Text = ""
             Return Nothing
         End Try
@@ -79,7 +90,7 @@ Module Importer
                                             texture.matName = shape.firstchild.attributes(0).value
                                             texture.filename = New Filename(Split(shape.firstchild.attributes(1).value, """ """)(1))
                                         Else
-                                            For Each texture2 In temp3D.Texturen
+                                            For Each texture2 In temp3D.texturen
                                                 If texture2.matName = shape.firstchild.attributes(0).value Then
                                                     texture = texture2
                                                 End If
@@ -89,7 +100,7 @@ Module Importer
                                             End If
                                         End If
 
-                                        temp3D.Texturen.Add(texture)
+                                        temp3D.texturen.Add(texture)
                                     End If
 
                                     If shape.name = "IndexedFaceSet" Then
@@ -196,7 +207,7 @@ Module Importer
         For Each subObj In temp3D.subObjekte
             linesTemp.AddRange(subObj)
         Next
-        temp3D.Lines = faceToLines(linesTemp).ToArray
+        temp3D.lines = faceToLines(linesTemp).ToArray
 
         Log.Add("Import erfolgreich! (Datei:" & filename.name & ", Format: X3D)")
         Return temp3D
@@ -223,7 +234,7 @@ Module Importer
         If bytes.Count < 5 Then                                                         'Datei leer
             Log.Add("Import fehlgeschlagen! (Feher: I000a, Datei: " & filename & ")", Log.TYPE_ERROR)
             If Not ignoreImportFail Then
-                Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Feher: I000a, Datei: " & filename & ") Datei leer!")
+                Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Feher: I000a, Datei: " & filename & ") Datei leer!", vbAbortRetryIgnore)
                 If result = vbIgnore Then ignoreImportFail = True
             End If
             Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
@@ -239,7 +250,7 @@ Module Importer
             End If
             Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
             Return Nothing
-            End If
+        End If
 
 
         Dim isAddon As Boolean = False
@@ -259,13 +270,13 @@ Module Importer
             If bytes(0) <> &H84 Or bytes(1) <> &H19 Or bytes(2) <> &H1 Or bytes(3) <> &H17 Then             'Normale O3D
                 Log.Add("Import fehlgeschlagen! (Fehler: I002, Datei: " & filename & ")", Log.TYPE_ERROR)
                 If Not ignoreImportFail Then
-                    Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002, Datei: " & filename & ") falsches Format")
+                    Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002, Datei: " & filename & ") falsches Format", vbAbortRetryIgnore)
                     If result = vbIgnore Then ignoreImportFail = True
                 End If
                 Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
                 Return Nothing
-                End If
             End If
+        End If
 
         Dim temp3D As New Local3DObjekt
 
@@ -462,8 +473,8 @@ Module Importer
             Case "xof 0303txt 0032"
                 Return readX303(lines, filename)
             Case Else
-                MsgBox("Import fehlgeschlagen! (Fehler: I012, Datei: " & filename & ") falsches Format")
                 Log.Add("Import fehlgeschlagen! (Fehler: I012, Datei: " & filename & ")", Log.TYPE_ERROR)
+                importWarnung("Import fehlgeschlagen!", "I012", filename, "falsches Format")
                 Frm_Main.SSLBStatus.Text = ""
                 Return Nothing
         End Select
@@ -603,14 +614,14 @@ Module Importer
                             textureNames.Add(.filename.name)
                         End With
                         Dim exists As Boolean = False
-                        For Each texture In temp3D.Texturen
+                        For Each texture In temp3D.texturen
                             If texture.filename.name = newTexture.filename.name Then
                                 exists = True
                             End If
                         Next
                         If Not exists Then
 
-                            temp3D.Texturen.Add(newTexture)
+                            temp3D.texturen.Add(newTexture)
                         End If
                     Else
                         textureNames.Add("keine")
@@ -627,20 +638,20 @@ Module Importer
             .normals = normalsTemp.ToArray
 
             'Lines erstellen
-            .Lines = linesTemp.ToArray
+            .lines = linesTemp.ToArray
 
 
             'Subobjekte erstellen
             Dim newMatlist As New List(Of Integer)
             Dim handeledTextureNames As New List(Of String)
-            For i = 0 To .Texturen.Count - 1
+            For i = 0 To .texturen.Count - 1
                 For n = 0 To textureNames.Count - 1
-                    If textureNames(n) = .Texturen(i).filename.name Then
-                        If Not handeledTextureNames.Contains(.Texturen(i).filename.name) Then
+                    If textureNames(n) = .texturen(i).filename.name Then
+                        If Not handeledTextureNames.Contains(.texturen(i).filename.name) Then
                             For x = 0 To matlistTemp.Count - 1
                                 If matlistTemp(x) = n Then newMatlist.Add(i)
                             Next
-                            handeledTextureNames.Add(.Texturen(i).filename.name)
+                            handeledTextureNames.Add(.texturen(i).filename.name)
                         End If
                     End If
                 Next
@@ -649,7 +660,7 @@ Module Importer
             matlistTemp = newMatlist
 
             Dim arrTemp As New List(Of Integer)
-            For i = 0 To .Texturen.Count - 1
+            For i = 0 To .texturen.Count - 1
                 arrTemp.Clear()
                 For n = 0 To matlistTemp.Count - 1
                     If matlistTemp(n) = i Then
@@ -834,14 +845,14 @@ Module Importer
                                 textureNames.Add(.filename.name)
                             End With
                             Dim exists As Boolean = False
-                            For Each texture In temp3D.Texturen
+                            For Each texture In temp3D.texturen
                                 If texture.filename.name = newTexture.filename.name Then
                                     exists = True
                                 End If
                             Next
                             If Not exists Then
 
-                                temp3D.Texturen.Add(newTexture)
+                                temp3D.texturen.Add(newTexture)
                             End If
                         Else
                             textureNames.Add("keine")
@@ -858,20 +869,20 @@ Module Importer
             .normals = normalsTemp2.ToArray
 
             'Lines erstellen
-            .Lines = linesTemp.ToArray
+            .lines = linesTemp.ToArray
 
 
             'Subobjekte erstellen
             Dim newMatlist As New List(Of Integer)
             Dim handeledTextureNames As New List(Of String)
-            For i = 0 To .Texturen.Count - 1
+            For i = 0 To .texturen.Count - 1
                 For n = 0 To textureNames.Count - 1
-                    If textureNames(n) = .Texturen(i).filename.name Then
-                        If Not handeledTextureNames.Contains(.Texturen(i).filename.name) Then
+                    If textureNames(n) = .texturen(i).filename.name Then
+                        If Not handeledTextureNames.Contains(.texturen(i).filename.name) Then
                             For x = 0 To matlistTemp.Count - 1
                                 If matlistTemp(x) = n Then newMatlist.Add(i)
                             Next
-                            handeledTextureNames.Add(.Texturen(i).filename.name)
+                            handeledTextureNames.Add(.texturen(i).filename.name)
                         End If
                     End If
                 Next
@@ -880,7 +891,7 @@ Module Importer
             matlistTemp = newMatlist
 
             Dim arrTemp As New List(Of Integer)
-            For i = 0 To .Texturen.Count - 1
+            For i = 0 To .texturen.Count - 1
                 arrTemp.Clear()
                 For n = 0 To matlistTemp.Count - 1
                     If matlistTemp(n) = i Then
@@ -947,7 +958,7 @@ Module Importer
             .position = New Point3D()
             .vertices = tempSLI.vertices
             .subObjekte = tempSLI.subobjekte
-            .Lines = tempSLI.lines
+            .lines = tempSLI.lines
             .texCoords = tempSLI.texCoords
             .texturen = tempSLI.textures
         End With
@@ -960,7 +971,7 @@ Module Importer
             If .vertices.Count = 0 Then Return False
             If .subObjekte.Count = 0 Then Return False
             If .texCoords.Count = 0 Then Return False
-            If .Lines.Count = 0 Then Return False
+            If .lines.Count = 0 Then Return False
             Return True
         End With
     End Function

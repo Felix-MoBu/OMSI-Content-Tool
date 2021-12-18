@@ -23,16 +23,6 @@ Partial Class Frm_Main
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim Point3D1 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim RgbColor1 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
-        Dim Point3D2 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D3 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D4 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D5 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D6 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D7 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim RgbColor2 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
-        Dim Point3D8 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Achsen")
         Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Boundingbox")
         Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Fahrerkameras")
@@ -51,6 +41,16 @@ Partial Class Frm_Main
         Dim TreeNode16 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Attachpoints")
         Dim TreeNode17 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Splinehelper")
         Dim TreeNode18 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Spots")
+        Dim Point3D1 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim RgbColor1 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
+        Dim Point3D2 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D3 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D4 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D5 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D6 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D7 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim RgbColor2 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
+        Dim Point3D8 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Main))
         Me.SS1 = New System.Windows.Forms.StatusStrip()
         Me.PBMain = New System.Windows.Forms.ToolStripProgressBar()
@@ -178,10 +178,8 @@ Partial Class Frm_Main
         Me.Spot_TBAussen = New System.Windows.Forms.TextBox()
         Me.Spot_TBInner = New System.Windows.Forms.TextBox()
         Me.Label80 = New System.Windows.Forms.Label()
-        Me.Spot_PSRichtung = New O3D_Test.PointSelector()
         Me.Spot_TBLeuchtweite = New System.Windows.Forms.TextBox()
         Me.Label79 = New System.Windows.Forms.Label()
-        Me.Spot_CSFarbe = New O3D_Test.ColorSelector()
         Me.GBPlatz = New System.Windows.Forms.GroupBox()
         Me.Platz_MinMax = New System.Windows.Forms.Button()
         Me.Platz_TBRichtung = New System.Windows.Forms.TextBox()
@@ -189,11 +187,9 @@ Partial Class Frm_Main
         Me.GBRauch = New System.Windows.Forms.GroupBox()
         Me.Rauch_MinMax = New System.Windows.Forms.Button()
         Me.Label56 = New System.Windows.Forms.Label()
-        Me.VarSelector1 = New O3D_Test.VarSelector()
         Me.Rauch_Geschw = New System.Windows.Forms.TextBox()
         Me.Label55 = New System.Windows.Forms.Label()
         Me.Label54 = New System.Windows.Forms.Label()
-        Me.PointSelector2 = New O3D_Test.PointSelector()
         Me.GBPfade = New System.Windows.Forms.GroupBox()
         Me.Pfade_CBTaster = New System.Windows.Forms.CheckBox()
         Me.Pfade_CBVerkauf = New System.Windows.Forms.CheckBox()
@@ -253,7 +249,6 @@ Partial Class Frm_Main
         Me.GBBbox = New System.Windows.Forms.GroupBox()
         Me.BBox_MinMax = New System.Windows.Forms.Button()
         Me.Label52 = New System.Windows.Forms.Label()
-        Me.BBox_PSSize = New O3D_Test.PointSelector()
         Me.BBoxBTBerechnen = New System.Windows.Forms.Button()
         Me.GBAchse = New System.Windows.Forms.GroupBox()
         Me.Label59 = New System.Windows.Forms.Label()
@@ -310,7 +305,6 @@ Partial Class Frm_Main
         Me.TBName = New System.Windows.Forms.TextBox()
         Me.Label = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.PSPos = New O3D_Test.PointSelector()
         Me.GBMesh = New System.Windows.Forms.GroupBox()
         Me.Mesh_TBMeshident = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
@@ -320,9 +314,6 @@ Partial Class Frm_Main
         Me.Mesh_NUMin = New System.Windows.Forms.NumericUpDown()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.Mesh_TBSichtbarkeitVal = New System.Windows.Forms.TextBox()
-        Me.Mesh_VSKlickevent = New O3D_Test.VarSelector()
-        Me.Mesh_VSSichtbarkeit = New O3D_Test.VarSelector()
-        Me.Mesh_PSCenter = New O3D_Test.PointSelector()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Mesh_DDViedpoint = New System.Windows.Forms.ComboBox()
@@ -350,9 +341,6 @@ Partial Class Frm_Main
         Me.GBLicht = New System.Windows.Forms.GroupBox()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Licht_MinMax = New System.Windows.Forms.Button()
-        Me.Licht_VSVar = New O3D_Test.VarSelector()
-        Me.Licht_PSVector = New O3D_Test.PointSelector()
-        Me.Licht_PSRichtung = New O3D_Test.PointSelector()
         Me.Licht_TBZeitkonst = New System.Windows.Forms.TextBox()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Licht_TBKegel = New System.Windows.Forms.TextBox()
@@ -374,7 +362,6 @@ Partial Class Frm_Main
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Licht_CBAusr = New System.Windows.Forms.ComboBox()
         Me.Label13 = New System.Windows.Forms.Label()
-        Me.Licht_CSFarbe = New O3D_Test.ColorSelector()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Licht_TBTexture = New System.Windows.Forms.TextBox()
@@ -398,13 +385,11 @@ Partial Class Frm_Main
         Me.Label75 = New System.Windows.Forms.Label()
         Me.Anim_RBPoint = New System.Windows.Forms.RadioButton()
         Me.Anim_RBCenter = New System.Windows.Forms.RadioButton()
-        Me.Anim_PSRotPnt = New O3D_Test.PointSelector()
         Me.Anim_TBAnimGrp = New System.Windows.Forms.TextBox()
         Me.Anim_MinMax = New System.Windows.Forms.Button()
         Me.Anim_TBValue = New System.Windows.Forms.TextBox()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.Label28 = New System.Windows.Forms.Label()
-        Me.Anim_VSVar = New O3D_Test.VarSelector()
         Me.Anim_RBVerschieben = New System.Windows.Forms.RadioButton()
         Me.Anim_RBDrehen = New System.Windows.Forms.RadioButton()
         Me.Anim_BTLöschen = New System.Windows.Forms.Button()
@@ -476,6 +461,21 @@ Partial Class Frm_Main
         Me.FDÖffnen = New System.Windows.Forms.OpenFileDialog()
         Me.TSave = New System.Windows.Forms.Timer(Me.components)
         Me.TReloadTextures = New System.Windows.Forms.Timer(Me.components)
+        Me.Spot_PSRichtung = New O3D_Test.PointSelector()
+        Me.Spot_CSFarbe = New O3D_Test.ColorSelector()
+        Me.VarSelector1 = New O3D_Test.VarSelector()
+        Me.PointSelector2 = New O3D_Test.PointSelector()
+        Me.BBox_PSSize = New O3D_Test.PointSelector()
+        Me.PSPos = New O3D_Test.PointSelector()
+        Me.Mesh_VSKlickevent = New O3D_Test.VarSelector()
+        Me.Mesh_VSSichtbarkeit = New O3D_Test.VarSelector()
+        Me.Mesh_PSCenter = New O3D_Test.PointSelector()
+        Me.Licht_VSVar = New O3D_Test.VarSelector()
+        Me.Licht_PSVector = New O3D_Test.PointSelector()
+        Me.Licht_PSRichtung = New O3D_Test.PointSelector()
+        Me.Licht_CSFarbe = New O3D_Test.ColorSelector()
+        Me.Anim_PSRotPnt = New O3D_Test.PointSelector()
+        Me.Anim_VSVar = New O3D_Test.VarSelector()
         Me.SS1.SuspendLayout()
         Me.MS1.SuspendLayout()
         Me.PanelMain.SuspendLayout()
@@ -570,32 +570,32 @@ Partial Class Frm_Main
         '
         Me.NeuToolStripMenuItem.Name = "NeuToolStripMenuItem"
         Me.NeuToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-        Me.NeuToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.NeuToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.NeuToolStripMenuItem.Text = "Neu"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(168, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
         '
         'ÖffnenToolStripMenuItem
         '
         Me.ÖffnenToolStripMenuItem.Name = "ÖffnenToolStripMenuItem"
         Me.ÖffnenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ÖffnenToolStripMenuItem.Text = "Öffnen"
         '
         'LetzteToolStripMenuItem
         '
         Me.LetzteToolStripMenuItem.Name = "LetzteToolStripMenuItem"
-        Me.LetzteToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.LetzteToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.LetzteToolStripMenuItem.Text = "Zuletzt geöffnet..."
         '
         'NeuLadenToolStripMenuItem
         '
         Me.NeuLadenToolStripMenuItem.Name = "NeuLadenToolStripMenuItem"
         Me.NeuLadenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
-        Me.NeuLadenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.NeuLadenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.NeuLadenToolStripMenuItem.Text = "Neu laden"
         '
         'SpeichernToolStripMenuItem
@@ -603,44 +603,44 @@ Partial Class Frm_Main
         Me.SpeichernToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AllesToolStripMenuItem1, Me.NurProjektbusovhscoToolStripMenuItem, Me.NurModelToolStripMenuItem, Me.NurCabinToolStripMenuItem, Me.NurPathsToolStripMenuItem})
         Me.SpeichernToolStripMenuItem.Enabled = False
         Me.SpeichernToolStripMenuItem.Name = "SpeichernToolStripMenuItem"
-        Me.SpeichernToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.SpeichernToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SpeichernToolStripMenuItem.Text = "Speichern"
         '
         'AllesToolStripMenuItem1
         '
         Me.AllesToolStripMenuItem1.Name = "AllesToolStripMenuItem1"
         Me.AllesToolStripMenuItem1.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.AllesToolStripMenuItem1.Size = New System.Drawing.Size(238, 22)
+        Me.AllesToolStripMenuItem1.Size = New System.Drawing.Size(260, 22)
         Me.AllesToolStripMenuItem1.Text = "Alles"
         '
         'NurProjektbusovhscoToolStripMenuItem
         '
         Me.NurProjektbusovhscoToolStripMenuItem.Name = "NurProjektbusovhscoToolStripMenuItem"
-        Me.NurProjektbusovhscoToolStripMenuItem.Size = New System.Drawing.Size(238, 22)
-        Me.NurProjektbusovhscoToolStripMenuItem.Text = "Nur Projekt (*.bus, *.ovh, *.sco)"
+        Me.NurProjektbusovhscoToolStripMenuItem.Size = New System.Drawing.Size(260, 22)
+        Me.NurProjektbusovhscoToolStripMenuItem.Text = "Nur Projekt (*.bus, *.ovh, *.sco *.sli)"
         '
         'NurModelToolStripMenuItem
         '
         Me.NurModelToolStripMenuItem.Name = "NurModelToolStripMenuItem"
-        Me.NurModelToolStripMenuItem.Size = New System.Drawing.Size(238, 22)
+        Me.NurModelToolStripMenuItem.Size = New System.Drawing.Size(260, 22)
         Me.NurModelToolStripMenuItem.Text = "Nur Model"
         '
         'NurCabinToolStripMenuItem
         '
         Me.NurCabinToolStripMenuItem.Name = "NurCabinToolStripMenuItem"
-        Me.NurCabinToolStripMenuItem.Size = New System.Drawing.Size(238, 22)
+        Me.NurCabinToolStripMenuItem.Size = New System.Drawing.Size(260, 22)
         Me.NurCabinToolStripMenuItem.Text = "Nur Sitz-/Stehplätze"
         '
         'NurPathsToolStripMenuItem
         '
         Me.NurPathsToolStripMenuItem.Name = "NurPathsToolStripMenuItem"
-        Me.NurPathsToolStripMenuItem.Size = New System.Drawing.Size(238, 22)
+        Me.NurPathsToolStripMenuItem.Size = New System.Drawing.Size(260, 22)
         Me.NurPathsToolStripMenuItem.Text = "Nur Pfade"
         '
         'SpeichernUnterToolStripMenuItem
         '
         Me.SpeichernUnterToolStripMenuItem.Name = "SpeichernUnterToolStripMenuItem"
-        Me.SpeichernUnterToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.SpeichernUnterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SpeichernUnterToolStripMenuItem.Text = "Speichern unter..."
         '
         'PackenToolStripMenuItem
@@ -648,7 +648,7 @@ Partial Class Frm_Main
         Me.PackenToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RarArchivToolStripMenuItem, Me.LctLOTUSContentToolStripMenuItem})
         Me.PackenToolStripMenuItem.Enabled = False
         Me.PackenToolStripMenuItem.Name = "PackenToolStripMenuItem"
-        Me.PackenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.PackenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.PackenToolStripMenuItem.Text = "Packen"
         '
         'RarArchivToolStripMenuItem
@@ -667,23 +667,23 @@ Partial Class Frm_Main
         'ToolStripMenuItem6
         '
         Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(168, 6)
+        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(177, 6)
         '
         'EinstellungenToolStripMenuItem
         '
         Me.EinstellungenToolStripMenuItem.Name = "EinstellungenToolStripMenuItem"
-        Me.EinstellungenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.EinstellungenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.EinstellungenToolStripMenuItem.Text = "Einstellungen"
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(168, 6)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(177, 6)
         '
         'BeendenToolStripMenuItem
         '
         Me.BeendenToolStripMenuItem.Name = "BeendenToolStripMenuItem"
-        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.BeendenToolStripMenuItem.Text = "Beenden"
         '
         'BearbeitenToolStripMenuItem
@@ -1405,20 +1405,6 @@ Partial Class Frm_Main
         Me.Label80.TabIndex = 4
         Me.Label80.Text = "Richtung"
         '
-        'Spot_PSRichtung
-        '
-        Me.Spot_PSRichtung.BackColor = System.Drawing.Color.Transparent
-        Me.Spot_PSRichtung.Location = New System.Drawing.Point(70, 19)
-        Me.Spot_PSRichtung.Max = 1.7976931348623157E+308R
-        Me.Spot_PSRichtung.Min = -1.7976931348623157E+308R
-        Me.Spot_PSRichtung.Name = "Spot_PSRichtung"
-        Me.Spot_PSRichtung.Point = Point3D1
-        Me.Spot_PSRichtung.Size = New System.Drawing.Size(254, 20)
-        Me.Spot_PSRichtung.TabIndex = 3
-        Me.Spot_PSRichtung.X = 0R
-        Me.Spot_PSRichtung.Y = 0R
-        Me.Spot_PSRichtung.Z = 0R
-        '
         'Spot_TBLeuchtweite
         '
         Me.Spot_TBLeuchtweite.Location = New System.Drawing.Point(69, 101)
@@ -1434,16 +1420,6 @@ Partial Class Frm_Main
         Me.Label79.Size = New System.Drawing.Size(65, 13)
         Me.Label79.TabIndex = 1
         Me.Label79.Text = "Leuchtweite"
-        '
-        'Spot_CSFarbe
-        '
-        Me.Spot_CSFarbe.BackColor = System.Drawing.Color.Transparent
-        Me.Spot_CSFarbe.Location = New System.Drawing.Point(6, 45)
-        Me.Spot_CSFarbe.Name = "Spot_CSFarbe"
-        RgbColor1.SelectedColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Spot_CSFarbe.SelectedColor = RgbColor1
-        Me.Spot_CSFarbe.Size = New System.Drawing.Size(193, 24)
-        Me.Spot_CSFarbe.TabIndex = 0
         '
         'GBPlatz
         '
@@ -1516,14 +1492,6 @@ Partial Class Frm_Main
         Me.Label56.TabIndex = 5
         Me.Label56.Text = "Geschw. Var"
         '
-        'VarSelector1
-        '
-        Me.VarSelector1.Location = New System.Drawing.Point(224, 44)
-        Me.VarSelector1.Name = "VarSelector1"
-        Me.VarSelector1.Size = New System.Drawing.Size(72, 20)
-        Me.VarSelector1.TabIndex = 4
-        Me.VarSelector1.Variable = ""
-        '
         'Rauch_Geschw
         '
         Me.Rauch_Geschw.Location = New System.Drawing.Point(70, 45)
@@ -1548,20 +1516,6 @@ Partial Class Frm_Main
         Me.Label54.Size = New System.Drawing.Size(50, 13)
         Me.Label54.TabIndex = 1
         Me.Label54.Text = "Richtung"
-        '
-        'PointSelector2
-        '
-        Me.PointSelector2.BackColor = System.Drawing.Color.Transparent
-        Me.PointSelector2.Location = New System.Drawing.Point(70, 19)
-        Me.PointSelector2.Max = 1.7976931348623157E+308R
-        Me.PointSelector2.Min = 0R
-        Me.PointSelector2.Name = "PointSelector2"
-        Me.PointSelector2.Point = Point3D2
-        Me.PointSelector2.Size = New System.Drawing.Size(255, 20)
-        Me.PointSelector2.TabIndex = 0
-        Me.PointSelector2.X = 0R
-        Me.PointSelector2.Y = 0R
-        Me.PointSelector2.Z = 0R
         '
         'GBPfade
         '
@@ -2164,20 +2118,6 @@ Partial Class Frm_Main
         Me.Label52.TabIndex = 24
         Me.Label52.Text = "Maße"
         '
-        'BBox_PSSize
-        '
-        Me.BBox_PSSize.BackColor = System.Drawing.Color.Transparent
-        Me.BBox_PSSize.Location = New System.Drawing.Point(70, 19)
-        Me.BBox_PSSize.Max = 1.7976931348623157E+308R
-        Me.BBox_PSSize.Min = -1.7976931348623157E+308R
-        Me.BBox_PSSize.Name = "BBox_PSSize"
-        Me.BBox_PSSize.Point = Point3D3
-        Me.BBox_PSSize.Size = New System.Drawing.Size(255, 20)
-        Me.BBox_PSSize.TabIndex = 23
-        Me.BBox_PSSize.X = 0R
-        Me.BBox_PSSize.Y = 0R
-        Me.BBox_PSSize.Z = 0R
-        '
         'BBoxBTBerechnen
         '
         Me.BBoxBTBerechnen.Location = New System.Drawing.Point(244, 45)
@@ -2704,20 +2644,6 @@ Partial Class Frm_Main
         Me.Label3.TabIndex = 8
         Me.Label3.Text = "Position"
         '
-        'PSPos
-        '
-        Me.PSPos.BackColor = System.Drawing.Color.Transparent
-        Me.PSPos.Location = New System.Drawing.Point(69, 44)
-        Me.PSPos.Max = 1.7976931348623157E+308R
-        Me.PSPos.Min = -1.7976931348623157E+308R
-        Me.PSPos.Name = "PSPos"
-        Me.PSPos.Point = Point3D4
-        Me.PSPos.Size = New System.Drawing.Size(255, 20)
-        Me.PSPos.TabIndex = 22
-        Me.PSPos.X = 0R
-        Me.PSPos.Y = 0R
-        Me.PSPos.Z = 0R
-        '
         'GBMesh
         '
         Me.GBMesh.Controls.Add(Me.Mesh_TBMeshident)
@@ -2814,36 +2740,6 @@ Partial Class Frm_Main
         Me.Mesh_TBSichtbarkeitVal.Size = New System.Drawing.Size(71, 20)
         Me.Mesh_TBSichtbarkeitVal.TabIndex = 29
         Me.Mesh_TBSichtbarkeitVal.Text = "0"
-        '
-        'Mesh_VSKlickevent
-        '
-        Me.Mesh_VSKlickevent.Location = New System.Drawing.Point(69, 19)
-        Me.Mesh_VSKlickevent.Name = "Mesh_VSKlickevent"
-        Me.Mesh_VSKlickevent.Size = New System.Drawing.Size(226, 20)
-        Me.Mesh_VSKlickevent.TabIndex = 28
-        Me.Mesh_VSKlickevent.Variable = ""
-        '
-        'Mesh_VSSichtbarkeit
-        '
-        Me.Mesh_VSSichtbarkeit.Location = New System.Drawing.Point(69, 72)
-        Me.Mesh_VSSichtbarkeit.Name = "Mesh_VSSichtbarkeit"
-        Me.Mesh_VSSichtbarkeit.Size = New System.Drawing.Size(149, 20)
-        Me.Mesh_VSSichtbarkeit.TabIndex = 27
-        Me.Mesh_VSSichtbarkeit.Variable = ""
-        '
-        'Mesh_PSCenter
-        '
-        Me.Mesh_PSCenter.BackColor = System.Drawing.Color.Transparent
-        Me.Mesh_PSCenter.Location = New System.Drawing.Point(69, 99)
-        Me.Mesh_PSCenter.Max = 1.7976931348623157E+308R
-        Me.Mesh_PSCenter.Min = -1.7976931348623157E+308R
-        Me.Mesh_PSCenter.Name = "Mesh_PSCenter"
-        Me.Mesh_PSCenter.Point = Point3D5
-        Me.Mesh_PSCenter.Size = New System.Drawing.Size(255, 20)
-        Me.Mesh_PSCenter.TabIndex = 26
-        Me.Mesh_PSCenter.X = 0R
-        Me.Mesh_PSCenter.Y = 0R
-        Me.Mesh_PSCenter.Z = 0R
         '
         'Label5
         '
@@ -3143,42 +3039,6 @@ Partial Class Frm_Main
         Me.Licht_MinMax.Text = "-"
         Me.Licht_MinMax.UseVisualStyleBackColor = True
         '
-        'Licht_VSVar
-        '
-        Me.Licht_VSVar.Location = New System.Drawing.Point(70, 19)
-        Me.Licht_VSVar.Name = "Licht_VSVar"
-        Me.Licht_VSVar.Size = New System.Drawing.Size(226, 20)
-        Me.Licht_VSVar.TabIndex = 29
-        Me.Licht_VSVar.Variable = ""
-        '
-        'Licht_PSVector
-        '
-        Me.Licht_PSVector.BackColor = System.Drawing.Color.Transparent
-        Me.Licht_PSVector.Location = New System.Drawing.Point(70, 71)
-        Me.Licht_PSVector.Max = 2.0R
-        Me.Licht_PSVector.Min = 0R
-        Me.Licht_PSVector.Name = "Licht_PSVector"
-        Me.Licht_PSVector.Point = Point3D6
-        Me.Licht_PSVector.Size = New System.Drawing.Size(255, 20)
-        Me.Licht_PSVector.TabIndex = 58
-        Me.Licht_PSVector.X = 0R
-        Me.Licht_PSVector.Y = 0R
-        Me.Licht_PSVector.Z = 0R
-        '
-        'Licht_PSRichtung
-        '
-        Me.Licht_PSRichtung.BackColor = System.Drawing.Color.Transparent
-        Me.Licht_PSRichtung.Location = New System.Drawing.Point(70, 45)
-        Me.Licht_PSRichtung.Max = 1.0R
-        Me.Licht_PSRichtung.Min = -1.0R
-        Me.Licht_PSRichtung.Name = "Licht_PSRichtung"
-        Me.Licht_PSRichtung.Point = Point3D7
-        Me.Licht_PSRichtung.Size = New System.Drawing.Size(255, 20)
-        Me.Licht_PSRichtung.TabIndex = 57
-        Me.Licht_PSRichtung.X = 0R
-        Me.Licht_PSRichtung.Y = 0R
-        Me.Licht_PSRichtung.Z = 0R
-        '
         'Licht_TBZeitkonst
         '
         Me.Licht_TBZeitkonst.Location = New System.Drawing.Point(224, 207)
@@ -3366,16 +3226,6 @@ Partial Class Frm_Main
         Me.Label13.Size = New System.Drawing.Size(38, 13)
         Me.Label13.TabIndex = 30
         Me.Label13.Text = "Vektor"
-        '
-        'Licht_CSFarbe
-        '
-        Me.Licht_CSFarbe.BackColor = System.Drawing.Color.Transparent
-        Me.Licht_CSFarbe.Location = New System.Drawing.Point(6, 126)
-        Me.Licht_CSFarbe.Name = "Licht_CSFarbe"
-        RgbColor2.SelectedColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Licht_CSFarbe.SelectedColor = RgbColor2
-        Me.Licht_CSFarbe.Size = New System.Drawing.Size(193, 24)
-        Me.Licht_CSFarbe.TabIndex = 22
         '
         'Label8
         '
@@ -3621,21 +3471,6 @@ Partial Class Frm_Main
         Me.Anim_RBCenter.Text = "Center"
         Me.Anim_RBCenter.UseVisualStyleBackColor = True
         '
-        'Anim_PSRotPnt
-        '
-        Me.Anim_PSRotPnt.BackColor = System.Drawing.Color.Transparent
-        Me.Anim_PSRotPnt.Enabled = False
-        Me.Anim_PSRotPnt.Location = New System.Drawing.Point(69, 174)
-        Me.Anim_PSRotPnt.Max = 1.7976931348623157E+308R
-        Me.Anim_PSRotPnt.Min = 0R
-        Me.Anim_PSRotPnt.Name = "Anim_PSRotPnt"
-        Me.Anim_PSRotPnt.Point = Point3D8
-        Me.Anim_PSRotPnt.Size = New System.Drawing.Size(225, 20)
-        Me.Anim_PSRotPnt.TabIndex = 39
-        Me.Anim_PSRotPnt.X = 0R
-        Me.Anim_PSRotPnt.Y = 0R
-        Me.Anim_PSRotPnt.Z = 0R
-        '
         'Anim_TBAnimGrp
         '
         Me.Anim_TBAnimGrp.BackColor = System.Drawing.SystemColors.Menu
@@ -3679,14 +3514,6 @@ Partial Class Frm_Main
         Me.Label28.Size = New System.Drawing.Size(45, 13)
         Me.Label28.TabIndex = 33
         Me.Label28.Text = "Variable"
-        '
-        'Anim_VSVar
-        '
-        Me.Anim_VSVar.Location = New System.Drawing.Point(70, 99)
-        Me.Anim_VSVar.Name = "Anim_VSVar"
-        Me.Anim_VSVar.Size = New System.Drawing.Size(226, 20)
-        Me.Anim_VSVar.TabIndex = 32
-        Me.Anim_VSVar.Variable = ""
         '
         'Anim_RBVerschieben
         '
@@ -4334,6 +4161,179 @@ Partial Class Frm_Main
         'TReloadTextures
         '
         Me.TReloadTextures.Interval = 2000
+        '
+        'Spot_PSRichtung
+        '
+        Me.Spot_PSRichtung.BackColor = System.Drawing.Color.Transparent
+        Me.Spot_PSRichtung.Location = New System.Drawing.Point(70, 19)
+        Me.Spot_PSRichtung.Max = 1.7976931348623157E+308R
+        Me.Spot_PSRichtung.Min = -1.7976931348623157E+308R
+        Me.Spot_PSRichtung.Name = "Spot_PSRichtung"
+        Me.Spot_PSRichtung.Point = Point3D1
+        Me.Spot_PSRichtung.Size = New System.Drawing.Size(254, 20)
+        Me.Spot_PSRichtung.TabIndex = 3
+        Me.Spot_PSRichtung.X = 0R
+        Me.Spot_PSRichtung.Y = 0R
+        Me.Spot_PSRichtung.Z = 0R
+        '
+        'Spot_CSFarbe
+        '
+        Me.Spot_CSFarbe.BackColor = System.Drawing.Color.Transparent
+        Me.Spot_CSFarbe.Location = New System.Drawing.Point(6, 45)
+        Me.Spot_CSFarbe.Name = "Spot_CSFarbe"
+        RgbColor1.SelectedColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Spot_CSFarbe.SelectedColor = RgbColor1
+        Me.Spot_CSFarbe.Size = New System.Drawing.Size(193, 24)
+        Me.Spot_CSFarbe.TabIndex = 0
+        '
+        'VarSelector1
+        '
+        Me.VarSelector1.Location = New System.Drawing.Point(224, 44)
+        Me.VarSelector1.Name = "VarSelector1"
+        Me.VarSelector1.Size = New System.Drawing.Size(72, 20)
+        Me.VarSelector1.TabIndex = 4
+        Me.VarSelector1.Variable = ""
+        '
+        'PointSelector2
+        '
+        Me.PointSelector2.BackColor = System.Drawing.Color.Transparent
+        Me.PointSelector2.Location = New System.Drawing.Point(70, 19)
+        Me.PointSelector2.Max = 1.7976931348623157E+308R
+        Me.PointSelector2.Min = 0R
+        Me.PointSelector2.Name = "PointSelector2"
+        Me.PointSelector2.Point = Point3D2
+        Me.PointSelector2.Size = New System.Drawing.Size(255, 20)
+        Me.PointSelector2.TabIndex = 0
+        Me.PointSelector2.X = 0R
+        Me.PointSelector2.Y = 0R
+        Me.PointSelector2.Z = 0R
+        '
+        'BBox_PSSize
+        '
+        Me.BBox_PSSize.BackColor = System.Drawing.Color.Transparent
+        Me.BBox_PSSize.Location = New System.Drawing.Point(70, 19)
+        Me.BBox_PSSize.Max = 1.7976931348623157E+308R
+        Me.BBox_PSSize.Min = -1.7976931348623157E+308R
+        Me.BBox_PSSize.Name = "BBox_PSSize"
+        Me.BBox_PSSize.Point = Point3D3
+        Me.BBox_PSSize.Size = New System.Drawing.Size(255, 20)
+        Me.BBox_PSSize.TabIndex = 23
+        Me.BBox_PSSize.X = 0R
+        Me.BBox_PSSize.Y = 0R
+        Me.BBox_PSSize.Z = 0R
+        '
+        'PSPos
+        '
+        Me.PSPos.BackColor = System.Drawing.Color.Transparent
+        Me.PSPos.Location = New System.Drawing.Point(69, 44)
+        Me.PSPos.Max = 1.7976931348623157E+308R
+        Me.PSPos.Min = -1.7976931348623157E+308R
+        Me.PSPos.Name = "PSPos"
+        Me.PSPos.Point = Point3D4
+        Me.PSPos.Size = New System.Drawing.Size(255, 20)
+        Me.PSPos.TabIndex = 22
+        Me.PSPos.X = 0R
+        Me.PSPos.Y = 0R
+        Me.PSPos.Z = 0R
+        '
+        'Mesh_VSKlickevent
+        '
+        Me.Mesh_VSKlickevent.Location = New System.Drawing.Point(69, 19)
+        Me.Mesh_VSKlickevent.Name = "Mesh_VSKlickevent"
+        Me.Mesh_VSKlickevent.Size = New System.Drawing.Size(226, 20)
+        Me.Mesh_VSKlickevent.TabIndex = 28
+        Me.Mesh_VSKlickevent.Variable = ""
+        '
+        'Mesh_VSSichtbarkeit
+        '
+        Me.Mesh_VSSichtbarkeit.Location = New System.Drawing.Point(69, 72)
+        Me.Mesh_VSSichtbarkeit.Name = "Mesh_VSSichtbarkeit"
+        Me.Mesh_VSSichtbarkeit.Size = New System.Drawing.Size(149, 20)
+        Me.Mesh_VSSichtbarkeit.TabIndex = 27
+        Me.Mesh_VSSichtbarkeit.Variable = ""
+        '
+        'Mesh_PSCenter
+        '
+        Me.Mesh_PSCenter.BackColor = System.Drawing.Color.Transparent
+        Me.Mesh_PSCenter.Location = New System.Drawing.Point(69, 99)
+        Me.Mesh_PSCenter.Max = 1.7976931348623157E+308R
+        Me.Mesh_PSCenter.Min = -1.7976931348623157E+308R
+        Me.Mesh_PSCenter.Name = "Mesh_PSCenter"
+        Me.Mesh_PSCenter.Point = Point3D5
+        Me.Mesh_PSCenter.Size = New System.Drawing.Size(255, 20)
+        Me.Mesh_PSCenter.TabIndex = 26
+        Me.Mesh_PSCenter.X = 0R
+        Me.Mesh_PSCenter.Y = 0R
+        Me.Mesh_PSCenter.Z = 0R
+        '
+        'Licht_VSVar
+        '
+        Me.Licht_VSVar.Location = New System.Drawing.Point(70, 19)
+        Me.Licht_VSVar.Name = "Licht_VSVar"
+        Me.Licht_VSVar.Size = New System.Drawing.Size(226, 20)
+        Me.Licht_VSVar.TabIndex = 29
+        Me.Licht_VSVar.Variable = ""
+        '
+        'Licht_PSVector
+        '
+        Me.Licht_PSVector.BackColor = System.Drawing.Color.Transparent
+        Me.Licht_PSVector.Location = New System.Drawing.Point(70, 71)
+        Me.Licht_PSVector.Max = 2.0R
+        Me.Licht_PSVector.Min = 0R
+        Me.Licht_PSVector.Name = "Licht_PSVector"
+        Me.Licht_PSVector.Point = Point3D6
+        Me.Licht_PSVector.Size = New System.Drawing.Size(255, 20)
+        Me.Licht_PSVector.TabIndex = 58
+        Me.Licht_PSVector.X = 0R
+        Me.Licht_PSVector.Y = 0R
+        Me.Licht_PSVector.Z = 0R
+        '
+        'Licht_PSRichtung
+        '
+        Me.Licht_PSRichtung.BackColor = System.Drawing.Color.Transparent
+        Me.Licht_PSRichtung.Location = New System.Drawing.Point(70, 45)
+        Me.Licht_PSRichtung.Max = 1.0R
+        Me.Licht_PSRichtung.Min = -1.0R
+        Me.Licht_PSRichtung.Name = "Licht_PSRichtung"
+        Me.Licht_PSRichtung.Point = Point3D7
+        Me.Licht_PSRichtung.Size = New System.Drawing.Size(255, 20)
+        Me.Licht_PSRichtung.TabIndex = 57
+        Me.Licht_PSRichtung.X = 0R
+        Me.Licht_PSRichtung.Y = 0R
+        Me.Licht_PSRichtung.Z = 0R
+        '
+        'Licht_CSFarbe
+        '
+        Me.Licht_CSFarbe.BackColor = System.Drawing.Color.Transparent
+        Me.Licht_CSFarbe.Location = New System.Drawing.Point(6, 126)
+        Me.Licht_CSFarbe.Name = "Licht_CSFarbe"
+        RgbColor2.SelectedColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Licht_CSFarbe.SelectedColor = RgbColor2
+        Me.Licht_CSFarbe.Size = New System.Drawing.Size(193, 24)
+        Me.Licht_CSFarbe.TabIndex = 22
+        '
+        'Anim_PSRotPnt
+        '
+        Me.Anim_PSRotPnt.BackColor = System.Drawing.Color.Transparent
+        Me.Anim_PSRotPnt.Enabled = False
+        Me.Anim_PSRotPnt.Location = New System.Drawing.Point(69, 174)
+        Me.Anim_PSRotPnt.Max = 1.7976931348623157E+308R
+        Me.Anim_PSRotPnt.Min = 0R
+        Me.Anim_PSRotPnt.Name = "Anim_PSRotPnt"
+        Me.Anim_PSRotPnt.Point = Point3D8
+        Me.Anim_PSRotPnt.Size = New System.Drawing.Size(225, 20)
+        Me.Anim_PSRotPnt.TabIndex = 39
+        Me.Anim_PSRotPnt.X = 0R
+        Me.Anim_PSRotPnt.Y = 0R
+        Me.Anim_PSRotPnt.Z = 0R
+        '
+        'Anim_VSVar
+        '
+        Me.Anim_VSVar.Location = New System.Drawing.Point(70, 99)
+        Me.Anim_VSVar.Name = "Anim_VSVar"
+        Me.Anim_VSVar.Size = New System.Drawing.Size(226, 20)
+        Me.Anim_VSVar.TabIndex = 32
+        Me.Anim_VSVar.Variable = ""
         '
         'Frm_Main
         '

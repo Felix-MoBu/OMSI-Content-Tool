@@ -51,6 +51,7 @@ Partial Class Frm_Einst
         Me.BTRepToolSuchen = New System.Windows.Forms.Button()
         Me.TBRepTool = New System.Windows.Forms.TextBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.CBTexAutoReload = New System.Windows.Forms.CheckBox()
         Me.GBPerformance = New System.Windows.Forms.GroupBox()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.TBMaxFPS = New System.Windows.Forms.TextBox()
@@ -106,7 +107,6 @@ Partial Class Frm_Einst
         Me.CDColorAchsen = New System.Windows.Forms.ColorDialog()
         Me.BTEinstExp = New System.Windows.Forms.Button()
         Me.BTEinstImport = New System.Windows.Forms.Button()
-        Me.CBTexAutoReload = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -407,6 +407,16 @@ Partial Class Frm_Einst
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Darstellung"
         Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'CBTexAutoReload
+        '
+        Me.CBTexAutoReload.AutoSize = True
+        Me.CBTexAutoReload.Location = New System.Drawing.Point(265, 8)
+        Me.CBTexAutoReload.Name = "CBTexAutoReload"
+        Me.CBTexAutoReload.Size = New System.Drawing.Size(178, 17)
+        Me.CBTexAutoReload.TabIndex = 9
+        Me.CBTexAutoReload.Text = "Texturen automatisch neu laden"
+        Me.CBTexAutoReload.UseVisualStyleBackColor = True
         '
         'GBPerformance
         '
@@ -889,16 +899,6 @@ Partial Class Frm_Einst
         Me.BTEinstImport.TabIndex = 6
         Me.BTEinstImport.Text = "Einst. Import"
         Me.BTEinstImport.UseVisualStyleBackColor = True
-        '
-        'CBTexAutoReload
-        '
-        Me.CBTexAutoReload.AutoSize = True
-        Me.CBTexAutoReload.Location = New System.Drawing.Point(265, 8)
-        Me.CBTexAutoReload.Name = "CBTexAutoReload"
-        Me.CBTexAutoReload.Size = New System.Drawing.Size(178, 17)
-        Me.CBTexAutoReload.TabIndex = 9
-        Me.CBTexAutoReload.Text = "Texturen automatisch neu laden"
-        Me.CBTexAutoReload.UseVisualStyleBackColor = True
         '
         'Frm_Einst
         '
