@@ -7,10 +7,9 @@ Public Class OMSI_Spot
     Private range_int As Double
     Private innerCone_int As Integer
     Private outerCone_int As Integer
-    Public parent As String
 
     Public vertices As Double()
-    Public edges As Integer() = {0, 1, 2} ', 0, 2, 1}
+    Public edges As Integer() = {0, 1, 2}
     Public lines As Integer() = {0, 1, 2}
 
     Public Property range As Double

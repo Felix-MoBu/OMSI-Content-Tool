@@ -26,7 +26,6 @@ Partial Class ColorSelector
         Me.ColorB = New System.Windows.Forms.TextBox()
         Me.ColorG = New System.Windows.Forms.TextBox()
         Me.ColorR = New System.Windows.Forms.TextBox()
-        Me.Label8 = New System.Windows.Forms.Label()
         Me.PBColor = New System.Windows.Forms.PictureBox()
         Me.CD1 = New System.Windows.Forms.ColorDialog()
         CType(Me.PBColor, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -34,7 +33,7 @@ Partial Class ColorSelector
         '
         'CBBColor
         '
-        Me.CBBColor.Location = New System.Drawing.Point(238, 2)
+        Me.CBBColor.Location = New System.Drawing.Point(179, 2)
         Me.CBBColor.Name = "CBBColor"
         Me.CBBColor.Size = New System.Drawing.Size(26, 21)
         Me.CBBColor.TabIndex = 33
@@ -42,7 +41,7 @@ Partial Class ColorSelector
         '
         'ColorB
         '
-        Me.ColorB.Location = New System.Drawing.Point(197, 2)
+        Me.ColorB.Location = New System.Drawing.Point(138, 2)
         Me.ColorB.Name = "ColorB"
         Me.ColorB.Size = New System.Drawing.Size(40, 20)
         Me.ColorB.TabIndex = 32
@@ -50,7 +49,7 @@ Partial Class ColorSelector
         '
         'ColorG
         '
-        Me.ColorG.Location = New System.Drawing.Point(151, 2)
+        Me.ColorG.Location = New System.Drawing.Point(92, 2)
         Me.ColorG.Name = "ColorG"
         Me.ColorG.Size = New System.Drawing.Size(40, 20)
         Me.ColorG.TabIndex = 31
@@ -58,26 +57,17 @@ Partial Class ColorSelector
         '
         'ColorR
         '
-        Me.ColorR.Location = New System.Drawing.Point(105, 2)
+        Me.ColorR.Location = New System.Drawing.Point(46, 2)
         Me.ColorR.Name = "ColorR"
         Me.ColorR.Size = New System.Drawing.Size(40, 20)
         Me.ColorR.TabIndex = 30
         Me.ColorR.Text = "0"
         '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(0, 6)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(34, 13)
-        Me.Label8.TabIndex = 29
-        Me.Label8.Text = "Farbe"
-        '
         'PBColor
         '
         Me.PBColor.BackColor = System.Drawing.Color.White
         Me.PBColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PBColor.Location = New System.Drawing.Point(59, 2)
+        Me.PBColor.Location = New System.Drawing.Point(0, 2)
         Me.PBColor.Name = "PBColor"
         Me.PBColor.Size = New System.Drawing.Size(40, 20)
         Me.PBColor.TabIndex = 34
@@ -93,9 +83,8 @@ Partial Class ColorSelector
         Me.Controls.Add(Me.ColorB)
         Me.Controls.Add(Me.ColorG)
         Me.Controls.Add(Me.ColorR)
-        Me.Controls.Add(Me.Label8)
         Me.Name = "ColorSelector"
-        Me.Size = New System.Drawing.Size(281, 24)
+        Me.Size = New System.Drawing.Size(213, 24)
         CType(Me.PBColor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -106,7 +95,6 @@ Partial Class ColorSelector
     Friend WithEvents ColorB As TextBox
     Friend WithEvents ColorG As TextBox
     Friend WithEvents ColorR As TextBox
-    Friend WithEvents Label8 As Label
     Friend WithEvents PBColor As PictureBox
     Friend WithEvents CD1 As ColorDialog
 End Class

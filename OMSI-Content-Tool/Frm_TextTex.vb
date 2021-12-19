@@ -175,10 +175,10 @@ Public Class Frm_TextTex
     End Sub
 
     Private Sub TBHoehe_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBHoehe.KeyPress
-        e.Handled = helper.NumbersOnly(e)
+        e.Handled = helper.NumbersOnly(e, sender)
     End Sub
 
     Private Sub TBBreite_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBBreite.KeyPress
-        e.Handled = helper.NumbersOnly(e)
+        e.Handled = helper.NumbersOnly(e, sender)
     End Sub
 End Class

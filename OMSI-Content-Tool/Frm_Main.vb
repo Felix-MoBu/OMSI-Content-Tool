@@ -111,14 +111,6 @@ Class Frm_Main
         AlleObjekte.Clear()
         loadPositions()
 
-        Licht_CSFarbe.WidthOfTB = 226
-        Licht_CSFarbe.StartOfTB = 64
-        Licht_CSFarbe.Reload()
-
-        Spot_CSFarbe.WidthOfTB = 226
-        Spot_CSFarbe.StartOfTB = 64
-        Spot_CSFarbe.Reload()
-
         If My.Settings.eMail = Frm_Einst.stdMail Then
             TestToolStripMenuItem.Visible = True
         End If
@@ -137,20 +129,13 @@ Class Frm_Main
         redrawLetzte()
 
         If My.Settings.TexAutoReload Then TReloadTextures.Start()
-
-        'SoftDot nicht vergessen!
-        'dotTexture = New LocalTexture
-        'dotTexture.filename = New Filename("Dot.png", New Filename(Application.ExecutablePath).path)
-        'loadTexture(dotTexture)
-        'AlleTexturen.Add(dotTexture.filename)
-
     End Sub
 
 
 
 
 
-    Private Sub Frm_Main_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+    Private Sub Frm_Main_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
         'If exitApplication() = False Then e.Cancel = True
         Log.Add("Editor normal beendet!")
         Log.Close()
@@ -1646,21 +1631,10 @@ Class Frm_Main
             newSpot.outerCone = 70
             newSpot.innerCone = 30
 
-            If getSelectedMesh() Is Nothing Then
-                If LBMeshes.Items.Count > 0 Then
-                    newSpot.parent = LBMeshes.Items(0).ToString
-                Else
-                    MsgBox("Es kann kein Spot angelegt werden wenn kein Mesh geladen ist!")
-                    Log.Add("Licht anlegen ohne vorhandenes Mesh nicht möglich: Lichter brauchen immer ein Mesh als Parent!", Log.TYPE_WARNUNG)
-                    Exit Sub
-                End If
-
-            Else
-                If Not getSelectedMesh() Is Nothing Then
-                    newSpot.parent = getSelectedMesh.filename.name
-                Else
-                    newSpot.parent = getProj.model.meshes(0).filename.name
-                End If
+            If LBMeshes.Items.Count = 0 Then
+                MsgBox("Es kann kein Spot angelegt werden wenn kein Mesh geladen ist!")
+                Log.Add("Licht anlegen ohne vorhandenes Mesh nicht möglich: Lichter brauchen immer ein Mesh als Parent!", Log.TYPE_WARNUNG)
+                Exit Sub
             End If
 
             getProj.model.spots.Add(newSpot)
@@ -2446,20 +2420,28 @@ Class Frm_Main
                         Splinehelper_TBSpline.Text = .spline.name
                     End With
                 Case TVHelper.Nodes(11).Text    'Spots
-                    showSettings({GBParent, GBSpot})
-                    With Projekt_Bus.model.spots(index) 'getProj.model.spots(index)
-                        PSPos.Point = .position
-                        GBParent.Text = .parent
-                        Spot_PSRichtung.Point = .richtung
-                        Spot_CSFarbe.SelectedColor = .color
-                        Spot_TBAussen.Text = .outerCone
-                        Spot_TBInner.Text = .innerCone
-                        Spot_TBLeuchtweite.Text = .range
-                    End With
+                    showSettings({SSSpot})
+                    SSSpot.spot = getProj.model.spots(index)
+                    PSPos.Point = getProj.model.spots(index).position
+                    'With getProj.model.spots(index) 'getProj.model.spots(index)
+                    '    PSPos.Point = .position
+                    '    Spot_PSRichtung.Point = .richtung
+                    '    Spot_CSFarbe.SelectedColor = .color
+                    '    Spot_TBAussen.Text = .outerCone
+                    '    Spot_TBInner.Text = .innerCone
+                    '    Spot_TBLeuchtweite.Text = .range
+                    'End With
 
             End Select
         End If
         GlMain.Invalidate()
+    End Sub
+
+    Private Sub SSSpot_Changed(sender As Object, e As EventArgs) Handles SSSpot.Changed
+        If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_OVH Then
+            getProj.model.spots(TVHelper.SelectedNode.Index) = SSSpot.spot
+            GlMain.Invalidate()
+        End If
     End Sub
 
     Private Sub EntfernenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EntfernenToolStripMenuItem.Click
@@ -2593,10 +2575,10 @@ Class Frm_Main
         GlMain.Invalidate()
     End Sub
 
-    Private Sub showSettings(boxen As GroupBox())
-        For Each GB As GroupBox In PanelEigenschaften1.Controls
-            If Not GB.Text = "Allgemein" Then
-                GB.Visible = False
+    Private Sub showSettings(boxen As Object())
+        For Each obj As Object In PanelEigenschaften1.Controls
+            If Not obj.Text = "Allgemein" Then
+                obj.Visible = False
             End If
         Next
 
@@ -2888,17 +2870,17 @@ Class Frm_Main
         savePositions()
     End Sub
 
-    Private Sub LBPanelTexture_MouseDown(sender As Object, e As MouseEventArgs) Handles LBPanelTexture.MouseDown, MSTexturen.MouseDown
+    Private Sub LBPanelTexture_MouseDown(sender As Object, e As MouseEventArgs) Handles MSTexturen.MouseDown, LBPanelTexture.MouseDown
         movePanelTexture = True
     End Sub
 
-    Private Sub LBPanelTexture_MouseUp(sender As Object, e As MouseEventArgs) Handles LBPanelTexture.MouseUp, MSTexturen.MouseUp
+    Private Sub LBPanelTexture_MouseUp(sender As Object, e As MouseEventArgs) Handles MSTexturen.MouseUp, LBPanelTexture.MouseUp
         movePanelTexture = False
         checkPanelPosition(PanelTexture)
         savePositions()
     End Sub
 
-    Private Sub LBPanelTexture_MouseMove(sender As Object, e As MouseEventArgs) Handles LBPanelTexture.MouseMove, MSTexturen.MouseMove
+    Private Sub LBPanelTexture_MouseMove(sender As Object, e As MouseEventArgs) Handles MSTexturen.MouseMove, LBPanelTexture.MouseMove
         If movePanelTexture Then
             Dim ctl As Control = CType(PanelTexture, Control)
             ctl.Location = PointToClient(Cursor.Position - New Point(ctl.Width \ 2, 30))
@@ -3149,6 +3131,53 @@ Class Frm_Main
         savePositions()
     End Sub
 
+    Private Sub SSSpot_MinMax(sender As Object, e As EventArgs) Handles SSSpot.MinMax
+        GBMinMaxButton_neu(sender)
+    End Sub
+
+    Private Sub GBMinMaxButton_neu(sender As Object)
+        If sender.BTMinMax.text = "+" Then
+            sender.BTMinMax.text = "-"
+            sender.Height = sender.tag
+            sender.BackColor = Color.White
+        Else
+            sender.BTMinMax.text = "+"
+            sender.tag = sender.Height
+            sender.Height = 19
+            sender.BackColor = Form.DefaultBackColor
+        End If
+
+        Dim tempGBList As New List(Of Object)
+        Dim top As Integer = GBAllgemein.Height + GBAllgemein.Top + 6
+        For i = 0 To PanelEigenschaften1.Controls.Count - 1
+            Dim minTop As Integer = Height + 500
+            For Each control In PanelEigenschaften1.Controls
+                If control.visible Then
+                    If Not tempGBList.Contains(control) Then
+                        If control.top < minTop Then
+                            minTop = control.top
+                        End If
+                    End If
+                End If
+            Next
+            For Each control In PanelEigenschaften1.Controls
+                If control.top = minTop Then
+                    tempGBList.Add(control)
+                    Exit For
+                End If
+            Next
+        Next
+
+        For Each control In tempGBList
+            If Not control.Text = "Allgemein" Then
+                If control.Visible Then
+                    control.Top = top
+                    top += control.Height + 6
+                End If
+            End If
+        Next
+    End Sub
+
     Private Sub GBMinMaxButton(sender As Object, GB As GroupBox)
         If sender.text = "+" Then
             sender.text = "-"
@@ -3296,16 +3325,17 @@ Class Frm_Main
 
                         Case TVHelper.Nodes(3).Text     'Kupplung
                             If TVHelper.SelectedNode.FullPath.Split("\")(1) = "Front" Then
-                                Projekt_Bus.couple_front_point = PSPos.Point
+                                getProj.couple_front_point = PSPos.Point
                             ElseIf TVHelper.SelectedNode.FullPath.Split("\")(1) = "Heck" Then
-                                Projekt_Bus.couple_back_point = PSPos.Point
+                                getProj.couple_back_point = PSPos.Point
                             End If
 
                         Case TVHelper.Nodes(6).Text     'Spiegel
                             If Not getSelectedSpiegel() Is Nothing Then
                                 getSelectedSpiegel.position = PSPos.Point
                             End If
-
+                        Case TVHelper.Nodes(11).Text    'Spot
+                            getProj.model.spots(TVHelper.SelectedNode.Index).position = PSPos.Point
 
                     End Select
 
@@ -3459,7 +3489,7 @@ Class Frm_Main
         Return MyBase.ProcessCmdKey(msg, keyData)
     End Function
 
-    Private Sub GlMain_KeyDown(sender As Object, e As KeyEventArgs) Handles GlMain.KeyDown, LBMeshes.KeyDown
+    Private Sub GlMain_KeyDown(sender As Object, e As KeyEventArgs) Handles LBMeshes.KeyDown, GlMain.KeyDown
         If e.KeyCode = Keys.NumPad5 Then
             If My.Settings.OrtoScale = 3 Then
                 My.Settings.OrtoScale = 4
@@ -4164,7 +4194,7 @@ Class Frm_Main
 
     Private Sub Parent_CBParent_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Parent_CBParent.SelectedIndexChanged
         Select Case TCObjekte.SelectedIndex
-            Case 2
+            Case 2              'Lichter
                 If Not getSelectedLight() Is Nothing Then
                     getSelectedLight.parent = Parent_CBParent.SelectedItem.ToString
                 End If
@@ -4805,5 +4835,7 @@ Class Frm_Main
         Next
         GlMain.Invalidate()
     End Sub
+
+
 End Class
 

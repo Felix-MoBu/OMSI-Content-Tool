@@ -41,16 +41,18 @@ Partial Class Frm_Main
         Dim TreeNode16 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Attachpoints")
         Dim TreeNode17 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Splinehelper")
         Dim TreeNode18 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Spots")
-        Dim Point3D1 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim RgbColor1 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
         Dim Point3D2 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim RgbColor1 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
         Dim Point3D3 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim Point3D4 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim Point3D5 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim Point3D6 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D7 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim RgbColor2 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
+        Dim Point3D7 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim Point3D8 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D9 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim OmsI_Spot1 As O3D_Test.OMSI_Spot = New O3D_Test.OMSI_Spot()
+        Dim Point3D1 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Main))
         Me.SS1 = New System.Windows.Forms.StatusStrip()
         Me.PBMain = New System.Windows.Forms.ToolStripProgressBar()
@@ -339,6 +341,7 @@ Partial Class Frm_Main
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Bel_CB0 = New System.Windows.Forms.ComboBox()
         Me.GBLicht = New System.Windows.Forms.GroupBox()
+        Me.Labelx = New System.Windows.Forms.Label()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Licht_MinMax = New System.Windows.Forms.Button()
         Me.Licht_TBZeitkonst = New System.Windows.Forms.TextBox()
@@ -470,12 +473,13 @@ Partial Class Frm_Main
         Me.Mesh_VSKlickevent = New O3D_Test.VarSelector()
         Me.Mesh_VSSichtbarkeit = New O3D_Test.VarSelector()
         Me.Mesh_PSCenter = New O3D_Test.PointSelector()
+        Me.Licht_CSFarbe = New O3D_Test.ColorSelector()
         Me.Licht_VSVar = New O3D_Test.VarSelector()
         Me.Licht_PSVector = New O3D_Test.PointSelector()
         Me.Licht_PSRichtung = New O3D_Test.PointSelector()
-        Me.Licht_CSFarbe = New O3D_Test.ColorSelector()
         Me.Anim_PSRotPnt = New O3D_Test.PointSelector()
         Me.Anim_VSVar = New O3D_Test.VarSelector()
+        Me.SSSpot = New O3D_Test.SpotSelector()
         Me.SS1.SuspendLayout()
         Me.MS1.SuspendLayout()
         Me.PanelMain.SuspendLayout()
@@ -570,32 +574,32 @@ Partial Class Frm_Main
         '
         Me.NeuToolStripMenuItem.Name = "NeuToolStripMenuItem"
         Me.NeuToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-        Me.NeuToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.NeuToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.NeuToolStripMenuItem.Text = "Neu"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(168, 6)
         '
         'ÖffnenToolStripMenuItem
         '
         Me.ÖffnenToolStripMenuItem.Name = "ÖffnenToolStripMenuItem"
         Me.ÖffnenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.ÖffnenToolStripMenuItem.Text = "Öffnen"
         '
         'LetzteToolStripMenuItem
         '
         Me.LetzteToolStripMenuItem.Name = "LetzteToolStripMenuItem"
-        Me.LetzteToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.LetzteToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.LetzteToolStripMenuItem.Text = "Zuletzt geöffnet..."
         '
         'NeuLadenToolStripMenuItem
         '
         Me.NeuLadenToolStripMenuItem.Name = "NeuLadenToolStripMenuItem"
         Me.NeuLadenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
-        Me.NeuLadenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.NeuLadenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.NeuLadenToolStripMenuItem.Text = "Neu laden"
         '
         'SpeichernToolStripMenuItem
@@ -603,7 +607,7 @@ Partial Class Frm_Main
         Me.SpeichernToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AllesToolStripMenuItem1, Me.NurProjektbusovhscoToolStripMenuItem, Me.NurModelToolStripMenuItem, Me.NurCabinToolStripMenuItem, Me.NurPathsToolStripMenuItem})
         Me.SpeichernToolStripMenuItem.Enabled = False
         Me.SpeichernToolStripMenuItem.Name = "SpeichernToolStripMenuItem"
-        Me.SpeichernToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SpeichernToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.SpeichernToolStripMenuItem.Text = "Speichern"
         '
         'AllesToolStripMenuItem1
@@ -640,7 +644,7 @@ Partial Class Frm_Main
         'SpeichernUnterToolStripMenuItem
         '
         Me.SpeichernUnterToolStripMenuItem.Name = "SpeichernUnterToolStripMenuItem"
-        Me.SpeichernUnterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SpeichernUnterToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.SpeichernUnterToolStripMenuItem.Text = "Speichern unter..."
         '
         'PackenToolStripMenuItem
@@ -648,7 +652,7 @@ Partial Class Frm_Main
         Me.PackenToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RarArchivToolStripMenuItem, Me.LctLOTUSContentToolStripMenuItem})
         Me.PackenToolStripMenuItem.Enabled = False
         Me.PackenToolStripMenuItem.Name = "PackenToolStripMenuItem"
-        Me.PackenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.PackenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.PackenToolStripMenuItem.Text = "Packen"
         '
         'RarArchivToolStripMenuItem
@@ -667,23 +671,23 @@ Partial Class Frm_Main
         'ToolStripMenuItem6
         '
         Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(168, 6)
         '
         'EinstellungenToolStripMenuItem
         '
         Me.EinstellungenToolStripMenuItem.Name = "EinstellungenToolStripMenuItem"
-        Me.EinstellungenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.EinstellungenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.EinstellungenToolStripMenuItem.Text = "Einstellungen"
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(168, 6)
         '
         'BeendenToolStripMenuItem
         '
         Me.BeendenToolStripMenuItem.Name = "BeendenToolStripMenuItem"
-        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.BeendenToolStripMenuItem.Text = "Beenden"
         '
         'BearbeitenToolStripMenuItem
@@ -1322,6 +1326,7 @@ Partial Class Frm_Main
         '
         Me.PanelEigenschaften1.AutoScroll = True
         Me.PanelEigenschaften1.BackColor = System.Drawing.SystemColors.Window
+        Me.PanelEigenschaften1.Controls.Add(Me.SSSpot)
         Me.PanelEigenschaften1.Controls.Add(Me.GBSpot)
         Me.PanelEigenschaften1.Controls.Add(Me.GBPlatz)
         Me.PanelEigenschaften1.Controls.Add(Me.GBRauch)
@@ -1357,7 +1362,7 @@ Partial Class Frm_Main
         Me.GBSpot.Controls.Add(Me.Spot_TBLeuchtweite)
         Me.GBSpot.Controls.Add(Me.Label79)
         Me.GBSpot.Controls.Add(Me.Spot_CSFarbe)
-        Me.GBSpot.Location = New System.Drawing.Point(4, 2941)
+        Me.GBSpot.Location = New System.Drawing.Point(4, 2944)
         Me.GBSpot.Name = "GBSpot"
         Me.GBSpot.Size = New System.Drawing.Size(328, 129)
         Me.GBSpot.TabIndex = 36
@@ -1426,7 +1431,7 @@ Partial Class Frm_Main
         Me.GBPlatz.Controls.Add(Me.Platz_MinMax)
         Me.GBPlatz.Controls.Add(Me.Platz_TBRichtung)
         Me.GBPlatz.Controls.Add(Me.Label57)
-        Me.GBPlatz.Location = New System.Drawing.Point(4, 2650)
+        Me.GBPlatz.Location = New System.Drawing.Point(4, 2653)
         Me.GBPlatz.Name = "GBPlatz"
         Me.GBPlatz.Size = New System.Drawing.Size(327, 100)
         Me.GBPlatz.TabIndex = 35
@@ -1467,7 +1472,7 @@ Partial Class Frm_Main
         Me.GBRauch.Controls.Add(Me.Label55)
         Me.GBRauch.Controls.Add(Me.Label54)
         Me.GBRauch.Controls.Add(Me.PointSelector2)
-        Me.GBRauch.Location = New System.Drawing.Point(4, 1989)
+        Me.GBRauch.Location = New System.Drawing.Point(4, 1992)
         Me.GBRauch.Name = "GBRauch"
         Me.GBRauch.Size = New System.Drawing.Size(327, 100)
         Me.GBRauch.TabIndex = 34
@@ -1533,7 +1538,7 @@ Partial Class Frm_Main
         Me.GBPfade.Controls.Add(Me.Pfade_TBIndex)
         Me.GBPfade.Controls.Add(Me.Label53)
         Me.GBPfade.Controls.Add(Me.Label70)
-        Me.GBPfade.Location = New System.Drawing.Point(4, 1770)
+        Me.GBPfade.Location = New System.Drawing.Point(4, 1773)
         Me.GBPfade.Name = "GBPfade"
         Me.GBPfade.Size = New System.Drawing.Size(327, 213)
         Me.GBPfade.TabIndex = 33
@@ -1778,7 +1783,7 @@ Partial Class Frm_Main
         Me.GBKupplPnt.Controls.Add(Me.Label63)
         Me.GBKupplPnt.Controls.Add(Me.Kuppl_DDNextVehicle)
         Me.GBKupplPnt.Controls.Add(Me.Kupplung_MinMax)
-        Me.GBKupplPnt.Location = New System.Drawing.Point(4, 337)
+        Me.GBKupplPnt.Location = New System.Drawing.Point(4, 340)
         Me.GBKupplPnt.Name = "GBKupplPnt"
         Me.GBKupplPnt.Size = New System.Drawing.Size(327, 182)
         Me.GBKupplPnt.TabIndex = 32
@@ -1954,7 +1959,7 @@ Partial Class Frm_Main
         Me.GBKamera.Controls.Add(Me.Kamera_MinMax)
         Me.GBKamera.Controls.Add(Me.Kamera_RBPassagier)
         Me.GBKamera.Controls.Add(Me.Kamera_RBFahrer)
-        Me.GBKamera.Location = New System.Drawing.Point(4, 1533)
+        Me.GBKamera.Location = New System.Drawing.Point(4, 1536)
         Me.GBKamera.Name = "GBKamera"
         Me.GBKamera.Size = New System.Drawing.Size(327, 149)
         Me.GBKamera.TabIndex = 31
@@ -2093,7 +2098,7 @@ Partial Class Frm_Main
         Me.GBBbox.Controls.Add(Me.Label52)
         Me.GBBbox.Controls.Add(Me.BBox_PSSize)
         Me.GBBbox.Controls.Add(Me.BBoxBTBerechnen)
-        Me.GBBbox.Location = New System.Drawing.Point(4, 1268)
+        Me.GBBbox.Location = New System.Drawing.Point(4, 1271)
         Me.GBBbox.Name = "GBBbox"
         Me.GBBbox.Size = New System.Drawing.Size(327, 79)
         Me.GBBbox.TabIndex = 30
@@ -2145,7 +2150,7 @@ Partial Class Frm_Main
         Me.GBAchse.Controls.Add(Me.Achse_TBBreite)
         Me.GBAchse.Controls.Add(Me.Label46)
         Me.GBAchse.Controls.Add(Me.Achse_TBMaxwidt)
-        Me.GBAchse.Location = New System.Drawing.Point(4, 1353)
+        Me.GBAchse.Location = New System.Drawing.Point(4, 1356)
         Me.GBAchse.Name = "GBAchse"
         Me.GBAchse.Size = New System.Drawing.Size(327, 151)
         Me.GBAchse.TabIndex = 29
@@ -2292,7 +2297,7 @@ Partial Class Frm_Main
         Me.GBSplinehelper.Controls.Add(Me.Splinehelper_TBSpline)
         Me.GBSplinehelper.Controls.Add(Me.Label43)
         Me.GBSplinehelper.Controls.Add(Me.Splinehelper_TBDrehung)
-        Me.GBSplinehelper.Location = New System.Drawing.Point(4, 2570)
+        Me.GBSplinehelper.Location = New System.Drawing.Point(4, 2573)
         Me.GBSplinehelper.Name = "GBSplinehelper"
         Me.GBSplinehelper.Size = New System.Drawing.Size(327, 74)
         Me.GBSplinehelper.TabIndex = 28
@@ -2375,7 +2380,7 @@ Partial Class Frm_Main
         Me.GBPfad.Controls.Add(Me.Pfad_TBRadius)
         Me.GBPfad.Controls.Add(Me.Pfad_TBLänge)
         Me.GBPfad.Controls.Add(Me.Pfad_TBRot)
-        Me.GBPfad.Location = New System.Drawing.Point(4, 1057)
+        Me.GBPfad.Location = New System.Drawing.Point(4, 1060)
         Me.GBPfad.Name = "GBPfad"
         Me.GBPfad.Size = New System.Drawing.Size(325, 205)
         Me.GBPfad.TabIndex = 27
@@ -2588,7 +2593,7 @@ Partial Class Frm_Main
         'GBSpline
         '
         Me.GBSpline.Controls.Add(Me.Spline_MinMax)
-        Me.GBSpline.Location = New System.Drawing.Point(4, 819)
+        Me.GBSpline.Location = New System.Drawing.Point(4, 822)
         Me.GBSpline.Name = "GBSpline"
         Me.GBSpline.Size = New System.Drawing.Size(327, 114)
         Me.GBSpline.TabIndex = 26
@@ -2611,7 +2616,7 @@ Partial Class Frm_Main
         Me.GBAllgemein.Controls.Add(Me.Label)
         Me.GBAllgemein.Controls.Add(Me.Label3)
         Me.GBAllgemein.Controls.Add(Me.PSPos)
-        Me.GBAllgemein.Location = New System.Drawing.Point(4, 3)
+        Me.GBAllgemein.Location = New System.Drawing.Point(4, 6)
         Me.GBAllgemein.Name = "GBAllgemein"
         Me.GBAllgemein.Size = New System.Drawing.Size(327, 77)
         Me.GBAllgemein.TabIndex = 25
@@ -2662,7 +2667,7 @@ Partial Class Frm_Main
         Me.GBMesh.Controls.Add(Me.Mesh_DDViedpoint)
         Me.GBMesh.Controls.Add(Me.Label1)
         Me.GBMesh.Controls.Add(Me.Label4)
-        Me.GBMesh.Location = New System.Drawing.Point(4, 153)
+        Me.GBMesh.Location = New System.Drawing.Point(4, 156)
         Me.GBMesh.Name = "GBMesh"
         Me.GBMesh.Size = New System.Drawing.Size(327, 178)
         Me.GBMesh.TabIndex = 21
@@ -2792,7 +2797,7 @@ Partial Class Frm_Main
         Me.GBParent.Controls.Add(Me.Parent_MinMax)
         Me.GBParent.Controls.Add(Me.Parent_CBParent)
         Me.GBParent.Controls.Add(Me.Label25)
-        Me.GBParent.Location = New System.Drawing.Point(4, 94)
+        Me.GBParent.Location = New System.Drawing.Point(4, 97)
         Me.GBParent.Name = "GBParent"
         Me.GBParent.Size = New System.Drawing.Size(327, 53)
         Me.GBParent.TabIndex = 24
@@ -2834,7 +2839,7 @@ Partial Class Frm_Main
         Me.GBBones.Controls.Add(Me.Bones_CBParent)
         Me.GBBones.Controls.Add(Me.Bones_TBName)
         Me.GBBones.Controls.Add(Me.Label26)
-        Me.GBBones.Location = New System.Drawing.Point(3, 2857)
+        Me.GBBones.Location = New System.Drawing.Point(3, 2860)
         Me.GBBones.Name = "GBBones"
         Me.GBBones.Size = New System.Drawing.Size(327, 78)
         Me.GBBones.TabIndex = 23
@@ -2896,7 +2901,7 @@ Partial Class Frm_Main
         Me.GBBel.Controls.Add(Me.Bel_CB3)
         Me.GBBel.Controls.Add(Me.Label11)
         Me.GBBel.Controls.Add(Me.Bel_CB0)
-        Me.GBBel.Location = New System.Drawing.Point(4, 2756)
+        Me.GBBel.Location = New System.Drawing.Point(4, 2759)
         Me.GBBel.Name = "GBBel"
         Me.GBBel.Size = New System.Drawing.Size(327, 78)
         Me.GBBel.TabIndex = 20
@@ -2982,6 +2987,8 @@ Partial Class Frm_Main
         '
         'GBLicht
         '
+        Me.GBLicht.Controls.Add(Me.Licht_CSFarbe)
+        Me.GBLicht.Controls.Add(Me.Labelx)
         Me.GBLicht.Controls.Add(Me.Button2)
         Me.GBLicht.Controls.Add(Me.Licht_MinMax)
         Me.GBLicht.Controls.Add(Me.Licht_VSVar)
@@ -3008,18 +3015,26 @@ Partial Class Frm_Main
         Me.GBLicht.Controls.Add(Me.Label14)
         Me.GBLicht.Controls.Add(Me.Licht_CBAusr)
         Me.GBLicht.Controls.Add(Me.Label13)
-        Me.GBLicht.Controls.Add(Me.Licht_CSFarbe)
         Me.GBLicht.Controls.Add(Me.Label8)
         Me.GBLicht.Controls.Add(Me.Label7)
         Me.GBLicht.Controls.Add(Me.Licht_TBTexture)
         Me.GBLicht.Controls.Add(Me.Label6)
-        Me.GBLicht.Location = New System.Drawing.Point(4, 525)
+        Me.GBLicht.Location = New System.Drawing.Point(4, 528)
         Me.GBLicht.Name = "GBLicht"
         Me.GBLicht.Size = New System.Drawing.Size(327, 288)
         Me.GBLicht.TabIndex = 8
         Me.GBLicht.TabStop = False
         Me.GBLicht.Text = "Licht"
         Me.GBLicht.Visible = False
+        '
+        'Labelx
+        '
+        Me.Labelx.AutoSize = True
+        Me.Labelx.Location = New System.Drawing.Point(4, 131)
+        Me.Labelx.Name = "Labelx"
+        Me.Labelx.Size = New System.Drawing.Size(34, 13)
+        Me.Labelx.TabIndex = 62
+        Me.Labelx.Text = "Farbe"
         '
         'Button2
         '
@@ -3275,7 +3290,7 @@ Partial Class Frm_Main
         Me.GBMat.Controls.Add(Me.Label12)
         Me.GBMat.Controls.Add(Me.Mat_CBTex)
         Me.GBMat.Controls.Add(Me.Label10)
-        Me.GBMat.Location = New System.Drawing.Point(4, 2095)
+        Me.GBMat.Location = New System.Drawing.Point(4, 2098)
         Me.GBMat.Name = "GBMat"
         Me.GBMat.Size = New System.Drawing.Size(327, 189)
         Me.GBMat.TabIndex = 7
@@ -3405,7 +3420,7 @@ Partial Class Frm_Main
         Me.GBAnimation.Controls.Add(Me.Anim_BTNeu)
         Me.GBAnimation.Controls.Add(Me.Anim_DDList)
         Me.GBAnimation.Controls.Add(Me.Label9)
-        Me.GBAnimation.Location = New System.Drawing.Point(4, 2352)
+        Me.GBAnimation.Location = New System.Drawing.Point(4, 2355)
         Me.GBAnimation.Name = "GBAnimation"
         Me.GBAnimation.Size = New System.Drawing.Size(327, 212)
         Me.GBAnimation.TabIndex = 6
@@ -4169,7 +4184,7 @@ Partial Class Frm_Main
         Me.Spot_PSRichtung.Max = 1.7976931348623157E+308R
         Me.Spot_PSRichtung.Min = -1.7976931348623157E+308R
         Me.Spot_PSRichtung.Name = "Spot_PSRichtung"
-        Me.Spot_PSRichtung.Point = Point3D1
+        Me.Spot_PSRichtung.Point = Point3D2
         Me.Spot_PSRichtung.Size = New System.Drawing.Size(254, 20)
         Me.Spot_PSRichtung.TabIndex = 3
         Me.Spot_PSRichtung.X = 0R
@@ -4201,7 +4216,7 @@ Partial Class Frm_Main
         Me.PointSelector2.Max = 1.7976931348623157E+308R
         Me.PointSelector2.Min = 0R
         Me.PointSelector2.Name = "PointSelector2"
-        Me.PointSelector2.Point = Point3D2
+        Me.PointSelector2.Point = Point3D3
         Me.PointSelector2.Size = New System.Drawing.Size(255, 20)
         Me.PointSelector2.TabIndex = 0
         Me.PointSelector2.X = 0R
@@ -4215,7 +4230,7 @@ Partial Class Frm_Main
         Me.BBox_PSSize.Max = 1.7976931348623157E+308R
         Me.BBox_PSSize.Min = -1.7976931348623157E+308R
         Me.BBox_PSSize.Name = "BBox_PSSize"
-        Me.BBox_PSSize.Point = Point3D3
+        Me.BBox_PSSize.Point = Point3D4
         Me.BBox_PSSize.Size = New System.Drawing.Size(255, 20)
         Me.BBox_PSSize.TabIndex = 23
         Me.BBox_PSSize.X = 0R
@@ -4229,7 +4244,7 @@ Partial Class Frm_Main
         Me.PSPos.Max = 1.7976931348623157E+308R
         Me.PSPos.Min = -1.7976931348623157E+308R
         Me.PSPos.Name = "PSPos"
-        Me.PSPos.Point = Point3D4
+        Me.PSPos.Point = Point3D5
         Me.PSPos.Size = New System.Drawing.Size(255, 20)
         Me.PSPos.TabIndex = 22
         Me.PSPos.X = 0R
@@ -4259,12 +4274,22 @@ Partial Class Frm_Main
         Me.Mesh_PSCenter.Max = 1.7976931348623157E+308R
         Me.Mesh_PSCenter.Min = -1.7976931348623157E+308R
         Me.Mesh_PSCenter.Name = "Mesh_PSCenter"
-        Me.Mesh_PSCenter.Point = Point3D5
+        Me.Mesh_PSCenter.Point = Point3D6
         Me.Mesh_PSCenter.Size = New System.Drawing.Size(255, 20)
         Me.Mesh_PSCenter.TabIndex = 26
         Me.Mesh_PSCenter.X = 0R
         Me.Mesh_PSCenter.Y = 0R
         Me.Mesh_PSCenter.Z = 0R
+        '
+        'Licht_CSFarbe
+        '
+        Me.Licht_CSFarbe.BackColor = System.Drawing.Color.Transparent
+        Me.Licht_CSFarbe.Location = New System.Drawing.Point(70, 124)
+        Me.Licht_CSFarbe.Name = "Licht_CSFarbe"
+        RgbColor2.SelectedColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Licht_CSFarbe.SelectedColor = RgbColor2
+        Me.Licht_CSFarbe.Size = New System.Drawing.Size(193, 24)
+        Me.Licht_CSFarbe.TabIndex = 63
         '
         'Licht_VSVar
         '
@@ -4281,7 +4306,7 @@ Partial Class Frm_Main
         Me.Licht_PSVector.Max = 2.0R
         Me.Licht_PSVector.Min = 0R
         Me.Licht_PSVector.Name = "Licht_PSVector"
-        Me.Licht_PSVector.Point = Point3D6
+        Me.Licht_PSVector.Point = Point3D7
         Me.Licht_PSVector.Size = New System.Drawing.Size(255, 20)
         Me.Licht_PSVector.TabIndex = 58
         Me.Licht_PSVector.X = 0R
@@ -4295,22 +4320,12 @@ Partial Class Frm_Main
         Me.Licht_PSRichtung.Max = 1.0R
         Me.Licht_PSRichtung.Min = -1.0R
         Me.Licht_PSRichtung.Name = "Licht_PSRichtung"
-        Me.Licht_PSRichtung.Point = Point3D7
+        Me.Licht_PSRichtung.Point = Point3D8
         Me.Licht_PSRichtung.Size = New System.Drawing.Size(255, 20)
         Me.Licht_PSRichtung.TabIndex = 57
         Me.Licht_PSRichtung.X = 0R
         Me.Licht_PSRichtung.Y = 0R
         Me.Licht_PSRichtung.Z = 0R
-        '
-        'Licht_CSFarbe
-        '
-        Me.Licht_CSFarbe.BackColor = System.Drawing.Color.Transparent
-        Me.Licht_CSFarbe.Location = New System.Drawing.Point(6, 126)
-        Me.Licht_CSFarbe.Name = "Licht_CSFarbe"
-        RgbColor2.SelectedColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Licht_CSFarbe.SelectedColor = RgbColor2
-        Me.Licht_CSFarbe.Size = New System.Drawing.Size(193, 24)
-        Me.Licht_CSFarbe.TabIndex = 22
         '
         'Anim_PSRotPnt
         '
@@ -4320,7 +4335,7 @@ Partial Class Frm_Main
         Me.Anim_PSRotPnt.Max = 1.7976931348623157E+308R
         Me.Anim_PSRotPnt.Min = 0R
         Me.Anim_PSRotPnt.Name = "Anim_PSRotPnt"
-        Me.Anim_PSRotPnt.Point = Point3D8
+        Me.Anim_PSRotPnt.Point = Point3D9
         Me.Anim_PSRotPnt.Size = New System.Drawing.Size(225, 20)
         Me.Anim_PSRotPnt.TabIndex = 39
         Me.Anim_PSRotPnt.X = 0R
@@ -4334,6 +4349,18 @@ Partial Class Frm_Main
         Me.Anim_VSVar.Size = New System.Drawing.Size(226, 20)
         Me.Anim_VSVar.TabIndex = 32
         Me.Anim_VSVar.Variable = ""
+        '
+        'SSSpot
+        '
+        Me.SSSpot.Location = New System.Drawing.Point(4, 3079)
+        Me.SSSpot.Name = "SSSpot"
+        Me.SSSpot.Size = New System.Drawing.Size(332, 133)
+        OmsI_Spot1.innerCone = 0
+        OmsI_Spot1.outerCone = 0
+        OmsI_Spot1.position = Point3D1
+        OmsI_Spot1.range = 0R
+        Me.SSSpot.spot = OmsI_Spot1
+        Me.SSSpot.TabIndex = 37
         '
         'Frm_Main
         '
@@ -4539,7 +4566,6 @@ Partial Class Frm_Main
     Friend WithEvents Bel_BTKeine As Button
     Friend WithEvents Label12 As Label
     Friend WithEvents Mat_CBTextTex As ComboBox
-    Friend WithEvents Licht_CSFarbe As ColorSelector
     Friend WithEvents TCObjektePPfade As TabPage
     Friend WithEvents LBPfade As ListBox
     Friend WithEvents Label13 As Label
@@ -4842,4 +4868,7 @@ Partial Class Frm_Main
     Friend WithEvents Spot_TBInner As TextBox
     Friend WithEvents Label80 As Label
     Friend WithEvents Label82 As Label
+    Friend WithEvents Labelx As Label
+    Friend WithEvents Licht_CSFarbe As ColorSelector
+    Friend WithEvents SSSpot As SpotSelector
 End Class
