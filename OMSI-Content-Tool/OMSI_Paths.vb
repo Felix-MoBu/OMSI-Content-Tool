@@ -7,7 +7,7 @@ Public Class OMSI_Paths
     Public soundpacks As New List(Of List(Of String))
     Public vertices As Double()
     Public edges As Integer()
-    Public dots As New List(Of Local3DObjekt)
+    Public dots As New List(Of Integer())
 
     Public arrows As New List(Of Arrow)
 
@@ -85,6 +85,9 @@ Public Class OMSI_Paths
 
         recalc()
 
+
+
+
         Log.Add("Pfad-Datei """ & filename.name & """ fertig geladen.")
     End Sub
 
@@ -106,56 +109,12 @@ Public Class OMSI_Paths
         Next
         vertices = verticesTemp.ToArray
 
-
-        For ct As Integer = 0 To pathPoints.Count - 1   '-> in die Schleife oben integrieren!
-            Dim tmpVerticesDots As New List(Of Double)
-            Dim tmpEdgesDots As New List(Of Integer)
-            Dim newObj As New Local3DObjekt
-            tmpVerticesDots.AddRange(positionDot(pathPoints(ct)))
-            For i = 1 To 8 Step 7
-                tmpEdgesDots.Add(0)
-                For n = 0 To 6
-                    tmpEdgesDots.Add(n + i)
-                Next
-            Next
-            For i = 1 To 8 Step 7
-                tmpEdgesDots.Add(0)
-                For n = 6 To 0 Step -1
-                    tmpEdgesDots.Add(n + i)
-                Next
-            Next
-            newObj.vertices = tmpVerticesDots.ToArray
-            newObj.lines = tmpEdgesDots.ToArray
-            dots.Add(newObj)
+        dots = New List(Of Integer())
+        For i = 0 To pathPoints.Count - 1
+            dots.Add({i})
         Next
-
 
     End Sub
-
-    Private Function positionDot(position As Point3D) As List(Of Double)
-        Dim tmpPoint As New Point3D(0, 0, 0.1)
-        Dim tmpList As New List(Of Point3D)
-        tmpList.Add(New Point3D(tmpPoint))
-
-        For i As Integer = 1 To 7
-            tmpPoint.rotate(45, Point3D.ACHSE_X)
-            tmpList.Add(New Point3D(tmpPoint))
-        Next
-        tmpPoint.rotate(45, Point3D.ACHSE_X)
-
-        For i As Integer = 1 To 7
-            tmpPoint.rotate(45, Point3D.ACHSE_Y)
-            tmpList.Add(New Point3D(tmpPoint))
-        Next
-
-        Dim tmpList2 As New List(Of Double)
-        For Each pnt In tmpList
-            tmpList2.Add(-position.X + pnt.X)
-            tmpList2.Add(position.Z + pnt.Z)
-            tmpList2.Add(position.Y + pnt.Y)
-        Next
-        Return tmpList2
-    End Function
 
 
     Public Sub calcArrows(punkte As List(Of Point), richtungen As List(Of Boolean))

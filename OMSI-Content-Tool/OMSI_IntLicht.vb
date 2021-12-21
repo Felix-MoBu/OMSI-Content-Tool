@@ -8,8 +8,10 @@ Public Class OMSI_IntLicht
     Public parent As String
 
     Public vertices As Double()
-    Public edges As Integer() = {0, 1, 2, 3, 4, 5, 6, 1, 0, 7, 8, 9, 10, 11, 12, 7,
-                                 0, 1, 6, 5, 4, 3, 2, 1, 0, 7, 12, 11, 10, 9, 8, 7} '-> draw TriangeFan!
+    Public edges As Integer() = {0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 5, 0, 5, 6, 0, 6, 1,
+                                 0, 2, 1, 0, 3, 2, 0, 4, 3, 0, 5, 4, 0, 6, 5, 0, 1, 6,
+                                 0, 7, 8, 0, 8, 9, 0, 9, 10, 0, 10, 11, 0, 11, 12, 0, 12, 7,
+                                 0, 8, 7, 0, 9, 8, 0, 10, 9, 0, 11, 10, 0, 12, 11, 0, 7, 12}
 
     Public Property position As Point3D
         Get

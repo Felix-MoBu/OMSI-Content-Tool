@@ -3972,8 +3972,7 @@ Class Frm_Main
                                         Else
                                             GL.Color3(Color.Black)
                                         End If
-                                        GL.VertexPointer(3, VertexPointerType.Double, 0, .dots(i).vertices)
-                                        GL.DrawElements(PrimitiveType.TriangleFan, .dots(i).lines.Count, DrawElementsType.UnsignedInt, .dots(i).lines)
+                                        GL.DrawElements(PrimitiveType.Points, 1, DrawElementsType.UnsignedInt, .dots(i))
                                     Next
                                     GL.BindTexture(TextureTarget.Texture2D, 0)
                                     GL.LineWidth(3)
