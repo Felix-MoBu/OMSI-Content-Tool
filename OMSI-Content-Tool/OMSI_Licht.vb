@@ -20,8 +20,8 @@ Public Class OMSI_Licht
     Public parent As String
 
     Public vertices As Double()
-    Public edges As Integer() = {0, 1, 2, 3, 4, 5, 6, 1, 0, 7, 8, 9, 10, 11, 12, 7,
-                                 0, 1, 6, 5, 4, 3, 2, 1, 0, 7, 12, 11, 10, 9, 8, 7} '-> draw TriangeFan
+    Public edges As Integer() = {0, 1, 2, 3, 4, 5, 6, 7, 0, 8, 9, 10, 11, 12, 13, 14,
+                                 0, 7, 6, 5, 4, 3, 2, 1, 0, 14, 13, 12, 11, 10, 9, 8} '-> draw TriangeFan!
     Public Sub New()
         'nur damit man ein leeres Licht anlegen kann
     End Sub
@@ -72,34 +72,28 @@ Public Class OMSI_Licht
     End Property
 
     Private Sub positionLicht()
-        'Dim tmpPoint As New Point3D(0, 0, size_int / 4)
-        'Dim tmpList As New List(Of Point3D)
-        'tmpList.Add(New Point3D(position_int))
+        Dim tmpPoint As New Point3D(0, 0, size_int / 2) ' / 4)
+        Dim tmpList As New List(Of Point3D)
+        tmpList.Add(New Point3D(tmpPoint))
 
-        'For i As Integer = 0 To 5
-        '    tmpPoint.rotate(0.25, Point3D.ACHSE_X)
-        '    tmpList.Add(New Point3D(tmpPoint))
-        'Next
+        For i As Integer = 1 To 7
+            tmpPoint.rotate(45, Point3D.ACHSE_X)
+            tmpList.Add(New Point3D(tmpPoint))
+        Next
+        tmpPoint.rotate(45, Point3D.ACHSE_X)
 
-        'For i As Integer = 0 To 6
-        '    tmpPoint.rotate(0.25, Point3D.ACHSE_X)
-        '    tmpList.Add(New Point3D(tmpPoint))
-        'Next
-        '########### noch nicht fertig! #############
+        For i As Integer = 1 To 7
+            tmpPoint.rotate(45, Point3D.ACHSE_Y)
+            tmpList.Add(New Point3D(tmpPoint))
+        Next
 
-        vertices = {-position_int.X, position_int.Z, position_int.Y,
-                    -position_int.X + size_int / 4, position_int.Z - size_int / 2, position_int.Y,
-                    -position_int.X - size_int / 4, position_int.Z - size_int / 2, position_int.Y,
-                    -position_int.X - size_int / 2, position_int.Z, position_int.Y,
-                    -position_int.X - size_int / 4, position_int.Z + size_int / 2, position_int.Y,
-                    -position_int.X + size_int / 4, position_int.Z + size_int / 2, position_int.Y,
-                    -position_int.X + size_int / 2, position_int.Z, position_int.Y,
-                    -position_int.X, position_int.Z - size_int / 2, position_int.Y + size_int / 4,
-                    -position_int.X, position_int.Z - size_int / 2, position_int.Y - size_int / 4,
-                    -position_int.X, position_int.Z, position_int.Y - size_int / 2,
-                    -position_int.X, position_int.Z + size_int / 2, position_int.Y - size_int / 4,
-                    -position_int.X, position_int.Z + size_int / 2, position_int.Y + size_int / 4,
-                    -position_int.X, position_int.Z, position_int.Y + size_int / 2}
+        Dim tmpList2 As New List(Of Double)
+        For Each pnt In tmpList
+            tmpList2.Add(-position.X + pnt.X)
+            tmpList2.Add(position.Z + pnt.Z)
+            tmpList2.Add(position.Y + pnt.Y)
+        Next
+        vertices = tmpList2.ToArray
     End Sub
 
 End Class
