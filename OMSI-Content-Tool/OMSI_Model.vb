@@ -112,6 +112,9 @@ Public Class OMSI_Model
                                 .range = toSingle(allLines(linect + 10))
                                 .innerCone = allLines(linect + 11)
                                 .outerCone = allLines(linect + 12)
+                                If meshes.Count > 0 Then
+                                    .parent = meshes(meshes.Count - 1).filename.name
+                                End If
                             End With
                             spots.Add(spot)
                             linect += 12
@@ -442,23 +445,6 @@ Public Class OMSI_Model
                 Next
             End If
 
-            For Each spot In spots
-                If spot.name <> "" Then .Add(spot.name)
-                .Add("[spotlight]")
-                .Add(spot.position.X)
-                .Add(spot.position.Y)
-                .Add(spot.position.Z)
-                .Add(spot.richtung.X)
-                .Add(spot.richtung.Y)
-                .Add(spot.richtung.Z)
-                .Add(spot.color.R)
-                .Add(spot.color.G)
-                .Add(spot.color.B)
-                .Add(spot.range)
-                .Add(spot.innerCone)
-                .Add(spot.outerCone, True)
-            Next
-
             If meshes.Count > 0 Then
                 .teilüberschrift("Meshes")
                 For Each mesh In meshes
@@ -545,6 +531,25 @@ Public Class OMSI_Model
                             .Add(fromSingle(smoke.color.R / 255))
                             .Add(fromSingle(smoke.color.G / 255))
                             .Add(fromSingle(smoke.color.B / 255), True)
+                        End If
+                    Next
+
+                    For Each spot In spots
+                        If spot.parent = mesh.filename.name Then
+                            If spot.name <> "" Then .Add(spot.name)
+                            .Add("[spotlight]")
+                            .Add(spot.position.X)
+                            .Add(spot.position.Y)
+                            .Add(spot.position.Z)
+                            .Add(spot.richtung.X)
+                            .Add(spot.richtung.Y)
+                            .Add(spot.richtung.Z)
+                            .Add(spot.color.R)
+                            .Add(spot.color.G)
+                            .Add(spot.color.B)
+                            .Add(spot.range)
+                            .Add(spot.innerCone)
+                            .Add(spot.outerCone, True)
                         End If
                     Next
                 Next

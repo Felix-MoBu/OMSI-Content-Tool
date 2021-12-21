@@ -336,12 +336,6 @@
     <Compile Include="Sli_PatchworkChain.vb" />
     <Compile Include="Sli_Profile.vb" />
     <Compile Include="splinehelper.vb" />
-    <Compile Include="SpotSelector.Designer.vb">
-      <DependentUpon>SpotSelector.vb</DependentUpon>
-    </Compile>
-    <Compile Include="SpotSelector.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="TextTexture.vb" />
     <Compile Include="Texture_Change.vb" />
     <Compile Include="TGA_Tool.vb" />
@@ -442,9 +436,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PointSelector.resx">
       <DependentUpon>PointSelector.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SpotSelector.resx">
-      <DependentUpon>SpotSelector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VarSelector.resx">
       <DependentUpon>VarSelector.vb</DependentUpon>

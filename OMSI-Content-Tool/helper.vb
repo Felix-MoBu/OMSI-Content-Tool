@@ -4,7 +4,7 @@ Imports System.Text.RegularExpressions 'Für ColorFromData
 Module helper
     Dim allowedKeys As Integer() = {3, 8, 22, 24}
 
-    Public Function NumbersOnly(e As KeyPressEventArgs, TB As TextBox, Optional asDouble As Boolean = False, Optional minValue As Double = Double.MinValue, Optional maxValue As Double = Double.MaxValue) As Boolean
+    Public Function NumbersOnly(e As KeyPressEventArgs, Optional TB As TextBox = Nothing, Optional asDouble As Boolean = False, Optional minValue As Double = Double.MinValue, Optional maxValue As Double = Double.MaxValue) As Boolean
         If asDouble Then '44 = Komma | 45 = Minus | 46 = Punkt
             If TB Is Nothing Then Return True
             If Asc(e.KeyChar) = 45 Then

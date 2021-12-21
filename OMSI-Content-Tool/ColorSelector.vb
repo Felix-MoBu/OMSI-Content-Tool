@@ -27,7 +27,6 @@ Public Class ColorSelector
 
     Private Sub ColorSelector_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Reload()
-        recalc()
     End Sub
 
     Public Sub Reload()
@@ -64,19 +63,19 @@ Public Class ColorSelector
     End Property
 
     Private Sub TBColorR_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ColorR.KeyPress
-        e.Handled = helper.NumbersOnly(e, sender,, 0, 255)
+        e.Handled = helper.NumbersOnly(e)
         If sender.Text = "" Then sender.Text = "0"
         recalcColor()
     End Sub
 
     Private Sub TBColorG_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ColorG.KeyPress
-        e.Handled = helper.NumbersOnly(e, sender,, 0, 255)
+        e.Handled = helper.NumbersOnly(e)
         If sender.Text = "" Then sender.Text = "0"
         recalcColor()
     End Sub
 
     Private Sub TBColorB_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ColorB.KeyPress
-        e.Handled = helper.NumbersOnly(e, sender,, 0, 255)
+        e.Handled = helper.NumbersOnly(e)
         If sender.Text = "" Then sender.Text = "0"
         recalcColor()
     End Sub
@@ -109,26 +108,4 @@ Public Class ColorSelector
     End Sub
 
     Public Event Changed As EventHandler
-
-    Private Sub recalc()
-        Dim tmpWidth As Integer = Convert.ToInt16(((Width - 25) / 4) - 6)
-
-        PBColor.Left = 0
-        PBColor.Width = tmpWidth
-
-        ColorR.Left = tmpWidth + 6
-        ColorR.Width = tmpWidth
-
-        ColorG.Left = (tmpWidth + 6) * 2
-        ColorG.Width = tmpWidth
-
-        ColorB.Left = (tmpWidth + 6) * 3
-        ColorB.Width = tmpWidth
-
-        CBBColor.Left = (tmpWidth + 5) * 4
-    End Sub
-
-    Private Sub ColorSelector_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
-        recalc()
-    End Sub
 End Class
