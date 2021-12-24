@@ -1,7 +1,5 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Public Class ColorSelector
-    Public WidthOfTB As Integer = 100
-    Public StartOfTB As Integer = 59
 
     Private Sub PBColor_Click(sender As Object, e As EventArgs) Handles PBColor.Click
         With CD1
@@ -25,27 +23,30 @@ Public Class ColorSelector
         e.NewValue = 50
     End Sub
 
+
+    Private Sub ColorSelector_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
+        Reload()
+    End Sub
+
     Private Sub ColorSelector_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Reload()
     End Sub
 
     Public Sub Reload()
-        Dim tempWidth As Integer = (WidthOfTB / 4) - 4
-        Me.Width = StartOfTB + (tempWidth * 4) + 24 + 26
+        Dim tempWidth As Integer = (Width - CBBColor.Width - 4) / 4 - 5
 
-        PBColor.Left = StartOfTB
         PBColor.Width = tempWidth
 
-        ColorR.Left = StartOfTB + tempWidth + 6
+        ColorR.Left = tempWidth + 6
         ColorR.Width = tempWidth
 
-        ColorG.Left = StartOfTB + (tempWidth * 2) + 12
+        ColorG.Left = (tempWidth * 2) + 12
         ColorG.Width = tempWidth
 
-        ColorB.Left = StartOfTB + (tempWidth * 3) + 18
+        ColorB.Left = (tempWidth * 3) + 18
         ColorB.Width = tempWidth
 
-        CBBColor.Left = StartOfTB + (tempWidth * 4) + 20
+        CBBColor.Left = (tempWidth * 4) + 20
         recalcColor()
     End Sub
 

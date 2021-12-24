@@ -111,14 +111,6 @@ Class Frm_Main
         AlleObjekte.Clear()
         loadPositions()
 
-        Licht_CSFarbe.WidthOfTB = 226
-        Licht_CSFarbe.StartOfTB = 64
-        Licht_CSFarbe.Reload()
-
-        Spot_CSFarbe.WidthOfTB = 226
-        Spot_CSFarbe.StartOfTB = 64
-        Spot_CSFarbe.Reload()
-
         If My.Settings.eMail = Frm_Einst.stdMail Then
             TestToolStripMenuItem.Visible = True
         End If
@@ -1646,26 +1638,9 @@ Class Frm_Main
             newSpot.outerCone = 70
             newSpot.innerCone = 30
 
-            If getSelectedMesh() Is Nothing Then
-                If LBMeshes.Items.Count > 0 Then
-                    newSpot.parent = LBMeshes.Items(0).ToString
-                Else
-                    MsgBox("Es kann kein Spot angelegt werden wenn kein Mesh geladen ist!")
-                    Log.Add("Licht anlegen ohne vorhandenes Mesh nicht möglich: Lichter brauchen immer ein Mesh als Parent!", Log.TYPE_WARNUNG)
-                    Exit Sub
-                End If
-
-            Else
-                If Not getSelectedMesh() Is Nothing Then
-                    newSpot.parent = getSelectedMesh.filename.name
-                Else
-                    newSpot.parent = getProj.model.meshes(0).filename.name
-                End If
-            End If
-
             getProj.model.spots.Add(newSpot)
-            LBLichter.Items.Add(newSpot.name)
-
+            TVHelper.Nodes(11).Nodes.Add(newSpot.name)
+            TVHelper.Nodes(11).Expand()
 
         Else
             MsgNoProj()
@@ -1783,28 +1758,30 @@ Class Frm_Main
 
     Private Sub panelCollision(e As Panel, o As Panel)
         If Not e Is o Then
-            If e.Top <= o.Top + o.Height And e.Top + e.Height >= o.Top Then
-                If o.Left + o.Width >= e.Left And o.Left <= e.Left Then
-                    e.Left = o.Left + o.Width + 3
-                End If
-                If e.Left <= o.Left And e.Left + e.Width >= o.Left Then
-                    e.Left = o.Left - e.Width - 3
-                End If
-                If e.Left < 5 Then
-                    e.Left = 5
-                    o.Left = e.Width + 8
-                End If
-                If e.Top < 5 Then
-                    e.Top = 3
-                    o.Top = e.Height + 8
-                End If
-                If e.Left + e.Width > PanelMain.Width Then
-                    e.Left = PanelMain.Width - e.Width - 5
-                    o.Left = e.Left - o.Width - 3
-                End If
-                If e.Top + e.Height > PanelMain.Height Then
-                    e.Top = PanelMain.Height - e.Height - 5
-                    o.Top = e.Top - o.Height - 3
+            If o.Visible Then
+                If e.Top <= o.Top + o.Height And e.Top + e.Height >= o.Top Then
+                    If o.Left + o.Width >= e.Left And o.Left <= e.Left Then
+                        e.Left = o.Left + o.Width + 3
+                    End If
+                    If e.Left <= o.Left And e.Left + e.Width >= o.Left Then
+                        e.Left = o.Left - e.Width - 3
+                    End If
+                    If e.Left < 5 Then
+                        e.Left = 5
+                        o.Left = e.Width + 8
+                    End If
+                    If e.Top < 5 Then
+                        e.Top = 3
+                        o.Top = e.Height + 8
+                    End If
+                    If e.Left + e.Width > PanelMain.Width Then
+                        e.Left = PanelMain.Width - e.Width - 5
+                        o.Left = e.Left - o.Width - 3
+                    End If
+                    If e.Top + e.Height > PanelMain.Height Then
+                        e.Top = PanelMain.Height - e.Height - 5
+                        o.Top = e.Top - o.Height - 3
+                    End If
                 End If
             End If
         End If
@@ -2182,15 +2159,13 @@ Class Frm_Main
     End Sub
 
     Private Function getSelectedKamera() As Kamera
-        Dim tempList As List(Of Kamera)
-        If TVHelper.SelectedNode.FullPath.Contains("Fahrerkameras") Then
-            tempList = getProj().driver_cam_list
-        ElseIf TVHelper.SelectedNode.FullPath.Contains("Fahrgastkameras") Then
-            tempList = getProj().pax_cam_list
+        If TVHelper.SelectedNode.FullPath.Contains("Fahrerkameras\") Then
+            Return getProj().driver_cam_list(TVHelper.SelectedNode.Index)
+        ElseIf TVHelper.SelectedNode.FullPath.Contains("Fahrgastkameras\") Then
+            Return getProj().pax_cam_list(TVHelper.SelectedNode.Index)
         Else
             Return Nothing
         End If
-        Return tempList(TVHelper.SelectedNode.Index)
     End Function
 
     Private Sub Kamera_TBDistRotPnt_KeyDown(sender As Object, e As KeyEventArgs) Handles Kamera_TBDistRotPnt.KeyDown
@@ -2326,6 +2301,19 @@ Class Frm_Main
         End If
     End Sub
 
+    Public Function getSelectedSpot() As OMSI_Spot
+        If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_OVH Then
+            If TVHelper.SelectedNode.FullPath.Contains(TVHelper.Nodes(11).Text & "\") Then
+                If TVHelper.SelectedNode.Index > getProj.model.spots.Count Then
+                    If TVHelper.SelectedNode.Index > -1 Then
+                        Return getProj.model.spots(TVHelper.SelectedNode.Index)
+                    End If
+                End If
+            End If
+        End If
+        Return Nothing
+    End Function
+
 
 
 
@@ -2446,10 +2434,9 @@ Class Frm_Main
                         Splinehelper_TBSpline.Text = .spline.name
                     End With
                 Case TVHelper.Nodes(11).Text    'Spots
-                    showSettings({GBParent, GBSpot})
+                    showSettings({GBSpot})
                     With Projekt_Bus.model.spots(index) 'getProj.model.spots(index)
                         PSPos.Point = .position
-                        GBParent.Text = .parent
                         Spot_PSRichtung.Point = .richtung
                         Spot_CSFarbe.SelectedColor = .color
                         Spot_TBAussen.Text = .outerCone
@@ -3269,7 +3256,6 @@ Class Frm_Main
     Private Sub PSPos_KeyPress(sender As Object, e As Windows.Forms.KeyPressEventArgs) Handles PSPos.KeyPress
         If e.KeyChar = ChrW(Keys.Enter) Then '-> Tab geht nicht!
             Select Case TCObjekte.SelectedIndex
-                Case 0
                 Case 1
                     Dim helperSelection As String
                     If TVHelper.SelectedNode.FullPath.Contains("\") Then
@@ -3294,18 +3280,27 @@ Class Frm_Main
                                 getProj.bbox.pos = PSPos.Point
                             End If
 
+                        Case TVHelper.Nodes(2).Text     'Kameras
+                            If Not getSelectedKamera() Is Nothing Then
+                                getSelectedKamera.position = New Point3D(PSPos.Point)
+                            End If
+
                         Case TVHelper.Nodes(3).Text     'Kupplung
-                            If TVHelper.SelectedNode.FullPath.Split("\")(1) = "Front" Then
-                                Projekt_Bus.couple_front_point = PSPos.Point
-                            ElseIf TVHelper.SelectedNode.FullPath.Split("\")(1) = "Heck" Then
-                                Projekt_Bus.couple_back_point = PSPos.Point
-                            End If
+                                If TVHelper.SelectedNode.FullPath.Split("\")(1) = "Front" Then
+                                    Projekt_Bus.couple_front_point = PSPos.Point
+                                ElseIf TVHelper.SelectedNode.FullPath.Split("\")(1) = "Heck" Then
+                                    Projekt_Bus.couple_back_point = PSPos.Point
+                                End If
 
-                        Case TVHelper.Nodes(6).Text     'Spiegel
-                            If Not getSelectedSpiegel() Is Nothing Then
-                                getSelectedSpiegel.position = PSPos.Point
-                            End If
+                                Case TVHelper.Nodes(6).Text     'Spiegel
+                                If Not getSelectedSpiegel() Is Nothing Then
+                                    getSelectedSpiegel.position = PSPos.Point
+                                End If
 
+                                Case TVHelper.Nodes(11).Text    'Spot
+                                If Not getSelectedSpot() Is Nothing Then
+                                getSelectedSpot.position = New Point3D(PSPos.Point)
+                            End If
 
                     End Select
 
@@ -3817,7 +3812,7 @@ Class Frm_Main
                         GL.TexCoordPointer(2, TexCoordPointerType.Double, 0, {0, 0})
                         For index As Integer = 0 To Projekt_Bus.driver_cam_list.Count - 1
                             With Projekt_Bus.driver_cam_list(index)
-                                If TVHelper.SelectedNode.FullPath.Contains("Fahrerkameras") And index = TVHelper.SelectedNode.Index Then
+                                If TVHelper.SelectedNode.FullPath.Contains("Fahrerkameras\") And index = TVHelper.SelectedNode.Index Then
                                     GL.Color3(My.Settings.SelectionColor)
                                 Else
                                     GL.Color3(My.Settings.CamDriverColor)
@@ -3830,7 +3825,7 @@ Class Frm_Main
                         GL.Color3(My.Settings.CamPaxColor)
                         For index As Integer = 0 To Projekt_Bus.pax_cam_list.Count - 1
                             With Projekt_Bus.pax_cam_list(index)
-                                If TVHelper.SelectedNode.FullPath.Contains("Fahrgastkameras") And index = TVHelper.SelectedNode.Index Then
+                                If TVHelper.SelectedNode.FullPath.Contains("Fahrgastkameras\") And index = TVHelper.SelectedNode.Index Then
                                     GL.Color3(My.Settings.SelectionColor)
                                 Else
                                     GL.Color3(My.Settings.CamDriverColor)
@@ -3871,12 +3866,19 @@ Class Frm_Main
 
                         If Not Projekt_Bus.cabin Is Nothing Then
                             GL.LineWidth(1)
-                            For Each seat In Projekt_Bus.cabin.passPos
-                                GL.Color3(My.Settings.PassColor)
-                                GL.VertexPointer(3, VertexPointerType.Double, 0, seat.vertices)
-                                GL.DrawElements(PrimitiveType.Triangles, seat.edges.Count, DrawElementsType.UnsignedInt, seat.edges)
-                                GL.Color3(Color.Black)
-                                GL.DrawElements(PrimitiveType.Lines, seat.lines.Count, DrawElementsType.UnsignedInt, seat.lines)
+                            For i As Integer = 0 To Projekt_Bus.cabin.passPos.Count - 1
+                                With Projekt_Bus.cabin.passPos(i)
+                                    GL.Color3(My.Settings.PassColor)
+                                    If InStr(TVHelper.SelectedNode.FullPath, TVHelper.Nodes(7).Text & "\") Then
+                                        If TVHelper.SelectedNode.Index = i Then
+                                            GL.Color3(My.Settings.SelectionColor)
+                                        End If
+                                    End If
+                                    GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
+                                    GL.DrawElements(PrimitiveType.Triangles, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                    GL.Color3(Color.Black)
+                                    GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
+                                End With
                             Next
 
                             If Not Projekt_Bus.cabin.driverPos Is Nothing Then
@@ -4004,6 +4006,7 @@ Class Frm_Main
                         'GL.BindTexture(TextureTarget.Texture2D, overWriteTextures(origTexturen.IndexOf(.texturen(i).filename)).id)
                         GL.BindTexture(TextureTarget.Texture2D, overWriteTextures(origTexturen.FindIndex(Function(s) s.Equals(.texturen(i).filename, StringComparison.CurrentCultureIgnoreCase))).id)
                     End If
+
 
                     'GL.BindTexture(TextureTarget.Texture2D, .Texturen(i).id)
                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)

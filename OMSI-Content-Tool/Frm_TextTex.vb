@@ -2,7 +2,6 @@
 Imports System.ComponentModel
 
 Public Class Frm_TextTex
-    Dim CSMain As ColorSelector
     Dim tempItem As String
     Dim oldName As String
     Private Sub TBFont_Click(sender As Object, e As EventArgs) Handles TBFont.Click
@@ -12,16 +11,6 @@ Public Class Frm_TextTex
     Private Sub Frm_TextTex_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Location = New Point(Frm_Main.Width / 2 - Me.Width / 2, Frm_Main.Height / 2 - Me.Height / 2)
         CBAusr.SelectedIndex = 0
-        CSMain = New ColorSelector
-        With CSMain
-            .Top = 113
-            .Left = 10
-            .WidthOfTB = 228
-            .StartOfTB = 42
-            .Name = "CSMain"
-            AddHandler .PBColor.BackColorChanged, AddressOf colorChanged
-        End With
-        GBMain.Controls.Add(CSMain)
 
         LBMain.Items.Clear()
         For Each TTex In Frm_Main.getProj.model.TextTexturen

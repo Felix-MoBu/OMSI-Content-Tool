@@ -22,12 +22,15 @@ Partial Class Frm_TextTex
     'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim RgbColor1 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_TextTex))
         Me.LBMain = New System.Windows.Forms.ListBox()
         Me.BTEntfernen = New System.Windows.Forms.Button()
         Me.BTNeu = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GBMain = New System.Windows.Forms.GroupBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.CSMain = New O3D_Test.ColorSelector()
         Me.CBEnh = New System.Windows.Forms.CheckBox()
         Me.GBEnh = New System.Windows.Forms.GroupBox()
         Me.CBAusr = New System.Windows.Forms.ComboBox()
@@ -85,6 +88,8 @@ Partial Class Frm_TextTex
         '
         'GBMain
         '
+        Me.GBMain.Controls.Add(Me.Label6)
+        Me.GBMain.Controls.Add(Me.CSMain)
         Me.GBMain.Controls.Add(Me.CBEnh)
         Me.GBMain.Controls.Add(Me.GBEnh)
         Me.GBMain.Controls.Add(Me.RBColor)
@@ -102,6 +107,25 @@ Partial Class Frm_TextTex
         Me.GBMain.Size = New System.Drawing.Size(326, 230)
         Me.GBMain.TabIndex = 6
         Me.GBMain.TabStop = False
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(11, 116)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(34, 13)
+        Me.Label6.TabIndex = 18
+        Me.Label6.Text = "Farbe"
+        '
+        'CSMain
+        '
+        Me.CSMain.BackColor = System.Drawing.Color.Transparent
+        Me.CSMain.Location = New System.Drawing.Point(52, 111)
+        Me.CSMain.Name = "CSMain"
+        RgbColor1.SelectedColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.CSMain.SelectedColor = RgbColor1
+        Me.CSMain.Size = New System.Drawing.Size(256, 24)
+        Me.CSMain.TabIndex = 17
         '
         'CBEnh
         '
@@ -287,4 +311,6 @@ Partial Class Frm_TextTex
     Friend WithEvents CBGrid As CheckBox
     Friend WithEvents Label5 As Label
     Friend WithEvents CBAusr As ComboBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents CSMain As ColorSelector
 End Class
