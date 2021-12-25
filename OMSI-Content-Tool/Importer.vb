@@ -3,7 +3,9 @@ Imports System.Xml
 Imports System.IO
 
 Module Importer
+    Public ReadOnly KNOWN_FILE_TYPES As String() = {"o3d", "x", "x3d", "sli", "cfg", "txt"}
     Public stopImport As Boolean = False
+
 
     Public Function readFile(filename As Filename)
         stopImport = False
@@ -14,17 +16,17 @@ Module Importer
         Frm_Main.SSLBStatus.Text = "Import erfolgreich!"
 
         Select Case filename.extension
-            Case "o3d"
+            Case KNOWN_FILE_TYPES(0)
                 Return readO3D(filename)
-            Case "x"
+            Case KNOWN_FILE_TYPES(1)
                 Return readX(filename)
-            Case "x3d"
+            Case KNOWN_FILE_TYPES(2)
                 Return readX3D(filename)
-            Case "sli"
+            Case KNOWN_FILE_TYPES(3)
                 Return readSli(filename)
-            Case "cfg"
+            Case KNOWN_FILE_TYPES(4)
                 Return readCfg(filename)
-            Case "txt"
+            Case KNOWN_FILE_TYPES(5)
                 Return readtxt(filename)
             Case Else
                 Log.Add("Dateiformat nicht unterstützt! (Fehler: I000, Datei: " & filename & ")", Log.TYPE_WARNUNG)
@@ -465,7 +467,7 @@ Module Importer
             Return Nothing
         End If
 
-        Dim lines = Split(Replace(My.Computer.FileSystem.ReadAllText(filename), vbLf, vbCrLf), vbCrLf)
+        Dim lines = Split(My.Computer.FileSystem.ReadAllText(filename), vbCrLf)
 
         Select Case Trim(lines(0))
             Case "xof 0302txt 0032"

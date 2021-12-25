@@ -130,12 +130,33 @@ Class Frm_Main
 
         If My.Settings.TexAutoReload Then TReloadTextures.Start()
 
-        'SoftDot nicht vergessen!
-        'dotTexture = New LocalTexture
-        'dotTexture.filename = New Filename("Dot.png", New Filename(Application.ExecutablePath).path)
-        'loadTexture(dotTexture)
-        'AlleTexturen.Add(dotTexture.filename)
+        'Datei laden die übergeben wurde
+        Try
+            If My.Application.CommandLineArgs.Count > 0 Then
+                Dim newFile As New Filename(My.Application.CommandLineArgs(0))
+                If Proj_Bus.EXTENSION = newFile.extension Or Proj_Ovh.EXTENSION = newFile.extension Or Proj_Sco.EXTENSION = newFile.extension Or Proj_Sli.EXTENSION = newFile.extension Then
+                    ProjÖffnen(newFile)
+                ElseIf Importer.KNOWN_FILE_TYPES.Contains(newFile.extension) Then
+                    Dim newMesh As New OMSI_Mesh
+                    newMesh = fileimport2(newFile)
 
+                    If Not newMesh Is Nothing Then
+                        getProj.model.meshes.add(newMesh)
+                        LBMeshes.Items.Add(newMesh.filename.name)
+                        LBMeshes.SetItemChecked(LBMeshes.Items.Count - 1, True)
+                        Parent_CBParent.Items.Add(newMesh.filename.name)
+
+                        If newFile.extension.ToLower <> "o3d" Then
+                            newMesh.isProtected = False
+                        End If
+                    End If
+                Else
+                    MsgBox("Datei " & newFile & " wird nicht unterstützt!")
+                End If
+
+            End If
+        Catch ex As Exception
+        End Try
     End Sub
 
 

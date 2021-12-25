@@ -122,17 +122,6 @@ Partial Class Frm_Main
         Me.StatistikToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem12 = New System.Windows.Forms.ToolStripSeparator()
         Me.ProjektordnerÖffnenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ModifikationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.VeränderungAufnehmenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MitOriginalVergleichenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SoundToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ScriptToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.VarlistsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.StringvarlistToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ScriptsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ConstfilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem10 = New System.Windows.Forms.ToolStripSeparator()
-        Me.VariablenTestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ErstellenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AchseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.KameraToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -156,6 +145,17 @@ Partial Class Frm_Main
         Me.ToolStripMenuItem15 = New System.Windows.Forms.ToolStripSeparator()
         Me.LichtToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PfadToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ModifikationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.VeränderungAufnehmenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MitOriginalVergleichenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SoundToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ScriptToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.VarlistsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StringvarlistToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ScriptsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ConstfilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem10 = New System.Windows.Forms.ToolStripSeparator()
+        Me.VariablenTestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImportierenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExportiernToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HilfeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -173,6 +173,7 @@ Partial Class Frm_Main
         Me.BTPanelEingenschaftenClose = New System.Windows.Forms.Button()
         Me.PanelEigenschaften1 = New System.Windows.Forms.Panel()
         Me.GBSpot = New System.Windows.Forms.GroupBox()
+        Me.Label84 = New System.Windows.Forms.Label()
         Me.Label82 = New System.Windows.Forms.Label()
         Me.Label81 = New System.Windows.Forms.Label()
         Me.Spot_TBAussen = New System.Windows.Forms.TextBox()
@@ -339,6 +340,7 @@ Partial Class Frm_Main
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Bel_CB0 = New System.Windows.Forms.ComboBox()
         Me.GBLicht = New System.Windows.Forms.GroupBox()
+        Me.Label83 = New System.Windows.Forms.Label()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Licht_MinMax = New System.Windows.Forms.Button()
         Me.Licht_TBZeitkonst = New System.Windows.Forms.TextBox()
@@ -461,8 +463,6 @@ Partial Class Frm_Main
         Me.FDÖffnen = New System.Windows.Forms.OpenFileDialog()
         Me.TSave = New System.Windows.Forms.Timer(Me.components)
         Me.TReloadTextures = New System.Windows.Forms.Timer(Me.components)
-        Me.Label83 = New System.Windows.Forms.Label()
-        Me.Label84 = New System.Windows.Forms.Label()
         Me.Spot_PSRichtung = New O3D_Test.PointSelector()
         Me.Spot_CSFarbe = New O3D_Test.ColorSelector()
         Me.VarSelector1 = New O3D_Test.VarSelector()
@@ -982,6 +982,148 @@ Partial Class Frm_Main
         Me.ProjektordnerÖffnenToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
         Me.ProjektordnerÖffnenToolStripMenuItem.Text = "Projektordner öffnen"
         '
+        'ErstellenToolStripMenuItem
+        '
+        Me.ErstellenToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AchseToolStripMenuItem, Me.KameraToolStripMenuItem, Me.KupplungspunktToolStripMenuItem, Me.InnenlichtToolStripMenuItem, Me.RauchToolStripMenuItem, Me.SpiegelToolStripMenuItem, Me.SitzplatzToolStripMenuItem, Me.TicketblockToolStripMenuItem, Me.AttachpointsToolStripMenuItem, Me.SplinehelperToolStripMenuItem, Me.SpotToolStripMenuItem, Me.ToolStripMenuItem15, Me.LichtToolStripMenuItem, Me.PfadToolStripMenuItem})
+        Me.ErstellenToolStripMenuItem.Name = "ErstellenToolStripMenuItem"
+        Me.ErstellenToolStripMenuItem.Size = New System.Drawing.Size(63, 20)
+        Me.ErstellenToolStripMenuItem.Text = "Erstellen"
+        '
+        'AchseToolStripMenuItem
+        '
+        Me.AchseToolStripMenuItem.Name = "AchseToolStripMenuItem"
+        Me.AchseToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.AchseToolStripMenuItem.Text = "Achse"
+        '
+        'KameraToolStripMenuItem
+        '
+        Me.KameraToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FahrerkameraToolStripMenuItem, Me.FahrgastkameraToolStripMenuItem})
+        Me.KameraToolStripMenuItem.Name = "KameraToolStripMenuItem"
+        Me.KameraToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.KameraToolStripMenuItem.Text = "Kamera"
+        '
+        'FahrerkameraToolStripMenuItem
+        '
+        Me.FahrerkameraToolStripMenuItem.Name = "FahrerkameraToolStripMenuItem"
+        Me.FahrerkameraToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
+        Me.FahrerkameraToolStripMenuItem.Text = "Fahrerkamera"
+        '
+        'FahrgastkameraToolStripMenuItem
+        '
+        Me.FahrgastkameraToolStripMenuItem.Name = "FahrgastkameraToolStripMenuItem"
+        Me.FahrgastkameraToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
+        Me.FahrgastkameraToolStripMenuItem.Text = "Fahrgastkamera"
+        '
+        'KupplungspunktToolStripMenuItem
+        '
+        Me.KupplungspunktToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FrontToolStripMenuItem, Me.HeckToolStripMenuItem})
+        Me.KupplungspunktToolStripMenuItem.Name = "KupplungspunktToolStripMenuItem"
+        Me.KupplungspunktToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.KupplungspunktToolStripMenuItem.Text = "Kupplungspunkt"
+        '
+        'FrontToolStripMenuItem
+        '
+        Me.FrontToolStripMenuItem.Name = "FrontToolStripMenuItem"
+        Me.FrontToolStripMenuItem.Size = New System.Drawing.Size(102, 22)
+        Me.FrontToolStripMenuItem.Text = "Front"
+        '
+        'HeckToolStripMenuItem
+        '
+        Me.HeckToolStripMenuItem.Name = "HeckToolStripMenuItem"
+        Me.HeckToolStripMenuItem.Size = New System.Drawing.Size(102, 22)
+        Me.HeckToolStripMenuItem.Text = "Heck"
+        '
+        'InnenlichtToolStripMenuItem
+        '
+        Me.InnenlichtToolStripMenuItem.Name = "InnenlichtToolStripMenuItem"
+        Me.InnenlichtToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.InnenlichtToolStripMenuItem.Text = "Innenlicht"
+        '
+        'RauchToolStripMenuItem
+        '
+        Me.RauchToolStripMenuItem.Name = "RauchToolStripMenuItem"
+        Me.RauchToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.RauchToolStripMenuItem.Text = "Rauch"
+        '
+        'SpiegelToolStripMenuItem
+        '
+        Me.SpiegelToolStripMenuItem.Name = "SpiegelToolStripMenuItem"
+        Me.SpiegelToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.SpiegelToolStripMenuItem.Text = "Spiegel"
+        '
+        'SitzplatzToolStripMenuItem
+        '
+        Me.SitzplatzToolStripMenuItem.Name = "SitzplatzToolStripMenuItem"
+        Me.SitzplatzToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.SitzplatzToolStripMenuItem.Text = "Sitz-/ Stehplatz"
+        '
+        'TicketblockToolStripMenuItem
+        '
+        Me.TicketblockToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EntwerterToolStripMenuItem, Me.TicketblockToolStripMenuItem1, Me.RückgabefeldToolStripMenuItem, Me.GeldrückgabeToolStripMenuItem})
+        Me.TicketblockToolStripMenuItem.Name = "TicketblockToolStripMenuItem"
+        Me.TicketblockToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.TicketblockToolStripMenuItem.Text = "Tickes"
+        '
+        'EntwerterToolStripMenuItem
+        '
+        Me.EntwerterToolStripMenuItem.Name = "EntwerterToolStripMenuItem"
+        Me.EntwerterToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.EntwerterToolStripMenuItem.Text = "Entwerter"
+        '
+        'TicketblockToolStripMenuItem1
+        '
+        Me.TicketblockToolStripMenuItem1.Name = "TicketblockToolStripMenuItem1"
+        Me.TicketblockToolStripMenuItem1.Size = New System.Drawing.Size(147, 22)
+        Me.TicketblockToolStripMenuItem1.Text = "Ticketblock"
+        '
+        'RückgabefeldToolStripMenuItem
+        '
+        Me.RückgabefeldToolStripMenuItem.Name = "RückgabefeldToolStripMenuItem"
+        Me.RückgabefeldToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.RückgabefeldToolStripMenuItem.Text = "Geldablage"
+        '
+        'GeldrückgabeToolStripMenuItem
+        '
+        Me.GeldrückgabeToolStripMenuItem.Name = "GeldrückgabeToolStripMenuItem"
+        Me.GeldrückgabeToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.GeldrückgabeToolStripMenuItem.Text = "Geldrückgabe"
+        '
+        'AttachpointsToolStripMenuItem
+        '
+        Me.AttachpointsToolStripMenuItem.Name = "AttachpointsToolStripMenuItem"
+        Me.AttachpointsToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.AttachpointsToolStripMenuItem.Text = "Attachpoint"
+        '
+        'SplinehelperToolStripMenuItem
+        '
+        Me.SplinehelperToolStripMenuItem.Enabled = False
+        Me.SplinehelperToolStripMenuItem.Name = "SplinehelperToolStripMenuItem"
+        Me.SplinehelperToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.SplinehelperToolStripMenuItem.Text = "Splinehelper"
+        '
+        'SpotToolStripMenuItem
+        '
+        Me.SpotToolStripMenuItem.Name = "SpotToolStripMenuItem"
+        Me.SpotToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.SpotToolStripMenuItem.Text = "Spot"
+        '
+        'ToolStripMenuItem15
+        '
+        Me.ToolStripMenuItem15.Name = "ToolStripMenuItem15"
+        Me.ToolStripMenuItem15.Size = New System.Drawing.Size(159, 6)
+        '
+        'LichtToolStripMenuItem
+        '
+        Me.LichtToolStripMenuItem.Name = "LichtToolStripMenuItem"
+        Me.LichtToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.LichtToolStripMenuItem.Text = "Licht"
+        '
+        'PfadToolStripMenuItem
+        '
+        Me.PfadToolStripMenuItem.Name = "PfadToolStripMenuItem"
+        Me.PfadToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.PfadToolStripMenuItem.Text = "Pfad(punkt)"
+        '
         'ModifikationToolStripMenuItem
         '
         Me.ModifikationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.VeränderungAufnehmenToolStripMenuItem, Me.MitOriginalVergleichenToolStripMenuItem})
@@ -1049,148 +1191,6 @@ Partial Class Frm_Main
         Me.VariablenTestToolStripMenuItem.Name = "VariablenTestToolStripMenuItem"
         Me.VariablenTestToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
         Me.VariablenTestToolStripMenuItem.Text = "Variablen-Test"
-        '
-        'ErstellenToolStripMenuItem
-        '
-        Me.ErstellenToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AchseToolStripMenuItem, Me.KameraToolStripMenuItem, Me.KupplungspunktToolStripMenuItem, Me.InnenlichtToolStripMenuItem, Me.RauchToolStripMenuItem, Me.SpiegelToolStripMenuItem, Me.SitzplatzToolStripMenuItem, Me.TicketblockToolStripMenuItem, Me.AttachpointsToolStripMenuItem, Me.SplinehelperToolStripMenuItem, Me.SpotToolStripMenuItem, Me.ToolStripMenuItem15, Me.LichtToolStripMenuItem, Me.PfadToolStripMenuItem})
-        Me.ErstellenToolStripMenuItem.Name = "ErstellenToolStripMenuItem"
-        Me.ErstellenToolStripMenuItem.Size = New System.Drawing.Size(63, 20)
-        Me.ErstellenToolStripMenuItem.Text = "Erstellen"
-        '
-        'AchseToolStripMenuItem
-        '
-        Me.AchseToolStripMenuItem.Name = "AchseToolStripMenuItem"
-        Me.AchseToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.AchseToolStripMenuItem.Text = "Achse"
-        '
-        'KameraToolStripMenuItem
-        '
-        Me.KameraToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FahrerkameraToolStripMenuItem, Me.FahrgastkameraToolStripMenuItem})
-        Me.KameraToolStripMenuItem.Name = "KameraToolStripMenuItem"
-        Me.KameraToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.KameraToolStripMenuItem.Text = "Kamera"
-        '
-        'FahrerkameraToolStripMenuItem
-        '
-        Me.FahrerkameraToolStripMenuItem.Name = "FahrerkameraToolStripMenuItem"
-        Me.FahrerkameraToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
-        Me.FahrerkameraToolStripMenuItem.Text = "Fahrerkamera"
-        '
-        'FahrgastkameraToolStripMenuItem
-        '
-        Me.FahrgastkameraToolStripMenuItem.Name = "FahrgastkameraToolStripMenuItem"
-        Me.FahrgastkameraToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
-        Me.FahrgastkameraToolStripMenuItem.Text = "Fahrgastkamera"
-        '
-        'KupplungspunktToolStripMenuItem
-        '
-        Me.KupplungspunktToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FrontToolStripMenuItem, Me.HeckToolStripMenuItem})
-        Me.KupplungspunktToolStripMenuItem.Name = "KupplungspunktToolStripMenuItem"
-        Me.KupplungspunktToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.KupplungspunktToolStripMenuItem.Text = "Kupplungspunkt"
-        '
-        'FrontToolStripMenuItem
-        '
-        Me.FrontToolStripMenuItem.Name = "FrontToolStripMenuItem"
-        Me.FrontToolStripMenuItem.Size = New System.Drawing.Size(102, 22)
-        Me.FrontToolStripMenuItem.Text = "Front"
-        '
-        'HeckToolStripMenuItem
-        '
-        Me.HeckToolStripMenuItem.Name = "HeckToolStripMenuItem"
-        Me.HeckToolStripMenuItem.Size = New System.Drawing.Size(102, 22)
-        Me.HeckToolStripMenuItem.Text = "Heck"
-        '
-        'InnenlichtToolStripMenuItem
-        '
-        Me.InnenlichtToolStripMenuItem.Name = "InnenlichtToolStripMenuItem"
-        Me.InnenlichtToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.InnenlichtToolStripMenuItem.Text = "Innenlicht"
-        '
-        'RauchToolStripMenuItem
-        '
-        Me.RauchToolStripMenuItem.Name = "RauchToolStripMenuItem"
-        Me.RauchToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.RauchToolStripMenuItem.Text = "Rauch"
-        '
-        'SpiegelToolStripMenuItem
-        '
-        Me.SpiegelToolStripMenuItem.Name = "SpiegelToolStripMenuItem"
-        Me.SpiegelToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.SpiegelToolStripMenuItem.Text = "Spiegel"
-        '
-        'SitzplatzToolStripMenuItem
-        '
-        Me.SitzplatzToolStripMenuItem.Name = "SitzplatzToolStripMenuItem"
-        Me.SitzplatzToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.SitzplatzToolStripMenuItem.Text = "Sitz-/ Stehplatz"
-        '
-        'TicketblockToolStripMenuItem
-        '
-        Me.TicketblockToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EntwerterToolStripMenuItem, Me.TicketblockToolStripMenuItem1, Me.RückgabefeldToolStripMenuItem, Me.GeldrückgabeToolStripMenuItem})
-        Me.TicketblockToolStripMenuItem.Name = "TicketblockToolStripMenuItem"
-        Me.TicketblockToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.TicketblockToolStripMenuItem.Text = "Tickes"
-        '
-        'EntwerterToolStripMenuItem
-        '
-        Me.EntwerterToolStripMenuItem.Name = "EntwerterToolStripMenuItem"
-        Me.EntwerterToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
-        Me.EntwerterToolStripMenuItem.Text = "Entwerter"
-        '
-        'TicketblockToolStripMenuItem1
-        '
-        Me.TicketblockToolStripMenuItem1.Name = "TicketblockToolStripMenuItem1"
-        Me.TicketblockToolStripMenuItem1.Size = New System.Drawing.Size(147, 22)
-        Me.TicketblockToolStripMenuItem1.Text = "Ticketblock"
-        '
-        'RückgabefeldToolStripMenuItem
-        '
-        Me.RückgabefeldToolStripMenuItem.Name = "RückgabefeldToolStripMenuItem"
-        Me.RückgabefeldToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
-        Me.RückgabefeldToolStripMenuItem.Text = "Geldablage"
-        '
-        'GeldrückgabeToolStripMenuItem
-        '
-        Me.GeldrückgabeToolStripMenuItem.Name = "GeldrückgabeToolStripMenuItem"
-        Me.GeldrückgabeToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
-        Me.GeldrückgabeToolStripMenuItem.Text = "Geldrückgabe"
-        '
-        'AttachpointsToolStripMenuItem
-        '
-        Me.AttachpointsToolStripMenuItem.Name = "AttachpointsToolStripMenuItem"
-        Me.AttachpointsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.AttachpointsToolStripMenuItem.Text = "Attachpoint"
-        '
-        'SplinehelperToolStripMenuItem
-        '
-        Me.SplinehelperToolStripMenuItem.Enabled = False
-        Me.SplinehelperToolStripMenuItem.Name = "SplinehelperToolStripMenuItem"
-        Me.SplinehelperToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.SplinehelperToolStripMenuItem.Text = "Splinehelper"
-        '
-        'SpotToolStripMenuItem
-        '
-        Me.SpotToolStripMenuItem.Name = "SpotToolStripMenuItem"
-        Me.SpotToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.SpotToolStripMenuItem.Text = "Spot"
-        '
-        'ToolStripMenuItem15
-        '
-        Me.ToolStripMenuItem15.Name = "ToolStripMenuItem15"
-        Me.ToolStripMenuItem15.Size = New System.Drawing.Size(177, 6)
-        '
-        'LichtToolStripMenuItem
-        '
-        Me.LichtToolStripMenuItem.Name = "LichtToolStripMenuItem"
-        Me.LichtToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.LichtToolStripMenuItem.Text = "Licht"
-        '
-        'PfadToolStripMenuItem
-        '
-        Me.PfadToolStripMenuItem.Name = "PfadToolStripMenuItem"
-        Me.PfadToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.PfadToolStripMenuItem.Text = "Pfad(punkt)"
         '
         'ImportierenToolStripMenuItem
         '
@@ -1366,6 +1366,15 @@ Partial Class Frm_Main
         Me.GBSpot.TabIndex = 36
         Me.GBSpot.TabStop = False
         Me.GBSpot.Text = "Spot"
+        '
+        'Label84
+        '
+        Me.Label84.AutoSize = True
+        Me.Label84.Location = New System.Drawing.Point(3, 51)
+        Me.Label84.Name = "Label84"
+        Me.Label84.Size = New System.Drawing.Size(34, 13)
+        Me.Label84.TabIndex = 9
+        Me.Label84.Text = "Farbe"
         '
         'Label82
         '
@@ -3025,6 +3034,15 @@ Partial Class Frm_Main
         Me.GBLicht.Text = "Licht"
         Me.GBLicht.Visible = False
         '
+        'Label83
+        '
+        Me.Label83.AutoSize = True
+        Me.Label83.Location = New System.Drawing.Point(3, 132)
+        Me.Label83.Name = "Label83"
+        Me.Label83.Size = New System.Drawing.Size(34, 13)
+        Me.Label83.TabIndex = 61
+        Me.Label83.Text = "Farbe"
+        '
         'Button2
         '
         Me.Button2.Location = New System.Drawing.Point(224, 258)
@@ -4165,24 +4183,6 @@ Partial Class Frm_Main
         'TReloadTextures
         '
         Me.TReloadTextures.Interval = 2000
-        '
-        'Label83
-        '
-        Me.Label83.AutoSize = True
-        Me.Label83.Location = New System.Drawing.Point(3, 132)
-        Me.Label83.Name = "Label83"
-        Me.Label83.Size = New System.Drawing.Size(34, 13)
-        Me.Label83.TabIndex = 61
-        Me.Label83.Text = "Farbe"
-        '
-        'Label84
-        '
-        Me.Label84.AutoSize = True
-        Me.Label84.Location = New System.Drawing.Point(3, 51)
-        Me.Label84.Name = "Label84"
-        Me.Label84.Size = New System.Drawing.Size(34, 13)
-        Me.Label84.TabIndex = 9
-        Me.Label84.Text = "Farbe"
         '
         'Spot_PSRichtung
         '

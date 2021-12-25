@@ -3,6 +3,7 @@ Imports System.Text
 
 Public Class Proj_Sco
     Public Const TYPE = Frm_Main.PROJ_TYPE_SCO
+    Public Const EXTENSION As String = "sco"
 
     Public isloaded As Boolean
     Public filename As Filename
