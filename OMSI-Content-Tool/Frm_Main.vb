@@ -306,8 +306,13 @@ Class Frm_Main
                                 Else
                                     getProj.model = New OMSI_Model(newFilename)
                                 End If
+                            Else
+                                If getProjTyp() = Proj_Emt.TYPE Then
+                                    getProj.model = New OMSI_Model(newFilename)
+                                End If
                             End If
-
+                            loadModelPrefs(getProj.model)
+                            showModel(getProj.model.meshes)
                         Else
                             MsgBox("Datei konnte nicht gefunden werden! (Datei: " & newFilename & ")")
                         End If
@@ -324,13 +329,14 @@ Class Frm_Main
     End Sub
 
     Public Function fileimport2(filename As Filename, Optional convert As Boolean = False) As OMSI_Mesh
-        Dim newObjekt As Local3DObjekt = Importer.readFile(filename)
+        Dim newObjekt As Object = Importer.readFile(filename)
 
-        If Not newObjekt Is Nothing Then
+        If TypeOf newObjekt Is Local3DObjekt Then
             Dim newMesh As New OMSI_Mesh
             newMesh.filename = filename
             newMesh.position = newObjekt.position
             newMesh.center = newObjekt.center
+            newMesh.origin = newObjekt.origin
             newMesh.index = AlleObjekte.Count
 
 
@@ -354,7 +360,10 @@ Class Frm_Main
 
 
             Return newMesh
+        ElseIf TypeOf newObjekt Is OMSI_Model Then
+            getProj.model = newObjekt
         Else
+
             Log.Add("Datei nicht geaden! (Datei: " & filename.name & ")", Log.TYPE_DEBUG)
             Return Nothing
         End If
@@ -1010,6 +1019,10 @@ Class Frm_Main
                     For Each anim In mesh.animations
                         If anim.origin_from_mesh Then
                             anim.mesh_center = mesh.center
+                            'anim.mesh_origin = mesh.origin
+                            'If InStr(mesh.filename, "lenkrad") Then
+                            '    MsgBox(mesh.origin.Y)
+                            'End If
                         End If
                     Next
                 Next
@@ -1094,6 +1107,7 @@ Class Frm_Main
                 meshes(i).index = newMesh.index
                 meshes(i).ObjIds = newMesh.ObjIds
                 meshes(i).center = newMesh.center
+                meshes(i).origin = newMesh.origin
                 If meshes(i).lodMin <= lodVal And meshes(i).lodMax >= lodVal Then
                     AlleObjekte(AlleObjekte.Count - 1).visible = True
                 Else
@@ -1329,6 +1343,7 @@ Class Frm_Main
 
     Private Sub ImportierenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportierenToolStripMenuItem.Click
         fileImport()
+        mainStrg = False
     End Sub
 
     Private Sub ExportiernToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportiernToolStripMenuItem.Click
@@ -1344,6 +1359,7 @@ Class Frm_Main
         Else
             MsgBox("Kein Mesh ausgewählt!")
         End If
+        mainStrg = False
     End Sub
 
     Private Sub ForumToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ForumToolStripMenuItem.Click
@@ -1444,7 +1460,8 @@ Class Frm_Main
     End Sub
 
     Private Sub SuchenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SuchenToolStripMenuItem.Click
-        Frm_FindMesh.Show()
+        Frm_FindMesh.Show(Me)
+        mainStrg = False
     End Sub
 
     Private Sub FahrrersichtToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FahrrersichtToolStripMenuItem.Click
@@ -1493,6 +1510,7 @@ Class Frm_Main
 
     Private Sub LogfileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogfileToolStripMenuItem.Click
         Shell("C:\WINDOWS\Notepad.exe " & Application.StartupPath & "\" & Log.logfile, 1)
+        mainStrg = False
     End Sub
 
     Private Sub ReadmetxtToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReadmetxtToolStripMenuItem.Click
@@ -1518,6 +1536,7 @@ Class Frm_Main
         Else
             MsgNoProj()
         End If
+        mainStrg = False
     End Sub
 
     Private Sub VarlistsToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles VarlistsToolStripMenuItem.Click
@@ -1605,6 +1624,7 @@ Class Frm_Main
 
     Private Sub NeuToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles NeuToolStripMenuItem2.Click
         LichtToolStripMenuItem_Click(sender, e)
+        mainStrg = False
     End Sub
 
     Private Sub LichtToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LichtToolStripMenuItem.Click
@@ -2867,26 +2887,29 @@ Class Frm_Main
                 .ImageTag = PBTexture.Tag
                 .Text = "Texture - """ & PBTexture.Tag & """"
 
-                Dim allSubObjekte As New List(Of Integer)
-                Dim allTexCoords As Double() = {}
-                For Each Objekt In AlleObjekte
+                If getProjTyp() = Proj_Bus.TYPE Or Proj_Ovh.TYPE Or Proj_Sco.TYPE Then
+                    Dim allSubObjekte As New List(Of Integer)
+                    Dim allTexCoords As Double() = {}
+                    For Each Objekt In AlleObjekte
+                        If selectedMesh.ObjIds.Contains(Objekt.id) Then
+                            For subObjID As Integer = 0 To Objekt.texturen.Count - 1
+                                If Objekt.texturen(subObjID).filename = New Filename(PBTexture.Tag.ToString) Then
+                                    allSubObjekte.AddRange(Objekt.subObjekte(subObjID).ToList)
+                                    allTexCoords = Objekt.texCoords
+                                End If
+                            Next
 
-                    If selectedMesh.ObjIds.Contains(Objekt.id) Then
-                        For subObjID As Integer = 0 To Objekt.texturen.Count - 1
-                            If Objekt.texturen(subObjID).filename = New Filename(PBTexture.Tag.ToString) Then
-                                allSubObjekte.AddRange(Objekt.subObjekte(subObjID).ToList)
-                                allTexCoords = Objekt.texCoords
-                            End If
-                        Next
-
-                    End If
-                Next
-                .drawUV(allTexCoords, allSubObjekte.ToArray)
+                        End If
+                    Next
+                    .drawUV(allTexCoords, allSubObjekte.ToArray)
+                ElseIf getProjTyp() = Proj_Sli.TYPE Then
+                    'hier weiter für SLI
+                End If
 
 
                 PanelTexture.Visible = False
-            End If
-            .Show()
+                End If
+                .Show()
         End With
     End Sub
 
@@ -3775,18 +3798,6 @@ Class Frm_Main
                                 End With
                             Next
                         End If
-                End Select
-            End If
-        End If
-
-
-        If getProj() Is Projekt_Sco Then
-            If Not getProj.model Is Nothing Then
-                GL.LineWidth(3)
-                GL.BindTexture(TextureTarget.Texture2D, 0)
-                GL.DepthFunc(DepthFunction.Always)              'Alles wird in den Vordergrund gezeichnet
-
-                Select Case TCObjekte.SelectedIndex
                     Case 2
                         GL.BindTexture(TextureTarget.Texture2D, 0)
                         Dim i As Integer = 0
@@ -3817,11 +3828,14 @@ Class Frm_Main
 
                 Select Case TCObjekte.SelectedIndex
                     Case 0
-                        GL.Color3(My.Settings.AchsenColor)
-
                         If Not getSelectedMesh() Is Nothing Then
-                            For Each anim In getSelectedMesh.animations
-                                With anim
+                            For i As Integer = 0 To getSelectedMesh.animations.Count - 1
+                                With getSelectedMesh.animations(i)
+                                    If i = Anim_DDList.Text Then
+                                        GL.Color3(My.Settings.SelectionColor)
+                                    Else
+                                        GL.Color3(My.Settings.AchsenColor)
+                                    End If
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                     GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
                                 End With

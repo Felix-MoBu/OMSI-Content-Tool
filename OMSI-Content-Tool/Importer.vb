@@ -3,7 +3,7 @@ Imports System.Xml
 Imports System.IO
 
 Module Importer
-    Public ReadOnly KNOWN_FILE_TYPES As String() = {"o3d", "x", "x3d", "sli", "cfg", "txt"}
+    Public ReadOnly KNOWN_FILE_TYPES As String() = {"o3d", "x", "x3d", "sli", "txt"}
     Public stopImport As Boolean = False
 
 
@@ -25,20 +25,13 @@ Module Importer
             Case KNOWN_FILE_TYPES(3)
                 Return readSli(filename)
             Case KNOWN_FILE_TYPES(4)
-                Return readCfg(filename)
-            Case KNOWN_FILE_TYPES(5)
                 Return readtxt(filename)
             Case Else
                 Log.Add("Dateiformat nicht unterstützt! (Fehler: I000, Datei: " & filename & ")", Log.TYPE_WARNUNG)
-                MsgBox("Dateiformat nicht unterstützt! (" & filename.name & ")")
+                importWarnung("Dateiformat nicht unterstützt!", "I999", filename, "Dateiformat nicht unterstützt!")
                 Return Nothing
         End Select
 
-    End Function
-
-    Private Function readCfg(filename As Filename) As OMSI_Model
-        MsgBox("Das Nachladen von neuen Modell-Dateien wird noch nicht unterstützt!")
-        Return Nothing
     End Function
 
     Private Function readtxt(filename As Filename) As OMSI_Mesh
@@ -411,23 +404,21 @@ Module Importer
         Dim startCenter As Integer = startCtTexturen + lenTexturenamen + ctTexture * 45 + 1
         With temp3D
             .A1.X = Math.Round(BitConverter.ToSingle({bytes(startCenter), bytes(startCenter + 1), bytes(startCenter + 2), bytes(startCenter + 3)}, 0), 6)
-            .A1.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 4), bytes(startCenter + 5), bytes(startCenter + 6), bytes(startCenter + 7)}, 0), 6)
-            .A1.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 8), bytes(startCenter + 9), bytes(startCenter + 10), bytes(startCenter + 11)}, 0), 6)
+            .A1.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 4), bytes(startCenter + 5), bytes(startCenter + 6), bytes(startCenter + 7)}, 0), 6)
+            .A1.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 8), bytes(startCenter + 9), bytes(startCenter + 10), bytes(startCenter + 11)}, 0), 6)
             .A2 = Math.Round(BitConverter.ToSingle({bytes(startCenter + 12), bytes(startCenter + 13), bytes(startCenter + 14), bytes(startCenter + 15)}, 0), 6)
             .B1.X = Math.Round(BitConverter.ToSingle({bytes(startCenter + 16), bytes(startCenter + 17), bytes(startCenter + 18), bytes(startCenter + 19)}, 0), 6)
-            .B1.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 20), bytes(startCenter + 21), bytes(startCenter + 22), bytes(startCenter + 23)}, 0), 6)
-            .B1.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 24), bytes(startCenter + 25), bytes(startCenter + 26), bytes(startCenter + 27)}, 0), 6)
+            .B1.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 20), bytes(startCenter + 21), bytes(startCenter + 22), bytes(startCenter + 23)}, 0), 6)
+            .B1.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 24), bytes(startCenter + 25), bytes(startCenter + 26), bytes(startCenter + 27)}, 0), 6)
             .B2 = Math.Round(BitConverter.ToSingle({bytes(startCenter + 28), bytes(startCenter + 29), bytes(startCenter + 30), bytes(startCenter + 31)}, 0), 6)
-            .C1.X = Math.Round(BitConverter.ToSingle({bytes(startCenter + 32), bytes(startCenter + 33), bytes(startCenter + 34), bytes(startCenter + 35)}, 0), 6)
-            .C1.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 36), bytes(startCenter + 37), bytes(startCenter + 38), bytes(startCenter + 39)}, 0), 6)
-            .C1.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 40), bytes(startCenter + 41), bytes(startCenter + 42), bytes(startCenter + 43)}, 0), 6)
-            .C2 = Math.Round(BitConverter.ToSingle({bytes(startCenter + 44), bytes(startCenter + 45), bytes(startCenter + 46), bytes(startCenter + 47)}, 0), 6)
+            .origin.X = Math.Round(BitConverter.ToSingle({bytes(startCenter + 32), bytes(startCenter + 33), bytes(startCenter + 34), bytes(startCenter + 35)}, 0), 6)
+            .origin.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 36), bytes(startCenter + 37), bytes(startCenter + 38), bytes(startCenter + 39)}, 0), 6)
+            .origin.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 40), bytes(startCenter + 41), bytes(startCenter + 42), bytes(startCenter + 43)}, 0), 6)
+            .origin_scale = Math.Round(BitConverter.ToSingle({bytes(startCenter + 44), bytes(startCenter + 45), bytes(startCenter + 46), bytes(startCenter + 47)}, 0), 6)
             .center.X = Math.Round(BitConverter.ToSingle({bytes(startCenter + 48), bytes(startCenter + 49), bytes(startCenter + 50), bytes(startCenter + 51)}, 0), 6)
             .center.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 52), bytes(startCenter + 53), bytes(startCenter + 54), bytes(startCenter + 55)}, 0), 6)
             .center.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 56), bytes(startCenter + 57), bytes(startCenter + 58), bytes(startCenter + 59)}, 0), 6)
             .scale = Math.Round(BitConverter.ToSingle({bytes(startCenter + 60), bytes(startCenter + 61), bytes(startCenter + 62), bytes(startCenter + 63)}, 0), 6)
-
-
 
             'Werte an Objekt übergeben
             .vertices = verticesTemp.ToArray
@@ -513,23 +504,23 @@ Module Importer
             Select Case Split(Trim(lines(ctLine)), " ")(0)
                 Case "FrameTransformMatrix"
                     temp3D.A1.X = Replace(Split(Trim(lines(ctLine + 1)), ",")(0), ".", ",")
-                    temp3D.A1.Y = Replace(Split(Trim(lines(ctLine + 1)), ",")(1), ".", ",")
-                    temp3D.A1.Z = Replace(Split(Trim(lines(ctLine + 1)), ",")(2), ".", ",")
+                    temp3D.A1.Z = Replace(Split(Trim(lines(ctLine + 1)), ",")(1), ".", ",")
+                    temp3D.A1.Y = Replace(Split(Trim(lines(ctLine + 1)), ",")(2), ".", ",")
                     temp3D.A2 = Replace(Split(Trim(lines(ctLine + 1)), ",")(3), ".", ",")
 
                     temp3D.B1.X = Replace(Split(Trim(lines(ctLine + 2)), ",")(0), ".", ",")
-                    temp3D.B1.Y = Replace(Split(Trim(lines(ctLine + 2)), ",")(1), ".", ",")
-                    temp3D.B1.Z = Replace(Split(Trim(lines(ctLine + 2)), ",")(2), ".", ",")
+                    temp3D.B1.Z = Replace(Split(Trim(lines(ctLine + 2)), ",")(1), ".", ",")
+                    temp3D.B1.Y = Replace(Split(Trim(lines(ctLine + 2)), ",")(2), ".", ",")
                     temp3D.B2 = Replace(Split(Trim(lines(ctLine + 2)), ",")(3), ".", ",")
 
-                    temp3D.C1.X = Replace(Split(Trim(lines(ctLine + 3)), ",")(0), ".", ",")
-                    temp3D.C1.Y = Replace(Split(Trim(lines(ctLine + 3)), ",")(1), ".", ",")
-                    temp3D.C1.Z = Replace(Split(Trim(lines(ctLine + 3)), ",")(2), ".", ",")
-                    temp3D.C2 = Replace(Split(Trim(lines(ctLine + 3)), ",")(3), ".", ",")
+                    temp3D.origin.X = Replace(Split(Trim(lines(ctLine + 3)), ",")(0), ".", ",")
+                    temp3D.origin.Z = Replace(Split(Trim(lines(ctLine + 3)), ",")(1), ".", ",")
+                    temp3D.origin.Y = Replace(Split(Trim(lines(ctLine + 3)), ",")(2), ".", ",")
+                    temp3D.origin_scale = Replace(Split(Trim(lines(ctLine + 3)), ",")(3), ".", ",")
 
                     temp3D.center.X = -Replace(Split(Trim(lines(ctLine + 4)), ",")(0), ".", ",")
-                    temp3D.center.Y = Replace(Split(Trim(lines(ctLine + 4)), ",")(2), ".", ",")
-                    temp3D.center.Z = Replace(Split(Trim(lines(ctLine + 4)), ",")(1), ".", ",")
+                    temp3D.center.Z = Replace(Split(Trim(lines(ctLine + 4)), ",")(2), ".", ",")
+                    temp3D.center.Y = Replace(Split(Trim(lines(ctLine + 4)), ",")(1), ".", ",")
                     temp3D.scale = Replace(Split(Trim(lines(ctLine + 4)), ",")(3), ".", ",")
                     ctLine += 4
                 Case "Mesh"
@@ -720,32 +711,32 @@ Module Importer
             Select Case Split(Trim(lines(ctLine)), " ")(0)
                 Case "FrameTransformMatrix"
                     temp3D.A1.X = Replace(Split(Trim(lines(ctLine + 1)), ",")(0), ".", ",")
-                    temp3D.A1.Y = Replace(Split(Trim(lines(ctLine + 1)), ",")(1), ".", ",")
-                    temp3D.A1.Z = Replace(Split(Trim(lines(ctLine + 1)), ",")(2), ".", ",")
+                    temp3D.A1.Z = Replace(Split(Trim(lines(ctLine + 1)), ",")(1), ".", ",")
+                    temp3D.A1.Y = Replace(Split(Trim(lines(ctLine + 1)), ",")(2), ".", ",")
                     temp3D.A2 = Replace(Split(Trim(lines(ctLine + 1)), ",")(3), ".", ",")
 
                     temp3D.B1.X = Replace(Split(Trim(lines(ctLine + 2)), ",")(0), ".", ",")
-                    temp3D.B1.Y = Replace(Split(Trim(lines(ctLine + 2)), ",")(1), ".", ",")
-                    temp3D.B1.Z = Replace(Split(Trim(lines(ctLine + 2)), ",")(2), ".", ",")
+                    temp3D.B1.Z = Replace(Split(Trim(lines(ctLine + 2)), ",")(1), ".", ",")
+                    temp3D.B1.Y = Replace(Split(Trim(lines(ctLine + 2)), ",")(2), ".", ",")
                     temp3D.B2 = Replace(Split(Trim(lines(ctLine + 2)), ",")(3), ".", ",")
 
-                    temp3D.C1.X = Replace(Split(Trim(lines(ctLine + 3)), ",")(0), ".", ",")
-                    temp3D.C1.Y = Replace(Split(Trim(lines(ctLine + 3)), ",")(1), ".", ",")
-                    temp3D.C1.Z = Replace(Split(Trim(lines(ctLine + 3)), ",")(2), ".", ",")
-                    temp3D.C2 = Replace(Split(Trim(lines(ctLine + 3)), ",")(3), ".", ",")
+                    temp3D.origin.X = Replace(Split(Trim(lines(ctLine + 3)), ",")(0), ".", ",")
+                    temp3D.origin.Z = Replace(Split(Trim(lines(ctLine + 3)), ",")(1), ".", ",")
+                    temp3D.origin.Y = Replace(Split(Trim(lines(ctLine + 3)), ",")(2), ".", ",")
+                    temp3D.origin_scale = Replace(Split(Trim(lines(ctLine + 3)), ",")(3), ".", ",")
 
                     temp3D.center.X = Replace(Split(Trim(lines(ctLine + 4)), ",")(0), ".", ",")
-                    temp3D.center.Y = Replace(Split(Trim(lines(ctLine + 4)), ",")(1), ".", ",")
-                    temp3D.center.Z = Replace(Split(Trim(lines(ctLine + 4)), ",")(2), ".", ",")
+                    temp3D.center.Z = Replace(Split(Trim(lines(ctLine + 4)), ",")(1), ".", ",")
+                    temp3D.center.Y = Replace(Split(Trim(lines(ctLine + 4)), ",")(2), ".", ",")
                     temp3D.scale = Replace(Replace(Split(Trim(lines(ctLine + 4)), ",")(3), ".", ","), ";", "")
                     ctLine += 4
                 Case "Mesh"
                     'Mesh-Bereich
                     ctMesh = Replace(lines(ctLine + 1), ";", "")
                     For i = ctLine + 2 To ctLine + 2 + ctMesh - 1
-                        verticesTemp.Add(-Replace(Split(Trim(lines(i)), ";")(0), ".", ",") * temp3D.A1.X + temp3D.center.X)
-                        verticesTemp.Add(Replace(Split(Trim(lines(i)), ";")(2), ".", ",") * temp3D.C1.Z + temp3D.center.Z)
-                        verticesTemp.Add(Replace(Split(Trim(lines(i)), ";")(1), ".", ",") * temp3D.B1.Y + temp3D.center.Y)
+                        verticesTemp.Add(-Replace(Split(Trim(lines(i)), ";")(0), ".", ",") * temp3D.origin.X + temp3D.center.X)
+                        verticesTemp.Add(Replace(Split(Trim(lines(i)), ";")(2), ".", ",") * temp3D.origin.Z + temp3D.center.Z)
+                        verticesTemp.Add(Replace(Split(Trim(lines(i)), ";")(1), ".", ",") * temp3D.origin.Y + temp3D.center.Y)
                     Next
                     ctLine += 2 + ctMesh
 
@@ -935,12 +926,12 @@ Module Importer
                 .vertices = tempVert.ToArray
             End If
 
-            If Not Math.Round(.C1.Z, 6) = 1 Then
+            If Not Math.Round(.origin.Z, 6) = 1 Then
                 Dim tempVert As New List(Of Double)
                 For i = 0 To .vertices.Count - 1 Step 3
                     Dim newPnt As New Point3D(.vertices(i), - .vertices(i + 1), .vertices(i + 2))
-                    If Not .C1.X = 0 Then newPnt.rotate(.C1.X * -90, Point3D.ACHSE_X)
-                    If Not .C1.Y = 0 Then newPnt.rotate(.C1.Y * 90, Point3D.ACHSE_Z)
+                    If Not .origin.X = 0 Then newPnt.rotate(.origin.X * -90, Point3D.ACHSE_X)
+                    If Not .origin.Y = 0 Then newPnt.rotate(.origin.Y * 90, Point3D.ACHSE_Z)
                     tempVert.AddRange(newPnt.toList)
                 Next
                 .vertices = tempVert.ToArray
@@ -981,8 +972,9 @@ Module Importer
 
     Private Function checkIfExist(filename As Filename) As Boolean
         If Not My.Computer.FileSystem.FileExists(filename) Then
-            MsgBox("Import fehlgeschlagen! (Fehler: I001, Datei: " & filename & ") nicht gefunden")
             Log.Add("Import fehlgeschlagen! (Fehler: I001, Datei: " & filename & ") nicht gefunden", Log.TYPE_ERROR)
+            importWarnung("Import fehlgeschlagen!", "I001", filename, "Datei nicht gefunden")
+
             Frm_Main.SSLBStatus.Text = ""
             Return True
         Else

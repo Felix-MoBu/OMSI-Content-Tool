@@ -27,21 +27,29 @@ Public Class Frm_FindMesh
 
     Private Sub suchen(Optional vonForne As Boolean = False)
         If TBSuchen.Text <> "" Then
-            With Frm_Main.LBMeshes
-                Dim startindex As Integer = .SelectedIndex
-                If vonForne Then startindex = -1
-                For i As Integer = startindex + 1 To .Items.Count - 1
-                    If LCase(.Items(i)).contains(LCase(TBSuchen.Text)) Then
-                        .SelectedIndex = i
+            If CBMesh.Checked Then
+                With Frm_Main.LBMeshes
+                    Dim startindex As Integer = .SelectedIndex
+                    If vonForne Then startindex = -1
+                    For i As Integer = startindex + 1 To .Items.Count - 1
+                        If LCase(.Items(i)).contains(LCase(TBSuchen.Text)) Then
+                            .SelectedIndex = i
+                            Exit Sub
+                        End If
+                    Next
+                    If vonForne Then
                         Exit Sub
+                    Else
+                        suchen(True)
                     End If
-                Next
-                If vonForne Then
-                    Exit Sub
-                Else
-                    suchen(True)
-                End If
-            End With
+                End With
+            End If
+            If CBTexture.Checked Then
+                'hier weiert...
+            End If
+            If CBVariable.Checked Then
+                'hier weiter
+            End If
         End If
     End Sub
 End Class

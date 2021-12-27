@@ -105,19 +105,19 @@ Module Exporter
             .Add(&H79)
 
             .AddRange(ToHex(Objekt.A1.X))
-            .AddRange(ToHex(Objekt.A1.Y))
             .AddRange(ToHex(Objekt.A1.Z))
+            .AddRange(ToHex(Objekt.A1.Y))
             .AddRange(ToHex(Objekt.A2))
 
             .AddRange(ToHex(Objekt.B1.X))
-            .AddRange(ToHex(Objekt.B1.Y))
             .AddRange(ToHex(Objekt.B1.Z))
+            .AddRange(ToHex(Objekt.B1.Y))
             .AddRange(ToHex(Objekt.B2))
 
-            .AddRange(ToHex(Objekt.C1.X))
-            .AddRange(ToHex(Objekt.C1.Y))
-            .AddRange(ToHex(Objekt.C1.Z))
-            .AddRange(ToHex(Objekt.C2))
+            .AddRange(ToHex(Objekt.origin.X))
+            .AddRange(ToHex(Objekt.origin.Z))
+            .AddRange(ToHex(Objekt.origin.Y))
+            .AddRange(ToHex(Objekt.origin_scale))
 
             .AddRange(ToHex(Objekt.center.X))
             .AddRange(ToHex(Objekt.center.Z))
@@ -142,15 +142,15 @@ Module Exporter
             .Add("     1.000000, 0.000000, 0.000000, 0.000000,")
             .Add("     0.000000, 1.000000, 0.000000, 0.000000,")
             .Add("     0.000000, 0.000000, 1.000000, 0.000000,")
-            .Add("     " & fromSingle(Objekt.position.X, 6) & ", " & fromSingle(Objekt.position.Y, 6) & ", " & fromSingle(Objekt.position.Z, 6) & ", 1.000000;;")
+            .Add("     " & fromSingle(Objekt.position.X, 6) & ", " & fromSingle(Objekt.position.Z, 6) & ", " & fromSingle(Objekt.position.Y, 6) & ", 1.000000;;")
             .Add("  }")
 
             .Add("  Frame " & filename.nameNoEnding & " {")
             .Add("    FrameTransformMatrix {")
-            .Add("       " & fromSingle(Objekt.A1.X, 6) & ", " & fromSingle(Objekt.A1.Y, 6) & ", " & fromSingle(Objekt.A1.Z, 6) & ", " & fromSingle(Objekt.A2, 6) & ",")
-            .Add("       " & fromSingle(Objekt.B1.X, 6) & ", " & fromSingle(Objekt.B1.Y, 6) & ", " & fromSingle(Objekt.B1.Z, 6) & ", " & fromSingle(Objekt.B2, 6) & ",")
-            .Add("       " & fromSingle(Objekt.C1.X, 6) & ", " & fromSingle(Objekt.C1.Y, 6) & ", " & fromSingle(Objekt.C1.Z, 6) & ", " & fromSingle(Objekt.C2, 6) & ",")
-            .Add("       " & fromSingle(Objekt.center.X, 6) & ", " & fromSingle(Objekt.center.Y, 6) & ", " & fromSingle(Objekt.center.Z, 6) & ", " & fromSingle(Objekt.scale, 6) & ";;")
+            .Add("       " & fromSingle(Objekt.A1.X, 6) & ", " & fromSingle(Objekt.A1.Z, 6) & ", " & fromSingle(Objekt.A1.Y, 6) & ", " & fromSingle(Objekt.A2, 6) & ",")
+            .Add("       " & fromSingle(Objekt.B1.X, 6) & ", " & fromSingle(Objekt.B1.Z, 6) & ", " & fromSingle(Objekt.B1.Y, 6) & ", " & fromSingle(Objekt.B2, 6) & ",")
+            .Add("       " & fromSingle(Objekt.origin.X, 6) & ", " & fromSingle(Objekt.origin.Z, 6) & ", " & fromSingle(Objekt.origin.Y, 6) & ", " & fromSingle(Objekt.origin_scale, 6) & ",")
+            .Add("       " & fromSingle(Objekt.center.X, 6) & ", " & fromSingle(Objekt.center.Z, 6) & ", " & fromSingle(Objekt.center.Y, 6) & ", " & fromSingle(Objekt.scale, 6) & ";;")
             .Add("    }")
 
 
@@ -159,7 +159,7 @@ Module Exporter
             Dim zeilenEnde As String = ";,"
             For ctVerts As Integer = 0 To Objekt.vertices.Count - 1 Step 3
                 If ctVerts = Objekt.vertices.Count - 3 Then zeilenEnde = ";;"
-                .Add("       " & fromSingle(-Objekt.vertices(ctVerts) - Objekt.center.X, 6) & ";" & fromSingle(Objekt.vertices(ctVerts + 2) - Objekt.center.Y, 6) & ";" & fromSingle(Objekt.vertices(ctVerts + 1) - Objekt.center.Z, 6) & zeilenEnde)
+                .Add("       " & fromSingle(-Objekt.vertices(ctVerts) - Objekt.center.X, 6) & ";" & fromSingle(Objekt.vertices(ctVerts + 2) - Objekt.center.Z, 6) & ";" & fromSingle(Objekt.vertices(ctVerts + 1) - Objekt.center.Y, 6) & zeilenEnde)
             Next
 
 

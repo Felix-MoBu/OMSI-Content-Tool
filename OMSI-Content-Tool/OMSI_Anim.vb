@@ -5,6 +5,7 @@ Public Class OMSI_Anim
     Private origin_trans_int As New Point3D
     Private origin_from_mesh_int As Boolean
     Private mesh_center_int As New Point3D
+    Private mesh_origin_int As New Point3D
 
     Private origin_rot_x_int As Single
     Private origin_rot_y_int As Single
@@ -86,6 +87,16 @@ Public Class OMSI_Anim
         End Set
     End Property
 
+    Public Property mesh_origin As Point3D
+        Get
+            Return mesh_origin_int
+        End Get
+        Set(value As Point3D)
+            mesh_origin_int = value
+            recalc()
+        End Set
+    End Property
+
     Public Sub New()
         recalc()
     End Sub
@@ -94,11 +105,11 @@ Public Class OMSI_Anim
         Dim verts As New List(Of Double)
 
         If origin_from_mesh_int Then
-            verts.AddRange(PointToList(New Point3D(-mesh_center_int.X, mesh_center_int.Y, mesh_center_int.Z + 5), mesh_center_int.getWithInvertAchse(Point3D.ACHSE_X)))
-            verts.AddRange(PointToList(New Point3D(-mesh_center_int.X, mesh_center_int.Y, mesh_center_int.Z - 5), mesh_center_int.getWithInvertAchse(Point3D.ACHSE_X)))
+            verts.AddRange(PointToList(New Point3D(-mesh_center_int.X + 5, mesh_center_int.Y, mesh_center_int.Z), mesh_center_int.getWithInvertAchse(Point3D.ACHSE_X)))
+            verts.AddRange(PointToList(New Point3D(-mesh_center_int.X - 5, mesh_center_int.Y, mesh_center_int.Z), mesh_center_int.getWithInvertAchse(Point3D.ACHSE_X)))
         Else
-            verts.AddRange(PointToList(New Point3D(-origin_trans.X, origin_trans.Y, origin_trans.Z + 5), origin_trans.getWithInvertAchse(Point3D.ACHSE_X)))
-            verts.AddRange(PointToList(New Point3D(-origin_trans.X, origin_trans.Y, origin_trans.Z - 5), origin_trans.getWithInvertAchse(Point3D.ACHSE_X)))
+            verts.AddRange(PointToList(New Point3D(-origin_trans.X + 5, origin_trans.Y, origin_trans.Z), origin_trans.getWithInvertAchse(Point3D.ACHSE_X)))
+            verts.AddRange(PointToList(New Point3D(-origin_trans.X - 5, origin_trans.Y, origin_trans.Z), origin_trans.getWithInvertAchse(Point3D.ACHSE_X)))
         End If
 
         'MsgBox(verts(0) & "; " & verts(1) & "; " & verts(2) & vbCrLf & verts(3) & "; " & verts(4) & "; " & verts(5))
@@ -109,9 +120,19 @@ Public Class OMSI_Anim
 
     Private Function PointToList(tmpPnt As Point3D, origin As Point3D) As List(Of Double)
         PointToList = New List(Of Double)
-        tmpPnt.rotate(origin_rot_x_int, Point3D.ACHSE_X, origin)
-        tmpPnt.rotate(origin_rot_y_int, Point3D.ACHSE_Y, origin)
-        tmpPnt.rotate(origin_rot_z_int, Point3D.ACHSE_Z, origin)
+
+        If origin_from_mesh Then
+            With mesh_origin_int
+                tmpPnt.rotate(90 + (90 * Math.Asin(.Y / 1)), Point3D.ACHSE_X, origin)
+                tmpPnt.rotate(90 + (90 * Math.Asin(.Z / 1)), Point3D.ACHSE_Y, origin)
+                tmpPnt.rotate(90 + (90 * Math.Asin(.X / 1)), Point3D.ACHSE_Z, origin)
+            End With
+        Else
+            tmpPnt.rotate(origin_rot_x_int, Point3D.ACHSE_X, origin)
+            tmpPnt.rotate(origin_rot_y_int, Point3D.ACHSE_Y, origin)
+            tmpPnt.rotate(origin_rot_z_int, Point3D.ACHSE_Z, origin)
+        End If
+
 
         PointToList.Add(tmpPnt.X)
         PointToList.Add(tmpPnt.Z)

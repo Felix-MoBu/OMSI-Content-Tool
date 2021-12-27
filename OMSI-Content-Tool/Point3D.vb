@@ -114,23 +114,6 @@ Public Class Point3D
         End Select
     End Sub
 
-    'Public Sub rotate(grad As Double, achse As Byte)
-    '    Dim origPos As New Point3D(Me)
-    '    Select Case achse
-    '        Case ACHSE_X
-    '            Me.Y = Math.Cos(grad / 180 * Math.PI) * origPos.Y + Math.Sin(-grad / 180 * Math.PI) * origPos.Z
-    '            Me.Z = Math.Sin(grad / 180 * Math.PI) * origPos.Y + Math.Cos(-grad / 180 * Math.PI) * origPos.Z
-    '        Case ACHSE_Y
-    '            Me.X = Math.Cos(grad / 180 * Math.PI) * origPos.Z + Math.Sin(-grad / 180 * Math.PI) * origPos.X
-    '            Me.Z = Math.Sin(grad / 180 * Math.PI) * origPos.Z + Math.Cos(-grad / 180 * Math.PI) * origPos.X
-    '        Case ACHSE_Z
-    '            Me.X = Math.Cos(grad / 180 * Math.PI) * origPos.X + Math.Sin(-grad / 180 * Math.PI) * origPos.Y
-    '            Me.Y = Math.Sin(grad / 180 * Math.PI) * origPos.X + Math.Cos(-grad / 180 * Math.PI) * origPos.Y
-    '        Case Else
-    '            Log.Add("Programmfehler: ungültige Achse bei Point3D.rotate ", Log.TYPE_DEBUG)
-    '    End Select
-    'End Sub
-
     Public Sub rotate(grad As Double, achse As Byte, pnt As Point3D)
         Me.X -= pnt.X
         Me.Y -= pnt.Y
