@@ -1675,6 +1675,7 @@ Class Frm_Main
 
             Dim newSpot As New OMSI_Spot
             newSpot.name = newName
+            newSpot.richtung = New Point3D(0, 1, 0)
             newSpot.range = 50
             newSpot.outerCone = 70
             newSpot.innerCone = 30
@@ -2455,8 +2456,9 @@ Class Frm_Main
                     PSPos.Point = getProj.model.intLichter(index).position
 
                 Case TVHelper.Nodes(5).Text     'Rauch
-                    showSettings({GBRauch})
+                    showSettings({GBParent, GBRauch})
                     PSPos.Point = getProj.model.rauch(index).position
+                    Parent_CBParent.SelectedItem = getProj.model.rauch(index).parent
 
                 Case TVHelper.Nodes(6).Text     'Spiegel
                     showSettings({GBKamera})
