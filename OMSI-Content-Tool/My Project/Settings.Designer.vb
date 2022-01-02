@@ -81,12 +81,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property PObjekteVis() As Boolean
+        Public Property PObjekteV() As Boolean
             Get
-                Return CType(Me("PObjekteVis"),Boolean)
+                Return CType(Me("PObjekteV"),Boolean)
             End Get
             Set
-                Me("PObjekteVis") = value
+                Me("PObjekteV") = value
             End Set
         End Property
         
@@ -141,12 +141,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property PTextureVis() As Boolean
+        Public Property PTextureV() As Boolean
             Get
-                Return CType(Me("PTextureVis"),Boolean)
+                Return CType(Me("PTextureV"),Boolean)
             End Get
             Set
-                Me("PTextureVis") = value
+                Me("PTextureV") = value
             End Set
         End Property
         
@@ -668,13 +668,25 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property Einstellung() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("255, 128, 0")>  _
+        Public Property SelectionColor() As Global.System.Drawing.Color
             Get
-                Return CType(Me("Einstellung"),String)
+                Return CType(Me("SelectionColor"),Global.System.Drawing.Color)
             End Get
             Set
-                Me("Einstellung") = value
+                Me("SelectionColor") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property TexAutoReload() As Boolean
+            Get
+                Return CType(Me("TexAutoReload"),Boolean)
+            End Get
+            Set
+                Me("TexAutoReload") = value
             End Set
         End Property
     End Class

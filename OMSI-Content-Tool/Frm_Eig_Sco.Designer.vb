@@ -299,6 +299,7 @@ Partial Class Frm_Eig_Sco
         Me.GBSichtbar.Controls.Add(Me.Label5)
         Me.GBSichtbar.Controls.Add(Me.CBComplexcity)
         Me.GBSichtbar.Controls.Add(Me.Label6)
+        Me.GBSichtbar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GBSichtbar.Location = New System.Drawing.Point(12, 221)
         Me.GBSichtbar.Name = "GBSichtbar"
         Me.GBSichtbar.Size = New System.Drawing.Size(313, 191)
@@ -309,6 +310,7 @@ Partial Class Frm_Eig_Sco
         'Label9
         '
         Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(107, 44)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(138, 13)
@@ -317,6 +319,7 @@ Partial Class Frm_Eig_Sco
         '
         'CBRendertype
         '
+        Me.CBRendertype.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBRendertype.FormattingEnabled = True
         Me.CBRendertype.Items.AddRange(New Object() {"Vor Terrain", "Mit Terrain", "Nach Terrain", "Vor normalen Objekten", "Standardwert", "Nach normalen Objekten", "Nach Fahrzeugen"})
         Me.CBRendertype.Location = New System.Drawing.Point(83, 153)
@@ -337,6 +340,7 @@ Partial Class Frm_Eig_Sco
         'Label4
         '
         Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(3, 156)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(62, 13)
@@ -345,6 +349,7 @@ Partial Class Frm_Eig_Sco
         '
         'TBDetailfaktor
         '
+        Me.TBDetailfaktor.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBDetailfaktor.Location = New System.Drawing.Point(83, 69)
         Me.TBDetailfaktor.Name = "TBDetailfaktor"
         Me.TBDetailfaktor.Size = New System.Drawing.Size(76, 20)
@@ -353,6 +358,7 @@ Partial Class Frm_Eig_Sco
         'CBonlyEditor
         '
         Me.CBonlyEditor.AutoSize = True
+        Me.CBonlyEditor.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBonlyEditor.Location = New System.Drawing.Point(9, 19)
         Me.CBonlyEditor.Name = "CBonlyEditor"
         Me.CBonlyEditor.Size = New System.Drawing.Size(150, 17)
@@ -363,6 +369,7 @@ Partial Class Frm_Eig_Sco
         'Label5
         '
         Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(3, 76)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(61, 13)
@@ -371,6 +378,7 @@ Partial Class Frm_Eig_Sco
         '
         'CBComplexcity
         '
+        Me.CBComplexcity.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBComplexcity.FormattingEnabled = True
         Me.CBComplexcity.Items.AddRange(New Object() {"sehr wichtig (z.B. Kreuzung)", "wichtig (z.B. Bushaltestelle)", "normal (z.B. Telefonzelle)", "unwichtig (z.B. Parkbank)"})
         Me.CBComplexcity.Location = New System.Drawing.Point(83, 126)
@@ -381,6 +389,7 @@ Partial Class Frm_Eig_Sco
         'Label6
         '
         Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(3, 129)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(57, 13)
@@ -389,6 +398,7 @@ Partial Class Frm_Eig_Sco
         '
         'CBNightMapMode
         '
+        Me.CBNightMapMode.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBNightMapMode.FormattingEnabled = True
         Me.CBNightMapMode.Items.AddRange(New Object() {"wie Straßenbeleuchtung", "Gebäude mit durchgehender Beleuchtung", "Wohngebäude (nicht zwischen ca. 23 und 6 Uhr)", "Gewerbegebäude (nicht zwischen ca. 18 und 7 Uhr)", "Schule (nicht zwischen ca. 15 und 7 Uhr)"})
         Me.CBNightMapMode.Location = New System.Drawing.Point(106, 88)
@@ -399,6 +409,7 @@ Partial Class Frm_Eig_Sco
         'Label3
         '
         Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(10, 91)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(80, 13)
@@ -408,6 +419,7 @@ Partial Class Frm_Eig_Sco
         'Label7
         '
         Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(6, 137)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(85, 13)
@@ -416,6 +428,7 @@ Partial Class Frm_Eig_Sco
         '
         'TBCrashmodeKraft
         '
+        Me.TBCrashmodeKraft.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBCrashmodeKraft.Location = New System.Drawing.Point(136, 134)
         Me.TBCrashmodeKraft.Name = "TBCrashmodeKraft"
         Me.TBCrashmodeKraft.Size = New System.Drawing.Size(100, 20)
@@ -424,6 +437,7 @@ Partial Class Frm_Eig_Sco
         'Label8
         '
         Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.Location = New System.Drawing.Point(6, 165)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(123, 13)
@@ -432,6 +446,7 @@ Partial Class Frm_Eig_Sco
         '
         'TBCrashmodeWinkel
         '
+        Me.TBCrashmodeWinkel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBCrashmodeWinkel.Location = New System.Drawing.Point(136, 160)
         Me.TBCrashmodeWinkel.Name = "TBCrashmodeWinkel"
         Me.TBCrashmodeWinkel.Size = New System.Drawing.Size(100, 20)
@@ -440,6 +455,7 @@ Partial Class Frm_Eig_Sco
         'CBFixed
         '
         Me.CBFixed.AutoSize = True
+        Me.CBFixed.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBFixed.Location = New System.Drawing.Point(6, 19)
         Me.CBFixed.Name = "CBFixed"
         Me.CBFixed.Size = New System.Drawing.Size(204, 17)
@@ -450,6 +466,7 @@ Partial Class Frm_Eig_Sco
         'CBSurface
         '
         Me.CBSurface.AutoSize = True
+        Me.CBSurface.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBSurface.Location = New System.Drawing.Point(6, 42)
         Me.CBSurface.Name = "CBSurface"
         Me.CBSurface.Size = New System.Drawing.Size(157, 17)
@@ -460,6 +477,7 @@ Partial Class Frm_Eig_Sco
         'CBJoinable
         '
         Me.CBJoinable.AutoSize = True
+        Me.CBJoinable.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBJoinable.Location = New System.Drawing.Point(6, 65)
         Me.CBJoinable.Name = "CBJoinable"
         Me.CBJoinable.Size = New System.Drawing.Size(62, 17)
@@ -470,6 +488,7 @@ Partial Class Frm_Eig_Sco
         'CBNocollision
         '
         Me.CBNocollision.AutoSize = True
+        Me.CBNocollision.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBNocollision.Location = New System.Drawing.Point(6, 88)
         Me.CBNocollision.Name = "CBNocollision"
         Me.CBNocollision.Size = New System.Drawing.Size(93, 17)
@@ -480,6 +499,7 @@ Partial Class Frm_Eig_Sco
         'CBAbsHeight
         '
         Me.CBAbsHeight.AutoSize = True
+        Me.CBAbsHeight.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBAbsHeight.Location = New System.Drawing.Point(6, 111)
         Me.CBAbsHeight.Name = "CBAbsHeight"
         Me.CBAbsHeight.Size = New System.Drawing.Size(95, 17)
@@ -490,6 +510,7 @@ Partial Class Frm_Eig_Sco
         'CBLightmapMapping
         '
         Me.CBLightmapMapping.AutoSize = True
+        Me.CBLightmapMapping.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBLightmapMapping.Location = New System.Drawing.Point(12, 19)
         Me.CBLightmapMapping.Name = "CBLightmapMapping"
         Me.CBLightmapMapping.Size = New System.Drawing.Size(110, 17)
@@ -500,6 +521,7 @@ Partial Class Frm_Eig_Sco
         'CBShadow
         '
         Me.CBShadow.AutoSize = True
+        Me.CBShadow.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBShadow.Location = New System.Drawing.Point(12, 42)
         Me.CBShadow.Name = "CBShadow"
         Me.CBShadow.Size = New System.Drawing.Size(125, 17)
@@ -514,6 +536,7 @@ Partial Class Frm_Eig_Sco
         Me.GBBel.Controls.Add(Me.CBShadow)
         Me.GBBel.Controls.Add(Me.CBNightMapMode)
         Me.GBBel.Controls.Add(Me.Label3)
+        Me.GBBel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GBBel.Location = New System.Drawing.Point(340, 418)
         Me.GBBel.Name = "GBBel"
         Me.GBBel.Size = New System.Drawing.Size(434, 128)
@@ -524,6 +547,7 @@ Partial Class Frm_Eig_Sco
         'CBNormalBel
         '
         Me.CBNormalBel.AutoSize = True
+        Me.CBNormalBel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBNormalBel.Location = New System.Drawing.Point(12, 65)
         Me.CBNormalBel.Name = "CBNormalBel"
         Me.CBNormalBel.Size = New System.Drawing.Size(118, 17)
@@ -542,6 +566,7 @@ Partial Class Frm_Eig_Sco
         Me.GBPhysik.Controls.Add(Me.CBAbsHeight)
         Me.GBPhysik.Controls.Add(Me.TBCrashmodeKraft)
         Me.GBPhysik.Controls.Add(Me.Label7)
+        Me.GBPhysik.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GBPhysik.Location = New System.Drawing.Point(340, 222)
         Me.GBPhysik.Name = "GBPhysik"
         Me.GBPhysik.Size = New System.Drawing.Size(434, 190)
@@ -552,6 +577,7 @@ Partial Class Frm_Eig_Sco
         'CBTankstelle
         '
         Me.CBTankstelle.AutoSize = True
+        Me.CBTankstelle.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBTankstelle.Location = New System.Drawing.Point(6, 17)
         Me.CBTankstelle.Name = "CBTankstelle"
         Me.CBTankstelle.Size = New System.Drawing.Size(75, 17)
@@ -562,6 +588,7 @@ Partial Class Frm_Eig_Sco
         'CBBusstop
         '
         Me.CBBusstop.AutoSize = True
+        Me.CBBusstop.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBBusstop.Location = New System.Drawing.Point(6, 40)
         Me.CBBusstop.Name = "CBBusstop"
         Me.CBBusstop.Size = New System.Drawing.Size(239, 17)
@@ -577,6 +604,7 @@ Partial Class Frm_Eig_Sco
         Me.GBGeneric.Controls.Add(Me.CBBusstop)
         Me.GBGeneric.Controls.Add(Me.CBTankstelle)
         Me.GBGeneric.Enabled = False
+        Me.GBGeneric.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GBGeneric.Location = New System.Drawing.Point(12, 418)
         Me.GBGeneric.Name = "GBGeneric"
         Me.GBGeneric.Size = New System.Drawing.Size(313, 128)
@@ -587,6 +615,7 @@ Partial Class Frm_Eig_Sco
         'CBHilfspfeil
         '
         Me.CBHilfspfeil.AutoSize = True
+        Me.CBHilfspfeil.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBHilfspfeil.Location = New System.Drawing.Point(6, 109)
         Me.CBHilfspfeil.Name = "CBHilfspfeil"
         Me.CBHilfspfeil.Size = New System.Drawing.Size(63, 17)
@@ -597,6 +626,7 @@ Partial Class Frm_Eig_Sco
         'CBEntrypoint
         '
         Me.CBEntrypoint.AutoSize = True
+        Me.CBEntrypoint.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBEntrypoint.Location = New System.Drawing.Point(6, 86)
         Me.CBEntrypoint.Name = "CBEntrypoint"
         Me.CBEntrypoint.Size = New System.Drawing.Size(73, 17)
@@ -607,6 +637,7 @@ Partial Class Frm_Eig_Sco
         'CBCarpark
         '
         Me.CBCarpark.AutoSize = True
+        Me.CBCarpark.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBCarpark.Location = New System.Drawing.Point(6, 63)
         Me.CBCarpark.Name = "CBCarpark"
         Me.CBCarpark.Size = New System.Drawing.Size(63, 17)
@@ -619,6 +650,7 @@ Partial Class Frm_Eig_Sco
         Me.GroupBox4.Controls.Add(Me.RBHilfsobj)
         Me.GroupBox4.Controls.Add(Me.RBStrael)
         Me.GroupBox4.Controls.Add(Me.RBGeb)
+        Me.GroupBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox4.Location = New System.Drawing.Point(12, 12)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(764, 40)
@@ -629,6 +661,7 @@ Partial Class Frm_Eig_Sco
         'RBHilfsobj
         '
         Me.RBHilfsobj.AutoSize = True
+        Me.RBHilfsobj.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RBHilfsobj.Location = New System.Drawing.Point(214, 17)
         Me.RBHilfsobj.Name = "RBHilfsobj"
         Me.RBHilfsobj.Size = New System.Drawing.Size(74, 17)
@@ -639,6 +672,7 @@ Partial Class Frm_Eig_Sco
         'RBStrael
         '
         Me.RBStrael.AutoSize = True
+        Me.RBStrael.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RBStrael.Location = New System.Drawing.Point(95, 17)
         Me.RBStrael.Name = "RBStrael"
         Me.RBStrael.Size = New System.Drawing.Size(99, 17)
@@ -650,6 +684,7 @@ Partial Class Frm_Eig_Sco
         '
         Me.RBGeb.AutoSize = True
         Me.RBGeb.Checked = True
+        Me.RBGeb.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RBGeb.Location = New System.Drawing.Point(6, 17)
         Me.RBGeb.Name = "RBGeb"
         Me.RBGeb.Size = New System.Drawing.Size(69, 17)

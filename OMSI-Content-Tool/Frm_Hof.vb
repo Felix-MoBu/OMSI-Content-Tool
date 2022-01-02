@@ -54,4 +54,10 @@ Public Class Frm_Hof
             End If
         End With
     End Sub
+
+    Private Sub Frm_Hof_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+        BTEntfernen.Top = Height - 70
+        BTImport.Top = BTEntfernen.Top
+        LBHofdateien.Height = BTEntfernen.Top - 18
+    End Sub
 End Class

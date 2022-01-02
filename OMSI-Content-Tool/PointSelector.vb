@@ -3,8 +3,8 @@ Option Strict On
 
 Public Class PointSelector
     Dim intPoint As New Point3D
-    Dim intMin As Double
-    Dim intMax As Double
+    Dim intMin As Double = Double.MinValue
+    Dim intMax As Double = Double.MaxValue
 
     Public Property Min As Double
         Get
@@ -163,17 +163,17 @@ Public Class PointSelector
     End Sub
 
     Private Sub TBX_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBX.KeyPress
-        e.Handled = helper.NumbersOnly(e, TBX, True, intMax, intMin)
+        e.Handled = helper.NumbersOnly(e, TBX, True, intMin, intMax)
         RaiseEvent KeyPress(sender, e)
     End Sub
 
     Private Sub TBY_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBY.KeyPress
-        e.Handled = helper.NumbersOnly(e, TBY, True, intMax, intMin)
+        e.Handled = helper.NumbersOnly(e, TBY, True, intMin, intMax)
         RaiseEvent KeyPress(sender, e)
     End Sub
 
     Private Sub TBZ_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBZ.KeyPress
-        e.Handled = helper.NumbersOnly(e, TBZ, True, intMax, intMin)
+        e.Handled = helper.NumbersOnly(e, TBZ, True, intMin, intMax)
         RaiseEvent KeyPress(sender, e)
     End Sub
 
@@ -184,7 +184,6 @@ Public Class PointSelector
     End Sub
 
     Protected Overrides Sub Finalize()
-
         MyBase.Finalize()
         CBBPoint.Enabled = True
     End Sub

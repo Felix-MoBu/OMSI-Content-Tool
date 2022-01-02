@@ -11,8 +11,8 @@ Public Class Local3DObjekt
     Public A2 As Double
     Public B1 As New Point3D
     Public B2 As Double
-    Public C1 As New Point3D
-    Public C2 As Double
+    Public origin As New Point3D
+    Public origin_scale As Double
 
     Public vertices As Double()
     Public normals As Double()

@@ -4,7 +4,7 @@ Imports System.Text.RegularExpressions 'Für ColorFromData
 Module helper
     Dim allowedKeys As Integer() = {3, 8, 22, 24}
 
-    Public Function NumbersOnly(e As KeyPressEventArgs, Optional TB As TextBox = Nothing, Optional asDouble As Boolean = False, Optional maxValue As Double = Double.MaxValue, Optional minValue As Double = Double.MinValue) As Boolean
+    Public Function NumbersOnly(e As KeyPressEventArgs, Optional TB As TextBox = Nothing, Optional asDouble As Boolean = False, Optional minValue As Double = Double.MinValue, Optional maxValue As Double = Double.MaxValue) As Boolean
         If asDouble Then '44 = Komma | 45 = Minus | 46 = Punkt
             If TB Is Nothing Then Return True
             If Asc(e.KeyChar) = 45 Then
@@ -48,8 +48,28 @@ Module helper
             End If
         End If
 
+        'hier nicht lieber ein or statt and?
         If (Asc(e.KeyChar) >= 48 And Asc(e.KeyChar) <= 57) Or allowedKeys.Contains(Asc(e.KeyChar)) Then
-            Return False
+            If Not allowedKeys.Contains(Asc(e.KeyChar)) Then
+                If TB.SelectedText = "" Then
+                    Select Case Convert.ToDouble(TB.Text & e.KeyChar)
+                        Case > maxValue
+                            TB.Text = maxValue
+                            TB.SelectionStart = TB.TextLength - 1
+                            Return True
+                        Case < minValue
+                            TB.Text = minValue
+                            TB.SelectionStart = TB.TextLength - 1
+                            Return True
+                        Case Else
+                            Return False
+                    End Select
+                Else
+                    Return False
+                End If
+            Else
+                Return False
+            End If
         Else
             Return True
         End If

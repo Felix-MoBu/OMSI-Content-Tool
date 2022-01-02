@@ -3,6 +3,7 @@ Imports System.Text
 
 Public Class Proj_Bus
     Public Const TYPE As Byte = Frm_Main.PROJ_TYPE_BUS
+    Public Const EXTENSION As String = "bus"
 
     Public isloaded As Boolean
     Public filename As Filename

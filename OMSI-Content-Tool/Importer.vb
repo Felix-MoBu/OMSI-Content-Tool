@@ -3,7 +3,12 @@ Imports System.Xml
 Imports System.IO
 
 Module Importer
+    Public ReadOnly KNOWN_FILE_TYPES As String() = {"o3d", "x", "x3d", "sli", "txt"}
+    Public stopImport As Boolean = False
+
+
     Public Function readFile(filename As Filename)
+        stopImport = False
         If checkIfExist(filename) Then
             Return Nothing
         End If
@@ -11,29 +16,22 @@ Module Importer
         Frm_Main.SSLBStatus.Text = "Import erfolgreich!"
 
         Select Case filename.extension
-            Case "o3d"
+            Case KNOWN_FILE_TYPES(0)
                 Return readO3D(filename)
-            Case "x"
+            Case KNOWN_FILE_TYPES(1)
                 Return readX(filename)
-            Case "x3d"
+            Case KNOWN_FILE_TYPES(2)
                 Return readX3D(filename)
-            Case "sli"
+            Case KNOWN_FILE_TYPES(3)
                 Return readSli(filename)
-            Case "cfg"
-                Return readCfg(filename)
-            Case "txt"
+            Case KNOWN_FILE_TYPES(4)
                 Return readtxt(filename)
             Case Else
                 Log.Add("Dateiformat nicht unterstützt! (Fehler: I000, Datei: " & filename & ")", Log.TYPE_WARNUNG)
-                MsgBox("Dateiformat nicht unterstützt! (" & filename.name & ")")
+                importWarnung("Dateiformat nicht unterstützt!", "I999", filename, "Dateiformat nicht unterstützt!")
                 Return Nothing
         End Select
 
-    End Function
-
-    Private Function readCfg(filename As Filename) As OMSI_Model
-        MsgBox("Das Nachladen von neuen Modell-Dateien wird noch nicht unterstützt!")
-        Return Nothing
     End Function
 
     Private Function readtxt(filename As Filename) As OMSI_Mesh
@@ -41,14 +39,22 @@ Module Importer
         Return Nothing
     End Function
 
+    Private Sub importWarnung(msg As String, fehler As String, filename As String, grund As String)
+        If Not ignoreImportFail Then
+            Dim result = MsgBox(msg & vbCrLf & "(Feher: " & fehler & ", Datei: " & filename & ") " & grund, vbAbortRetryIgnore)
+            If result = vbIgnore Then ignoreImportFail = True
+            If result = vbAbort Then stopImport = True
+        End If
+    End Sub
+
     Private Function readX3D(filename As Filename) As Local3DObjekt
         Dim document As New XmlDocument
 
         Try
             document.Load(filename)
         Catch ex As Exception
-            MsgBox("Import fehlgeschlagen! (Fehler: I003, Datei: " & filename & ") falsches Dateiformat oder bschädigte Datei")
             Log.Add("Import fehlgeschlagen! (Fehler: I003, Datei: " & filename & ")", Log.TYPE_ERROR)
+            importWarnung("Import fehlgeschlagen!", "I003", filename, "falsches Dateiformat oder bschädigte Datei")
             Frm_Main.SSLBStatus.Text = ""
             Return Nothing
         End Try
@@ -79,7 +85,7 @@ Module Importer
                                             texture.matName = shape.firstchild.attributes(0).value
                                             texture.filename = New Filename(Split(shape.firstchild.attributes(1).value, """ """)(1))
                                         Else
-                                            For Each texture2 In temp3D.Texturen
+                                            For Each texture2 In temp3D.texturen
                                                 If texture2.matName = shape.firstchild.attributes(0).value Then
                                                     texture = texture2
                                                 End If
@@ -89,7 +95,7 @@ Module Importer
                                             End If
                                         End If
 
-                                        temp3D.Texturen.Add(texture)
+                                        temp3D.texturen.Add(texture)
                                     End If
 
                                     If shape.name = "IndexedFaceSet" Then
@@ -196,7 +202,7 @@ Module Importer
         For Each subObj In temp3D.subObjekte
             linesTemp.AddRange(subObj)
         Next
-        temp3D.Lines = faceToLines(linesTemp).ToArray
+        temp3D.lines = faceToLines(linesTemp).ToArray
 
         Log.Add("Import erfolgreich! (Datei:" & filename.name & ", Format: X3D)")
         Return temp3D
@@ -223,7 +229,7 @@ Module Importer
         If bytes.Count < 5 Then                                                         'Datei leer
             Log.Add("Import fehlgeschlagen! (Feher: I000a, Datei: " & filename & ")", Log.TYPE_ERROR)
             If Not ignoreImportFail Then
-                Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Feher: I000a, Datei: " & filename & ") Datei leer!")
+                Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Feher: I000a, Datei: " & filename & ") Datei leer!", vbAbortRetryIgnore)
                 If result = vbIgnore Then ignoreImportFail = True
             End If
             Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
@@ -239,7 +245,7 @@ Module Importer
             End If
             Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
             Return Nothing
-            End If
+        End If
 
 
         Dim isAddon As Boolean = False
@@ -259,13 +265,13 @@ Module Importer
             If bytes(0) <> &H84 Or bytes(1) <> &H19 Or bytes(2) <> &H1 Or bytes(3) <> &H17 Then             'Normale O3D
                 Log.Add("Import fehlgeschlagen! (Fehler: I002, Datei: " & filename & ")", Log.TYPE_ERROR)
                 If Not ignoreImportFail Then
-                    Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002, Datei: " & filename & ") falsches Format")
+                    Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002, Datei: " & filename & ") falsches Format", vbAbortRetryIgnore)
                     If result = vbIgnore Then ignoreImportFail = True
                 End If
                 Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
                 Return Nothing
-                End If
             End If
+        End If
 
         Dim temp3D As New Local3DObjekt
 
@@ -398,23 +404,21 @@ Module Importer
         Dim startCenter As Integer = startCtTexturen + lenTexturenamen + ctTexture * 45 + 1
         With temp3D
             .A1.X = Math.Round(BitConverter.ToSingle({bytes(startCenter), bytes(startCenter + 1), bytes(startCenter + 2), bytes(startCenter + 3)}, 0), 6)
-            .A1.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 4), bytes(startCenter + 5), bytes(startCenter + 6), bytes(startCenter + 7)}, 0), 6)
-            .A1.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 8), bytes(startCenter + 9), bytes(startCenter + 10), bytes(startCenter + 11)}, 0), 6)
+            .A1.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 4), bytes(startCenter + 5), bytes(startCenter + 6), bytes(startCenter + 7)}, 0), 6)
+            .A1.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 8), bytes(startCenter + 9), bytes(startCenter + 10), bytes(startCenter + 11)}, 0), 6)
             .A2 = Math.Round(BitConverter.ToSingle({bytes(startCenter + 12), bytes(startCenter + 13), bytes(startCenter + 14), bytes(startCenter + 15)}, 0), 6)
             .B1.X = Math.Round(BitConverter.ToSingle({bytes(startCenter + 16), bytes(startCenter + 17), bytes(startCenter + 18), bytes(startCenter + 19)}, 0), 6)
-            .B1.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 20), bytes(startCenter + 21), bytes(startCenter + 22), bytes(startCenter + 23)}, 0), 6)
-            .B1.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 24), bytes(startCenter + 25), bytes(startCenter + 26), bytes(startCenter + 27)}, 0), 6)
+            .B1.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 20), bytes(startCenter + 21), bytes(startCenter + 22), bytes(startCenter + 23)}, 0), 6)
+            .B1.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 24), bytes(startCenter + 25), bytes(startCenter + 26), bytes(startCenter + 27)}, 0), 6)
             .B2 = Math.Round(BitConverter.ToSingle({bytes(startCenter + 28), bytes(startCenter + 29), bytes(startCenter + 30), bytes(startCenter + 31)}, 0), 6)
-            .C1.X = Math.Round(BitConverter.ToSingle({bytes(startCenter + 32), bytes(startCenter + 33), bytes(startCenter + 34), bytes(startCenter + 35)}, 0), 6)
-            .C1.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 36), bytes(startCenter + 37), bytes(startCenter + 38), bytes(startCenter + 39)}, 0), 6)
-            .C1.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 40), bytes(startCenter + 41), bytes(startCenter + 42), bytes(startCenter + 43)}, 0), 6)
-            .C2 = Math.Round(BitConverter.ToSingle({bytes(startCenter + 44), bytes(startCenter + 45), bytes(startCenter + 46), bytes(startCenter + 47)}, 0), 6)
+            .origin.X = Math.Round(BitConverter.ToSingle({bytes(startCenter + 32), bytes(startCenter + 33), bytes(startCenter + 34), bytes(startCenter + 35)}, 0), 6)
+            .origin.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 36), bytes(startCenter + 37), bytes(startCenter + 38), bytes(startCenter + 39)}, 0), 6)
+            .origin.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 40), bytes(startCenter + 41), bytes(startCenter + 42), bytes(startCenter + 43)}, 0), 6)
+            .origin_scale = Math.Round(BitConverter.ToSingle({bytes(startCenter + 44), bytes(startCenter + 45), bytes(startCenter + 46), bytes(startCenter + 47)}, 0), 6)
             .center.X = Math.Round(BitConverter.ToSingle({bytes(startCenter + 48), bytes(startCenter + 49), bytes(startCenter + 50), bytes(startCenter + 51)}, 0), 6)
             .center.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 52), bytes(startCenter + 53), bytes(startCenter + 54), bytes(startCenter + 55)}, 0), 6)
             .center.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 56), bytes(startCenter + 57), bytes(startCenter + 58), bytes(startCenter + 59)}, 0), 6)
             .scale = Math.Round(BitConverter.ToSingle({bytes(startCenter + 60), bytes(startCenter + 61), bytes(startCenter + 62), bytes(startCenter + 63)}, 0), 6)
-
-
 
             'Werte an Objekt übergeben
             .vertices = verticesTemp.ToArray
@@ -454,7 +458,7 @@ Module Importer
             Return Nothing
         End If
 
-        Dim lines = Split(Replace(My.Computer.FileSystem.ReadAllText(filename), vbLf, vbCrLf), vbCrLf)
+        Dim lines = Split(My.Computer.FileSystem.ReadAllText(filename), vbCrLf)
 
         Select Case Trim(lines(0))
             Case "xof 0302txt 0032"
@@ -462,8 +466,8 @@ Module Importer
             Case "xof 0303txt 0032"
                 Return readX303(lines, filename)
             Case Else
-                MsgBox("Import fehlgeschlagen! (Fehler: I012, Datei: " & filename & ") falsches Format")
                 Log.Add("Import fehlgeschlagen! (Fehler: I012, Datei: " & filename & ")", Log.TYPE_ERROR)
+                importWarnung("Import fehlgeschlagen!", "I012", filename, "falsches Format")
                 Frm_Main.SSLBStatus.Text = ""
                 Return Nothing
         End Select
@@ -500,23 +504,23 @@ Module Importer
             Select Case Split(Trim(lines(ctLine)), " ")(0)
                 Case "FrameTransformMatrix"
                     temp3D.A1.X = Replace(Split(Trim(lines(ctLine + 1)), ",")(0), ".", ",")
-                    temp3D.A1.Y = Replace(Split(Trim(lines(ctLine + 1)), ",")(1), ".", ",")
-                    temp3D.A1.Z = Replace(Split(Trim(lines(ctLine + 1)), ",")(2), ".", ",")
+                    temp3D.A1.Z = Replace(Split(Trim(lines(ctLine + 1)), ",")(1), ".", ",")
+                    temp3D.A1.Y = Replace(Split(Trim(lines(ctLine + 1)), ",")(2), ".", ",")
                     temp3D.A2 = Replace(Split(Trim(lines(ctLine + 1)), ",")(3), ".", ",")
 
                     temp3D.B1.X = Replace(Split(Trim(lines(ctLine + 2)), ",")(0), ".", ",")
-                    temp3D.B1.Y = Replace(Split(Trim(lines(ctLine + 2)), ",")(1), ".", ",")
-                    temp3D.B1.Z = Replace(Split(Trim(lines(ctLine + 2)), ",")(2), ".", ",")
+                    temp3D.B1.Z = Replace(Split(Trim(lines(ctLine + 2)), ",")(1), ".", ",")
+                    temp3D.B1.Y = Replace(Split(Trim(lines(ctLine + 2)), ",")(2), ".", ",")
                     temp3D.B2 = Replace(Split(Trim(lines(ctLine + 2)), ",")(3), ".", ",")
 
-                    temp3D.C1.X = Replace(Split(Trim(lines(ctLine + 3)), ",")(0), ".", ",")
-                    temp3D.C1.Y = Replace(Split(Trim(lines(ctLine + 3)), ",")(1), ".", ",")
-                    temp3D.C1.Z = Replace(Split(Trim(lines(ctLine + 3)), ",")(2), ".", ",")
-                    temp3D.C2 = Replace(Split(Trim(lines(ctLine + 3)), ",")(3), ".", ",")
+                    temp3D.origin.X = Replace(Split(Trim(lines(ctLine + 3)), ",")(0), ".", ",")
+                    temp3D.origin.Z = Replace(Split(Trim(lines(ctLine + 3)), ",")(1), ".", ",")
+                    temp3D.origin.Y = Replace(Split(Trim(lines(ctLine + 3)), ",")(2), ".", ",")
+                    temp3D.origin_scale = Replace(Split(Trim(lines(ctLine + 3)), ",")(3), ".", ",")
 
                     temp3D.center.X = -Replace(Split(Trim(lines(ctLine + 4)), ",")(0), ".", ",")
-                    temp3D.center.Y = Replace(Split(Trim(lines(ctLine + 4)), ",")(2), ".", ",")
-                    temp3D.center.Z = Replace(Split(Trim(lines(ctLine + 4)), ",")(1), ".", ",")
+                    temp3D.center.Z = Replace(Split(Trim(lines(ctLine + 4)), ",")(2), ".", ",")
+                    temp3D.center.Y = Replace(Split(Trim(lines(ctLine + 4)), ",")(1), ".", ",")
                     temp3D.scale = Replace(Split(Trim(lines(ctLine + 4)), ",")(3), ".", ",")
                     ctLine += 4
                 Case "Mesh"
@@ -603,14 +607,14 @@ Module Importer
                             textureNames.Add(.filename.name)
                         End With
                         Dim exists As Boolean = False
-                        For Each texture In temp3D.Texturen
+                        For Each texture In temp3D.texturen
                             If texture.filename.name = newTexture.filename.name Then
                                 exists = True
                             End If
                         Next
                         If Not exists Then
 
-                            temp3D.Texturen.Add(newTexture)
+                            temp3D.texturen.Add(newTexture)
                         End If
                     Else
                         textureNames.Add("keine")
@@ -627,20 +631,20 @@ Module Importer
             .normals = normalsTemp.ToArray
 
             'Lines erstellen
-            .Lines = linesTemp.ToArray
+            .lines = linesTemp.ToArray
 
 
             'Subobjekte erstellen
             Dim newMatlist As New List(Of Integer)
             Dim handeledTextureNames As New List(Of String)
-            For i = 0 To .Texturen.Count - 1
+            For i = 0 To .texturen.Count - 1
                 For n = 0 To textureNames.Count - 1
-                    If textureNames(n) = .Texturen(i).filename.name Then
-                        If Not handeledTextureNames.Contains(.Texturen(i).filename.name) Then
+                    If textureNames(n) = .texturen(i).filename.name Then
+                        If Not handeledTextureNames.Contains(.texturen(i).filename.name) Then
                             For x = 0 To matlistTemp.Count - 1
                                 If matlistTemp(x) = n Then newMatlist.Add(i)
                             Next
-                            handeledTextureNames.Add(.Texturen(i).filename.name)
+                            handeledTextureNames.Add(.texturen(i).filename.name)
                         End If
                     End If
                 Next
@@ -649,7 +653,7 @@ Module Importer
             matlistTemp = newMatlist
 
             Dim arrTemp As New List(Of Integer)
-            For i = 0 To .Texturen.Count - 1
+            For i = 0 To .texturen.Count - 1
                 arrTemp.Clear()
                 For n = 0 To matlistTemp.Count - 1
                     If matlistTemp(n) = i Then
@@ -707,32 +711,32 @@ Module Importer
             Select Case Split(Trim(lines(ctLine)), " ")(0)
                 Case "FrameTransformMatrix"
                     temp3D.A1.X = Replace(Split(Trim(lines(ctLine + 1)), ",")(0), ".", ",")
-                    temp3D.A1.Y = Replace(Split(Trim(lines(ctLine + 1)), ",")(1), ".", ",")
-                    temp3D.A1.Z = Replace(Split(Trim(lines(ctLine + 1)), ",")(2), ".", ",")
+                    temp3D.A1.Z = Replace(Split(Trim(lines(ctLine + 1)), ",")(1), ".", ",")
+                    temp3D.A1.Y = Replace(Split(Trim(lines(ctLine + 1)), ",")(2), ".", ",")
                     temp3D.A2 = Replace(Split(Trim(lines(ctLine + 1)), ",")(3), ".", ",")
 
                     temp3D.B1.X = Replace(Split(Trim(lines(ctLine + 2)), ",")(0), ".", ",")
-                    temp3D.B1.Y = Replace(Split(Trim(lines(ctLine + 2)), ",")(1), ".", ",")
-                    temp3D.B1.Z = Replace(Split(Trim(lines(ctLine + 2)), ",")(2), ".", ",")
+                    temp3D.B1.Z = Replace(Split(Trim(lines(ctLine + 2)), ",")(1), ".", ",")
+                    temp3D.B1.Y = Replace(Split(Trim(lines(ctLine + 2)), ",")(2), ".", ",")
                     temp3D.B2 = Replace(Split(Trim(lines(ctLine + 2)), ",")(3), ".", ",")
 
-                    temp3D.C1.X = Replace(Split(Trim(lines(ctLine + 3)), ",")(0), ".", ",")
-                    temp3D.C1.Y = Replace(Split(Trim(lines(ctLine + 3)), ",")(1), ".", ",")
-                    temp3D.C1.Z = Replace(Split(Trim(lines(ctLine + 3)), ",")(2), ".", ",")
-                    temp3D.C2 = Replace(Split(Trim(lines(ctLine + 3)), ",")(3), ".", ",")
+                    temp3D.origin.X = Replace(Split(Trim(lines(ctLine + 3)), ",")(0), ".", ",")
+                    temp3D.origin.Z = Replace(Split(Trim(lines(ctLine + 3)), ",")(1), ".", ",")
+                    temp3D.origin.Y = Replace(Split(Trim(lines(ctLine + 3)), ",")(2), ".", ",")
+                    temp3D.origin_scale = Replace(Split(Trim(lines(ctLine + 3)), ",")(3), ".", ",")
 
                     temp3D.center.X = Replace(Split(Trim(lines(ctLine + 4)), ",")(0), ".", ",")
-                    temp3D.center.Y = Replace(Split(Trim(lines(ctLine + 4)), ",")(1), ".", ",")
-                    temp3D.center.Z = Replace(Split(Trim(lines(ctLine + 4)), ",")(2), ".", ",")
+                    temp3D.center.Z = Replace(Split(Trim(lines(ctLine + 4)), ",")(1), ".", ",")
+                    temp3D.center.Y = Replace(Split(Trim(lines(ctLine + 4)), ",")(2), ".", ",")
                     temp3D.scale = Replace(Replace(Split(Trim(lines(ctLine + 4)), ",")(3), ".", ","), ";", "")
                     ctLine += 4
                 Case "Mesh"
                     'Mesh-Bereich
                     ctMesh = Replace(lines(ctLine + 1), ";", "")
                     For i = ctLine + 2 To ctLine + 2 + ctMesh - 1
-                        verticesTemp.Add(-Replace(Split(Trim(lines(i)), ";")(0), ".", ",") * temp3D.A1.X + temp3D.center.X)
-                        verticesTemp.Add(Replace(Split(Trim(lines(i)), ";")(2), ".", ",") * temp3D.C1.Z + temp3D.center.Z)
-                        verticesTemp.Add(Replace(Split(Trim(lines(i)), ";")(1), ".", ",") * temp3D.B1.Y + temp3D.center.Y)
+                        verticesTemp.Add(-Replace(Split(Trim(lines(i)), ";")(0), ".", ",") * temp3D.origin.X + temp3D.center.X)
+                        verticesTemp.Add(Replace(Split(Trim(lines(i)), ";")(2), ".", ",") * temp3D.origin.Z + temp3D.center.Z)
+                        verticesTemp.Add(Replace(Split(Trim(lines(i)), ";")(1), ".", ",") * temp3D.origin.Y + temp3D.center.Y)
                     Next
                     ctLine += 2 + ctMesh
 
@@ -834,14 +838,14 @@ Module Importer
                                 textureNames.Add(.filename.name)
                             End With
                             Dim exists As Boolean = False
-                            For Each texture In temp3D.Texturen
+                            For Each texture In temp3D.texturen
                                 If texture.filename.name = newTexture.filename.name Then
                                     exists = True
                                 End If
                             Next
                             If Not exists Then
 
-                                temp3D.Texturen.Add(newTexture)
+                                temp3D.texturen.Add(newTexture)
                             End If
                         Else
                             textureNames.Add("keine")
@@ -858,20 +862,20 @@ Module Importer
             .normals = normalsTemp2.ToArray
 
             'Lines erstellen
-            .Lines = linesTemp.ToArray
+            .lines = linesTemp.ToArray
 
 
             'Subobjekte erstellen
             Dim newMatlist As New List(Of Integer)
             Dim handeledTextureNames As New List(Of String)
-            For i = 0 To .Texturen.Count - 1
+            For i = 0 To .texturen.Count - 1
                 For n = 0 To textureNames.Count - 1
-                    If textureNames(n) = .Texturen(i).filename.name Then
-                        If Not handeledTextureNames.Contains(.Texturen(i).filename.name) Then
+                    If textureNames(n) = .texturen(i).filename.name Then
+                        If Not handeledTextureNames.Contains(.texturen(i).filename.name) Then
                             For x = 0 To matlistTemp.Count - 1
                                 If matlistTemp(x) = n Then newMatlist.Add(i)
                             Next
-                            handeledTextureNames.Add(.Texturen(i).filename.name)
+                            handeledTextureNames.Add(.texturen(i).filename.name)
                         End If
                     End If
                 Next
@@ -880,7 +884,7 @@ Module Importer
             matlistTemp = newMatlist
 
             Dim arrTemp As New List(Of Integer)
-            For i = 0 To .Texturen.Count - 1
+            For i = 0 To .texturen.Count - 1
                 arrTemp.Clear()
                 For n = 0 To matlistTemp.Count - 1
                     If matlistTemp(n) = i Then
@@ -922,12 +926,12 @@ Module Importer
                 .vertices = tempVert.ToArray
             End If
 
-            If Not Math.Round(.C1.Z, 6) = 1 Then
+            If Not Math.Round(.origin.Z, 6) = 1 Then
                 Dim tempVert As New List(Of Double)
                 For i = 0 To .vertices.Count - 1 Step 3
                     Dim newPnt As New Point3D(.vertices(i), - .vertices(i + 1), .vertices(i + 2))
-                    If Not .C1.X = 0 Then newPnt.rotate(.C1.X * -90, Point3D.ACHSE_X)
-                    If Not .C1.Y = 0 Then newPnt.rotate(.C1.Y * 90, Point3D.ACHSE_Z)
+                    If Not .origin.X = 0 Then newPnt.rotate(.origin.X * -90, Point3D.ACHSE_X)
+                    If Not .origin.Y = 0 Then newPnt.rotate(.origin.Y * 90, Point3D.ACHSE_Z)
                     tempVert.AddRange(newPnt.toList)
                 Next
                 .vertices = tempVert.ToArray
@@ -947,7 +951,7 @@ Module Importer
             .position = New Point3D()
             .vertices = tempSLI.vertices
             .subObjekte = tempSLI.subobjekte
-            .Lines = tempSLI.lines
+            .lines = tempSLI.lines
             .texCoords = tempSLI.texCoords
             .texturen = tempSLI.textures
         End With
@@ -960,7 +964,7 @@ Module Importer
             If .vertices.Count = 0 Then Return False
             If .subObjekte.Count = 0 Then Return False
             If .texCoords.Count = 0 Then Return False
-            If .Lines.Count = 0 Then Return False
+            If .lines.Count = 0 Then Return False
             Return True
         End With
     End Function
@@ -968,8 +972,9 @@ Module Importer
 
     Private Function checkIfExist(filename As Filename) As Boolean
         If Not My.Computer.FileSystem.FileExists(filename) Then
-            MsgBox("Import fehlgeschlagen! (Fehler: I001, Datei: " & filename & ") nicht gefunden")
             Log.Add("Import fehlgeschlagen! (Fehler: I001, Datei: " & filename & ") nicht gefunden", Log.TYPE_ERROR)
+            importWarnung("Import fehlgeschlagen!", "I001", filename, "Datei nicht gefunden")
+
             Frm_Main.SSLBStatus.Text = ""
             Return True
         Else

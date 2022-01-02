@@ -1,6 +1,7 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Public Class Proj_Ovh
     Public Const TYPE = Frm_Main.PROJ_TYPE_OVH
+    Public Const EXTENSION As String = "ovh"
 
     Public isloaded As Boolean
     Public filename As Filename

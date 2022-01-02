@@ -6,7 +6,8 @@ Public Class OMSI_Mesh
     Public filename As Filename
     Public ObjIds As New List(Of Int16)
     Public position As New Point3D
-    Public center As New Point3D
+    Private center_int As New Point3D   '-> Hat property
+    Private origin_int As New Point3D   '-> Hat property
 
     Public viewpoint As Byte
     Public illumination As OMSI_Illumination
@@ -30,6 +31,30 @@ Public Class OMSI_Mesh
     Public matl_change_file As String
     Public matl_change_index As Integer
     Public matl_change_var As String
+
+    Public Property center As Point3D
+        Get
+            Return center_int
+        End Get
+        Set(value As Point3D)
+            center_int = value
+            For Each anim In animations
+                anim.mesh_center = value
+            Next
+        End Set
+    End Property
+
+    Public Property origin As Point3D
+        Get
+            Return origin_int
+        End Get
+        Set(value As Point3D)
+            origin_int = value
+            For Each anim In animations
+                anim.mesh_origin = origin_int
+            Next
+        End Set
+    End Property
 
     Public Function getpropertys() As List(Of String)
         getpropertys = New List(Of String)

@@ -27,6 +27,9 @@ Partial Class Frm_FindMesh
         Me.TBSuchen = New System.Windows.Forms.TextBox()
         Me.BTSuchen = New System.Windows.Forms.Button()
         Me.BTAbbrechen = New System.Windows.Forms.Button()
+        Me.CBMesh = New System.Windows.Forms.CheckBox()
+        Me.CBTexture = New System.Windows.Forms.CheckBox()
+        Me.CBVariable = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -63,11 +66,49 @@ Partial Class Frm_FindMesh
         Me.BTAbbrechen.Text = "Abbrechen"
         Me.BTAbbrechen.UseVisualStyleBackColor = True
         '
+        'CBMesh
+        '
+        Me.CBMesh.AutoSize = True
+        Me.CBMesh.Checked = True
+        Me.CBMesh.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CBMesh.Enabled = False
+        Me.CBMesh.Location = New System.Drawing.Point(15, 45)
+        Me.CBMesh.Name = "CBMesh"
+        Me.CBMesh.Size = New System.Drawing.Size(52, 17)
+        Me.CBMesh.TabIndex = 4
+        Me.CBMesh.Text = "Mesh"
+        Me.CBMesh.UseVisualStyleBackColor = True
+        '
+        'CBTexture
+        '
+        Me.CBTexture.AutoSize = True
+        Me.CBTexture.Enabled = False
+        Me.CBTexture.Location = New System.Drawing.Point(92, 45)
+        Me.CBTexture.Name = "CBTexture"
+        Me.CBTexture.Size = New System.Drawing.Size(62, 17)
+        Me.CBTexture.TabIndex = 5
+        Me.CBTexture.Text = "Texture"
+        Me.CBTexture.UseVisualStyleBackColor = True
+        '
+        'CBVariable
+        '
+        Me.CBVariable.AutoSize = True
+        Me.CBVariable.Enabled = False
+        Me.CBVariable.Location = New System.Drawing.Point(177, 45)
+        Me.CBVariable.Name = "CBVariable"
+        Me.CBVariable.Size = New System.Drawing.Size(64, 17)
+        Me.CBVariable.TabIndex = 6
+        Me.CBVariable.Text = "Variable"
+        Me.CBVariable.UseVisualStyleBackColor = True
+        '
         'Frm_FindMesh
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(389, 69)
+        Me.Controls.Add(Me.CBVariable)
+        Me.Controls.Add(Me.CBTexture)
+        Me.Controls.Add(Me.CBMesh)
         Me.Controls.Add(Me.BTAbbrechen)
         Me.Controls.Add(Me.BTSuchen)
         Me.Controls.Add(Me.TBSuchen)
@@ -78,7 +119,7 @@ Partial Class Frm_FindMesh
         Me.MinimizeBox = False
         Me.MinimumSize = New System.Drawing.Size(405, 108)
         Me.Name = "Frm_FindMesh"
-        Me.Text = "Mesh Suchen"
+        Me.Text = "Suchen"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -88,4 +129,7 @@ Partial Class Frm_FindMesh
     Friend WithEvents TBSuchen As TextBox
     Friend WithEvents BTSuchen As Button
     Friend WithEvents BTAbbrechen As Button
+    Friend WithEvents CBMesh As CheckBox
+    Friend WithEvents CBTexture As CheckBox
+    Friend WithEvents CBVariable As CheckBox
 End Class

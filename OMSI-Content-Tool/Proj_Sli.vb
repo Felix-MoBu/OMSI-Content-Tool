@@ -1,6 +1,7 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Public Class Proj_Sli
     Public Const TYPE = Frm_Main.PROJ_TYPE_SLI
+    Public Const EXTENSION As String = "sli"
 
     Public isloaded As Boolean
     Public filename As Filename

@@ -29,7 +29,7 @@ Partial Class Frm_Vars
         Me.Label2 = New System.Windows.Forms.Label()
         Me.LBLetzteVars = New System.Windows.Forms.ListBox()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.Button2 = New System.Windows.Forms.Button()
+        Me.BTKeine = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'TBFilter
@@ -84,22 +84,22 @@ Partial Class Frm_Vars
         Me.Label3.TabIndex = 6
         Me.Label3.Text = "Zuletzt verwendete Variablen"
         '
-        'Button2
+        'BTKeine
         '
-        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.Location = New System.Drawing.Point(343, 23)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 23)
-        Me.Button2.TabIndex = 7
-        Me.Button2.Text = "KEINE"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.BTKeine.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BTKeine.Location = New System.Drawing.Point(343, 23)
+        Me.BTKeine.Name = "BTKeine"
+        Me.BTKeine.Size = New System.Drawing.Size(75, 23)
+        Me.BTKeine.TabIndex = 7
+        Me.BTKeine.Text = "KEINE"
+        Me.BTKeine.UseVisualStyleBackColor = True
         '
         'Frm_Vars
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(427, 454)
-        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.BTKeine)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.LBLetzteVars)
         Me.Controls.Add(Me.Label2)
@@ -124,5 +124,5 @@ Partial Class Frm_Vars
     Friend WithEvents Label2 As Label
     Friend WithEvents LBLetzteVars As ListBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents Button2 As Button
+    Friend WithEvents BTKeine As Button
 End Class

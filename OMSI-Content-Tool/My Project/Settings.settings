@@ -8,7 +8,7 @@
     <Setting Name="ExpPfad" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="PObjekteVis" Type="System.Boolean" Scope="User">
+    <Setting Name="PObjekteV" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="PObjekteX" Type="System.Int32" Scope="User">
@@ -23,7 +23,7 @@
     <Setting Name="PObjekteH" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">328</Value>
     </Setting>
-    <Setting Name="PTextureVis" Type="System.Boolean" Scope="User">
+    <Setting Name="PTextureV" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="PTextureX" Type="System.Int32" Scope="User">
@@ -155,8 +155,11 @@
     <Setting Name="fpsLimit" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">120</Value>
     </Setting>
-    <Setting Name="Einstellung" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="SelectionColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">255, 128, 0</Value>
+    </Setting>
+    <Setting Name="TexAutoReload" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

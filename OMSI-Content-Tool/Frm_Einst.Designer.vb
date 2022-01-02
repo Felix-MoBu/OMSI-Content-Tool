@@ -51,6 +51,10 @@ Partial Class Frm_Einst
         Me.BTRepToolSuchen = New System.Windows.Forms.Button()
         Me.TBRepTool = New System.Windows.Forms.TextBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.CBTexAutoReload = New System.Windows.Forms.CheckBox()
+        Me.GBPerformance = New System.Windows.Forms.GroupBox()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.TBMaxFPS = New System.Windows.Forms.TextBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.BTResetEig = New System.Windows.Forms.Button()
@@ -59,6 +63,8 @@ Partial Class Frm_Einst
         Me.TBColor3D = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.TBColorSelectedObj = New System.Windows.Forms.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.TBColorAchsen = New System.Windows.Forms.TextBox()
         Me.TBColorPassengers = New System.Windows.Forms.TextBox()
@@ -101,9 +107,6 @@ Partial Class Frm_Einst
         Me.CDColorAchsen = New System.Windows.Forms.ColorDialog()
         Me.BTEinstExp = New System.Windows.Forms.Button()
         Me.BTEinstImport = New System.Windows.Forms.Button()
-        Me.GBPerformance = New System.Windows.Forms.GroupBox()
-        Me.Label21 = New System.Windows.Forms.Label()
-        Me.TBMaxFPS = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -111,6 +114,7 @@ Partial Class Frm_Einst
         Me.GroupBox3.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.TabPage3.SuspendLayout()
+        Me.GBPerformance.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.TabPage5.SuspendLayout()
@@ -119,7 +123,6 @@ Partial Class Frm_Einst
         Me.GroupBox7.SuspendLayout()
         Me.TabPage4.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
-        Me.GBPerformance.SuspendLayout()
         Me.SuspendLayout()
         '
         'OBUebernehmen
@@ -391,6 +394,7 @@ Partial Class Frm_Einst
         '
         'TabPage3
         '
+        Me.TabPage3.Controls.Add(Me.CBTexAutoReload)
         Me.TabPage3.Controls.Add(Me.GBPerformance)
         Me.TabPage3.Controls.Add(Me.GroupBox4)
         Me.TabPage3.Controls.Add(Me.TBColor3D)
@@ -404,13 +408,50 @@ Partial Class Frm_Einst
         Me.TabPage3.Text = "Darstellung"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
+        'CBTexAutoReload
+        '
+        Me.CBTexAutoReload.AutoSize = True
+        Me.CBTexAutoReload.Location = New System.Drawing.Point(265, 8)
+        Me.CBTexAutoReload.Name = "CBTexAutoReload"
+        Me.CBTexAutoReload.Size = New System.Drawing.Size(178, 17)
+        Me.CBTexAutoReload.TabIndex = 9
+        Me.CBTexAutoReload.Text = "Texturen automatisch neu laden"
+        Me.CBTexAutoReload.UseVisualStyleBackColor = True
+        '
+        'GBPerformance
+        '
+        Me.GBPerformance.Controls.Add(Me.Label21)
+        Me.GBPerformance.Controls.Add(Me.TBMaxFPS)
+        Me.GBPerformance.Location = New System.Drawing.Point(8, 251)
+        Me.GBPerformance.Name = "GBPerformance"
+        Me.GBPerformance.Size = New System.Drawing.Size(251, 56)
+        Me.GBPerformance.TabIndex = 8
+        Me.GBPerformance.TabStop = False
+        Me.GBPerformance.Text = "Performance"
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(9, 22)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(115, 13)
+        Me.Label21.TabIndex = 0
+        Me.Label21.Text = "maximale FPS (<1.000)"
+        '
+        'TBMaxFPS
+        '
+        Me.TBMaxFPS.Location = New System.Drawing.Point(139, 19)
+        Me.TBMaxFPS.Name = "TBMaxFPS"
+        Me.TBMaxFPS.Size = New System.Drawing.Size(100, 20)
+        Me.TBMaxFPS.TabIndex = 0
+        '
         'GroupBox4
         '
         Me.GroupBox4.Controls.Add(Me.Label10)
         Me.GroupBox4.Controls.Add(Me.BTResetEig)
         Me.GroupBox4.Controls.Add(Me.BTResetTex)
         Me.GroupBox4.Controls.Add(Me.BTResetObj)
-        Me.GroupBox4.Location = New System.Drawing.Point(8, 138)
+        Me.GroupBox4.Location = New System.Drawing.Point(8, 165)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(251, 80)
         Me.GroupBox4.TabIndex = 7
@@ -471,6 +512,8 @@ Partial Class Frm_Einst
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Label22)
+        Me.GroupBox1.Controls.Add(Me.TBColorSelectedObj)
         Me.GroupBox1.Controls.Add(Me.Label13)
         Me.GroupBox1.Controls.Add(Me.TBColorAchsen)
         Me.GroupBox1.Controls.Add(Me.TBColorPassengers)
@@ -486,10 +529,28 @@ Partial Class Frm_Einst
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.Location = New System.Drawing.Point(8, 32)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(426, 100)
+        Me.GroupBox1.Size = New System.Drawing.Size(426, 127)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "3D-Objekte"
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label22.Location = New System.Drawing.Point(6, 100)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(91, 13)
+        Me.Label22.TabIndex = 12
+        Me.Label22.Text = "Markierte Objekte"
+        '
+        'TBColorSelectedObj
+        '
+        Me.TBColorSelectedObj.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TBColorSelectedObj.Location = New System.Drawing.Point(139, 97)
+        Me.TBColorSelectedObj.Name = "TBColorSelectedObj"
+        Me.TBColorSelectedObj.Size = New System.Drawing.Size(100, 20)
+        Me.TBColorSelectedObj.TabIndex = 12
         '
         'Label13
         '
@@ -839,33 +900,6 @@ Partial Class Frm_Einst
         Me.BTEinstImport.Text = "Einst. Import"
         Me.BTEinstImport.UseVisualStyleBackColor = True
         '
-        'GBPerformance
-        '
-        Me.GBPerformance.Controls.Add(Me.Label21)
-        Me.GBPerformance.Controls.Add(Me.TBMaxFPS)
-        Me.GBPerformance.Location = New System.Drawing.Point(8, 224)
-        Me.GBPerformance.Name = "GBPerformance"
-        Me.GBPerformance.Size = New System.Drawing.Size(251, 56)
-        Me.GBPerformance.TabIndex = 8
-        Me.GBPerformance.TabStop = False
-        Me.GBPerformance.Text = "Performance"
-        '
-        'Label21
-        '
-        Me.Label21.AutoSize = True
-        Me.Label21.Location = New System.Drawing.Point(9, 22)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(73, 13)
-        Me.Label21.TabIndex = 0
-        Me.Label21.Text = "maximale FPS"
-        '
-        'TBMaxFPS
-        '
-        Me.TBMaxFPS.Location = New System.Drawing.Point(139, 19)
-        Me.TBMaxFPS.Name = "TBMaxFPS"
-        Me.TBMaxFPS.Size = New System.Drawing.Size(100, 20)
-        Me.TBMaxFPS.TabIndex = 0
-        '
         'Frm_Einst
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -893,6 +927,8 @@ Partial Class Frm_Einst
         Me.TabPage2.PerformLayout()
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
+        Me.GBPerformance.ResumeLayout(False)
+        Me.GBPerformance.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
@@ -907,8 +943,6 @@ Partial Class Frm_Einst
         Me.TabPage4.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
-        Me.GBPerformance.ResumeLayout(False)
-        Me.GBPerformance.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -994,4 +1028,7 @@ Partial Class Frm_Einst
     Friend WithEvents GBPerformance As GroupBox
     Friend WithEvents Label21 As Label
     Friend WithEvents TBMaxFPS As TextBox
+    Friend WithEvents Label22 As Label
+    Friend WithEvents TBColorSelectedObj As TextBox
+    Friend WithEvents CBTexAutoReload As CheckBox
 End Class

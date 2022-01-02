@@ -7,10 +7,10 @@ Public Class OMSI_Spot
     Private range_int As Double
     Private innerCone_int As Integer
     Private outerCone_int As Integer
-    Public parent As String
 
     Public vertices As Double()
-    Public edges As Integer() = {0, 1, 2}
+    Public edges As Integer() = {0, 1, 2} ', 0, 2, 1}
+    Public lines As Integer() = {0, 1, 2}
 
     Public Property range As Double
         Get
@@ -56,18 +56,19 @@ Public Class OMSI_Spot
         Dim tmp_vert As New List(Of Double)
 
         tmp_vert.Add(position.X)
-        tmp_vert.Add(0)             '<- Hier vlt Z einsetzen!
+        tmp_vert.Add(position.Z)
         tmp_vert.Add(position.Y)
 
+        Dim dist As Double = Math.Cos(outerCone_int / 2) * range / 2
 
-        tmp_vert.Add(position.X - Math.Cos(outerCone_int / 2) * range / 2)
-        tmp_vert.Add(0)             '<- Hier vlt Z einsetzen!
-        tmp_vert.Add(position.Y + range / 2)
+        tmp_vert.Add(position.X + Math.Abs(dist * richtung.Y) + (range / 2 * richtung.X))
+        tmp_vert.Add(position.Z + (range / 100 * richtung.Z))
+        tmp_vert.Add(position.Y + (range / 2 * richtung.Y) - Math.Abs(dist * richtung.X))
 
 
-        tmp_vert.Add(position.X + Math.Cos(outerCone_int / 2) * range / 2)
-        tmp_vert.Add(0)             '<- Hier vlt Z einsetzen!
-        tmp_vert.Add(position.Y + range / 2)
+        tmp_vert.Add(position.X - Math.Abs(dist * richtung.Y) + (range / 2 * richtung.X))
+        tmp_vert.Add(position.Z + (range / 100 * richtung.Z))
+        tmp_vert.Add(position.Y + (range / 2 * richtung.Y) + Math.Abs(dist * richtung.X))
 
         vertices = tmp_vert.ToArray
     End Sub
