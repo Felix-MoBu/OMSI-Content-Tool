@@ -71,7 +71,7 @@ Public Class Point3D
     End Function
 
     Public Function toVector3new() As Vector3
-        Return New Vector3(Convert.ToSingle(X), Convert.ToSingle(Y), Convert.ToSingle(Z))
+        Return New Vector3(Convert.ToSingle(-Z), Convert.ToSingle(Y), Convert.ToSingle(-X))
     End Function
 
 

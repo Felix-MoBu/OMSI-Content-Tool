@@ -362,6 +362,7 @@ Class Frm_Main
             Return newMesh
         ElseIf TypeOf newObjekt Is OMSI_Model Then
             getProj.model = newObjekt
+            Return Nothing
         Else
 
             Log.Add("Datei nicht geaden! (Datei: " & filename.name & ")", Log.TYPE_DEBUG)
@@ -400,8 +401,7 @@ Class Frm_Main
             bmp.RotateFlip(RotateFlipType.RotateNoneFlipY)
 
             'Hier Spiegelung Horizontal!
-            'bmp.RotateFlip(RotateFlipType.RotateNoneFlipX)
-
+            bmp.RotateFlip(RotateFlipType.RotateNoneFlipX)
 
 
             Dim rect = New Rectangle(0, 0, bmp.Width, bmp.Height)
@@ -413,9 +413,6 @@ Class Frm_Main
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D)
         End If
     End Sub
-
-
-
 
 
     Public Sub loadTexture(ByRef texture As LocalTexture, Optional overWrite As Boolean = False)
@@ -2956,8 +2953,8 @@ Class Frm_Main
                 Next
             Next
             PBTexture.Image = My.Resources.pink
-            If IO.File.Exists(Projekt_Bus.filename.path & "\Texture\" & file) Then
-                PBTexture.Tag = Projekt_Bus.filename.path & "\Texture\" & file
+            If IO.File.Exists(getProj.filename.path & "\Texture\" & file) Then
+                PBTexture.Tag = getProj.filename.path & "\Texture\" & file
             End If
         End If
     End Sub
@@ -3643,8 +3640,10 @@ Class Frm_Main
         If Not GlLoaded Then Exit Sub
 
         'FPS Limiter
-        If DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - last_draw < 1000 / My.Settings.fpsLimit Then Exit Sub
-        last_draw = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+        If Not mirrorRender Then
+            If DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - last_draw < 1000 / My.Settings.fpsLimit Then Exit Sub
+            last_draw = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+        End If
 
         GL.Clear(ClearBufferMask.ColorBufferBit)
         GL.Clear(ClearBufferMask.DepthBufferBit)
@@ -3669,12 +3668,11 @@ Class Frm_Main
             GL.LoadMatrix(lookat)
             If viewPoint = 1 Then
                 With Projekt_Bus.driver_cam_list(selectedDriverCam)
-
-
                     'Spiegelberechnung nur in der Fahreransicht
-                    If mirrorRender = True Then
-                        With Projekt_Bus.spiegel(mirrorID)
-                            GL.Translate(- .position.toVector3new)
+                    If mirrorRender Then
+                        With Projekt_Bus.spiegel(1) 'mirrorID
+                            GL.Translate(New Vector3(- .position.X, - .position.Y, - .position.Z))
+                            'GL.Translate(New Vector3(-1, 0, 0))
                             'GL.Rotate(-(.rotX - 90), 0, 1, 0)
                             'GL.Rotate(-(.rotY + 90), 0, 0, 1)
 
@@ -3688,7 +3686,7 @@ Class Frm_Main
                         For i As Integer = 0 To Projekt_Bus.spiegel.Count - 1
                             GlMain_Paint(GlMain, Nothing, True, i)
 
-                            With Projekt_Bus.spiegel(i)
+                            With Projekt_Bus.spiegel(1) 'i
 
                                 GL.Rotate(-90, 0, 1, 0) '-90
                                 GL.Rotate(-(.rotY + 90), 0, 0, 1) '45
@@ -3696,7 +3694,8 @@ Class Frm_Main
 
                                 'GL.Rotate(.rotY + 90, 0, 0, 1)
                                 'GL.Rotate(.rotX - 90, 0, 1, 0)
-                                GL.Translate(.position.toVector3new)
+                                'GL.Translate(New Vector3(1, 0, 0))
+                                GL.Translate(New Vector3(.position.X, .position.Y, .position.Z))
 
                             End With
                         Next
@@ -3705,10 +3704,7 @@ Class Frm_Main
                         GL.Rotate(.rotX - 90, 0, 1, 0)
 
                         GL.Translate(New Vector3(.position.toVector3))
-
                     End If
-
-
 
 
                 End With
@@ -3848,25 +3844,19 @@ Class Frm_Main
                         GL.VertexPointer(3, VertexPointerType.Double, 0, {0, 0, 0})
                         GL.TexCoordPointer(2, TexCoordPointerType.Double, 0, {0, 0})
                         For index As Integer = 0 To Projekt_Bus.driver_cam_list.Count - 1
+                            GL.Color3(My.Settings.CamDriverColor)
+                            If TVHelper.SelectedNode.FullPath.Contains("Fahrerkameras\") And index = TVHelper.SelectedNode.Index Then GL.Color3(My.Settings.SelectionColor)
                             With Projekt_Bus.driver_cam_list(index)
-                                If TVHelper.SelectedNode.FullPath.Contains("Fahrerkameras\") And index = TVHelper.SelectedNode.Index Then
-                                    GL.Color3(My.Settings.SelectionColor)
-                                Else
-                                    GL.Color3(My.Settings.CamDriverColor)
-                                End If
                                 GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                 GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
                             End With
                         Next
 
                         GL.Color3(My.Settings.CamPaxColor)
-                        For index As Integer = 0 To Projekt_Bus.pax_cam_list.Count - 1
-                            With Projekt_Bus.pax_cam_list(index)
-                                If TVHelper.SelectedNode.FullPath.Contains("Fahrgastkameras\") And index = TVHelper.SelectedNode.Index Then
-                                    GL.Color3(My.Settings.SelectionColor)
-                                Else
-                                    GL.Color3(My.Settings.CamDriverColor)
-                                End If
+                        For i As Integer = 0 To Projekt_Bus.pax_cam_list.Count - 1
+                            GL.Color3(My.Settings.CamDriverColor)
+                            If TVHelper.SelectedNode.FullPath.Contains("Fahrgastkameras\") And i = TVHelper.SelectedNode.Index Then GL.Color3(My.Settings.SelectionColor)
+                            With Projekt_Bus.pax_cam_list(i)
                                 GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                 GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
                             End With
@@ -3874,16 +3864,18 @@ Class Frm_Main
 
                         For i As Integer = 0 To Projekt_Bus.achsen.Count - 1
                             GL.Color3(My.Settings.AchsenColor)
-                            If InStr(TVHelper.SelectedNode.FullPath, TVHelper.Nodes(0).Text & "\") And i = TVHelper.SelectedNode.Index Then GL.Color3(My.Settings.SelectionColor)
+                            If InStr(TVHelper.SelectedNode.FullPath, "Achsen\") And i = TVHelper.SelectedNode.Index Then GL.Color3(My.Settings.SelectionColor)
                             With Projekt_Bus.achsen(i)
                                 GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                 GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
                             End With
                         Next
 
-                        GL.Color3(My.Settings.CamReflexColor)
-                        For Each kamera In Projekt_Bus.spiegel
-                            With kamera
+
+                        For i As Integer = 0 To Projekt_Bus.spiegel.Count - 1
+                            GL.Color3(My.Settings.CamReflexColor)
+                            If TVHelper.SelectedNode.FullPath.Contains("Spiegel\") And i = TVHelper.SelectedNode.Index Then GL.Color3(My.Settings.SelectionColor)
+                            With Projekt_Bus.spiegel(i)
                                 GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                 GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
                             End With
