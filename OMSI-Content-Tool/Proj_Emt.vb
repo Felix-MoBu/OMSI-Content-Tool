@@ -10,6 +10,8 @@ Public Class Proj_Emt
     Public paths As OMSI_Paths
     Public cabin As OMSI_Cabin
 
+    Public ProjDataBase As DataBase
+
     Public Sub save()
         If Not changed Then Exit Sub
         MsgBox("Die Änderungen wurden nicht gespeichert! Bitte zunächst ein Projekt erstellen oder die Dateien einzeln exportieren.")

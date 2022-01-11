@@ -58,7 +58,7 @@ Class Frm_Main
     Private selectedMeshesChanged As Boolean = False
     Public Clipboard3D As Point3D
     Public Sprachen As List(Of String)
-    Public repName As String
+    Public selectedRepaint As OMSI_Repaint
 
     Public lodVal As Single
 
@@ -150,6 +150,8 @@ Class Frm_Main
                             newMesh.isProtected = False
                         End If
                     End If
+                ElseIf newFile.extension = DataBase.FILETYPE Then
+
                 Else
                     MsgBox("Datei " & newFile & " wird nicht unterstützt!")
                 End If
@@ -819,8 +821,10 @@ Class Frm_Main
                 Exit Sub
         End Select
         addProjectlist(filename)
+        loadProjDataBase()
         GlMain.Invalidate()
         TCObjekte_SelectedIndexChanged(TCObjekte, Nothing)
+
         If Not Importer.stopImport Then
             Text = filename & " - " & My.Application.Info.Title
         End If
@@ -877,6 +881,23 @@ Class Frm_Main
 
             projectReady()
         End With
+    End Sub
+
+    Private Sub loadProjDataBase()
+        If Not getProj.ProjDataBase Is Nothing Then
+            With Projekt_Bus.ProjDataBase
+
+                Frm_Rep.showInitialRepaint(.selectedRepaint)
+
+                For i As Integer = 0 To .AlleVariablen.Count - 1
+                    If AlleVariablen.Contains(.AlleVariablen(i)) Then
+                        'AlleVarValues(AlleVariablen.IndexOf(.AlleVariablen(i))) = .AlleVarValues(i)
+                        Frm_VarTest.addVar(.AlleVariablen(i), .AlleVarValues(i))
+                    End If
+                Next
+
+            End With
+        End If
     End Sub
 
 
@@ -1615,7 +1636,6 @@ Class Frm_Main
     End Sub
 
     Public Sub RepaintToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RepaintToolStripMenuItem.Click
-        Frm_Rep.Projekt_Bus = getProj()
         Frm_Rep.Show()
     End Sub
 

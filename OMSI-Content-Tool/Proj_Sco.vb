@@ -65,7 +65,7 @@ Public Class Proj_Sco
     Public model As OMSI_Model
     'Public subPorjs As New List(Of Proj_Sli)
     Public collisionMesh As Filename
-    Public ProjDataBase As New DataBase()
+    Public ProjDataBase As DataBase
 
     Public Sub New()
         'Hier das rein was zum erstellen eines Busses vorhanden sein muss!
@@ -291,7 +291,7 @@ Public Class Proj_Sco
                 model = New OMSI_Model(filename)
             End If
 
-            ProjDataBase.LoadFile(filename)
+            ProjDataBase = New DataBase(filename)
             Log.Add("Projekt """ & filename.name & """ fertig geladen.")
             isloaded = True
         Else

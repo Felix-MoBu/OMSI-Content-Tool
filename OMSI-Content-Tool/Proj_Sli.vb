@@ -26,7 +26,7 @@ Public Class Proj_Sli
     Public profiles As New List(Of Sli_Profile)
     Public paths As New List(Of KI_Path)
 
-    Public ProjDataBase As New DataBase
+    Public ProjDataBase As DataBase
 
     Public Sub New()
         'Hier das rein was zum erstellen eines Busses vorhanden sein muss!
@@ -210,6 +210,7 @@ Public Class Proj_Sli
             lines = linesTemp.ToArray
             texCoords = texCoordsTemp.ToArray
             Log.Add("Projekt """ & filename.name & """ fertig geladen.")
+            ProjDataBase = New DataBase(filename)
             isloaded = True
         Else
             Log.Add("Spline nicht gefunden! (" & filename & ")")
@@ -328,6 +329,6 @@ Public Class Proj_Sli
         linesCount = newFile.Write()
 
         Log.Add("Projekt gespeichert! (Datei: " & filename_n.name & ", Zeilen: " & linesCount & ")")
-        ProjDataBase.SaveFile()
+        ProjDataBase.Save()
     End Sub
 End Class

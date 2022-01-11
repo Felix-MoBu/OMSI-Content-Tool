@@ -12,6 +12,8 @@ Public Class Proj_Ovh
     Public scripts As New List(Of String)
     Public constfiles As New List(Of String)
 
+    Public ProjDataBase As DataBase
+
     'Public controlCables As New List(Of OMSI_ControlCabels)
 
     'hier weiter!

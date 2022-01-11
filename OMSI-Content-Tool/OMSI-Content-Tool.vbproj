@@ -253,6 +253,7 @@
     <Compile Include="OMSI_TicketPnt.vb" />
     <Compile Include="OMSI_traffic_light.vb" />
     <Compile Include="OMSI_Tree.vb" />
+    <Compile Include="OMSI_Var.vb" />
     <Compile Include="PointSelector.Designer.vb">
       <DependentUpon>PointSelector.vb</DependentUpon>
     </Compile>

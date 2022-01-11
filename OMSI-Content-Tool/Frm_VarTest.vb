@@ -2,12 +2,10 @@
 Imports System.ComponentModel
 
 Public Class Frm_VarTest
-    Dim ListCount As Integer = 0
+    Dim ListCount As Integer = 1
 
     Private Sub Frm_Var_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
         Me.Location = New Point(Frm_Main.Width / 2 - Me.Width / 2, Frm_Main.Height / 2 - Me.Height / 2)
-        ListCount = 1
     End Sub
 
     Private Sub valueChanged(sender As Object, e As EventArgs) Handles TB_0.TextChanged
@@ -49,7 +47,7 @@ Public Class Frm_VarTest
         Next
     End Sub
 
-    Private Sub keyPressTB(sender As Object, e As System.Windows.Forms.KeyPressEventArgs) Handles TB_0.KeyPress
+    Private Sub keyPressTB(sender As Object, e As KeyPressEventArgs) Handles TB_0.KeyPress
         e.Handled = helper.NumbersOnly(e, sender, True)
     End Sub
 
@@ -73,6 +71,29 @@ Public Class Frm_VarTest
     End Sub
 
     Private Sub BTHinzu_Click(sender As Object, e As EventArgs) Handles BTHinzu.Click
+        addVar("", 0, sender)
+    End Sub
+
+    Public Sub addVar(newVar As String, newVal As Single, Optional sender As Object = Nothing)
+        If sender Is BTHinzu Then
+            newControlLine(newVar, newVal)
+        Else
+            If VS_0.Variable = "" Then
+                VS_0.Variable = newVar
+                TB_0.Text = newVal
+            Else
+                Dim found As Boolean = False
+                For Each control In Controls
+                    If control.name.contains("VS_") Then
+                        If control.variable = newVar Then found = True
+                    End If
+                Next
+                If Not found Then newControlLine(newVar, newVal)
+            End If
+        End If
+    End Sub
+
+    Private Sub newControlLine(newVar As String, newVal As Single)
         Dim VS As New VarSelector
         With VS
             .Top = ListCount * 28 + 12
@@ -80,6 +101,9 @@ Public Class Frm_VarTest
             .Width = 178
             .Height = 20
             .Name = "VS_" & ListCount
+            If newVar <> "" Then
+                .Variable = newVar
+            End If
             AddHandler .Click, AddressOf VBClick '-> Wenn sich die Var ändert muss der Wert geladen werden.
         End With
         Me.Controls.Add(VS)
@@ -105,7 +129,7 @@ Public Class Frm_VarTest
             .Left = 277
             .Width = 75
             .Height = 20
-            .Text = "0"
+            .Text = CStr(newVal)
             .Name = "TB_" & ListCount
             AddHandler .TextChanged, AddressOf valueChanged
             AddHandler .MouseDown, AddressOf TB_MouseDown
@@ -113,6 +137,9 @@ Public Class Frm_VarTest
             AddHandler .MouseUp, AddressOf TB_MouseUp
         End With
         Me.Controls.Add(TB)
+        If Not newVal = 0 Then
+            valueChanged(TB, Nothing)
+        End If
 
         Dim RM As New Button
         With RM
@@ -128,7 +155,6 @@ Public Class Frm_VarTest
 
         ListCount += 1
         BTHinzu.Top = BTHinzu.Top + 28
-
     End Sub
 
     Private Sub VBClick(sender As Object, e As EventArgs)
@@ -159,4 +185,23 @@ Public Class Frm_VarTest
             sender.text = Format((MousePosition.X + 5 - Me.Location.X - sender.Location.X) / (sender.width + 5), "#0.###")
         End If
     End Sub
+
+    Public Function getUsedVars() As List(Of OMSI_Var)
+        Dim tmplist As New List(Of OMSI_Var)
+        For i As Integer = 0 To ListCount
+            Dim newVar As New OMSI_Var
+            For Each control In Me.Controls
+                If control.Name = "VS_" & i Then
+                    newVar.var = control.variable
+                End If
+                If control.Name = "TB_" & i Then
+                    newVar.val = toSingle(control.text)
+                End If
+            Next
+            If newVar.var <> "" Then
+                tmplist.Add(newVar)
+            End If
+        Next
+        Return tmplist
+    End Function
 End Class

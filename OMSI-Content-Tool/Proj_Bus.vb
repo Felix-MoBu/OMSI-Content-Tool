@@ -66,7 +66,7 @@ Public Class Proj_Bus
     Public couple_front_char As Point3D
     Public couple_front_type As Boolean
 
-    Public ProjDataBase As New DataBase
+    Public ProjDataBase As DataBase
 
     Public Structure AI_TYPE
         Const CAR As Byte = 0
@@ -331,7 +331,7 @@ Public Class Proj_Bus
 
             If model Is Nothing Then model = New OMSI_Model
             If model.filename Is Nothing Then model = New OMSI_Model(filename)
-            ProjDataBase.LoadFile(filename)
+            ProjDataBase = New DataBase(filename)
             Log.Add("Projekt """ & filename.name & """ fertig geladen.")
             isloaded = True
         Else
@@ -650,7 +650,7 @@ Public Class Proj_Bus
             End If
             If Not paths Is Nothing Then paths.save()
             If Not cabin Is Nothing Then cabin.save()
-            ProjDataBase.SaveFile()
+            ProjDataBase.Save()
         End If
     End Sub
 End Class
