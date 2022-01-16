@@ -12,6 +12,7 @@ Public Class DataBase
     Public selectedRepaint As OMSI_Repaint
     Public AlleVariablen As New List(Of String)
     Public AlleVarValues As New List(Of Double)
+    Public lastVars As New List(Of String)
     Public todoList As New List(Of String)
     Public todoReadyList As New List(Of String)
 
@@ -50,6 +51,11 @@ Public Class DataBase
                         AlleVariablen.Add(allLines(linect + 1))
                         AlleVarValues.Add(toSingle(allLines(linect + 2)))
                         linect += 2
+                    Case "[lastvars]"
+                        For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1))
+                            lastVars.Add(allLines(i))
+                        Next
+                        linect += 2 + CInt(allLines(linect + 1))
                     Case "[todo]"
                         For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1))
                             todoList.Add(allLines(i))
@@ -120,10 +126,19 @@ Public Class DataBase
                     .Add(AlleVarValues(varct), True)
                 Next
 
+                If lastVars.Count > 0 Then
+                    .Add("[lastvars]")
+                    .Add(todoList.Count)
+                    For lastVarsct As Integer = 0 To lastVars.Count - 1
+                        .Add(lastVars(lastVarsct))
+                    Next
+                    .Add(vbCrLf)
+                End If
+
                 If todoList.Count > 0 Then
                     .Add("[todo]")
                     .Add(todoList.Count)
-                    For todoct = 0 To todoList.Count - 1
+                    For todoct As Integer = 0 To todoList.Count - 1
                         .Add(todoList(todoct))
                     Next
                     .Add(vbCrLf)
@@ -132,7 +147,7 @@ Public Class DataBase
                 If todoReadyList.Count > 0 Then
                     .Add("[todo_ready]")
                     .Add(todoReadyList.Count)
-                    For todoct = 0 To todoReadyList.Count - 1
+                    For todoct As Integer = 0 To todoReadyList.Count - 1
                         .Add(todoReadyList(todoct))
                     Next
                     .Add(vbCrLf)
