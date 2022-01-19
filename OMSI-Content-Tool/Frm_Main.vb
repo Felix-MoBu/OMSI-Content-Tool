@@ -134,7 +134,7 @@ Class Frm_Main
         Try
             If My.Application.CommandLineArgs.Count > 0 Then
                 Dim newFile As New Filename(My.Application.CommandLineArgs(0))
-                If Proj_Bus.EXTENSION = newFile.extension Or Proj_Ovh.EXTENSION = newFile.extension Or Proj_Sco.EXTENSION = newFile.extension Or Proj_Sli.EXTENSION = newFile.extension Then
+                If projectExtensions.Contains(newFile.extension) Then
                     ProjÖffnen(newFile)
                 ElseIf Importer.KNOWN_FILE_TYPES.Contains(newFile.extension) Then
                     Dim newMesh As New OMSI_Mesh
@@ -151,7 +151,12 @@ Class Frm_Main
                         End If
                     End If
                 ElseIf newFile.extension = DataBase.FILETYPE Then
-
+                    For Each extension In projectExtensions()
+                        If IO.File.Exists(newFile.path & "\" & newFile.nameNoEnding & "." & extension) Then
+                            ProjÖffnen(newFile.path & "\" & newFile.nameNoEnding & "." & extension)
+                            Exit For
+                        End If
+                    Next
                 Else
                     MsgBox("Datei " & newFile & " wird nicht unterstützt!")
                 End If
@@ -163,7 +168,16 @@ Class Frm_Main
 
 
 
-
+    Private Function projectExtensions() As List(Of String)
+        projectExtensions = New List(Of String)
+        With projectExtensions
+            .Add(Proj_Bus.EXTENSION)
+            .Add(Proj_Ovh.EXTENSION)
+            .Add(Proj_Sco.EXTENSION)
+            .Add(Proj_Sli.EXTENSION)
+        End With
+        Return projectExtensions
+    End Function
 
     Private Sub Frm_Main_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         'If exitApplication() = False Then e.Cancel = True
@@ -342,6 +356,7 @@ Class Frm_Main
             newMesh.index = AlleObjekte.Count
 
 
+            newObjekt.parentMesh = newMesh.filename.name
             newObjekt.id = AlleObjekte.Count
             newMesh.ObjIds.Add(newObjekt.id)
 
@@ -887,7 +902,9 @@ Class Frm_Main
         If Not getProj.ProjDataBase Is Nothing Then
             With Projekt_Bus.ProjDataBase
 
-                Frm_Rep.showInitialRepaint(.selectedRepaint)
+                If Not .selectedRepaint Is Nothing Then
+                    Frm_Rep.showInitialRepaint(.selectedRepaint)
+                End If
 
                 For i As Integer = 0 To .AlleVariablen.Count - 1
                     If AlleVariablen.Contains(.AlleVariablen(i)) Then
@@ -1137,15 +1154,20 @@ Class Frm_Main
             PBMain.Value = Convert.ToInt16(ctMesh / meshes.Count * 100)
         Next
 
-        Dim newMeshesStart As Integer = LBMeshes.Items.Count
-        LBMeshes.Items.AddRange(items_temp.ToArray)
-        For iMeshes As Integer = newMeshesStart To LBMeshes.Items.Count - 1
+        For iMeshes As Integer = 0 To meshes.Count - 1
+            LBMeshes.Items.Add(meshes(iMeshes).filename.name)
             LBMeshes.SetItemChecked(iMeshes, True)
         Next
 
+        'Dim newMeshesStart As Integer = LBMeshes.Items.Count
+        'LBMeshes.Items.AddRange(items_temp.ToArray)
+        'For iMeshes As Integer = newMeshesStart To LBMeshes.Items.Count - 1
+        '    LBMeshes.SetItemChecked(iMeshes, True)
+        'Next
+
         Parent_CBParent.Items.AddRange(items_temp.ToArray)
         GlMain.Invalidate()
-        TCObjektePMeshes.Text = "Meshes (" & AlleObjekte.Count & ")"
+        TCObjektePMeshes.Text = "Meshes (" & LBMeshes.Items.Count & ")"
     End Sub
 
     Public Sub loadNewModel(model As OMSI_Model)
