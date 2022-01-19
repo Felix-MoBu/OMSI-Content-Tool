@@ -33,7 +33,7 @@ Public Class OMSI_Model
         If My.Computer.FileSystem.FileExists(filename) Then
             Log.Add("Model-Datei """ & filename & """ laden...")
             Me.filename = filename
-            Dim allLines As String() = Split(My.Computer.FileSystem.ReadAllText(filename, Encoding.GetEncoding(1252)), vbCrLf)
+            Dim allLines As String() = Split(Replace(My.Computer.FileSystem.ReadAllText(filename, Encoding.GetEncoding(1252)), vbCr, ""), vbLf)
 
             Dim text_tex_index As Integer = 0
             Dim tempLODMin As Single = 0

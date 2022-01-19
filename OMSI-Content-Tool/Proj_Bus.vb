@@ -92,7 +92,7 @@ Public Class Proj_Bus
         filename = New Filename(filepath)
         If My.Computer.FileSystem.FileExists(filename.path & "\" & filename.name) Then
             Log.Add("Projekt """ & filename.name & """ laden...")
-            Dim allLines As String() = Split(My.Computer.FileSystem.ReadAllText(filename.path & "\" & filename.name, Encoding.GetEncoding(1252)), vbCrLf)
+            Dim allLines As String() = Split(Replace(My.Computer.FileSystem.ReadAllText(filename, Encoding.GetEncoding(1252)), vbCr, ""), vbLf)
 
             For linect = 0 To allLines.Count - 1
                 Select Case allLines(linect)

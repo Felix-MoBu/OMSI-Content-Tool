@@ -42,22 +42,22 @@ Public Class Frm_Rep
         Next
 
         'CTI-Dateien einlesen
-        Dim files() As String = IO.Directory.GetFiles(TexChangeFolder, "*.cti", IO.SearchOption.TopDirectoryOnly)
-        For Each file In files
-            Dim lines() As String = Split(My.Computer.FileSystem.ReadAllText(file, Encoding.GetEncoding(1252)), vbCrLf)
+        Dim filenames() As String = IO.Directory.GetFiles(TexChangeFolder, "*.cti", IO.SearchOption.TopDirectoryOnly)
+        For Each filename In filenames
+            Dim allLines As String() = Split(Replace(My.Computer.FileSystem.ReadAllText(filename, Encoding.GetEncoding(1252)), vbCr, ""), vbLf)
             Dim lastName As String = ""
 
-            For i = 0 To lines.Count - 1
-                If lines(i) = "[item]" Then
+            For i = 0 To allLines.Count - 1
+                If allLines(i) = "[item]" Then
                     Dim rp As New OMSI_Repaint
                     With rp
-                        lastName = lines(i + 1)
-                        .name = lines(i + 1)
-                        .var = lines(i + 2)
-                        .ctifile = file.Substring(TexChangeFolder.Count + 1)
-                        .file = Replace(lines(i + 3), "/", "\")
-                        If InStr(lines(i + 3), "/") Then
-                            Log.Add("Formatfehler in Repaint automatisch behoben! (Fehler: R001, Zeile: " & i + 3 & " Datei: " & file & ")", Log.TYPE_WARNUNG)
+                        lastName = allLines(i + 1)
+                        .name = allLines(i + 1)
+                        .var = allLines(i + 2)
+                        .ctifile = filename.Substring(TexChangeFolder.Count + 1)
+                        .file = Replace(allLines(i + 3), "/", "\")
+                        If InStr(allLines(i + 3), "/") Then
+                            Log.Add("Formatfehler in Repaint automatisch behoben! (Fehler: R001, Zeile: " & i + 3 & " Datei: " & filename & ")", Log.TYPE_WARNUNG)
                             .changed = True
                         Else
                             .changed = False
@@ -65,13 +65,13 @@ Public Class Frm_Rep
                     End With
                     repaints.Add(rp)
                 End If
-                If lines(i) = "[setvar]" Then
+                If allLines(i) = "[setvar]" Then
                     Dim rv As New OMSI_Rep_Var
                     With rv
                         .name = lastName
-                        .file = file
-                        .var = lines(i + 1)
-                        .val = lines(i + 2)
+                        .file = filename
+                        .var = allLines(i + 1)
+                        .val = allLines(i + 2)
                     End With
                     rep_vars.Add(rv)
                 End If
@@ -262,7 +262,10 @@ Public Class Frm_Rep
 
     Public Sub showInitialRepaint(repaint As OMSI_Repaint)
         einlesen()
-        shwoRepaintOnMain(repaint)
+        If LBRepaints.Items.Contains(repaint) Then
+            LBRepaints.SelectedItem = repaint
+        End If
+        'shwoRepaintOnMain(repaint)
         loadPVars()
     End Sub
 

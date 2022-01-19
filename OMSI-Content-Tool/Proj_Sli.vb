@@ -1,4 +1,6 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
+Imports System.Text
+
 Public Class Proj_Sli
     Public Const TYPE = Frm_Main.PROJ_TYPE_SLI
     Public Const EXTENSION As String = "sli"
@@ -36,7 +38,7 @@ Public Class Proj_Sli
     Public Sub New(filepath As String)
         filename = New Filename(filepath)
         If My.Computer.FileSystem.FileExists(filename.path & "\" & filename.name) Then
-            Dim allLines = Split(My.Computer.FileSystem.ReadAllText(filename), vbCrLf)
+            Dim allLines As String() = Split(Replace(My.Computer.FileSystem.ReadAllText(filename, Encoding.GetEncoding(1252)), vbCr, ""), vbLf)
 
             If Not allLines.Contains("[profilepnt]") Then
                 Log.Add("Spline hat keine Profilpunkte!", Log.TYPE_WARNUNG)
@@ -202,7 +204,7 @@ Public Class Proj_Sli
                     ct += 2
                 Next
                 textures.Add(texturesTemp(profile.texIndex))
-                subobjekte.Add(edgesTemp.toarray)
+                subobjekte.Add(edgesTemp.ToArray)
             Next
 
             vertices = verticesTemp.ToArray
