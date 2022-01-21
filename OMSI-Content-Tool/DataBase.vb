@@ -20,7 +20,7 @@ Public Class DataBase
 
     Public Sub New(name As Filename)
         filename = New Filename(name.path & "\" & name.nameNoEnding & "." & FILETYPE)
-        If Not My.Computer.FileSystem.FileExists(filename) Then
+        If Not IO.File.Exists(filename) Then
             Log.Add("Es wurde keine Projektdatenbank geladen!")
             Log.Add("Datei: " & filename, Log.TYPE_DEBUG)
             Exit Sub
@@ -52,17 +52,17 @@ Public Class DataBase
                         AlleVarValues.Add(toSingle(allLines(linect + 2)))
                         linect += 2
                     Case "[lastvars]"
-                        For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1))
+                        For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1)) - 1
                             lastVars.Add(allLines(i))
                         Next
                         linect += 2 + CInt(allLines(linect + 1))
                     Case "[todo]"
-                        For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1))
+                        For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1)) - 1
                             todoList.Add(allLines(i))
                         Next
                         linect += 2 + CInt(allLines(linect + 1))
                     Case "[todo_ready]"
-                        For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1))
+                        For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1)) - 1
                             todoReadyList.Add(allLines(i))
                         Next
                         linect += 2 + CInt(allLines(linect + 1))
@@ -154,10 +154,19 @@ Public Class DataBase
                 End If
             End With
 
-            Dim linesCount As Integer
-            linesCount = newFile.Write()
+            If newFile.Lenght > 2 Then
+                Dim linesCount As Integer
+                linesCount = newFile.Write()
 
-            Log.Add("Projektdatenbank gespeichert! (Datei: " & filename.name & ", Zeilen: " & linesCount & ")")
+                Log.Add("Projektdatenbank gespeichert! (Datei: " & filename.name & ", Zeilen: " & linesCount & ")")
+            Else
+                If IO.File.Exists(filename) Then
+                    IO.File.Delete(filename)
+                    Log.Add("Keine Projektdatenbank erstellt da keine Werte zum Speichern vorhanden sind. (Alte Datei gelöscht!)")
+                Else
+                    Log.Add("Keine Projektdatenbank erstellt da keine Werte zum Speichern vorhanden sind.")
+                End If
+            End If
         End If
     End Sub
 End Class

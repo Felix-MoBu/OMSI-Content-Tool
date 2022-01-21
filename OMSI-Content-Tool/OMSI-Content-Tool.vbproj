@@ -217,6 +217,12 @@
     <Compile Include="Frm_TextTex.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Frm_ToDo.Designer.vb">
+      <DependentUpon>Frm_ToDo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_ToDo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Frm_Vars.Designer.vb">
       <DependentUpon>Frm_Vars.vb</DependentUpon>
     </Compile>
@@ -422,6 +428,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Texture.resx">
       <DependentUpon>Frm_Texture.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_ToDo.resx">
+      <DependentUpon>Frm_ToDo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Vars.resx">
       <DependentUpon>Frm_Vars.vb</DependentUpon>

@@ -7,9 +7,15 @@ Public Class Frm_Sounds
         LBDateien.Items.Clear()
 
         If Frm_Main.getProjTyp = Frm_Main.PROJ_TYPE_BUS Then
-            For i As Integer = 0 To Frm_Main.getProj.paths.soundpacks.count - 1
-                LBGruppen.Items.Add(i)
-            Next
+            If Not Frm_Main.getProj.paths Is Nothing Then
+                For i As Integer = 0 To Frm_Main.getProj.paths.soundpacks.count - 1
+                    LBGruppen.Items.Add(i)
+                Next
+
+            Else
+                MsgBox("Es wurde keine Path-Datei gefunden")
+                Me.Close()
+            End If
         End If
     End Sub
 

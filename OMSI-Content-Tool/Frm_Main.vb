@@ -800,12 +800,14 @@ Class Frm_Main
         Projekt_Ovh = Nothing
         Projekt_Sco = Nothing
         Projekt_Sli = Nothing
+        resetTextures()
         AlleObjekte = New List(Of Local3DObjekt)
         AlleTexturen = New List(Of String)
         AlleVariablen = New List(Of String)
         AlleVarValues = New List(Of Double)
         HofDateienToolStripMenuItem.Enabled = False     'Nur Busse haben Hof-Dateien
         RepaintToolStripMenuItem.Enabled = False        'Splines haben keine Repaints
+
         Text = My.Application.Info.Title
     End Sub
 
@@ -1429,6 +1431,13 @@ Class Frm_Main
         SSLBStatus.Text = "Projektdatei gespeichert"
     End Sub
 
+    Private Sub NurToolUmgebungocdbToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NurToolUmgebungocdbToolStripMenuItem.Click
+        If Not getProjTyp() = PROJ_TYPE_EMT Then
+            getProj.ProjDataBase.Save()
+            SSLBStatus.Text = "Umgebung gespeichert"
+        End If
+    End Sub
+
     Private Sub NurModelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NurModelToolStripMenuItem.Click
         getProj.model.save()
         SSLBStatus.Text = "Model-Datei gespeichert"
@@ -1505,13 +1514,21 @@ Class Frm_Main
     End Sub
 
     Private Sub FahrrersichtToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FahrrersichtToolStripMenuItem.Click
-        viewPoint = 1
-        GlMain.Invalidate()
+        If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_OVH Then
+            If getProj.driver_cam_list.Count > 0 Then
+                viewPoint = 1
+                GlMain.Invalidate()
+            End If
+        End If
     End Sub
 
     Private Sub PassagiersichtToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PassagiersichtToolStripMenuItem.Click
-        viewPoint = 2
-        GlMain.Invalidate()
+        If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_OVH Then
+            If getProj.pax_cam_list.Count > 0 Then
+                viewPoint = 2
+                GlMain.Invalidate()
+            End If
+        End If
     End Sub
 
     Private Sub AußenansichtToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AußenansichtToolStripMenuItem.Click
@@ -1564,6 +1581,13 @@ Class Frm_Main
         Else
             MsgNoProj()
         End If
+    End Sub
+
+    Private Sub ToDoListToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToDoListToolStripMenuItem.Click
+        If Projekt_Bus.ProjDataBase Is Nothing Then
+            getProj.ProjDataBase = New DataBase(getProj.filename)
+        End If
+        Frm_ToDo.Show()
     End Sub
 
     Private Sub RechnerToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles RechnerToolStripMenuItem.Click
@@ -2222,7 +2246,7 @@ Class Frm_Main
             Dim newCam As New Kamera
             newCam.position = New Point3D()
             Projekt_Bus.driver_cam_list.Add(newCam)
-            TVHelper.Nodes(2).Nodes(0).Nodes.Add("Kamera_" & Projekt_Bus.pax_cam_list.Count - 1)
+            TVHelper.Nodes(2).Nodes(0).Nodes.Add("Kamera_" & Projekt_Bus.pax_cam_list.Count)
         Else
             MsgBox("Dieser Projekttyp unterstützt keine Kameras!")
         End If
@@ -2233,7 +2257,7 @@ Class Frm_Main
             Dim newCam As New Kamera
             newCam.position = New Point3D()
             Projekt_Bus.pax_cam_list.Add(newCam)
-            TVHelper.Nodes(2).Nodes(1).Nodes.Add("Kamera_" & Projekt_Bus.pax_cam_list.Count - 1)
+            TVHelper.Nodes(2).Nodes(1).Nodes.Add("Kamera_" & Projekt_Bus.pax_cam_list.Count)
         Else
             MsgBox("Dieser Projekttyp unterstützt keine Kameras!")
         End If
@@ -2381,21 +2405,6 @@ Class Frm_Main
             getProj.couple_back_dir = intToBool(Kuppl_DDRichtung.SelectedIndex)
         End If
     End Sub
-
-    Public Function getSelectedSpot() As OMSI_Spot
-        If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_OVH Then
-            If TVHelper.SelectedNode.FullPath.Contains(TVHelper.Nodes(11).Text & "\") Then
-                If TVHelper.SelectedNode.Index > getProj.model.spots.Count Then
-                    If TVHelper.SelectedNode.Index > -1 Then
-                        Return getProj.model.spots(TVHelper.SelectedNode.Index)
-                    End If
-                End If
-            End If
-        End If
-        Return Nothing
-    End Function
-
-
 
 
     ' #### TV Helper ####
@@ -3461,6 +3470,7 @@ Class Frm_Main
 
 
     '### Panel Licht ###
+
     Private Sub Licht_TBTexture_Click(sender As Object, e As EventArgs) Handles Licht_TBTexture.Click
         activeImageSelector = sender
         PanelTexture.Location = New Point(Convert.ToInt16(GlMain.Width / 2 - PanelTexture.Width / 2), Convert.ToInt16(GlMain.Height / 2 - PanelTexture.Height / 2))
@@ -3474,6 +3484,59 @@ Class Frm_Main
         End If
     End Sub
 
+    '### Panel Spot ###
+
+    Public Function getSelectedSpot() As OMSI_Spot
+        If getProjTyp() = PROJ_TYPE_BUS Or getProjTyp() = PROJ_TYPE_OVH Then
+            If TVHelper.SelectedNode.FullPath.Contains(TVHelper.Nodes(11).Text & "\") Then
+                If TVHelper.SelectedNode.Index < getProj.model.spots.Count Then
+                    If TVHelper.SelectedNode.Index > -1 Then
+                        Return getProj.model.spots(TVHelper.SelectedNode.Index)
+                    End If
+                End If
+            End If
+        End If
+        Return Nothing
+    End Function
+
+    Private Sub Spot_CSFarbe_ColorChanged(sender As Object, e As EventArgs) Handles Spot_CSFarbe.ColorChanged
+        If Not getSelectedSpot() Is Nothing Then
+            getSelectedSpot.color = Spot_CSFarbe.SelectedColor
+        End If
+    End Sub
+
+    Private Sub Spot_PSRichtung_Changed(sender As Object, e As EventArgs) Handles Spot_PSRichtung.Changed
+        If Not getSelectedSpot() Is Nothing Then
+            getSelectedSpot.richtung = Spot_PSRichtung.Point
+        End If
+    End Sub
+
+    Private Sub Spot_TBAussen_KeyPress(sender As Object, e As Windows.Forms.KeyPressEventArgs) Handles Spot_TBAussen.KeyPress
+        If helper.NumbersOnly(e, sender, True, Double.MinValue, Double.MaxValue) Then
+            If Not getSelectedSpot() Is Nothing Then
+                getSelectedSpot.outerCone = Spot_TBAussen.Text
+            End If
+            e.Handled = True
+            End If
+    End Sub
+
+    Private Sub Spot_TBInner_KeyPress(sender As Object, e As Windows.Forms.KeyPressEventArgs) Handles Spot_TBInner.KeyPress
+        If helper.NumbersOnly(e, sender, True, Double.MinValue, Double.MaxValue) Then
+            If Not getSelectedSpot() Is Nothing Then
+                getSelectedSpot.innerCone = Spot_TBInner.Text
+            End If
+            e.Handled = True
+            End If
+    End Sub
+
+    Private Sub Spot_TBLeuchtweite_KeyPress(sender As Object, e As Windows.Forms.KeyPressEventArgs) Handles Spot_TBLeuchtweite.KeyPress
+        If helper.NumbersOnly(e, sender, True, Double.MinValue, Double.MaxValue) Then
+            If Not getSelectedSpot() Is Nothing Then
+                getSelectedSpot.range = Spot_TBLeuchtweite.Text
+            End If
+            e.Handled = True
+            End If
+    End Sub
 
     '################
     '3D-Panel
@@ -3576,26 +3639,13 @@ Class Frm_Main
 
             Case Keys.Up
                 If e.Control Then
-                    With LBMeshes
-                        If .SelectedIndex > 0 Then
-                            Dim tempMeshName As String = .SelectedItem
-                            .Items(.SelectedIndex) = .Items(.SelectedIndex - 1)
-                            .Items(.SelectedIndex - 1) = tempMeshName
-                            .SelectedIndex -= 1
-                        End If
-                    End With
+                    swapMeshOrder(LBMeshes.SelectedIndex, LBMeshes.SelectedIndex - 1)
                     e.Handled = True
                 End If
+
             Case Keys.Down
                 If e.Control Then
-                    With LBMeshes
-                        If .SelectedIndex < .Items.Count - 1 Then
-                            Dim tempMeshName As String = .SelectedItem
-                            .Items(.SelectedIndex) = .Items(.SelectedIndex + 1)
-                            .Items(.SelectedIndex + 1) = tempMeshName
-                            .SelectedIndex += 1
-                        End If
-                    End With
+                    swapMeshOrder(LBMeshes.SelectedIndex, LBMeshes.SelectedIndex + 1)
                     e.Handled = True
                 End If
 
@@ -3622,6 +3672,27 @@ Class Frm_Main
                 mainShift = e.Shift
                 mainStrg = e.Control
         End Select
+    End Sub
+
+    Private Sub swapMeshOrder(oldIndex As Integer, newIndex As Integer)
+        If newIndex >= 0 And oldIndex >= 0 And LBMeshes.Items.Count > 0 Then
+            If newIndex > LBMeshes.Items.Count - 1 Then newIndex = LBMeshes.Items.Count - 1
+            Dim newStep As Integer = 1
+            If newIndex < oldIndex Then newStep = -1
+            For meshCt As Integer = oldIndex To newIndex - newStep Step newStep
+                Dim tmpOldIndex As Integer = meshCt
+                Dim tmpNewIndex As Integer = meshCt + newStep
+                With getProj.model
+                    Dim tempMesh As OMSI_Mesh = .meshes(tmpOldIndex)
+                    .meshes(tmpOldIndex) = .meshes(tmpNewIndex)
+                    LBMeshes.Items(tmpOldIndex) = .meshes(tmpOldIndex).filename.name
+
+                    .meshes(tmpNewIndex) = tempMesh
+                    LBMeshes.Items(tmpNewIndex) = .meshes(tmpNewIndex).filename.name
+                End With
+            Next
+            LBMeshes.SelectedIndex = newIndex
+        End If
     End Sub
 
     Private Sub hideTemp(index As Integer)

@@ -69,6 +69,7 @@ Partial Class Frm_Main
         Me.NurModelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NurCabinToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NurPathsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NurToolUmgebungocdbToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SpeichernUnterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PackenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RarArchivToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -572,40 +573,40 @@ Partial Class Frm_Main
         '
         Me.NeuToolStripMenuItem.Name = "NeuToolStripMenuItem"
         Me.NeuToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-        Me.NeuToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.NeuToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.NeuToolStripMenuItem.Text = "Neu"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(168, 6)
         '
         'ÖffnenToolStripMenuItem
         '
         Me.ÖffnenToolStripMenuItem.Name = "ÖffnenToolStripMenuItem"
         Me.ÖffnenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.ÖffnenToolStripMenuItem.Text = "Öffnen"
         '
         'LetzteToolStripMenuItem
         '
         Me.LetzteToolStripMenuItem.Name = "LetzteToolStripMenuItem"
-        Me.LetzteToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.LetzteToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.LetzteToolStripMenuItem.Text = "Zuletzt geöffnet..."
         '
         'NeuLadenToolStripMenuItem
         '
         Me.NeuLadenToolStripMenuItem.Name = "NeuLadenToolStripMenuItem"
         Me.NeuLadenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
-        Me.NeuLadenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.NeuLadenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.NeuLadenToolStripMenuItem.Text = "Neu laden"
         '
         'SpeichernToolStripMenuItem
         '
-        Me.SpeichernToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AllesToolStripMenuItem1, Me.NurProjektbusovhscoToolStripMenuItem, Me.NurModelToolStripMenuItem, Me.NurCabinToolStripMenuItem, Me.NurPathsToolStripMenuItem})
+        Me.SpeichernToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AllesToolStripMenuItem1, Me.NurProjektbusovhscoToolStripMenuItem, Me.NurModelToolStripMenuItem, Me.NurCabinToolStripMenuItem, Me.NurPathsToolStripMenuItem, Me.NurToolUmgebungocdbToolStripMenuItem})
         Me.SpeichernToolStripMenuItem.Enabled = False
         Me.SpeichernToolStripMenuItem.Name = "SpeichernToolStripMenuItem"
-        Me.SpeichernToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SpeichernToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.SpeichernToolStripMenuItem.Text = "Speichern"
         '
         'AllesToolStripMenuItem1
@@ -625,24 +626,30 @@ Partial Class Frm_Main
         '
         Me.NurModelToolStripMenuItem.Name = "NurModelToolStripMenuItem"
         Me.NurModelToolStripMenuItem.Size = New System.Drawing.Size(260, 22)
-        Me.NurModelToolStripMenuItem.Text = "Nur Model"
+        Me.NurModelToolStripMenuItem.Text = "Nur Model (model.cfg)"
         '
         'NurCabinToolStripMenuItem
         '
         Me.NurCabinToolStripMenuItem.Name = "NurCabinToolStripMenuItem"
         Me.NurCabinToolStripMenuItem.Size = New System.Drawing.Size(260, 22)
-        Me.NurCabinToolStripMenuItem.Text = "Nur Sitz-/Stehplätze"
+        Me.NurCabinToolStripMenuItem.Text = "Nur Sitz-/Stehplätze (cabin.cfg)"
         '
         'NurPathsToolStripMenuItem
         '
         Me.NurPathsToolStripMenuItem.Name = "NurPathsToolStripMenuItem"
         Me.NurPathsToolStripMenuItem.Size = New System.Drawing.Size(260, 22)
-        Me.NurPathsToolStripMenuItem.Text = "Nur Pfade"
+        Me.NurPathsToolStripMenuItem.Text = "Nur Pfade (path.cfg)"
+        '
+        'NurToolUmgebungocdbToolStripMenuItem
+        '
+        Me.NurToolUmgebungocdbToolStripMenuItem.Name = "NurToolUmgebungocdbToolStripMenuItem"
+        Me.NurToolUmgebungocdbToolStripMenuItem.Size = New System.Drawing.Size(260, 22)
+        Me.NurToolUmgebungocdbToolStripMenuItem.Text = "Nur Tool-Umgebung (*.ocdb)"
         '
         'SpeichernUnterToolStripMenuItem
         '
         Me.SpeichernUnterToolStripMenuItem.Name = "SpeichernUnterToolStripMenuItem"
-        Me.SpeichernUnterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SpeichernUnterToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.SpeichernUnterToolStripMenuItem.Text = "Speichern unter..."
         '
         'PackenToolStripMenuItem
@@ -650,7 +657,7 @@ Partial Class Frm_Main
         Me.PackenToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RarArchivToolStripMenuItem, Me.LctLOTUSContentToolStripMenuItem})
         Me.PackenToolStripMenuItem.Enabled = False
         Me.PackenToolStripMenuItem.Name = "PackenToolStripMenuItem"
-        Me.PackenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.PackenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.PackenToolStripMenuItem.Text = "Packen"
         '
         'RarArchivToolStripMenuItem
@@ -669,23 +676,23 @@ Partial Class Frm_Main
         'ToolStripMenuItem6
         '
         Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(168, 6)
         '
         'EinstellungenToolStripMenuItem
         '
         Me.EinstellungenToolStripMenuItem.Name = "EinstellungenToolStripMenuItem"
-        Me.EinstellungenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.EinstellungenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.EinstellungenToolStripMenuItem.Text = "Einstellungen"
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(168, 6)
         '
         'BeendenToolStripMenuItem
         '
         Me.BeendenToolStripMenuItem.Name = "BeendenToolStripMenuItem"
-        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.BeendenToolStripMenuItem.Text = "Beenden"
         '
         'BearbeitenToolStripMenuItem
@@ -923,14 +930,14 @@ Partial Class Frm_Main
         '
         Me.EntfernenToolStripMenuItem2.Name = "EntfernenToolStripMenuItem2"
         Me.EntfernenToolStripMenuItem2.ShortcutKeys = System.Windows.Forms.Keys.Delete
-        Me.EntfernenToolStripMenuItem2.Size = New System.Drawing.Size(180, 22)
+        Me.EntfernenToolStripMenuItem2.Size = New System.Drawing.Size(175, 22)
         Me.EntfernenToolStripMenuItem2.Text = "Entfernen"
         '
         'VersteckenToolStripMenuItem
         '
         Me.VersteckenToolStripMenuItem.Name = "VersteckenToolStripMenuItem"
         Me.VersteckenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.H), System.Windows.Forms.Keys)
-        Me.VersteckenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.VersteckenToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
         Me.VersteckenToolStripMenuItem.Text = "Verstecken"
         '
         'DevelopmentToolStripMenuItem
@@ -4866,4 +4873,5 @@ Partial Class Frm_Main
     Friend WithEvents Licht_CSFarbe As ColorSelector
     Friend WithEvents Label84 As Label
     Private WithEvents Label83 As Label
+    Friend WithEvents NurToolUmgebungocdbToolStripMenuItem As ToolStripMenuItem
 End Class

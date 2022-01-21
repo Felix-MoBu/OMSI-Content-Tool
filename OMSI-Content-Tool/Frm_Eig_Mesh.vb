@@ -42,11 +42,11 @@ Public Class Frm_Eig_Mesh
         LBProps.SelectedIndex = LBLabels.SelectedIndex
     End Sub
 
-    Private Sub LBProps_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBProps.SelectedIndexChanged
-        LBLabels.SelectedIndex = LBProps.SelectedIndex
-    End Sub
-
     Private Sub KopierenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles KopierenToolStripMenuItem.Click
         Clipboard.SetText(LBProps.SelectedItem)
+    End Sub
+
+    Private Sub LBProps_MouseDown(sender As Object, e As MouseEventArgs) Handles LBProps.MouseDown
+        LBLabels.SelectedIndex = LBProps.SelectedIndex
     End Sub
 End Class
