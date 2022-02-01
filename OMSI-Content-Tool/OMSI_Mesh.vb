@@ -196,27 +196,30 @@ Public Class OMSI_Mesh
 
             For Each anim In animations
                 .Add("[newanim]")
-                If anim.origin_from_mesh Then .Add("origin_from_mesh")
-                If anim.origin_trans.dist(New Point3D) <> 0 Then
-                    .Add("origin_trans")
-                    .Add(fromSingle(anim.origin_trans.X))
-                    .Add(fromSingle(anim.origin_trans.Y))
-                    .Add(fromSingle(anim.origin_trans.Z))
+                If anim.origin_from_mesh Then
+                    .Add("origin_from_mesh")
+                Else
+                    If anim.origin_trans.dist(New Point3D) <> 0 Then
+                        .Add("origin_trans")
+                        .Add(fromSingle(anim.origin_trans.X))
+                        .Add(fromSingle(anim.origin_trans.Y))
+                        .Add(fromSingle(anim.origin_trans.Z))
+                    End If
                 End If
 
-                If anim.origin_rot_x <> 0 Then
+                If Not anim.origin_rot.X = 0 Then
                     .Add("origin_rot_x")
-                    .Add(fromSingle(anim.origin_rot_x))
+                    .Add(fromSingle(anim.origin_rot.X))
                 End If
 
-                If anim.origin_rot_y <> 0 Then
+                If Not anim.origin_rot.Y = 0 Then
                     .Add("origin_rot_y")
-                    .Add(fromSingle(anim.origin_rot_y))
+                    .Add(fromSingle(anim.origin_rot.Y))
                 End If
 
-                If anim.origin_rot_z <> 0 Then
+                If Not anim.origin_rot.Z = 0 Then
                     .Add("origin_rot_z")
-                    .Add(fromSingle(anim.origin_rot_z))
+                    .Add(fromSingle(anim.origin_rot.Z))
                 End If
 
                 If anim.anim_type = OMSI_Anim.TYPE_ROTATION Then

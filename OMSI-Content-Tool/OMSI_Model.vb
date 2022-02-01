@@ -249,11 +249,11 @@ Public Class OMSI_Model
                                                             .origin_trans.Z = toSingle(allLines(a + 3))
                                                             a += 3
                                                         Case "origin_rot_x"
-                                                            .origin_rot_x = toSingle(allLines(a + 1))
+                                                            .origin_rot.X = toSingle(allLines(a + 1))
                                                         Case "origin_rot_y"
-                                                            .origin_rot_y = toSingle(allLines(a + 1))
+                                                            .origin_rot.Y = toSingle(allLines(a + 1))
                                                         Case "origin_rot_z"
-                                                            .origin_rot_z = toSingle(allLines(a + 1))
+                                                            .origin_rot.Z = toSingle(allLines(a + 1))
                                                         Case "anim_trans"
                                                             .anim_type = OMSI_Anim.TYPE_TRANSFORM
                                                             .anim_var = allLines(a + 1)

@@ -24,13 +24,16 @@ Public Class VarSelector
     End Sub
 
     Private Sub TBVar_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBVar.KeyPress
+        Frm_Vars.TBFilter.Text = e.KeyChar.ToString
+        Frm_Vars.ShowDialog()
         e.Handled = True
     End Sub
 
     Public Sub TBVar_TextChanged(sender As Object, e As EventArgs) Handles TBVar.TextChanged
         localChanged = True
+        RaiseEvent Changed(sender, e)
     End Sub
 
-    'Public Event changed(ByVal EventNumber As Integer)
+    Public Event Changed As EventHandler
 
 End Class

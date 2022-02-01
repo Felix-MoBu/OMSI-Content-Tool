@@ -51,6 +51,7 @@ Partial Class Frm_Main
         Dim Point3D7 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim RgbColor2 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
         Dim Point3D8 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D9 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Main))
         Me.SS1 = New System.Windows.Forms.StatusStrip()
         Me.PBMain = New System.Windows.Forms.ToolStripProgressBar()
@@ -382,19 +383,22 @@ Partial Class Frm_Main
         Me.Mat_CBTex = New System.Windows.Forms.ComboBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.GBAnimation = New System.Windows.Forms.GroupBox()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Anim_RBPoint = New System.Windows.Forms.RadioButton()
+        Me.Anim_RBMesh = New System.Windows.Forms.RadioButton()
+        Me.Anim_PRBArt = New System.Windows.Forms.Panel()
+        Me.Anim_RBVerschieben = New System.Windows.Forms.RadioButton()
+        Me.Anim_RBDrehen = New System.Windows.Forms.RadioButton()
+        Me.Label85 = New System.Windows.Forms.Label()
         Me.Label78 = New System.Windows.Forms.Label()
         Me.Label77 = New System.Windows.Forms.Label()
         Me.Label76 = New System.Windows.Forms.Label()
         Me.Label75 = New System.Windows.Forms.Label()
-        Me.Anim_RBPoint = New System.Windows.Forms.RadioButton()
-        Me.Anim_RBCenter = New System.Windows.Forms.RadioButton()
         Me.Anim_TBAnimGrp = New System.Windows.Forms.TextBox()
         Me.Anim_MinMax = New System.Windows.Forms.Button()
         Me.Anim_TBValue = New System.Windows.Forms.TextBox()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.Label28 = New System.Windows.Forms.Label()
-        Me.Anim_RBVerschieben = New System.Windows.Forms.RadioButton()
-        Me.Anim_RBDrehen = New System.Windows.Forms.RadioButton()
         Me.Anim_BTLöschen = New System.Windows.Forms.Button()
         Me.Anim_BTNeu = New System.Windows.Forms.Button()
         Me.Anim_DDList = New System.Windows.Forms.ComboBox()
@@ -477,6 +481,7 @@ Partial Class Frm_Main
         Me.Licht_PSVector = New O3D_Test.PointSelector()
         Me.Licht_PSRichtung = New O3D_Test.PointSelector()
         Me.Licht_CSFarbe = New O3D_Test.ColorSelector()
+        Me.Anim_PSRichtung = New O3D_Test.PointSelector()
         Me.Anim_PSRotPnt = New O3D_Test.PointSelector()
         Me.Anim_VSVar = New O3D_Test.VarSelector()
         Me.SS1.SuspendLayout()
@@ -508,6 +513,8 @@ Partial Class Frm_Main
         Me.GBLicht.SuspendLayout()
         Me.GBMat.SuspendLayout()
         Me.GBAnimation.SuspendLayout()
+        Me.Panel1.SuspendLayout()
+        Me.Anim_PRBArt.SuspendLayout()
         Me.PanelTexture.SuspendLayout()
         CType(Me.PBTexture, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MSTexturen.SuspendLayout()
@@ -3415,12 +3422,14 @@ Partial Class Frm_Main
         '
         'GBAnimation
         '
+        Me.GBAnimation.Controls.Add(Me.Panel1)
+        Me.GBAnimation.Controls.Add(Me.Anim_PRBArt)
+        Me.GBAnimation.Controls.Add(Me.Anim_PSRichtung)
+        Me.GBAnimation.Controls.Add(Me.Label85)
         Me.GBAnimation.Controls.Add(Me.Label78)
         Me.GBAnimation.Controls.Add(Me.Label77)
         Me.GBAnimation.Controls.Add(Me.Label76)
         Me.GBAnimation.Controls.Add(Me.Label75)
-        Me.GBAnimation.Controls.Add(Me.Anim_RBPoint)
-        Me.GBAnimation.Controls.Add(Me.Anim_RBCenter)
         Me.GBAnimation.Controls.Add(Me.Anim_PSRotPnt)
         Me.GBAnimation.Controls.Add(Me.Anim_TBAnimGrp)
         Me.GBAnimation.Controls.Add(Me.Anim_MinMax)
@@ -3428,33 +3437,102 @@ Partial Class Frm_Main
         Me.GBAnimation.Controls.Add(Me.Label29)
         Me.GBAnimation.Controls.Add(Me.Label28)
         Me.GBAnimation.Controls.Add(Me.Anim_VSVar)
-        Me.GBAnimation.Controls.Add(Me.Anim_RBVerschieben)
-        Me.GBAnimation.Controls.Add(Me.Anim_RBDrehen)
         Me.GBAnimation.Controls.Add(Me.Anim_BTLöschen)
         Me.GBAnimation.Controls.Add(Me.Anim_BTNeu)
         Me.GBAnimation.Controls.Add(Me.Anim_DDList)
         Me.GBAnimation.Controls.Add(Me.Label9)
-        Me.GBAnimation.Location = New System.Drawing.Point(4, 2352)
+        Me.GBAnimation.Location = New System.Drawing.Point(4, 2314)
         Me.GBAnimation.Name = "GBAnimation"
-        Me.GBAnimation.Size = New System.Drawing.Size(327, 212)
+        Me.GBAnimation.Size = New System.Drawing.Size(327, 230)
         Me.GBAnimation.TabIndex = 6
         Me.GBAnimation.TabStop = False
         Me.GBAnimation.Text = "Animation"
         Me.GBAnimation.Visible = False
         '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.Anim_RBPoint)
+        Me.Panel1.Controls.Add(Me.Anim_RBMesh)
+        Me.Panel1.Location = New System.Drawing.Point(70, 121)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(176, 24)
+        Me.Panel1.TabIndex = 61
+        '
+        'Anim_RBPoint
+        '
+        Me.Anim_RBPoint.AutoSize = True
+        Me.Anim_RBPoint.Location = New System.Drawing.Point(82, 3)
+        Me.Anim_RBPoint.Name = "Anim_RBPoint"
+        Me.Anim_RBPoint.Size = New System.Drawing.Size(49, 17)
+        Me.Anim_RBPoint.TabIndex = 41
+        Me.Anim_RBPoint.TabStop = True
+        Me.Anim_RBPoint.Text = "Point"
+        Me.Anim_RBPoint.UseVisualStyleBackColor = True
+        '
+        'Anim_RBMesh
+        '
+        Me.Anim_RBMesh.AutoSize = True
+        Me.Anim_RBMesh.Location = New System.Drawing.Point(3, 3)
+        Me.Anim_RBMesh.Name = "Anim_RBMesh"
+        Me.Anim_RBMesh.Size = New System.Drawing.Size(51, 17)
+        Me.Anim_RBMesh.TabIndex = 40
+        Me.Anim_RBMesh.TabStop = True
+        Me.Anim_RBMesh.Text = "Mesh"
+        Me.Anim_RBMesh.UseVisualStyleBackColor = True
+        '
+        'Anim_PRBArt
+        '
+        Me.Anim_PRBArt.Controls.Add(Me.Anim_RBVerschieben)
+        Me.Anim_PRBArt.Controls.Add(Me.Anim_RBDrehen)
+        Me.Anim_PRBArt.Location = New System.Drawing.Point(70, 47)
+        Me.Anim_PRBArt.Name = "Anim_PRBArt"
+        Me.Anim_PRBArt.Size = New System.Drawing.Size(231, 23)
+        Me.Anim_PRBArt.TabIndex = 60
+        '
+        'Anim_RBVerschieben
+        '
+        Me.Anim_RBVerschieben.AutoSize = True
+        Me.Anim_RBVerschieben.Location = New System.Drawing.Point(76, 2)
+        Me.Anim_RBVerschieben.Name = "Anim_RBVerschieben"
+        Me.Anim_RBVerschieben.Size = New System.Drawing.Size(84, 17)
+        Me.Anim_RBVerschieben.TabIndex = 31
+        Me.Anim_RBVerschieben.TabStop = True
+        Me.Anim_RBVerschieben.Text = "Verschieben"
+        Me.Anim_RBVerschieben.UseVisualStyleBackColor = True
+        '
+        'Anim_RBDrehen
+        '
+        Me.Anim_RBDrehen.AutoSize = True
+        Me.Anim_RBDrehen.Location = New System.Drawing.Point(3, 2)
+        Me.Anim_RBDrehen.Name = "Anim_RBDrehen"
+        Me.Anim_RBDrehen.Size = New System.Drawing.Size(60, 17)
+        Me.Anim_RBDrehen.TabIndex = 30
+        Me.Anim_RBDrehen.TabStop = True
+        Me.Anim_RBDrehen.Text = "Drehen"
+        Me.Anim_RBDrehen.UseVisualStyleBackColor = True
+        '
+        'Label85
+        '
+        Me.Label85.AutoSize = True
+        Me.Label85.Location = New System.Drawing.Point(4, 178)
+        Me.Label85.Name = "Label85"
+        Me.Label85.Size = New System.Drawing.Size(50, 13)
+        Me.Label85.TabIndex = 58
+        Me.Label85.Text = "Richtung"
+        '
         'Label78
         '
         Me.Label78.AutoSize = True
-        Me.Label78.Location = New System.Drawing.Point(4, 153)
+        Me.Label78.Location = New System.Drawing.Point(4, 126)
         Me.Label78.Name = "Label78"
-        Me.Label78.Size = New System.Drawing.Size(35, 13)
+        Me.Label78.Size = New System.Drawing.Size(34, 13)
         Me.Label78.TabIndex = 45
-        Me.Label78.Text = "Anker"
+        Me.Label78.Text = "Origin"
         '
         'Label77
         '
         Me.Label77.AutoSize = True
-        Me.Label77.Location = New System.Drawing.Point(4, 78)
+        Me.Label77.Location = New System.Drawing.Point(4, 51)
         Me.Label77.Name = "Label77"
         Me.Label77.Size = New System.Drawing.Size(20, 13)
         Me.Label77.TabIndex = 44
@@ -3463,7 +3541,7 @@ Partial Class Frm_Main
         'Label76
         '
         Me.Label76.AutoSize = True
-        Me.Label76.Location = New System.Drawing.Point(4, 52)
+        Me.Label76.Location = New System.Drawing.Point(3, 27)
         Me.Label76.Name = "Label76"
         Me.Label76.Size = New System.Drawing.Size(46, 13)
         Me.Label76.TabIndex = 43
@@ -3472,39 +3550,17 @@ Partial Class Frm_Main
         'Label75
         '
         Me.Label75.AutoSize = True
-        Me.Label75.Location = New System.Drawing.Point(4, 178)
+        Me.Label75.Location = New System.Drawing.Point(4, 151)
         Me.Label75.Name = "Label75"
         Me.Label75.Size = New System.Drawing.Size(57, 13)
         Me.Label75.TabIndex = 42
         Me.Label75.Text = "Drehpunkt"
         '
-        'Anim_RBPoint
-        '
-        Me.Anim_RBPoint.AutoSize = True
-        Me.Anim_RBPoint.Location = New System.Drawing.Point(152, 151)
-        Me.Anim_RBPoint.Name = "Anim_RBPoint"
-        Me.Anim_RBPoint.Size = New System.Drawing.Size(49, 17)
-        Me.Anim_RBPoint.TabIndex = 41
-        Me.Anim_RBPoint.TabStop = True
-        Me.Anim_RBPoint.Text = "Point"
-        Me.Anim_RBPoint.UseVisualStyleBackColor = True
-        '
-        'Anim_RBCenter
-        '
-        Me.Anim_RBCenter.AutoSize = True
-        Me.Anim_RBCenter.Location = New System.Drawing.Point(69, 151)
-        Me.Anim_RBCenter.Name = "Anim_RBCenter"
-        Me.Anim_RBCenter.Size = New System.Drawing.Size(56, 17)
-        Me.Anim_RBCenter.TabIndex = 40
-        Me.Anim_RBCenter.TabStop = True
-        Me.Anim_RBCenter.Text = "Center"
-        Me.Anim_RBCenter.UseVisualStyleBackColor = True
-        '
         'Anim_TBAnimGrp
         '
         Me.Anim_TBAnimGrp.BackColor = System.Drawing.SystemColors.Menu
         Me.Anim_TBAnimGrp.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Anim_TBAnimGrp.Location = New System.Drawing.Point(69, 22)
+        Me.Anim_TBAnimGrp.Location = New System.Drawing.Point(69, 200)
         Me.Anim_TBAnimGrp.Name = "Anim_TBAnimGrp"
         Me.Anim_TBAnimGrp.ReadOnly = True
         Me.Anim_TBAnimGrp.Size = New System.Drawing.Size(226, 20)
@@ -3521,7 +3577,7 @@ Partial Class Frm_Main
         '
         'Anim_TBValue
         '
-        Me.Anim_TBValue.Location = New System.Drawing.Point(70, 125)
+        Me.Anim_TBValue.Location = New System.Drawing.Point(70, 98)
         Me.Anim_TBValue.Name = "Anim_TBValue"
         Me.Anim_TBValue.Size = New System.Drawing.Size(226, 20)
         Me.Anim_TBValue.TabIndex = 35
@@ -3529,7 +3585,7 @@ Partial Class Frm_Main
         'Label29
         '
         Me.Label29.AutoSize = True
-        Me.Label29.Location = New System.Drawing.Point(4, 128)
+        Me.Label29.Location = New System.Drawing.Point(4, 101)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(30, 13)
         Me.Label29.TabIndex = 34
@@ -3538,37 +3594,15 @@ Partial Class Frm_Main
         'Label28
         '
         Me.Label28.AutoSize = True
-        Me.Label28.Location = New System.Drawing.Point(4, 103)
+        Me.Label28.Location = New System.Drawing.Point(4, 76)
         Me.Label28.Name = "Label28"
         Me.Label28.Size = New System.Drawing.Size(45, 13)
         Me.Label28.TabIndex = 33
         Me.Label28.Text = "Variable"
         '
-        'Anim_RBVerschieben
-        '
-        Me.Anim_RBVerschieben.AutoSize = True
-        Me.Anim_RBVerschieben.Location = New System.Drawing.Point(151, 76)
-        Me.Anim_RBVerschieben.Name = "Anim_RBVerschieben"
-        Me.Anim_RBVerschieben.Size = New System.Drawing.Size(84, 17)
-        Me.Anim_RBVerschieben.TabIndex = 31
-        Me.Anim_RBVerschieben.TabStop = True
-        Me.Anim_RBVerschieben.Text = "Verschieben"
-        Me.Anim_RBVerschieben.UseVisualStyleBackColor = True
-        '
-        'Anim_RBDrehen
-        '
-        Me.Anim_RBDrehen.AutoSize = True
-        Me.Anim_RBDrehen.Location = New System.Drawing.Point(70, 76)
-        Me.Anim_RBDrehen.Name = "Anim_RBDrehen"
-        Me.Anim_RBDrehen.Size = New System.Drawing.Size(60, 17)
-        Me.Anim_RBDrehen.TabIndex = 30
-        Me.Anim_RBDrehen.TabStop = True
-        Me.Anim_RBDrehen.Text = "Drehen"
-        Me.Anim_RBDrehen.UseVisualStyleBackColor = True
-        '
         'Anim_BTLöschen
         '
-        Me.Anim_BTLöschen.Location = New System.Drawing.Point(224, 47)
+        Me.Anim_BTLöschen.Location = New System.Drawing.Point(223, 22)
         Me.Anim_BTLöschen.Name = "Anim_BTLöschen"
         Me.Anim_BTLöschen.Size = New System.Drawing.Size(72, 23)
         Me.Anim_BTLöschen.TabIndex = 29
@@ -3577,9 +3611,9 @@ Partial Class Frm_Main
         '
         'Anim_BTNeu
         '
-        Me.Anim_BTNeu.Location = New System.Drawing.Point(151, 47)
+        Me.Anim_BTNeu.Location = New System.Drawing.Point(146, 22)
         Me.Anim_BTNeu.Name = "Anim_BTNeu"
-        Me.Anim_BTNeu.Size = New System.Drawing.Size(68, 23)
+        Me.Anim_BTNeu.Size = New System.Drawing.Size(72, 23)
         Me.Anim_BTNeu.TabIndex = 28
         Me.Anim_BTNeu.Text = "Neu"
         Me.Anim_BTNeu.UseVisualStyleBackColor = True
@@ -3588,7 +3622,7 @@ Partial Class Frm_Main
         '
         Me.Anim_DDList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Anim_DDList.FormattingEnabled = True
-        Me.Anim_DDList.Location = New System.Drawing.Point(70, 48)
+        Me.Anim_DDList.Location = New System.Drawing.Point(69, 23)
         Me.Anim_DDList.Name = "Anim_DDList"
         Me.Anim_DDList.Size = New System.Drawing.Size(72, 21)
         Me.Anim_DDList.TabIndex = 27
@@ -3596,7 +3630,7 @@ Partial Class Frm_Main
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(3, 26)
+        Me.Label9.Location = New System.Drawing.Point(3, 204)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(47, 13)
         Me.Label9.TabIndex = 0
@@ -4284,6 +4318,7 @@ Partial Class Frm_Main
         'Mesh_PSCenter
         '
         Me.Mesh_PSCenter.BackColor = System.Drawing.Color.Transparent
+        Me.Mesh_PSCenter.Enabled = False
         Me.Mesh_PSCenter.Location = New System.Drawing.Point(69, 99)
         Me.Mesh_PSCenter.Max = 1.7976931348623157E+308R
         Me.Mesh_PSCenter.Min = -1.7976931348623157E+308R
@@ -4341,16 +4376,31 @@ Partial Class Frm_Main
         Me.Licht_CSFarbe.Size = New System.Drawing.Size(257, 24)
         Me.Licht_CSFarbe.TabIndex = 22
         '
+        'Anim_PSRichtung
+        '
+        Me.Anim_PSRichtung.BackColor = System.Drawing.Color.Transparent
+        Me.Anim_PSRichtung.Enabled = False
+        Me.Anim_PSRichtung.Location = New System.Drawing.Point(70, 173)
+        Me.Anim_PSRichtung.Max = 360.0R
+        Me.Anim_PSRichtung.Min = -360.0R
+        Me.Anim_PSRichtung.Name = "Anim_PSRichtung"
+        Me.Anim_PSRichtung.Point = Point3D8
+        Me.Anim_PSRichtung.Size = New System.Drawing.Size(255, 20)
+        Me.Anim_PSRichtung.TabIndex = 59
+        Me.Anim_PSRichtung.X = 0R
+        Me.Anim_PSRichtung.Y = 0R
+        Me.Anim_PSRichtung.Z = 0R
+        '
         'Anim_PSRotPnt
         '
         Me.Anim_PSRotPnt.BackColor = System.Drawing.Color.Transparent
         Me.Anim_PSRotPnt.Enabled = False
-        Me.Anim_PSRotPnt.Location = New System.Drawing.Point(69, 174)
+        Me.Anim_PSRotPnt.Location = New System.Drawing.Point(69, 147)
         Me.Anim_PSRotPnt.Max = 1.7976931348623157E+308R
         Me.Anim_PSRotPnt.Min = 0R
         Me.Anim_PSRotPnt.Name = "Anim_PSRotPnt"
-        Me.Anim_PSRotPnt.Point = Point3D8
-        Me.Anim_PSRotPnt.Size = New System.Drawing.Size(225, 20)
+        Me.Anim_PSRotPnt.Point = Point3D9
+        Me.Anim_PSRotPnt.Size = New System.Drawing.Size(256, 20)
         Me.Anim_PSRotPnt.TabIndex = 39
         Me.Anim_PSRotPnt.X = 0R
         Me.Anim_PSRotPnt.Y = 0R
@@ -4358,7 +4408,7 @@ Partial Class Frm_Main
         '
         'Anim_VSVar
         '
-        Me.Anim_VSVar.Location = New System.Drawing.Point(70, 99)
+        Me.Anim_VSVar.Location = New System.Drawing.Point(70, 72)
         Me.Anim_VSVar.Name = "Anim_VSVar"
         Me.Anim_VSVar.Size = New System.Drawing.Size(226, 20)
         Me.Anim_VSVar.TabIndex = 32
@@ -4428,6 +4478,10 @@ Partial Class Frm_Main
         Me.GBMat.PerformLayout()
         Me.GBAnimation.ResumeLayout(False)
         Me.GBAnimation.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.Anim_PRBArt.ResumeLayout(False)
+        Me.Anim_PRBArt.PerformLayout()
         Me.PanelTexture.ResumeLayout(False)
         Me.PanelTexture.PerformLayout()
         CType(Me.PBTexture, System.ComponentModel.ISupportInitialize).EndInit()
@@ -4857,7 +4911,7 @@ Partial Class Frm_Main
     Friend WithEvents Label76 As Label
     Friend WithEvents Label75 As Label
     Friend WithEvents Anim_RBPoint As RadioButton
-    Friend WithEvents Anim_RBCenter As RadioButton
+    Friend WithEvents Anim_RBMesh As RadioButton
     Friend WithEvents Anim_PSRotPnt As PointSelector
     Friend WithEvents TReloadTextures As Timer
     Friend WithEvents GBSpot As GroupBox
@@ -4874,4 +4928,8 @@ Partial Class Frm_Main
     Friend WithEvents Label84 As Label
     Private WithEvents Label83 As Label
     Friend WithEvents NurToolUmgebungocdbToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Anim_PSRichtung As PointSelector
+    Friend WithEvents Label85 As Label
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Anim_PRBArt As Panel
 End Class

@@ -1004,18 +1004,16 @@ Class Frm_Main
 
             Kuppl_DDNextVehicle.Items.Clear()
             Kuppl_DDNextVehicle.Items.Add("")
-            For Each file As Filename In My.Computer.FileSystem.GetFiles(.filename.path)
-                If file.extension = "bus" Then
-                    Kuppl_DDNextVehicle.Items.Add(file.name)
-                End If
-                If Not getProj.couple_back_file Is Nothing Then
-                    If Not Kuppl_DDNextVehicle.Items.Contains(getProj.couple_back_file.name) Then
-                        Kuppl_DDNextVehicle.Items.Add(getProj.couple_back_file.name)
-                        Log.Add("Angehängter Fahrzeugteil (" & getProj.couple_back_file.name & ") konnte nicht gefunden werden!", Log.TYPE_ERROR, True)
-                    End If
-                End If
+            For Each file As Filename In My.Computer.FileSystem.GetFiles(.filename.path, FileIO.SearchOption.SearchTopLevelOnly, "*.bus")
+                Kuppl_DDNextVehicle.Items.Add(file.name)
             Next
 
+            If Not getProj.couple_back_file Is Nothing Then
+                If Not Kuppl_DDNextVehicle.Items.Contains(getProj.couple_back_file.name) Then
+                    Kuppl_DDNextVehicle.Items.Add(getProj.couple_back_file.name)
+                    Log.Add("Angehängter Fahrzeugteil (" & getProj.couple_back_file.name & ") konnte nicht gefunden werden!", Log.TYPE_ERROR, True)
+                End If
+            End If
 
 
             TVHelper.Nodes(6).Nodes.Clear()
@@ -1056,10 +1054,7 @@ Class Frm_Main
                     For Each anim In mesh.animations
                         If anim.origin_from_mesh Then
                             anim.mesh_center = mesh.center
-                            'anim.mesh_origin = mesh.origin
-                            'If InStr(mesh.filename, "lenkrad") Then
-                            '    MsgBox(mesh.origin.Y)
-                            'End If
+                            anim.mesh_origin = New Point3D(mesh.origin.X * 90, mesh.origin.Y * 90, mesh.origin.Z * 90)
                         End If
                     Next
                 Next
@@ -2885,7 +2880,6 @@ Class Frm_Main
                 .visibleVar = Mesh_VSSichtbarkeit.Variable
                 .visibleInt = Convert.ToInt32(Mesh_TBSichtbarkeitVal.Text)
                 .mouseevent = Mesh_VSKlickevent.Variable
-                .center = Mesh_PSCenter.Point
                 .lodMin = Mesh_NUMin.Value
                 .lodMax = Mesh_NUMax.Value
                 .meshident = Mesh_TBMeshident.Text
@@ -2897,13 +2891,15 @@ Class Frm_Main
         End If
     End Sub
 
+    'Panel Animation ###########
+
     Private Sub Anim_CBList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Anim_DDList.SelectedIndexChanged
         AnimDetails(getSelectedMesh, Anim_DDList.SelectedIndex)
     End Sub
 
     Private Sub AnimDetails(mesh As OMSI_Mesh, id As Integer)
-        With mesh
-            If .animations(id).anim_type = OMSI_Anim.TYPE_ROTATION Then
+        With mesh.animations(id)
+            If .anim_type = OMSI_Anim.TYPE_ROTATION Then
                 Anim_RBDrehen.Checked = True
                 Anim_RBVerschieben.Checked = False
             Else
@@ -2911,23 +2907,88 @@ Class Frm_Main
                 Anim_RBVerschieben.Checked = True
             End If
 
-            Anim_VSVar.Variable = .animations(id).anim_var
-            Anim_TBValue.Text = .animations(id).anim_val
-            If Not .animations(id).origin_trans = New Point3D Then
-                Anim_RBCenter.Checked = False
-                Anim_RBPoint.Checked = True
-                Anim_PSRotPnt.Point = .animations(id).origin_trans
-            Else
-                Anim_RBCenter.Checked = True
+            Anim_VSVar.Variable = .anim_var
+            Anim_TBValue.Text = .anim_val
+            If .origin_from_mesh Then
+                Anim_RBMesh.Checked = True
                 Anim_RBPoint.Checked = False
-                Anim_PSRotPnt.Point = New Point3D
+                Anim_PSRotPnt.Point = .mesh_center
+                Anim_PSRichtung.Point = .mesh_origin
+            Else
+                Anim_RBMesh.Checked = False
+                Anim_RBPoint.Checked = True
+                Anim_PSRotPnt.Point = .origin_trans
+                Anim_PSRichtung.Point = .origin_rot
             End If
         End With
     End Sub
 
     Private Sub Anim_RBPoint_CheckedChanged(sender As Object, e As EventArgs) Handles Anim_RBPoint.CheckedChanged
         Anim_PSRotPnt.Enabled = Anim_RBPoint.Checked
+        Anim_PSRichtung.Enabled = Anim_RBPoint.Checked
+        getSelectedAnim.origin_from_mesh = Not Anim_RBPoint.Checked
     End Sub
+
+    Private Sub Anim_BTNeu_Click(sender As Object, e As EventArgs) Handles Anim_BTNeu.Click
+        If Not getProjTyp() = PROJ_TYPE_SLI Then
+            If Not getSelectedMesh() Is Nothing Then
+                Dim newAnim As New OMSI_Anim
+                With newAnim
+                    .anim_type = OMSI_Anim.TYPE_ROTATION
+                    .anim_val = 1
+                    .origin_from_mesh = True
+                    .mesh_center = getSelectedMesh.center
+                End With
+                getSelectedMesh.animations.Add(newAnim)
+                Anim_DDList.Items.Add(Anim_DDList.Items.Count)
+                Anim_DDList.SelectedIndex = Anim_DDList.Items.Count - 1
+            End If
+        End If
+    End Sub
+
+    Private Sub Anim_BTLöschen_Click(sender As Object, e As EventArgs) Handles Anim_BTLöschen.Click
+        If Not getSelectedMesh() Is Nothing Then
+            selectedMesh.animations.RemoveAt(Anim_DDList.SelectedIndex)
+            Anim_DDList.Items.RemoveAt(Anim_DDList.Items.Count - 1)
+        End If
+    End Sub
+
+    Private Sub Anim_VSVar_Changed(sender As Object, e As EventArgs) Handles Anim_VSVar.Changed
+        getSelectedAnim.anim_var = Anim_VSVar.Variable
+    End Sub
+
+    Private Sub Anim_TBValue_Leave(sender As Object, e As EventArgs) Handles Anim_TBValue.Leave
+        If Not IsNumeric(Anim_TBValue.Text) Then
+            Anim_TBValue.Text = "0"
+        End If
+        getSelectedAnim.anim_val = Anim_TBValue.Text
+    End Sub
+
+    Private Sub Anim_RBDrehen_Click(sender As Object, e As EventArgs) Handles Anim_RBDrehen.Click
+        getSelectedAnim.anim_type = Not Anim_RBDrehen.Checked
+    End Sub
+
+    Private Sub Anim_PSRichtung_Changed(sender As Object, e As EventArgs) Handles Anim_PSRichtung.Changed
+        If Anim_PSRichtung.Enabled Then
+            getSelectedAnim.origin_rot = Anim_PSRichtung.Point
+        End If
+    End Sub
+
+    Private Sub Anim_PSRotPnt_Changed(sender As Object, e As EventArgs) Handles Anim_PSRotPnt.Changed
+        If Anim_PSRotPnt.Enabled Then
+            getSelectedAnim.origin_trans = Anim_PSRotPnt.Point
+        End If
+    End Sub
+
+    Private Function getSelectedAnim() As OMSI_Anim
+        If Not getSelectedMesh() Is Nothing Then
+            If Anim_DDList.SelectedIndex < getSelectedMesh.animations.Count Then
+                Return getSelectedMesh.animations(Anim_DDList.SelectedIndex)
+            End If
+        End If
+        Return Nothing
+    End Function
+
 
     'Panel Texture ##########
 
@@ -3463,6 +3524,15 @@ Class Frm_Main
         If Not IsNumeric(Mesh_TBSichtbarkeitVal.Text) Then
             Mesh_TBSichtbarkeitVal.Text = "0"
         End If
+        getSelectedMesh.visibleInt = Mesh_TBSichtbarkeitVal.Text
+    End Sub
+
+    Private Sub Mesh_VSKlickevent_Changed(sender As Object, e As EventArgs) Handles Mesh_VSKlickevent.Changed
+        getSelectedMesh.mouseevent = Mesh_VSKlickevent.Variable
+    End Sub
+
+    Private Sub Mesh_VSSichtbarkeit_Changed(sender As Object, e As EventArgs) Handles Mesh_VSSichtbarkeit.Changed
+        getSelectedMesh.visibleVar = Mesh_VSSichtbarkeit.Variable
     End Sub
 
 
@@ -3942,7 +4012,7 @@ Class Frm_Main
                         If Not getSelectedMesh() Is Nothing Then
                             For i As Integer = 0 To getSelectedMesh.animations.Count - 1
                                 With getSelectedMesh.animations(i)
-                                    If i = Anim_DDList.Text Then
+                                    If i = Anim_DDList.SelectedIndex Then
                                         GL.Color3(My.Settings.SelectionColor)
                                     Else
                                         GL.Color3(My.Settings.AchsenColor)
@@ -4950,5 +5020,7 @@ Class Frm_Main
         Next
         GlMain.Invalidate()
     End Sub
+
+
 End Class
 
