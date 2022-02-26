@@ -17,4 +17,12 @@ Public Class Proj_Emt
         MsgBox("Die Änderungen wurden nicht gespeichert! Bitte zunächst ein Projekt erstellen oder die Dateien einzeln exportieren.")
         Log.Add("Leeres Projekt darf nicht gespeichert werden!", Log.TYPE_DEBUG)
     End Sub
+
+    Public Function usedFiles() As List(Of Filename)
+        usedFiles = New List(Of Filename)
+        With usedFiles
+
+        End With
+        Return usedFiles
+    End Function
 End Class

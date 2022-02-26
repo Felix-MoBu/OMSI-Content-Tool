@@ -333,4 +333,13 @@ Public Class Proj_Sli
         Log.Add("Projekt gespeichert! (Datei: " & filename_n.name & ", Zeilen: " & linesCount & ")")
         ProjDataBase.Save()
     End Sub
+
+    Public Function usedFiles() As List(Of Filename)
+        usedFiles = New List(Of Filename)
+        With usedFiles
+            .Add(filename)
+
+        End With
+        Return usedFiles
+    End Function
 End Class

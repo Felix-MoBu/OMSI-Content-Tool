@@ -13,8 +13,8 @@ Public Class OMSI_Anim
     Public anim_var As String
     Public anim_val As Double
 
-    Public delay As Integer
-    Public maxspeed As Integer
+    Public delay As Double
+    Public maxspeed As Double
 
 
     Public vertices As Double()

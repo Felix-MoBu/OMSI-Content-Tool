@@ -82,7 +82,7 @@ Public Class Proj_Bus
     End Structure
 
     Public Sub New()
-        'Hier das rein was zum erstellen eines Busses vorhanden sein muss!
+        'ggf löschen, damit kein leeres Projekt erstellt werden kann!
     End Sub
 
     Public Sub New(filepath As String)
@@ -624,7 +624,7 @@ Public Class Proj_Bus
                 End If
             End If
 
-                If couple_front Then
+            If couple_front Then
                 .Add("[coupling_front]")
                 .Add(fromSingle(couple_front_point.X) & vbCrLf & fromSingle(couple_front_point.Y) & vbCrLf & fromSingle(couple_front_point.Z), True)
 
@@ -653,4 +653,44 @@ Public Class Proj_Bus
             ProjDataBase.Save()
         End If
     End Sub
+
+    Public Function usedFiles() As List(Of Filename)
+        usedFiles = New List(Of Filename)
+        With usedFiles
+            .Add(filename)
+            .Add(New Filename(number_path))
+
+            .AddRange(model.usedFiles)
+            .Add(sound_file)
+            .Add(sound_ai_file)
+            .Add(paths.filename)
+            .Add(cabin.filename)
+
+            For Each script In scripts
+                .Add(New Filename(script, filename.path))
+            Next
+
+            For Each varlist In varlists
+                .Add(New Filename(varlist, filename.path))
+            Next
+
+            For Each stringvarlist In stringvarlists
+                .Add(New Filename(stringvarlist, filename.path))
+            Next
+
+            For Each constfile In constfiles
+                .Add(New Filename(constfile, filename.path))
+            Next
+
+            For i = 0 To spiegel.Count - 1
+                .Add(New Filename("reflexion" & i & ".bmp", filename.path))
+            Next
+
+            If Not couple_back_file Is Nothing Then
+                Log.Add("Erforderliche Dateien des Nachläufers wurden nicht berücksichtigt!")
+            End If
+        End With
+
+        Return usedFiles
+    End Function
 End Class

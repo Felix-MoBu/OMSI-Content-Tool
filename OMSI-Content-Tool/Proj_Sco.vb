@@ -538,4 +538,14 @@ Public Class Proj_Sco
             model.save(True)
         End If
     End Sub
+
+    Public Function usedFiles() As List(Of Filename)
+        usedFiles = New List(Of Filename)
+        With usedFiles
+            .Add(filename)
+            .AddRange(model.usedFiles)
+
+        End With
+        Return usedFiles
+    End Function
 End Class

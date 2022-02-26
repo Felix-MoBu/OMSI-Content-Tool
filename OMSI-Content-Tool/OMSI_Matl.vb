@@ -11,8 +11,9 @@ Public Class OMSI_Matl
     Public transmapVar As String
     Public item As Boolean
 
-    Public lightmap_name As String
-    Public lightmap_var As String
+    Public lightmap As New List(Of OMSI_Lightmap)
+
+    Public nightmap_name As String '-> Nur für [matl_change]
 
     Public env_map As String
     Public env_scalce As String
@@ -32,5 +33,9 @@ Public Class OMSI_Matl
 
     Public adressBorder As List(Of Byte)
     Public asressClamp As Boolean
+
+    Public matlChange As OMSI_MatlChange
     '...
+
+
 End Class

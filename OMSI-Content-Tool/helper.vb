@@ -108,11 +108,19 @@ Module helper
     End Function
 
     Public Function fromSingle(value As Single, Optional length As Byte = 3) As String
-        Return Replace(FormatNumber(value, length,,, TriState.False), ",", ".")
+        If ((value < 0.001 And value > 0) Or (value > -0.001 And value < 0)) And length = 3 Then
+            Return Replace(FormatNumber(value, 6,,, TriState.False), ",", ".")
+        Else
+            Return Replace(FormatNumber(value, length,,, TriState.False), ",", ".")
+        End If
     End Function
 
     Public Function fromDouble(value As Double, Optional length As Byte = 3) As String
-        Return Replace(FormatNumber(value, length,,, TriState.False), ",", ".")
+        If ((value < 0.001 And value > 0) Or (value > -0.001 And value < 0)) And length = 3 Then
+            Return Replace(FormatNumber(value, 6,,, TriState.False), ",", ".")
+        Else
+            Return Replace(FormatNumber(value, length,,, TriState.False), ",", ".")
+        End If
     End Function
 
     Public Function fromBool(value As Boolean) As String

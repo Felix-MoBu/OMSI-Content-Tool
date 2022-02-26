@@ -45,16 +45,20 @@ Public Class OMSI_Model
                         Case "[VFDmaxmin]"
                             vfdBox = New BoundingBox(toSingle(allLines(linect + 1)), toSingle(allLines(linect + 2)), toSingle(allLines(linect + 3)), toSingle(allLines(linect + 4)), toSingle(allLines(linect + 5)), toSingle(allLines(linect + 6)))
                             linect += 6
+
                         Case "[tex_detail_factor]"
                             detailfaktor = toSingle(allLines(linect + 1))
+
                         Case "[CTC]"
                             TexChangeName = allLines(linect + 1)
                             TexChangeFolder = allLines(linect + 2)
                             TexChangeInd = allLines(linect + 3)
                             linect += 3
+
                         Case "[CTCTexture]"
                             TexChangeTexs.Add(New Texture_Change(allLines(linect + 1), allLines(linect + 2)))
                             linect += 2
+
                         Case "[texttexture_enh]"
                             Dim t_enh As New TextTexture With {
                                 .enh = True,
@@ -73,6 +77,7 @@ Public Class OMSI_Model
                             TextTexturen.Add(t_enh)
                             text_tex_index += 1
                             linect += 10
+
                         Case "[texttexture]"
                             Dim t_tex As New TextTexture With {
                                 .index = text_tex_index,
@@ -88,15 +93,18 @@ Public Class OMSI_Model
                             TextTexturen.Add(t_tex)
                             text_tex_index += 1
                             linect += 8
+
                         Case "[scripttexture]"
                             Dim newST As New ScriptTexture
                             newST.name = Trim(allLines(linect - 1))
                             newST.X = allLines(linect + 1)
                             newST.Y = allLines(linect + 2)
                             ScriptTextures.Add(newST)
+
                         Case "[LOD]"
                             If tempLODMin > 0 Then tempLODMax = tempLODMin
                             tempLODMin = toSingle(allLines(linect + 1))
+
                         Case "[spotlight]"
                             Dim spot As New OMSI_Spot
                             With spot
@@ -115,6 +123,7 @@ Public Class OMSI_Model
                             End With
                             spots.Add(spot)
                             linect += 12
+
                         Case "[light_enh_2]"
                             Dim licht As New OMSI_Licht
                             With licht
@@ -149,6 +158,7 @@ Public Class OMSI_Model
                             End With
                             lichter.Add(licht)
                             linect += 24
+
                         Case "[interiorlight]"
                             Dim intLicht As New OMSI_IntLicht
                             With intLicht
@@ -165,6 +175,7 @@ Public Class OMSI_Model
                             End With
                             intLichter.Add(intLicht)
                             linect += 8
+
                         Case "[smoke]"
                             Dim rauch_neu As New OMSI_Rauch
                             With rauch_neu
@@ -191,6 +202,7 @@ Public Class OMSI_Model
                             End With
                             rauch.Add(rauch_neu)
                             linect += 19
+
                         Case "[mesh]"
                             Dim mesh As New OMSI_Mesh
                             With mesh
@@ -207,6 +219,7 @@ Public Class OMSI_Model
                                     Select Case allLines(i)
                                         Case "[viewpoint]"
                                             .viewpoint = allLines(i + 1)
+
                                         Case "[illumination_interior]"
                                             .illumination = New OMSI_Illumination
                                             .illumination.values.Add(allLines(i + 1))
@@ -214,31 +227,37 @@ Public Class OMSI_Model
                                             .illumination.values.Add(allLines(i + 3))
                                             .illumination.values.Add(allLines(i + 4))
                                             i += 4
+
                                         Case "[mouseevent]"
                                             .mouseevent = allLines(i + 1)
                                         Case "[visible]"
                                             .visibleVar = allLines(i + 1)
                                             .visibleInt = allLines(i + 2)
                                             i += 2
+
                                         Case "[isshadow]"
                                             .isshadow = True
-                                        Case "[matl_change]"
-                                            .matl_change_file = allLines(i + 1)
-                                            .matl_change_index = allLines(i + 2)
-                                            .matl_change_var = allLines(i + 3)
-                                            i += 3
+
                                         Case "[mesh_ident]"
                                             .meshident = allLines(i + 1)
+
                                         Case "[animparent]"
                                             .animparent = allLines(i + 1)
+
                                         Case "[smoothskin]"
                                             .smoothskin = True
+
                                         Case "[setbone]"
                                             .bones.Add(New OMSI_Bone(allLines(i + 1), allLines(i + 2)))
+
                                         Case "[newanim]"
                                             Dim newAnim As New OMSI_Anim
                                             For a As Integer = i + 1 To allLines.Count - 1
                                                 If a = allLines.Count Then Exit For
+                                                If allLines(a).Contains("[") And allLines(a).Contains("]") Then
+                                                    i = a - 1
+                                                    Exit For
+                                                End If
                                                 With newAnim
                                                     Select Case allLines(a)
                                                         Case "origin_from_mesh"
@@ -263,20 +282,24 @@ Public Class OMSI_Model
                                                             .anim_var = allLines(a + 1)
                                                             .anim_val = toSingle(allLines(a + 2))
                                                             a += 2
-                                                        Case Else
-                                                            If allLines(a).Contains("[") And allLines(a).Contains("]") Then
-                                                                i = a - 1
-                                                                Exit For
-                                                            End If
+                                                        Case "delay"
+                                                            .delay = toSingle(allLines(a + 1))
+                                                        Case "maxspeed"
+                                                            .maxspeed = toSingle(allLines(a + 1))
                                                     End Select
                                                 End With
                                             Next
                                             .animations.Add(newAnim)
-                                        Case "[matl]"
+
+                                        Case "[matl]", "[matl_change]"
                                             Dim matl As New OMSI_Matl
                                             With matl
                                                 .name = allLines(i + 1)
                                                 .index = allLines(i + 2)
+                                                If allLines(i) = "[matl_change]" Then
+                                                    .matlChange = New OMSI_MatlChange(allLines(i + 3))
+                                                End If
+
                                                 For n As Integer = i + 2 To allLines.Count - 1
                                                     If n = allLines.Count Then Exit For
                                                     Select Case allLines(n)
@@ -299,8 +322,7 @@ Public Class OMSI_Model
                                                         Case "[matl_envmap_mask]"
                                                             .envmask = allLines(n + 1)
                                                         Case "[matl_lightmap]"
-                                                            .lightmap_name = allLines(n + 1)
-                                                            .lightmap_var = allLines(n + 2)
+                                                            .lightmap.Add(New OMSI_Lightmap(allLines(n + 1), allLines(n + 2)))
                                                             n += 2
                                                         Case "[matl_bumpmap]"
                                                             .bumpmap_file = allLines(n + 1)
@@ -323,6 +345,67 @@ Public Class OMSI_Model
                                                         Case "[useTextTexture]"
                                                             .texTex = True
                                                             .texTexVal = allLines(n + 1)
+                                                        Case "[matl_item]"
+                                                            If Not .matlChange Is Nothing Then
+                                                                Dim newMatlItem As New OMSI_Matl
+                                                                For k As Integer = n + 1 To allLines.Count - 1
+                                                                    Select Case allLines(k)
+                                                                        Case "[matl_freetex]"
+                                                                            newMatlItem.freetexFile = allLines(k + 1)
+                                                                            newMatlItem.freetexVar = allLines(k + 2)
+                                                                            k += 2
+                                                                        Case "[texcoordtransX]"
+                                                                            newMatlItem.transX = allLines(k + 1)
+                                                                        Case "[texcoordtransY]"
+                                                                            newMatlItem.transY = allLines(k + 1)
+                                                                        Case "[matl_alpha]"
+                                                                            newMatlItem.alpha = allLines(k + 1)
+                                                                        Case "[alphascale]"
+                                                                            newMatlItem.alphascale = allLines(k + 1)
+                                                                        Case "[matl_envmap]"
+                                                                            newMatlItem.env_map = allLines(k + 1)
+                                                                            newMatlItem.env_scalce = toSingle(allLines(k + 2))
+                                                                            k += 2
+                                                                        Case "[matl_envmap_mask]"
+                                                                            newMatlItem.envmask = allLines(k + 1)
+                                                                        Case "[matl_lightmap]"
+                                                                            newMatlItem.lightmap.Add(New OMSI_Lightmap(allLines(k + 1), allLines(k + 2)))
+                                                                            k += 2
+                                                                        Case "[matl_nightmap]"
+                                                                            newMatlItem.nightmap_name = allLines(k + 1)
+                                                                        Case "[matl_bumpmap]"
+                                                                            newMatlItem.bumpmap_file = allLines(k + 1)
+                                                                            newMatlItem.bumpmap_val = toSingle(allLines(k + 2))
+                                                                            k += 2
+                                                                        Case "[matl_texadress_border]"
+                                                                            newMatlItem.adressBorder = New List(Of Byte)
+                                                                            newMatlItem.adressBorder.Add(toByte(allLines(k + 1)))
+                                                                            newMatlItem.adressBorder.Add(toByte(allLines(k + 2)))
+                                                                            newMatlItem.adressBorder.Add(toByte(allLines(k + 3)))
+                                                                            newMatlItem.adressBorder.Add(toByte(allLines(k + 4)))
+                                                                            k += 4
+                                                                        Case "[matl_transmap]"
+                                                                            newMatlItem.transmap = True
+                                                                            If allLines(k + 1) <> "" Then .transmapVar = allLines(k + 1)
+                                                                        Case "[matl_noZwrite]"
+                                                                            newMatlItem.zWrite = True
+                                                                        Case "[matl_noZcheck]"
+                                                                            newMatlItem.zCheck = True
+                                                                        Case "[useTextTexture]"
+                                                                            newMatlItem.texTex = True
+                                                                            newMatlItem.texTexVal = allLines(k + 1)
+                                                                        Case "[matl_item]"
+                                                                            .matlChange.items.Add(newMatlItem)
+                                                                            newMatlItem = New OMSI_Matl
+                                                                        Case Else
+                                                                            If allLines(k).Contains("[") And allLines(k).Contains("]") Then
+                                                                                n = k - 1
+                                                                                Exit For
+                                                                            End If
+                                                                    End Select
+                                                                Next
+                                                                .matlChange.items.Add(newMatlItem)
+                                                            End If
                                                         Case Else
                                                             If allLines(n).Contains("[") And allLines(n).Contains("]") Then
                                                                 i = n - 1
@@ -332,24 +415,11 @@ Public Class OMSI_Model
                                                 Next
                                             End With
                                             .materials.Add(matl)
-                                        Case "[mesh]"
+
+                                        Case "[mesh]", "[light_enh_2]", "[interiorlight]", "[smoke]", "[spotlight]", "[LOD]"
                                             linect = i - 1
                                             Exit For
-                                        Case "[light_enh_2]"
-                                            linect = i - 1
-                                            Exit For
-                                        Case "[interiorlight]"
-                                            linect = i - 1
-                                            Exit For
-                                        Case "[smoke]"
-                                            linect = i - 1
-                                            Exit For
-                                        Case "[spotlight]"
-                                            linect = i - 1
-                                            Exit For
-                                        Case "[LOD]"
-                                            linect = i - 1
-                                            Exit For
+
                                     End Select
                                 Next
                             End With
@@ -734,5 +804,32 @@ Public Class OMSI_Model
             End If
         End If
     End Sub
+
+    Public Function usedFiles() As List(Of Filename)
+        usedFiles = New List(Of Filename)
+        With usedFiles
+            .Add(filename)
+
+            Dim tmpTexList As New List(Of Filename)
+            For Each mesh In meshes
+                .Add(mesh.filename)
+                For Each ObjID In mesh.ObjIds
+                    For Each texture In Frm_Main.AlleObjekte(ObjID).texturen
+                        If Not tmpTexList.Contains(texture.filename) Then tmpTexList.Add(texture.filename)
+                    Next
+                Next
+                For Each material In mesh.materials
+                    Dim newTexture As New Filename(material.env_map, filename.path)
+                    If Not tmpTexList.Contains(newTexture) Then tmpTexList.Add(newTexture)
+
+                    'newTexture = New Filename(mesh.matlChange.nightmap, filename.path)
+                    'If Not tmpTexList.Contains(newTexture) Then tmpTexList.Add(newTexture)
+                Next
+            Next
+
+            .AddRange(tmpTexList)
+        End With
+        Return usedFiles
+    End Function
 
 End Class

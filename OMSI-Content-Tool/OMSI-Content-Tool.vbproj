@@ -250,7 +250,9 @@
     <Compile Include="OMSI_Font.vb" />
     <Compile Include="OMSI_Illumination.vb" />
     <Compile Include="OMSI_IntLicht.vb" />
+    <Compile Include="OMSI_Lightmap.vb" />
     <Compile Include="OMSI_Maplight.vb" />
+    <Compile Include="OMSI_MatlChange.vb" />
     <Compile Include="OMSI_Paths.vb" />
     <Compile Include="OMSI_Repaint.vb" />
     <Compile Include="OMSI_Rep_Var.vb" />

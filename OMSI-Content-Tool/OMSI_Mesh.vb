@@ -28,10 +28,6 @@ Public Class OMSI_Mesh
     Public texchanges As String
     Public isshadow As Boolean
 
-    Public matl_change_file As String
-    Public matl_change_index As Integer
-    Public matl_change_var As String
-
     Public Property center As Point3D
         Get
             Return center_int
@@ -99,90 +95,31 @@ Public Class OMSI_Mesh
 
             If smoothskin Then .Add("[smoothskin]" & vbCrLf)
 
-            If bones.Count > 0 Then
-                For Each bone In bones
-                    .Add("[setbone]")
-                    .Add(bone.var)
-                    .Add(bone.val & vbCrLf)
-                Next
-            End If
+            For Each bone In bones
+                .Add("[setbone]")
+                .Add(bone.var)
+                .Add(bone.val & vbCrLf)
+            Next
 
-            If matl_change_file <> "" Then
-                .Add("[matl_change]")
-                .Add(matl_change_file)
-                .Add(matl_change_index)
-                .Add(matl_change_var & vbCrLf)
-            End If
 
             If isshadow Then .Add("[isshadow]" & vbCrLf)
 
+
             For Each matl In materials
                 .Add("++++++++++")
-                .Add("[matl]")
-                .Add(matl.name)
-                .Add(matl.index & vbCrLf)
-
-                If matl.freetexFile <> "" Then
-                    .Add("[matl_freetex]")
-                    .Add(matl.freetexFile)
-                    .Add(matl.freetexVar & vbCrLf)
+                If matl.matlChange Is Nothing Then
+                    .Add("[matl]")
+                    .Add(matl.name)
+                    .Add(matl.index & vbCrLf)
+                Else
+                    .Add("[matl_change]")
+                    .Add(matl.name)
+                    .Add(matl.index)
+                    .Add(matl.matlChange.var & vbCrLf)
                 End If
 
-                If matl.transX <> "" Then
-                    .Add("[texcoordtransX]")
-                    .Add(matl.transX & vbCrLf)
-                End If
+                .AddRange(getMatlProps(matl))
 
-                If matl.transY <> "" Then
-                    .Add("[texcoordtransX]")
-                    .Add(matl.transY & vbCrLf)
-                End If
-
-                If matl.alpha > 0 Then
-                    .Add("[matl_alpha]")
-                    .Add(Convert.ToInt16(matl.alpha) & vbCrLf)
-                End If
-
-                If matl.alphascale <> "" Then
-                    .Add("[alphascale]")
-                    .Add(matl.alphascale & vbCrLf)
-                End If
-
-                If matl.env_map <> "" Then
-                    .Add("[matl_envmap]")
-                    .Add(matl.env_map)
-                    .Add(fromSingle(matl.env_scalce) & vbCrLf)
-                End If
-
-                If matl.envmask <> "" Then
-                    .Add("[matl_envmap_mask]")
-                    .Add(matl.envmask & vbCrLf)
-                End If
-
-                If matl.lightmap_name <> "" Then
-                    .Add("[matl_lightmap]")
-                    .Add(matl.lightmap_name)
-                    .Add(matl.lightmap_var & vbCrLf)
-                End If
-
-                If matl.bumpmap_file <> "" Then
-                    .Add("[matl_bumpmap]")
-                    .Add(matl.bumpmap_file)
-                    .Add(fromSingle(matl.bumpmap_val) & vbCrLf)
-                End If
-
-                If Not matl.adressBorder Is Nothing Then
-                    .Add("[matl_texadress_border]")
-                    For Each value In matl.adressBorder
-                        .Add(value)
-                    Next
-                    .Add(vbCrLf)
-                End If
-
-                If matl.transmap Then
-                    .Add("[matl_transmap]")
-                    .Add(matl.transmapVar & vbCrLf)
-                End If
 
                 If matl.zWrite Then .Add("[matl_noZwrite]" & vbCrLf)
 
@@ -192,18 +129,27 @@ Public Class OMSI_Mesh
                     .Add("[useTextTexture]")
                     .Add(matl.texTexVal & vbCrLf)
                 End If
+
+                If Not matl.matlChange Is Nothing Then
+                    For Each item In matl.matlChange.items
+                        .Add("[matl_item]" & vbCrLf)
+                        .AddRange(getMatlProps(item))
+                    Next
+                End If
             Next
 
             For Each anim In animations
-                .Add("[newanim]")
-                If anim.origin_from_mesh Then
-                    .Add("origin_from_mesh")
-                Else
-                    If anim.origin_trans.dist(New Point3D) <> 0 Then
-                        .Add("origin_trans")
-                        .Add(fromSingle(anim.origin_trans.X))
-                        .Add(fromSingle(anim.origin_trans.Y))
-                        .Add(fromSingle(anim.origin_trans.Z))
+                If anim.anim_var <> "" Then
+                    .Add("[newanim]")
+                    If anim.origin_from_mesh Then
+                        .Add("origin_from_mesh")
+                    Else
+                        If anim.origin_trans.dist(New Point3D) <> 0 Then
+                            .Add("origin_trans")
+                            .Add(fromSingle(anim.origin_trans.X))
+                            .Add(fromSingle(anim.origin_trans.Y))
+                            .Add(fromSingle(anim.origin_trans.Z))
+                        End If
                     End If
                 End If
 
@@ -231,8 +177,91 @@ Public Class OMSI_Mesh
                     .Add(anim.anim_var)
                     .Add(fromSingle(anim.anim_val))
                 End If
+
+                If Not anim.delay = 0 Then
+                    .Add("delay")
+                    .Add(fromSingle(anim.delay))
+                End If
+
+                If Not anim.maxspeed = 0 Then
+                    .Add("maxspeed")
+                    .Add(fromSingle(anim.maxspeed))
+                End If
                 .Add(vbCrLf)
             Next
         End With
+    End Function
+
+    Function getMatlProps(matl As OMSI_Matl) As List(Of String)
+        getMatlProps = New List(Of String)
+        With getMatlProps
+            If matl.freetexFile <> "" Then
+                .Add("[matl_freetex]")
+                .Add(matl.freetexFile)
+                .Add(matl.freetexVar & vbCrLf)
+            End If
+
+            If matl.transX <> "" Then
+                .Add("[texcoordtransX]")
+                .Add(matl.transX & vbCrLf)
+            End If
+
+            If matl.transY <> "" Then
+                .Add("[texcoordtransY]")
+                .Add(matl.transY & vbCrLf)
+            End If
+
+            If matl.alpha > 0 Then
+                .Add("[matl_alpha]")
+                .Add(Convert.ToInt16(matl.alpha) & vbCrLf)
+            End If
+
+            If matl.alphascale <> "" Then
+                .Add("[alphascale]")
+                .Add(matl.alphascale & vbCrLf)
+            End If
+
+            If matl.env_map <> "" Then
+                .Add("[matl_envmap]")
+                .Add(matl.env_map)
+                .Add(fromSingle(matl.env_scalce) & vbCrLf)
+            End If
+
+            If matl.envmask <> "" Then
+                .Add("[matl_envmap_mask]")
+                .Add(matl.envmask & vbCrLf)
+            End If
+
+            If matl.nightmap_name <> "" Then
+                .Add("[matl_nightmap]")
+                .Add(matl.nightmap_name & vbCrLf)
+            End If
+
+            For Each lightmap In matl.lightmap
+                .Add("[matl_lightmap]")
+                .Add(lightmap.name)
+                .Add(lightmap.var & vbCrLf)
+            Next
+
+            If matl.bumpmap_file <> "" Then
+                .Add("[matl_bumpmap]")
+                .Add(matl.bumpmap_file)
+                .Add(fromSingle(matl.bumpmap_val) & vbCrLf)
+            End If
+
+            If Not matl.adressBorder Is Nothing Then
+                .Add("[matl_texadress_border]")
+                For Each value In matl.adressBorder
+                    .Add(value)
+                Next
+                .Add(vbCrLf)
+            End If
+            If matl.transmap Then
+                .Add("[matl_transmap]")
+                .Add(matl.transmapVar & vbCrLf)
+            End If
+        End With
+
+        Return getMatlProps
     End Function
 End Class
