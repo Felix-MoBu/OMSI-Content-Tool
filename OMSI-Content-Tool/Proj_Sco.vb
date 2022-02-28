@@ -65,7 +65,7 @@ Public Class Proj_Sco
     Public model As OMSI_Model
     'Public subPorjs As New List(Of Proj_Sli)
     Public collisionMesh As Filename
-    Public ProjDataBase As New DataBase()
+    Public ProjDataBase As DataBase
 
     Public Sub New()
         'Hier das rein was zum erstellen eines Busses vorhanden sein muss!
@@ -76,7 +76,7 @@ Public Class Proj_Sco
         filename = New Filename(filepath)
         If My.Computer.FileSystem.FileExists(filepath) Then
             Log.Add("Projekt """ & filename.name & """ laden...")
-            Dim allLines As String() = Split(My.Computer.FileSystem.ReadAllText(filename.path & "\" & filename.name, Encoding.GetEncoding(1252)), vbCrLf)
+            Dim allLines As String() = Split(Replace(My.Computer.FileSystem.ReadAllText(filename, Encoding.GetEncoding(1252)), vbCr, ""), vbLf)
 
             If allLines.Contains("[particle_emitter]") Then
                 MsgBox("Feuerwerk wird nicht unterstützt!")
@@ -291,7 +291,7 @@ Public Class Proj_Sco
                 model = New OMSI_Model(filename)
             End If
 
-            ProjDataBase.LoadFile(filename)
+            ProjDataBase = New DataBase(filename)
             Log.Add("Projekt """ & filename.name & """ fertig geladen.")
             isloaded = True
         Else
@@ -538,4 +538,14 @@ Public Class Proj_Sco
             model.save(True)
         End If
     End Sub
+
+    Public Function usedFiles() As List(Of Filename)
+        usedFiles = New List(Of Filename)
+        With usedFiles
+            .Add(filename)
+            .AddRange(model.usedFiles)
+
+        End With
+        Return usedFiles
+    End Function
 End Class

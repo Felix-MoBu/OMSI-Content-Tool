@@ -1,4 +1,6 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
+Imports System.Text
+
 Public Class Proj_Sli
     Public Const TYPE = Frm_Main.PROJ_TYPE_SLI
     Public Const EXTENSION As String = "sli"
@@ -26,7 +28,7 @@ Public Class Proj_Sli
     Public profiles As New List(Of Sli_Profile)
     Public paths As New List(Of KI_Path)
 
-    Public ProjDataBase As New DataBase
+    Public ProjDataBase As DataBase
 
     Public Sub New()
         'Hier das rein was zum erstellen eines Busses vorhanden sein muss!
@@ -36,7 +38,7 @@ Public Class Proj_Sli
     Public Sub New(filepath As String)
         filename = New Filename(filepath)
         If My.Computer.FileSystem.FileExists(filename.path & "\" & filename.name) Then
-            Dim allLines = Split(My.Computer.FileSystem.ReadAllText(filename), vbCrLf)
+            Dim allLines As String() = Split(Replace(My.Computer.FileSystem.ReadAllText(filename, Encoding.GetEncoding(1252)), vbCr, ""), vbLf)
 
             If Not allLines.Contains("[profilepnt]") Then
                 Log.Add("Spline hat keine Profilpunkte!", Log.TYPE_WARNUNG)
@@ -202,7 +204,7 @@ Public Class Proj_Sli
                     ct += 2
                 Next
                 textures.Add(texturesTemp(profile.texIndex))
-                subobjekte.Add(edgesTemp.toarray)
+                subobjekte.Add(edgesTemp.ToArray)
             Next
 
             vertices = verticesTemp.ToArray
@@ -210,6 +212,7 @@ Public Class Proj_Sli
             lines = linesTemp.ToArray
             texCoords = texCoordsTemp.ToArray
             Log.Add("Projekt """ & filename.name & """ fertig geladen.")
+            ProjDataBase = New DataBase(filename)
             isloaded = True
         Else
             Log.Add("Spline nicht gefunden! (" & filename & ")")
@@ -328,6 +331,15 @@ Public Class Proj_Sli
         linesCount = newFile.Write()
 
         Log.Add("Projekt gespeichert! (Datei: " & filename_n.name & ", Zeilen: " & linesCount & ")")
-        ProjDataBase.SaveFile()
+        ProjDataBase.Save()
     End Sub
+
+    Public Function usedFiles() As List(Of Filename)
+        usedFiles = New List(Of Filename)
+        With usedFiles
+            .Add(filename)
+
+        End With
+        Return usedFiles
+    End Function
 End Class

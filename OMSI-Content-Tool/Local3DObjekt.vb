@@ -1,6 +1,8 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Public Class Local3DObjekt
     Public id As Integer
+    Public parentMesh As String
+
     Public position As New Point3D
     Public center As New Point3D
     Public scale As Double = 1

@@ -1,6 +1,9 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Public Class ColorSelector
 
+    Public Event Changed As EventHandler
+    Public Event ColorChanged As EventHandler
+
     Private Sub PBColor_Click(sender As Object, e As EventArgs) Handles PBColor.Click
         With CD1
             .Color = PBColor.BackColor
@@ -64,25 +67,25 @@ Public Class ColorSelector
     End Property
 
     Private Sub TBColorR_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ColorR.KeyPress
-        e.Handled = helper.NumbersOnly(e)
+        e.Handled = helper.NumbersOnly(e, sender, True, 0, 255)
         If sender.Text = "" Then sender.Text = "0"
         recalcColor()
     End Sub
 
     Private Sub TBColorG_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ColorG.KeyPress
-        e.Handled = helper.NumbersOnly(e)
+        e.Handled = helper.NumbersOnly(e, sender, True, 0, 255)
         If sender.Text = "" Then sender.Text = "0"
         recalcColor()
     End Sub
 
     Private Sub TBColorB_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ColorB.KeyPress
-        e.Handled = helper.NumbersOnly(e)
+        e.Handled = helper.NumbersOnly(e, sender, True, 0, 255)
         If sender.Text = "" Then sender.Text = "0"
         recalcColor()
     End Sub
 
     Public Sub recalcColor()
-        Dim tmpColor = New Color
+        Dim tmpColor As Color
         tmpColor = Color.FromArgb(ColorR.Text, ColorG.Text, ColorB.Text)
         PBColor.BackColor = tmpColor
     End Sub
@@ -108,5 +111,7 @@ Public Class ColorSelector
         End If
     End Sub
 
-    Public Event Changed As EventHandler
+    Private Sub PBColor_BackColorChanged(sender As Object, e As EventArgs) Handles PBColor.BackColorChanged
+        RaiseEvent ColorChanged(sender, EventArgs.Empty)
+    End Sub
 End Class

@@ -7,17 +7,14 @@ Public Class OMSI_Anim
     Private mesh_center_int As New Point3D
     Private mesh_origin_int As New Point3D
 
-    Private origin_rot_x_int As Single
-    Private origin_rot_y_int As Single
-    Private origin_rot_z_int As Single
+    Private origin_rot_int As New Point3D
 
     Public anim_type As Boolean '0 = Rot, 1 = Trans
     Public anim_var As String
     Public anim_val As Double
 
-    Public origin As String
-    Public delay As Integer
-    Public maxspeed As Integer
+    Public delay As Double
+    Public maxspeed As Double
 
 
     Public vertices As Double()
@@ -37,32 +34,12 @@ Public Class OMSI_Anim
         End Set
     End Property
 
-    Public Property origin_rot_x As Single
+    Public Property origin_rot As Point3D
         Get
-            Return origin_rot_x_int
+            Return origin_rot_int
         End Get
-        Set(value As Single)
-            origin_rot_x_int = value
-            recalc()
-        End Set
-    End Property
-
-    Public Property origin_rot_y As Single
-        Get
-            Return origin_rot_y_int
-        End Get
-        Set(value As Single)
-            origin_rot_y_int = value
-            recalc()
-        End Set
-    End Property
-
-    Public Property origin_rot_z As Single
-        Get
-            Return origin_rot_z_int
-        End Get
-        Set(value As Single)
-            origin_rot_z_int = value
+        Set(value As Point3D)
+            origin_rot_int = value
             recalc()
         End Set
     End Property
@@ -121,18 +98,9 @@ Public Class OMSI_Anim
     Private Function PointToList(tmpPnt As Point3D, origin As Point3D) As List(Of Double)
         PointToList = New List(Of Double)
 
-        If origin_from_mesh Then
-            With mesh_origin_int
-                tmpPnt.rotate(90 + (90 * Math.Asin(.Y / 1)), Point3D.ACHSE_X, origin)
-                tmpPnt.rotate(90 + (90 * Math.Asin(.Z / 1)), Point3D.ACHSE_Y, origin)
-                tmpPnt.rotate(90 + (90 * Math.Asin(.X / 1)), Point3D.ACHSE_Z, origin)
-            End With
-        Else
-            tmpPnt.rotate(origin_rot_x_int, Point3D.ACHSE_X, origin)
-            tmpPnt.rotate(origin_rot_y_int, Point3D.ACHSE_Y, origin)
-            tmpPnt.rotate(origin_rot_z_int, Point3D.ACHSE_Z, origin)
-        End If
-
+        tmpPnt.rotate(origin_rot_int.X, Point3D.ACHSE_X, origin)
+        tmpPnt.rotate(origin_rot_int.Y, Point3D.ACHSE_Y, origin)
+        tmpPnt.rotate(origin_rot_int.Z, Point3D.ACHSE_Z, origin)
 
         PointToList.Add(tmpPnt.X)
         PointToList.Add(tmpPnt.Z)

@@ -1,25 +1,172 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
-Public Class DataBase
-    Public filename As Filename
+Imports System.Text
 
-    Public Sub LoadFile(name As Filename)
-        filename = New Filename(name.path & "\" & name.nameNoEnding & ".ocdb")
-        If Not My.Computer.FileSystem.FileExists(filename) Then
+Public Class DataBase
+    Public loaded As Boolean = False
+    Public filename As Filename
+    Public version As Single
+    Public proj_version As Single
+    Public contentID As Integer
+    Public creatorID As Integer
+
+    Public selectedRepaint As OMSI_Repaint
+    Public AlleVariablen As New List(Of String)
+    Public AlleVarValues As New List(Of Double)
+    Public lastVars As New List(Of String)
+    Public todoList As New List(Of String)
+    Public todoReadyList As New List(Of String)
+
+    Public Const FILETYPE As String = "ocdb"
+
+    Public Sub New(name As Filename)
+        filename = New Filename(name.path & "\" & name.nameNoEnding & "." & FILETYPE)
+        If Not IO.File.Exists(filename) Then
             Log.Add("Es wurde keine Projektdatenbank geladen!")
             Log.Add("Datei: " & filename, Log.TYPE_DEBUG)
             Exit Sub
         End If
 
+
         Log.Add("Projektdatenbank laden...")
 
-        Dim allines As List(Of String) = My.Computer.FileSystem.ReadAllText(filename).Split(vbCrLf).ToList
+        Dim allLines As String() = Split(Replace(My.Computer.FileSystem.ReadAllText(filename, Encoding.GetEncoding(1252)), vbCr, ""), vbLf)
 
+        For linect = 0 To allLines.Count - 1
+            If Trim(allLines(linect)) <> "" Then
+                Select Case allLines(linect)
+                    Case "[version]"
+                        version = toSingle(allLines(linect + 1))
+                    Case "[proj_version]"
+                        proj_version = toSingle(allLines(linect + 1))
+                    Case "[creator_id]"
+                        creatorID = allLines(linect + 1)
+                    Case "[content_id]"
+                        contentID = allLines(linect + 1)
+                    Case "[repaint]"
+                        selectedRepaint = New OMSI_Repaint
+                        selectedRepaint.ctifile = allLines(linect + 1)
+                        selectedRepaint.name = allLines(linect + 2)
+                        linect += 2
+                    Case "[setvar]"
+                        AlleVariablen.Add(allLines(linect + 1))
+                        AlleVarValues.Add(toSingle(allLines(linect + 2)))
+                        linect += 2
+                    Case "[lastvars]"
+                        For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1)) - 1
+                            lastVars.Add(allLines(i))
+                        Next
+                        linect += 2 + CInt(allLines(linect + 1))
+                    Case "[todo]"
+                        For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1)) - 1
+                            todoList.Add(allLines(i))
+                        Next
+                        linect += 2 + CInt(allLines(linect + 1))
+                    Case "[todo_ready]"
+                        For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1)) - 1
+                            todoReadyList.Add(allLines(i))
+                        Next
+                        linect += 2 + CInt(allLines(linect + 1))
+                End Select
+            End If
+        Next
+        loaded = True
         Log.Add("Projektdatenbank """ & filename.name & """ fertig geladen.")
     End Sub
 
-    Public Sub SaveFile()
-        Log.Add("Projektdatenbank speichern ist noch nicht möglich", Log.TYPE_DEBUG)
+    Private Sub grabInfos()
+
+        selectedRepaint = Frm_Main.selectedRepaint
+
+        AlleVariablen = New List(Of String)
+        AlleVarValues = New List(Of Double)
+        For Each item In Frm_VarTest.getUsedVars
+            AlleVariablen.Add(item.var)
+            AlleVarValues.Add(item.val)
+        Next
+
+
     End Sub
 
-    'Kommentar
+
+    Public Sub Save(Optional noInfoGrabbing As Boolean = False)
+        If Not noInfoGrabbing Then grabInfos()
+
+        If Not filename Is Nothing Then
+            Dim newFile As New FileWriter(filename)
+            With newFile
+                If version <> 0 Then
+                    .Add("[version]")
+                    .Add(version, True)
+                End If
+
+                If proj_version <> 0 Then
+                    .Add("[proj_version]")
+                    .Add(proj_version, True)
+                End If
+
+                If creatorID <> 0 Then
+                    .Add("[creator_id]")
+                    .Add(creatorID, True)
+                End If
+
+                If contentID <> 0 Then
+                    .Add("[content_id]")
+                    .Add(contentID, True)
+                End If
+
+                If Not selectedRepaint Is Nothing Then
+                    .Add("[repaint]")
+                    .Add(selectedRepaint.ctifile)
+                    .Add(selectedRepaint.name, True)
+                End If
+
+                For varct As Integer = 0 To AlleVariablen.Count - 1
+                    .Add("[setvar]")
+                    .Add(AlleVariablen(varct))
+                    .Add(AlleVarValues(varct), True)
+                Next
+
+                If lastVars.Count > 0 Then
+                    .Add("[lastvars]")
+                    .Add(todoList.Count)
+                    For lastVarsct As Integer = 0 To lastVars.Count - 1
+                        .Add(lastVars(lastVarsct))
+                    Next
+                    .Add(vbCrLf)
+                End If
+
+                If todoList.Count > 0 Then
+                    .Add("[todo]")
+                    .Add(todoList.Count)
+                    For todoct As Integer = 0 To todoList.Count - 1
+                        .Add(todoList(todoct))
+                    Next
+                    .Add(vbCrLf)
+                End If
+
+                If todoReadyList.Count > 0 Then
+                    .Add("[todo_ready]")
+                    .Add(todoReadyList.Count)
+                    For todoct As Integer = 0 To todoReadyList.Count - 1
+                        .Add(todoReadyList(todoct))
+                    Next
+                    .Add(vbCrLf)
+                End If
+            End With
+
+            If newFile.Lenght > 2 Then
+                Dim linesCount As Integer
+                linesCount = newFile.Write()
+
+                Log.Add("Projektdatenbank gespeichert! (Datei: " & filename.name & ", Zeilen: " & linesCount & ")")
+            Else
+                If IO.File.Exists(filename) Then
+                    IO.File.Delete(filename)
+                    Log.Add("Keine Projektdatenbank erstellt da keine Werte zum Speichern vorhanden sind. (Alte Datei gelöscht!)")
+                Else
+                    Log.Add("Keine Projektdatenbank erstellt da keine Werte zum Speichern vorhanden sind.")
+                End If
+            End If
+        End If
+    End Sub
 End Class

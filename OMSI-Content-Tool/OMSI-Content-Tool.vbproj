@@ -217,6 +217,12 @@
     <Compile Include="Frm_TextTex.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Frm_ToDo.Designer.vb">
+      <DependentUpon>Frm_ToDo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_ToDo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Frm_Vars.Designer.vb">
       <DependentUpon>Frm_Vars.vb</DependentUpon>
     </Compile>
@@ -244,7 +250,9 @@
     <Compile Include="OMSI_Font.vb" />
     <Compile Include="OMSI_Illumination.vb" />
     <Compile Include="OMSI_IntLicht.vb" />
+    <Compile Include="OMSI_Lightmap.vb" />
     <Compile Include="OMSI_Maplight.vb" />
+    <Compile Include="OMSI_MatlChange.vb" />
     <Compile Include="OMSI_Paths.vb" />
     <Compile Include="OMSI_Repaint.vb" />
     <Compile Include="OMSI_Rep_Var.vb" />
@@ -253,6 +261,7 @@
     <Compile Include="OMSI_TicketPnt.vb" />
     <Compile Include="OMSI_traffic_light.vb" />
     <Compile Include="OMSI_Tree.vb" />
+    <Compile Include="OMSI_Var.vb" />
     <Compile Include="PointSelector.Designer.vb">
       <DependentUpon>PointSelector.vb</DependentUpon>
     </Compile>
@@ -421,6 +430,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Texture.resx">
       <DependentUpon>Frm_Texture.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_ToDo.resx">
+      <DependentUpon>Frm_ToDo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Vars.resx">
       <DependentUpon>Frm_Vars.vb</DependentUpon>

@@ -2,7 +2,7 @@
 Imports System.Text.RegularExpressions 'Für ColorFromData
 
 Module helper
-    Dim allowedKeys As Integer() = {3, 8, 22, 24}
+    Dim allowedKeys As Integer() = {3, 8, 9, 22, 24}
 
     Public Function NumbersOnly(e As KeyPressEventArgs, Optional TB As TextBox = Nothing, Optional asDouble As Boolean = False, Optional minValue As Double = Double.MinValue, Optional maxValue As Double = Double.MaxValue) As Boolean
         If asDouble Then '44 = Komma | 45 = Minus | 46 = Punkt
@@ -108,11 +108,27 @@ Module helper
     End Function
 
     Public Function fromSingle(value As Single, Optional length As Byte = 3) As String
-        Return Replace(FormatNumber(value, length,,, TriState.False), ",", ".")
+        If ((value < 0.001 And value > 0) Or (value > -0.001 And value < 0)) And length = 3 Then
+            Return Replace(FormatNumber(value, 6,,, TriState.False), ",", ".")
+        Else
+            If Not Int(value) = value Then
+                Return Replace(FormatNumber(value, length,,, TriState.False), ",", ".")
+            Else
+                Return "" & Int(value)
+            End If
+        End If
     End Function
 
     Public Function fromDouble(value As Double, Optional length As Byte = 3) As String
-        Return Replace(FormatNumber(value, length,,, TriState.False), ",", ".")
+        If ((value < 0.001 And value > 0) Or (value > -0.001 And value < 0)) And length = 3 Then
+            Return Replace(FormatNumber(value, 6,,, TriState.False), ",", ".")
+        Else
+            If Not Int(value) = value Then
+                Return Replace(FormatNumber(value, length,,, TriState.False), ",", ".")
+            Else
+                Return "" & Int(value)
+            End If
+        End If
     End Function
 
     Public Function fromBool(value As Boolean) As String

@@ -51,6 +51,7 @@ Partial Class Frm_Main
         Dim Point3D7 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim RgbColor2 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
         Dim Point3D8 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D9 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Main))
         Me.SS1 = New System.Windows.Forms.StatusStrip()
         Me.PBMain = New System.Windows.Forms.ToolStripProgressBar()
@@ -69,6 +70,7 @@ Partial Class Frm_Main
         Me.NurModelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NurCabinToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NurPathsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NurToolUmgebungocdbToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SpeichernUnterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PackenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RarArchivToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -381,19 +383,26 @@ Partial Class Frm_Main
         Me.Mat_CBTex = New System.Windows.Forms.ComboBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.GBAnimation = New System.Windows.Forms.GroupBox()
+        Me.Label87 = New System.Windows.Forms.Label()
+        Me.Anim_TBDelay = New System.Windows.Forms.TextBox()
+        Me.Anim_TBMaxSpeed = New System.Windows.Forms.TextBox()
+        Me.Label86 = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Anim_RBPoint = New System.Windows.Forms.RadioButton()
+        Me.Anim_RBMesh = New System.Windows.Forms.RadioButton()
+        Me.Anim_PRBArt = New System.Windows.Forms.Panel()
+        Me.Anim_RBVerschieben = New System.Windows.Forms.RadioButton()
+        Me.Anim_RBDrehen = New System.Windows.Forms.RadioButton()
+        Me.Label85 = New System.Windows.Forms.Label()
         Me.Label78 = New System.Windows.Forms.Label()
         Me.Label77 = New System.Windows.Forms.Label()
         Me.Label76 = New System.Windows.Forms.Label()
         Me.Label75 = New System.Windows.Forms.Label()
-        Me.Anim_RBPoint = New System.Windows.Forms.RadioButton()
-        Me.Anim_RBCenter = New System.Windows.Forms.RadioButton()
         Me.Anim_TBAnimGrp = New System.Windows.Forms.TextBox()
         Me.Anim_MinMax = New System.Windows.Forms.Button()
         Me.Anim_TBValue = New System.Windows.Forms.TextBox()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.Label28 = New System.Windows.Forms.Label()
-        Me.Anim_RBVerschieben = New System.Windows.Forms.RadioButton()
-        Me.Anim_RBDrehen = New System.Windows.Forms.RadioButton()
         Me.Anim_BTLöschen = New System.Windows.Forms.Button()
         Me.Anim_BTNeu = New System.Windows.Forms.Button()
         Me.Anim_DDList = New System.Windows.Forms.ComboBox()
@@ -476,8 +485,13 @@ Partial Class Frm_Main
         Me.Licht_PSVector = New O3D_Test.PointSelector()
         Me.Licht_PSRichtung = New O3D_Test.PointSelector()
         Me.Licht_CSFarbe = New O3D_Test.ColorSelector()
+        Me.Anim_PSRichtung = New O3D_Test.PointSelector()
         Me.Anim_PSRotPnt = New O3D_Test.PointSelector()
         Me.Anim_VSVar = New O3D_Test.VarSelector()
+        Me.Label88 = New System.Windows.Forms.Label()
+        Me.Label89 = New System.Windows.Forms.Label()
+        Me.Label90 = New System.Windows.Forms.Label()
+        Me.Label91 = New System.Windows.Forms.Label()
         Me.SS1.SuspendLayout()
         Me.MS1.SuspendLayout()
         Me.PanelMain.SuspendLayout()
@@ -507,6 +521,8 @@ Partial Class Frm_Main
         Me.GBLicht.SuspendLayout()
         Me.GBMat.SuspendLayout()
         Me.GBAnimation.SuspendLayout()
+        Me.Panel1.SuspendLayout()
+        Me.Anim_PRBArt.SuspendLayout()
         Me.PanelTexture.SuspendLayout()
         CType(Me.PBTexture, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MSTexturen.SuspendLayout()
@@ -572,40 +588,40 @@ Partial Class Frm_Main
         '
         Me.NeuToolStripMenuItem.Name = "NeuToolStripMenuItem"
         Me.NeuToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-        Me.NeuToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.NeuToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.NeuToolStripMenuItem.Text = "Neu"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(168, 6)
         '
         'ÖffnenToolStripMenuItem
         '
         Me.ÖffnenToolStripMenuItem.Name = "ÖffnenToolStripMenuItem"
         Me.ÖffnenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.ÖffnenToolStripMenuItem.Text = "Öffnen"
         '
         'LetzteToolStripMenuItem
         '
         Me.LetzteToolStripMenuItem.Name = "LetzteToolStripMenuItem"
-        Me.LetzteToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.LetzteToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.LetzteToolStripMenuItem.Text = "Zuletzt geöffnet..."
         '
         'NeuLadenToolStripMenuItem
         '
         Me.NeuLadenToolStripMenuItem.Name = "NeuLadenToolStripMenuItem"
         Me.NeuLadenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
-        Me.NeuLadenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.NeuLadenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.NeuLadenToolStripMenuItem.Text = "Neu laden"
         '
         'SpeichernToolStripMenuItem
         '
-        Me.SpeichernToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AllesToolStripMenuItem1, Me.NurProjektbusovhscoToolStripMenuItem, Me.NurModelToolStripMenuItem, Me.NurCabinToolStripMenuItem, Me.NurPathsToolStripMenuItem})
+        Me.SpeichernToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AllesToolStripMenuItem1, Me.NurProjektbusovhscoToolStripMenuItem, Me.NurModelToolStripMenuItem, Me.NurCabinToolStripMenuItem, Me.NurPathsToolStripMenuItem, Me.NurToolUmgebungocdbToolStripMenuItem})
         Me.SpeichernToolStripMenuItem.Enabled = False
         Me.SpeichernToolStripMenuItem.Name = "SpeichernToolStripMenuItem"
-        Me.SpeichernToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SpeichernToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.SpeichernToolStripMenuItem.Text = "Speichern"
         '
         'AllesToolStripMenuItem1
@@ -625,24 +641,30 @@ Partial Class Frm_Main
         '
         Me.NurModelToolStripMenuItem.Name = "NurModelToolStripMenuItem"
         Me.NurModelToolStripMenuItem.Size = New System.Drawing.Size(260, 22)
-        Me.NurModelToolStripMenuItem.Text = "Nur Model"
+        Me.NurModelToolStripMenuItem.Text = "Nur Model (model.cfg)"
         '
         'NurCabinToolStripMenuItem
         '
         Me.NurCabinToolStripMenuItem.Name = "NurCabinToolStripMenuItem"
         Me.NurCabinToolStripMenuItem.Size = New System.Drawing.Size(260, 22)
-        Me.NurCabinToolStripMenuItem.Text = "Nur Sitz-/Stehplätze"
+        Me.NurCabinToolStripMenuItem.Text = "Nur Sitz-/Stehplätze (cabin.cfg)"
         '
         'NurPathsToolStripMenuItem
         '
         Me.NurPathsToolStripMenuItem.Name = "NurPathsToolStripMenuItem"
         Me.NurPathsToolStripMenuItem.Size = New System.Drawing.Size(260, 22)
-        Me.NurPathsToolStripMenuItem.Text = "Nur Pfade"
+        Me.NurPathsToolStripMenuItem.Text = "Nur Pfade (path.cfg)"
+        '
+        'NurToolUmgebungocdbToolStripMenuItem
+        '
+        Me.NurToolUmgebungocdbToolStripMenuItem.Name = "NurToolUmgebungocdbToolStripMenuItem"
+        Me.NurToolUmgebungocdbToolStripMenuItem.Size = New System.Drawing.Size(260, 22)
+        Me.NurToolUmgebungocdbToolStripMenuItem.Text = "Nur Tool-Umgebung (*.ocdb)"
         '
         'SpeichernUnterToolStripMenuItem
         '
         Me.SpeichernUnterToolStripMenuItem.Name = "SpeichernUnterToolStripMenuItem"
-        Me.SpeichernUnterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SpeichernUnterToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.SpeichernUnterToolStripMenuItem.Text = "Speichern unter..."
         '
         'PackenToolStripMenuItem
@@ -650,7 +672,7 @@ Partial Class Frm_Main
         Me.PackenToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RarArchivToolStripMenuItem, Me.LctLOTUSContentToolStripMenuItem})
         Me.PackenToolStripMenuItem.Enabled = False
         Me.PackenToolStripMenuItem.Name = "PackenToolStripMenuItem"
-        Me.PackenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.PackenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.PackenToolStripMenuItem.Text = "Packen"
         '
         'RarArchivToolStripMenuItem
@@ -669,23 +691,23 @@ Partial Class Frm_Main
         'ToolStripMenuItem6
         '
         Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(168, 6)
         '
         'EinstellungenToolStripMenuItem
         '
         Me.EinstellungenToolStripMenuItem.Name = "EinstellungenToolStripMenuItem"
-        Me.EinstellungenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.EinstellungenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.EinstellungenToolStripMenuItem.Text = "Einstellungen"
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(168, 6)
         '
         'BeendenToolStripMenuItem
         '
         Me.BeendenToolStripMenuItem.Name = "BeendenToolStripMenuItem"
-        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.BeendenToolStripMenuItem.Text = "Beenden"
         '
         'BearbeitenToolStripMenuItem
@@ -923,14 +945,14 @@ Partial Class Frm_Main
         '
         Me.EntfernenToolStripMenuItem2.Name = "EntfernenToolStripMenuItem2"
         Me.EntfernenToolStripMenuItem2.ShortcutKeys = System.Windows.Forms.Keys.Delete
-        Me.EntfernenToolStripMenuItem2.Size = New System.Drawing.Size(180, 22)
+        Me.EntfernenToolStripMenuItem2.Size = New System.Drawing.Size(175, 22)
         Me.EntfernenToolStripMenuItem2.Text = "Entfernen"
         '
         'VersteckenToolStripMenuItem
         '
         Me.VersteckenToolStripMenuItem.Name = "VersteckenToolStripMenuItem"
         Me.VersteckenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.H), System.Windows.Forms.Keys)
-        Me.VersteckenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.VersteckenToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
         Me.VersteckenToolStripMenuItem.Text = "Verstecken"
         '
         'DevelopmentToolStripMenuItem
@@ -2900,6 +2922,10 @@ Partial Class Frm_Main
         '
         'GBBel
         '
+        Me.GBBel.Controls.Add(Me.Label91)
+        Me.GBBel.Controls.Add(Me.Label90)
+        Me.GBBel.Controls.Add(Me.Label89)
+        Me.GBBel.Controls.Add(Me.Label88)
         Me.GBBel.Controls.Add(Me.Bel_MinMax)
         Me.GBBel.Controls.Add(Me.Bel_BTKeine)
         Me.GBBel.Controls.Add(Me.Bel_BTBerechnen)
@@ -2947,7 +2973,7 @@ Partial Class Frm_Main
         '
         Me.Bel_CB1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Bel_CB1.FormattingEnabled = True
-        Me.Bel_CB1.Location = New System.Drawing.Point(159, 45)
+        Me.Bel_CB1.Location = New System.Drawing.Point(160, 18)
         Me.Bel_CB1.Name = "Bel_CB1"
         Me.Bel_CB1.Size = New System.Drawing.Size(55, 21)
         Me.Bel_CB1.Sorted = True
@@ -2957,7 +2983,7 @@ Partial Class Frm_Main
         '
         Me.Bel_CB2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Bel_CB2.FormattingEnabled = True
-        Me.Bel_CB2.Location = New System.Drawing.Point(100, 45)
+        Me.Bel_CB2.Location = New System.Drawing.Point(86, 45)
         Me.Bel_CB2.Name = "Bel_CB2"
         Me.Bel_CB2.Size = New System.Drawing.Size(55, 21)
         Me.Bel_CB2.Sorted = True
@@ -2967,7 +2993,7 @@ Partial Class Frm_Main
         '
         Me.Bel_CB3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Bel_CB3.FormattingEnabled = True
-        Me.Bel_CB3.Location = New System.Drawing.Point(159, 19)
+        Me.Bel_CB3.Location = New System.Drawing.Point(160, 46)
         Me.Bel_CB3.Name = "Bel_CB3"
         Me.Bel_CB3.Size = New System.Drawing.Size(55, 21)
         Me.Bel_CB3.Sorted = True
@@ -2986,7 +3012,7 @@ Partial Class Frm_Main
         '
         Me.Bel_CB0.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Bel_CB0.FormattingEnabled = True
-        Me.Bel_CB0.Location = New System.Drawing.Point(100, 19)
+        Me.Bel_CB0.Location = New System.Drawing.Point(86, 18)
         Me.Bel_CB0.Name = "Bel_CB0"
         Me.Bel_CB0.Size = New System.Drawing.Size(55, 21)
         Me.Bel_CB0.Sorted = True
@@ -3408,12 +3434,18 @@ Partial Class Frm_Main
         '
         'GBAnimation
         '
+        Me.GBAnimation.Controls.Add(Me.Label87)
+        Me.GBAnimation.Controls.Add(Me.Anim_TBDelay)
+        Me.GBAnimation.Controls.Add(Me.Anim_TBMaxSpeed)
+        Me.GBAnimation.Controls.Add(Me.Label86)
+        Me.GBAnimation.Controls.Add(Me.Panel1)
+        Me.GBAnimation.Controls.Add(Me.Anim_PRBArt)
+        Me.GBAnimation.Controls.Add(Me.Anim_PSRichtung)
+        Me.GBAnimation.Controls.Add(Me.Label85)
         Me.GBAnimation.Controls.Add(Me.Label78)
         Me.GBAnimation.Controls.Add(Me.Label77)
         Me.GBAnimation.Controls.Add(Me.Label76)
         Me.GBAnimation.Controls.Add(Me.Label75)
-        Me.GBAnimation.Controls.Add(Me.Anim_RBPoint)
-        Me.GBAnimation.Controls.Add(Me.Anim_RBCenter)
         Me.GBAnimation.Controls.Add(Me.Anim_PSRotPnt)
         Me.GBAnimation.Controls.Add(Me.Anim_TBAnimGrp)
         Me.GBAnimation.Controls.Add(Me.Anim_MinMax)
@@ -3421,33 +3453,136 @@ Partial Class Frm_Main
         Me.GBAnimation.Controls.Add(Me.Label29)
         Me.GBAnimation.Controls.Add(Me.Label28)
         Me.GBAnimation.Controls.Add(Me.Anim_VSVar)
-        Me.GBAnimation.Controls.Add(Me.Anim_RBVerschieben)
-        Me.GBAnimation.Controls.Add(Me.Anim_RBDrehen)
         Me.GBAnimation.Controls.Add(Me.Anim_BTLöschen)
         Me.GBAnimation.Controls.Add(Me.Anim_BTNeu)
         Me.GBAnimation.Controls.Add(Me.Anim_DDList)
         Me.GBAnimation.Controls.Add(Me.Label9)
-        Me.GBAnimation.Location = New System.Drawing.Point(4, 2352)
+        Me.GBAnimation.Location = New System.Drawing.Point(4, 2288)
         Me.GBAnimation.Name = "GBAnimation"
-        Me.GBAnimation.Size = New System.Drawing.Size(327, 212)
+        Me.GBAnimation.Size = New System.Drawing.Size(327, 256)
         Me.GBAnimation.TabIndex = 6
         Me.GBAnimation.TabStop = False
         Me.GBAnimation.Text = "Animation"
         Me.GBAnimation.Visible = False
         '
+        'Label87
+        '
+        Me.Label87.AutoSize = True
+        Me.Label87.Location = New System.Drawing.Point(147, 202)
+        Me.Label87.Name = "Label87"
+        Me.Label87.Size = New System.Drawing.Size(67, 13)
+        Me.Label87.TabIndex = 65
+        Me.Label87.Text = "Verzögerung"
+        '
+        'Anim_TBDelay
+        '
+        Me.Anim_TBDelay.Location = New System.Drawing.Point(224, 199)
+        Me.Anim_TBDelay.Name = "Anim_TBDelay"
+        Me.Anim_TBDelay.Size = New System.Drawing.Size(71, 20)
+        Me.Anim_TBDelay.TabIndex = 64
+        Me.Anim_TBDelay.Text = "0"
+        '
+        'Anim_TBMaxSpeed
+        '
+        Me.Anim_TBMaxSpeed.Location = New System.Drawing.Point(69, 199)
+        Me.Anim_TBMaxSpeed.Name = "Anim_TBMaxSpeed"
+        Me.Anim_TBMaxSpeed.Size = New System.Drawing.Size(72, 20)
+        Me.Anim_TBMaxSpeed.TabIndex = 63
+        Me.Anim_TBMaxSpeed.Text = "0"
+        '
+        'Label86
+        '
+        Me.Label86.AutoSize = True
+        Me.Label86.Location = New System.Drawing.Point(4, 202)
+        Me.Label86.Name = "Label86"
+        Me.Label86.Size = New System.Drawing.Size(66, 13)
+        Me.Label86.TabIndex = 62
+        Me.Label86.Text = "Max Geshw."
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.Anim_RBPoint)
+        Me.Panel1.Controls.Add(Me.Anim_RBMesh)
+        Me.Panel1.Location = New System.Drawing.Point(70, 121)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(176, 24)
+        Me.Panel1.TabIndex = 61
+        '
+        'Anim_RBPoint
+        '
+        Me.Anim_RBPoint.AutoSize = True
+        Me.Anim_RBPoint.Location = New System.Drawing.Point(82, 3)
+        Me.Anim_RBPoint.Name = "Anim_RBPoint"
+        Me.Anim_RBPoint.Size = New System.Drawing.Size(49, 17)
+        Me.Anim_RBPoint.TabIndex = 41
+        Me.Anim_RBPoint.TabStop = True
+        Me.Anim_RBPoint.Text = "Point"
+        Me.Anim_RBPoint.UseVisualStyleBackColor = True
+        '
+        'Anim_RBMesh
+        '
+        Me.Anim_RBMesh.AutoSize = True
+        Me.Anim_RBMesh.Location = New System.Drawing.Point(3, 3)
+        Me.Anim_RBMesh.Name = "Anim_RBMesh"
+        Me.Anim_RBMesh.Size = New System.Drawing.Size(51, 17)
+        Me.Anim_RBMesh.TabIndex = 40
+        Me.Anim_RBMesh.TabStop = True
+        Me.Anim_RBMesh.Text = "Mesh"
+        Me.Anim_RBMesh.UseVisualStyleBackColor = True
+        '
+        'Anim_PRBArt
+        '
+        Me.Anim_PRBArt.Controls.Add(Me.Anim_RBVerschieben)
+        Me.Anim_PRBArt.Controls.Add(Me.Anim_RBDrehen)
+        Me.Anim_PRBArt.Location = New System.Drawing.Point(70, 47)
+        Me.Anim_PRBArt.Name = "Anim_PRBArt"
+        Me.Anim_PRBArt.Size = New System.Drawing.Size(231, 23)
+        Me.Anim_PRBArt.TabIndex = 60
+        '
+        'Anim_RBVerschieben
+        '
+        Me.Anim_RBVerschieben.AutoSize = True
+        Me.Anim_RBVerschieben.Location = New System.Drawing.Point(76, 2)
+        Me.Anim_RBVerschieben.Name = "Anim_RBVerschieben"
+        Me.Anim_RBVerschieben.Size = New System.Drawing.Size(84, 17)
+        Me.Anim_RBVerschieben.TabIndex = 31
+        Me.Anim_RBVerschieben.TabStop = True
+        Me.Anim_RBVerschieben.Text = "Verschieben"
+        Me.Anim_RBVerschieben.UseVisualStyleBackColor = True
+        '
+        'Anim_RBDrehen
+        '
+        Me.Anim_RBDrehen.AutoSize = True
+        Me.Anim_RBDrehen.Location = New System.Drawing.Point(3, 2)
+        Me.Anim_RBDrehen.Name = "Anim_RBDrehen"
+        Me.Anim_RBDrehen.Size = New System.Drawing.Size(60, 17)
+        Me.Anim_RBDrehen.TabIndex = 30
+        Me.Anim_RBDrehen.TabStop = True
+        Me.Anim_RBDrehen.Text = "Drehen"
+        Me.Anim_RBDrehen.UseVisualStyleBackColor = True
+        '
+        'Label85
+        '
+        Me.Label85.AutoSize = True
+        Me.Label85.Location = New System.Drawing.Point(4, 178)
+        Me.Label85.Name = "Label85"
+        Me.Label85.Size = New System.Drawing.Size(50, 13)
+        Me.Label85.TabIndex = 58
+        Me.Label85.Text = "Richtung"
+        '
         'Label78
         '
         Me.Label78.AutoSize = True
-        Me.Label78.Location = New System.Drawing.Point(4, 153)
+        Me.Label78.Location = New System.Drawing.Point(4, 126)
         Me.Label78.Name = "Label78"
-        Me.Label78.Size = New System.Drawing.Size(35, 13)
+        Me.Label78.Size = New System.Drawing.Size(34, 13)
         Me.Label78.TabIndex = 45
-        Me.Label78.Text = "Anker"
+        Me.Label78.Text = "Origin"
         '
         'Label77
         '
         Me.Label77.AutoSize = True
-        Me.Label77.Location = New System.Drawing.Point(4, 78)
+        Me.Label77.Location = New System.Drawing.Point(4, 51)
         Me.Label77.Name = "Label77"
         Me.Label77.Size = New System.Drawing.Size(20, 13)
         Me.Label77.TabIndex = 44
@@ -3456,7 +3591,7 @@ Partial Class Frm_Main
         'Label76
         '
         Me.Label76.AutoSize = True
-        Me.Label76.Location = New System.Drawing.Point(4, 52)
+        Me.Label76.Location = New System.Drawing.Point(3, 27)
         Me.Label76.Name = "Label76"
         Me.Label76.Size = New System.Drawing.Size(46, 13)
         Me.Label76.TabIndex = 43
@@ -3465,39 +3600,17 @@ Partial Class Frm_Main
         'Label75
         '
         Me.Label75.AutoSize = True
-        Me.Label75.Location = New System.Drawing.Point(4, 178)
+        Me.Label75.Location = New System.Drawing.Point(4, 151)
         Me.Label75.Name = "Label75"
         Me.Label75.Size = New System.Drawing.Size(57, 13)
         Me.Label75.TabIndex = 42
         Me.Label75.Text = "Drehpunkt"
         '
-        'Anim_RBPoint
-        '
-        Me.Anim_RBPoint.AutoSize = True
-        Me.Anim_RBPoint.Location = New System.Drawing.Point(152, 151)
-        Me.Anim_RBPoint.Name = "Anim_RBPoint"
-        Me.Anim_RBPoint.Size = New System.Drawing.Size(49, 17)
-        Me.Anim_RBPoint.TabIndex = 41
-        Me.Anim_RBPoint.TabStop = True
-        Me.Anim_RBPoint.Text = "Point"
-        Me.Anim_RBPoint.UseVisualStyleBackColor = True
-        '
-        'Anim_RBCenter
-        '
-        Me.Anim_RBCenter.AutoSize = True
-        Me.Anim_RBCenter.Location = New System.Drawing.Point(69, 151)
-        Me.Anim_RBCenter.Name = "Anim_RBCenter"
-        Me.Anim_RBCenter.Size = New System.Drawing.Size(56, 17)
-        Me.Anim_RBCenter.TabIndex = 40
-        Me.Anim_RBCenter.TabStop = True
-        Me.Anim_RBCenter.Text = "Center"
-        Me.Anim_RBCenter.UseVisualStyleBackColor = True
-        '
         'Anim_TBAnimGrp
         '
         Me.Anim_TBAnimGrp.BackColor = System.Drawing.SystemColors.Menu
         Me.Anim_TBAnimGrp.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Anim_TBAnimGrp.Location = New System.Drawing.Point(69, 22)
+        Me.Anim_TBAnimGrp.Location = New System.Drawing.Point(69, 226)
         Me.Anim_TBAnimGrp.Name = "Anim_TBAnimGrp"
         Me.Anim_TBAnimGrp.ReadOnly = True
         Me.Anim_TBAnimGrp.Size = New System.Drawing.Size(226, 20)
@@ -3514,7 +3627,7 @@ Partial Class Frm_Main
         '
         'Anim_TBValue
         '
-        Me.Anim_TBValue.Location = New System.Drawing.Point(70, 125)
+        Me.Anim_TBValue.Location = New System.Drawing.Point(70, 98)
         Me.Anim_TBValue.Name = "Anim_TBValue"
         Me.Anim_TBValue.Size = New System.Drawing.Size(226, 20)
         Me.Anim_TBValue.TabIndex = 35
@@ -3522,7 +3635,7 @@ Partial Class Frm_Main
         'Label29
         '
         Me.Label29.AutoSize = True
-        Me.Label29.Location = New System.Drawing.Point(4, 128)
+        Me.Label29.Location = New System.Drawing.Point(4, 101)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(30, 13)
         Me.Label29.TabIndex = 34
@@ -3531,37 +3644,15 @@ Partial Class Frm_Main
         'Label28
         '
         Me.Label28.AutoSize = True
-        Me.Label28.Location = New System.Drawing.Point(4, 103)
+        Me.Label28.Location = New System.Drawing.Point(4, 76)
         Me.Label28.Name = "Label28"
         Me.Label28.Size = New System.Drawing.Size(45, 13)
         Me.Label28.TabIndex = 33
         Me.Label28.Text = "Variable"
         '
-        'Anim_RBVerschieben
-        '
-        Me.Anim_RBVerschieben.AutoSize = True
-        Me.Anim_RBVerschieben.Location = New System.Drawing.Point(151, 76)
-        Me.Anim_RBVerschieben.Name = "Anim_RBVerschieben"
-        Me.Anim_RBVerschieben.Size = New System.Drawing.Size(84, 17)
-        Me.Anim_RBVerschieben.TabIndex = 31
-        Me.Anim_RBVerschieben.TabStop = True
-        Me.Anim_RBVerschieben.Text = "Verschieben"
-        Me.Anim_RBVerschieben.UseVisualStyleBackColor = True
-        '
-        'Anim_RBDrehen
-        '
-        Me.Anim_RBDrehen.AutoSize = True
-        Me.Anim_RBDrehen.Location = New System.Drawing.Point(70, 76)
-        Me.Anim_RBDrehen.Name = "Anim_RBDrehen"
-        Me.Anim_RBDrehen.Size = New System.Drawing.Size(60, 17)
-        Me.Anim_RBDrehen.TabIndex = 30
-        Me.Anim_RBDrehen.TabStop = True
-        Me.Anim_RBDrehen.Text = "Drehen"
-        Me.Anim_RBDrehen.UseVisualStyleBackColor = True
-        '
         'Anim_BTLöschen
         '
-        Me.Anim_BTLöschen.Location = New System.Drawing.Point(224, 47)
+        Me.Anim_BTLöschen.Location = New System.Drawing.Point(223, 22)
         Me.Anim_BTLöschen.Name = "Anim_BTLöschen"
         Me.Anim_BTLöschen.Size = New System.Drawing.Size(72, 23)
         Me.Anim_BTLöschen.TabIndex = 29
@@ -3570,9 +3661,9 @@ Partial Class Frm_Main
         '
         'Anim_BTNeu
         '
-        Me.Anim_BTNeu.Location = New System.Drawing.Point(151, 47)
+        Me.Anim_BTNeu.Location = New System.Drawing.Point(146, 22)
         Me.Anim_BTNeu.Name = "Anim_BTNeu"
-        Me.Anim_BTNeu.Size = New System.Drawing.Size(68, 23)
+        Me.Anim_BTNeu.Size = New System.Drawing.Size(72, 23)
         Me.Anim_BTNeu.TabIndex = 28
         Me.Anim_BTNeu.Text = "Neu"
         Me.Anim_BTNeu.UseVisualStyleBackColor = True
@@ -3581,7 +3672,7 @@ Partial Class Frm_Main
         '
         Me.Anim_DDList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Anim_DDList.FormattingEnabled = True
-        Me.Anim_DDList.Location = New System.Drawing.Point(70, 48)
+        Me.Anim_DDList.Location = New System.Drawing.Point(69, 23)
         Me.Anim_DDList.Name = "Anim_DDList"
         Me.Anim_DDList.Size = New System.Drawing.Size(72, 21)
         Me.Anim_DDList.TabIndex = 27
@@ -3589,7 +3680,7 @@ Partial Class Frm_Main
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(3, 26)
+        Me.Label9.Location = New System.Drawing.Point(3, 230)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(47, 13)
         Me.Label9.TabIndex = 0
@@ -4277,6 +4368,7 @@ Partial Class Frm_Main
         'Mesh_PSCenter
         '
         Me.Mesh_PSCenter.BackColor = System.Drawing.Color.Transparent
+        Me.Mesh_PSCenter.Enabled = False
         Me.Mesh_PSCenter.Location = New System.Drawing.Point(69, 99)
         Me.Mesh_PSCenter.Max = 1.7976931348623157E+308R
         Me.Mesh_PSCenter.Min = -1.7976931348623157E+308R
@@ -4334,16 +4426,31 @@ Partial Class Frm_Main
         Me.Licht_CSFarbe.Size = New System.Drawing.Size(257, 24)
         Me.Licht_CSFarbe.TabIndex = 22
         '
+        'Anim_PSRichtung
+        '
+        Me.Anim_PSRichtung.BackColor = System.Drawing.Color.Transparent
+        Me.Anim_PSRichtung.Enabled = False
+        Me.Anim_PSRichtung.Location = New System.Drawing.Point(70, 173)
+        Me.Anim_PSRichtung.Max = 360.0R
+        Me.Anim_PSRichtung.Min = -360.0R
+        Me.Anim_PSRichtung.Name = "Anim_PSRichtung"
+        Me.Anim_PSRichtung.Point = Point3D8
+        Me.Anim_PSRichtung.Size = New System.Drawing.Size(255, 20)
+        Me.Anim_PSRichtung.TabIndex = 59
+        Me.Anim_PSRichtung.X = 0R
+        Me.Anim_PSRichtung.Y = 0R
+        Me.Anim_PSRichtung.Z = 0R
+        '
         'Anim_PSRotPnt
         '
         Me.Anim_PSRotPnt.BackColor = System.Drawing.Color.Transparent
         Me.Anim_PSRotPnt.Enabled = False
-        Me.Anim_PSRotPnt.Location = New System.Drawing.Point(69, 174)
+        Me.Anim_PSRotPnt.Location = New System.Drawing.Point(69, 147)
         Me.Anim_PSRotPnt.Max = 1.7976931348623157E+308R
         Me.Anim_PSRotPnt.Min = 0R
         Me.Anim_PSRotPnt.Name = "Anim_PSRotPnt"
-        Me.Anim_PSRotPnt.Point = Point3D8
-        Me.Anim_PSRotPnt.Size = New System.Drawing.Size(225, 20)
+        Me.Anim_PSRotPnt.Point = Point3D9
+        Me.Anim_PSRotPnt.Size = New System.Drawing.Size(256, 20)
         Me.Anim_PSRotPnt.TabIndex = 39
         Me.Anim_PSRotPnt.X = 0R
         Me.Anim_PSRotPnt.Y = 0R
@@ -4351,11 +4458,47 @@ Partial Class Frm_Main
         '
         'Anim_VSVar
         '
-        Me.Anim_VSVar.Location = New System.Drawing.Point(70, 99)
+        Me.Anim_VSVar.Location = New System.Drawing.Point(70, 72)
         Me.Anim_VSVar.Name = "Anim_VSVar"
         Me.Anim_VSVar.Size = New System.Drawing.Size(226, 20)
         Me.Anim_VSVar.TabIndex = 32
         Me.Anim_VSVar.Variable = ""
+        '
+        'Label88
+        '
+        Me.Label88.AutoSize = True
+        Me.Label88.Location = New System.Drawing.Point(70, 21)
+        Me.Label88.Name = "Label88"
+        Me.Label88.Size = New System.Drawing.Size(13, 13)
+        Me.Label88.TabIndex = 38
+        Me.Label88.Text = "0"
+        '
+        'Label89
+        '
+        Me.Label89.AutoSize = True
+        Me.Label89.Location = New System.Drawing.Point(144, 21)
+        Me.Label89.Name = "Label89"
+        Me.Label89.Size = New System.Drawing.Size(13, 13)
+        Me.Label89.TabIndex = 39
+        Me.Label89.Text = "1"
+        '
+        'Label90
+        '
+        Me.Label90.AutoSize = True
+        Me.Label90.Location = New System.Drawing.Point(70, 49)
+        Me.Label90.Name = "Label90"
+        Me.Label90.Size = New System.Drawing.Size(13, 13)
+        Me.Label90.TabIndex = 40
+        Me.Label90.Text = "2"
+        '
+        'Label91
+        '
+        Me.Label91.AutoSize = True
+        Me.Label91.Location = New System.Drawing.Point(144, 49)
+        Me.Label91.Name = "Label91"
+        Me.Label91.Size = New System.Drawing.Size(13, 13)
+        Me.Label91.TabIndex = 41
+        Me.Label91.Text = "3"
         '
         'Frm_Main
         '
@@ -4421,6 +4564,10 @@ Partial Class Frm_Main
         Me.GBMat.PerformLayout()
         Me.GBAnimation.ResumeLayout(False)
         Me.GBAnimation.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.Anim_PRBArt.ResumeLayout(False)
+        Me.Anim_PRBArt.PerformLayout()
         Me.PanelTexture.ResumeLayout(False)
         Me.PanelTexture.PerformLayout()
         CType(Me.PBTexture, System.ComponentModel.ISupportInitialize).EndInit()
@@ -4850,7 +4997,7 @@ Partial Class Frm_Main
     Friend WithEvents Label76 As Label
     Friend WithEvents Label75 As Label
     Friend WithEvents Anim_RBPoint As RadioButton
-    Friend WithEvents Anim_RBCenter As RadioButton
+    Friend WithEvents Anim_RBMesh As RadioButton
     Friend WithEvents Anim_PSRotPnt As PointSelector
     Friend WithEvents TReloadTextures As Timer
     Friend WithEvents GBSpot As GroupBox
@@ -4866,4 +5013,17 @@ Partial Class Frm_Main
     Friend WithEvents Licht_CSFarbe As ColorSelector
     Friend WithEvents Label84 As Label
     Private WithEvents Label83 As Label
+    Friend WithEvents NurToolUmgebungocdbToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Anim_PSRichtung As PointSelector
+    Friend WithEvents Label85 As Label
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Anim_PRBArt As Panel
+    Friend WithEvents Label87 As Label
+    Friend WithEvents Anim_TBDelay As TextBox
+    Friend WithEvents Anim_TBMaxSpeed As TextBox
+    Friend WithEvents Label86 As Label
+    Friend WithEvents Label91 As Label
+    Friend WithEvents Label90 As Label
+    Friend WithEvents Label89 As Label
+    Friend WithEvents Label88 As Label
 End Class

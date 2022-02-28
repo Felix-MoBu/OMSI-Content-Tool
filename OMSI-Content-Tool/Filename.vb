@@ -1,8 +1,17 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Public Class Filename
+    ''' <summary>
+    ''' Only path, beginning with the drive letter, without filename or extension
+    ''' </summary>
     Public path As String
+    ''' <summary>
+    ''' Only name with extension but without path
+    ''' </summary>
     Public name As String
 
+    ''' <summary>
+    ''' Only name without path or extension
+    ''' </summary>
     Property nameNoEnding As String
         Get
             Dim tempname = Split(name, ".")
@@ -23,6 +32,9 @@ Public Class Filename
         End Set
     End Property
 
+    ''' <summary>
+    ''' Only extension without seperating dot
+    ''' </summary>
     Public Property extension As String
         Get
             Return Split(name, ".").Last
@@ -49,7 +61,8 @@ Public Class Filename
             Me.name = filename.name
             Me.path = filename.path
         Catch ex As Exception
-
+            Me.name = ""
+            Me.path = ""
         End Try
     End Sub
 

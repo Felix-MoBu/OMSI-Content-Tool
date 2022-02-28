@@ -14,15 +14,18 @@ Public Class Frm_Rep
     Public Projekt_Bus As Proj_Bus
 
     Private Sub Frm_Rep_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        TexChangeFolder = Projekt_Bus.filename.path & "\" & Projekt_Bus.model.TexChangeFolder
-
         Me.Location = New Point(Frm_Main.Width / 2 - Me.Width / 2, Frm_Main.Height / 2 - Me.Height / 2)
 
-        einlesen()
+        If Projekt_Bus Is Nothing Then
+            einlesen()
+        End If
+
         TBFilter.Text = ""
     End Sub
 
     Private Sub einlesen()
+        Projekt_Bus = Frm_Main.getProj()
+        TexChangeFolder = Projekt_Bus.filename.path & "\" & Projekt_Bus.model.TexChangeFolder
         'Standardlack
         anstrichAlt = Projekt_Bus.anstrich
         For Each TCTex In Projekt_Bus.model.TexChangeTexs
@@ -39,22 +42,22 @@ Public Class Frm_Rep
         Next
 
         'CTI-Dateien einlesen
-        Dim files() As String = IO.Directory.GetFiles(TexChangeFolder, "*.cti", IO.SearchOption.TopDirectoryOnly)
-        For Each file In files
-            Dim lines() As String = Split(My.Computer.FileSystem.ReadAllText(file, Encoding.GetEncoding(1252)), vbCrLf)
+        Dim filenames() As String = IO.Directory.GetFiles(TexChangeFolder, "*.cti", IO.SearchOption.TopDirectoryOnly)
+        For Each filename In filenames
+            Dim allLines As String() = Split(Replace(My.Computer.FileSystem.ReadAllText(filename, Encoding.GetEncoding(1252)), vbCr, ""), vbLf)
             Dim lastName As String = ""
 
-            For i = 0 To lines.Count - 1
-                If lines(i) = "[item]" Then
+            For i = 0 To allLines.Count - 1
+                If allLines(i) = "[item]" Then
                     Dim rp As New OMSI_Repaint
                     With rp
-                        lastName = lines(i + 1)
-                        .name = lines(i + 1)
-                        .var = lines(i + 2)
-                        .ctifile = file.Substring(TexChangeFolder.Count + 1)
-                        .file = Replace(lines(i + 3), "/", "\")
-                        If InStr(lines(i + 3), "/") Then
-                            Log.Add("Formatfehler in Repaint automatisch behoben! (Fehler: R001, Zeile: " & i + 3 & " Datei: " & file & ")", Log.TYPE_WARNUNG)
+                        lastName = allLines(i + 1)
+                        .name = allLines(i + 1)
+                        .var = allLines(i + 2)
+                        .ctifile = filename.Substring(TexChangeFolder.Count + 1)
+                        .file = Replace(allLines(i + 3), "/", "\")
+                        If InStr(allLines(i + 3), "/") Then
+                            Log.Add("Formatfehler in Repaint automatisch behoben! (Fehler: R001, Zeile: " & i + 3 & " Datei: " & filename & ")", Log.TYPE_WARNUNG)
                             .changed = True
                         Else
                             .changed = False
@@ -62,13 +65,13 @@ Public Class Frm_Rep
                     End With
                     repaints.Add(rp)
                 End If
-                If lines(i) = "[setvar]" Then
+                If allLines(i) = "[setvar]" Then
                     Dim rv As New OMSI_Rep_Var
                     With rv
                         .name = lastName
-                        .file = file
-                        .var = lines(i + 1)
-                        .val = lines(i + 2)
+                        .file = filename
+                        .var = allLines(i + 1)
+                        .val = allLines(i + 2)
                     End With
                     rep_vars.Add(rv)
                 End If
@@ -86,7 +89,10 @@ Public Class Frm_Rep
             End If
         Next
 
-        Dim lastSelectedRepaint As String = Frm_Main.repName
+        Dim lastSelectedRepaint As String = ""
+        If Not Frm_Main.selectedRepaint Is Nothing Then
+            lastSelectedRepaint = Frm_Main.selectedRepaint.name
+        End If
 
         'Listbox füllen
         For Each repaint In repaints
@@ -246,48 +252,62 @@ Public Class Frm_Rep
             If repaint.name = LBRepaints.SelectedItem Then
                 TBName.Text = repaint.name.Replace(" 🔒", "")
                 LabelDateiname.Text = repaint.ctifile
-                For i = 0 To Projekt_Bus.model.TexChangeTexs.Count - 1
-                    If repaint.var = Projekt_Bus.model.TexChangeTexs(i).Var Then
-
-                        Dim RepFolder As String = TexChangeFolder
-                        Dim ChangeEnable As Boolean = True
-                        If LBRepaints.SelectedIndex = 0 Then
-                            RepFolder = Projekt_Bus.filename.path & "\Texture"
-                            ChangeEnable = False
-                            BTEntfernen.Enabled = False
-                        End If
-
-                        For Each control In PMain.Controls
-                            If control.Name = "CB" & i Then
-                                If My.Computer.FileSystem.FileExists(RepFolder & "\" & repaint.file) Then
-                                    control.selecteditem = repaint.file
-                                Else
-                                    control.backcolor = Color.Red
-                                End If
-                                control.Text = repaint.file
-                                control.Enabled = ChangeEnable
-                            End If
-                            If control.Name = "BT" & i Then
-                                control.Enabled = True
-                            End If
-                        Next
-
-                        If LBRepaints.SelectedIndex > 0 Then
-                            Dim newLT As New LocalTexture
-                            newLT.filename = New Filename(repaint.file, RepFolder)
-                            Frm_Main.loadTexture(newLT)         '<- Hier vlt mit True die vorher geladene Texture überschreiben!
-                            Frm_Main.origTexturen.Add(New Filename(Projekt_Bus.model.TexChangeTexs(i).file, Projekt_Bus.filename.path & "\Texture"))
-                            Frm_Main.overWriteTextures.Add(newLT)
-                            Frm_Main.repName = LBRepaints.SelectedItem
-                            Exit For
-                        End If
-                    End If
-                Next
+                shwoRepaintOnMain(repaint)
             End If
         Next
 
         loadPVars()
         Frm_Main.GlMain.Invalidate()
+    End Sub
+
+    Public Sub showInitialRepaint(repaint As OMSI_Repaint)
+        einlesen()
+        If LBRepaints.Items.Contains(repaint) Then
+            LBRepaints.SelectedItem = repaint
+        End If
+        'shwoRepaintOnMain(repaint)
+        loadPVars()
+    End Sub
+
+    Private Sub shwoRepaintOnMain(repaint As OMSI_Repaint)
+        For i = 0 To Projekt_Bus.model.TexChangeTexs.Count - 1
+            If repaint.var = Projekt_Bus.model.TexChangeTexs(i).Var Then
+
+                Dim RepFolder As String = TexChangeFolder
+                Dim ChangeEnable As Boolean = True
+                If LBRepaints.SelectedIndex = 0 Then
+                    RepFolder = Projekt_Bus.filename.path & "\Texture"
+                    ChangeEnable = False
+                    BTEntfernen.Enabled = False
+                End If
+
+                For Each control In PMain.Controls
+                    If control.Name = "CB" & i Then
+                        If My.Computer.FileSystem.FileExists(RepFolder & "\" & repaint.file) Then
+                            control.selecteditem = repaint.file
+                        Else
+                            control.backcolor = Color.Red
+                        End If
+                        control.Text = repaint.file
+                        control.Enabled = ChangeEnable
+                    End If
+                    If control.Name = "BT" & i Then
+                        control.Enabled = True
+                    End If
+                Next
+
+                If LBRepaints.SelectedIndex > 0 Then
+                    Dim newLT As New LocalTexture
+                    newLT.filename = New Filename(repaint.file, RepFolder)
+                    Frm_Main.loadTexture(newLT)         '<- Hier vlt mit True die vorher geladene Texture überschreiben!
+                    Frm_Main.origTexturen.Add(New Filename(Projekt_Bus.model.TexChangeTexs(i).file, Projekt_Bus.filename.path & "\Texture"))
+                    Frm_Main.overWriteTextures.Add(newLT)
+                    Frm_Main.selectedRepaint = repaint
+                    Exit For
+                End If
+            End If
+        Next
+
     End Sub
 
     Private Sub loadPVars()

@@ -25,9 +25,9 @@ Partial Class Frm_Eig_Mesh
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Eig_Mesh))
         Me.LBLabels = New System.Windows.Forms.ListBox()
-        Me.LBProps = New System.Windows.Forms.ListBox()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.KopierenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LBProps = New System.Windows.Forms.ListBox()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -39,15 +39,6 @@ Partial Class Frm_Eig_Mesh
         Me.LBLabels.Name = "LBLabels"
         Me.LBLabels.Size = New System.Drawing.Size(147, 433)
         Me.LBLabels.TabIndex = 0
-        '
-        'LBProps
-        '
-        Me.LBProps.ContextMenuStrip = Me.ContextMenuStrip1
-        Me.LBProps.FormattingEnabled = True
-        Me.LBProps.Location = New System.Drawing.Point(158, 12)
-        Me.LBProps.Name = "LBProps"
-        Me.LBProps.Size = New System.Drawing.Size(165, 433)
-        Me.LBProps.TabIndex = 1
         '
         'ContextMenuStrip1
         '
@@ -61,6 +52,15 @@ Partial Class Frm_Eig_Mesh
         Me.KopierenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
         Me.KopierenToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
         Me.KopierenToolStripMenuItem.Text = "Wert kopieren"
+        '
+        'LBProps
+        '
+        Me.LBProps.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.LBProps.FormattingEnabled = True
+        Me.LBProps.Location = New System.Drawing.Point(158, 12)
+        Me.LBProps.Name = "LBProps"
+        Me.LBProps.Size = New System.Drawing.Size(165, 433)
+        Me.LBProps.TabIndex = 1
         '
         'Frm_Eig_Mesh
         '
