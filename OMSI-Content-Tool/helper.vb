@@ -111,7 +111,11 @@ Module helper
         If ((value < 0.001 And value > 0) Or (value > -0.001 And value < 0)) And length = 3 Then
             Return Replace(FormatNumber(value, 6,,, TriState.False), ",", ".")
         Else
-            Return Replace(FormatNumber(value, length,,, TriState.False), ",", ".")
+            If Not Int(value) = value Then
+                Return Replace(FormatNumber(value, length,,, TriState.False), ",", ".")
+            Else
+                Return "" & Int(value)
+            End If
         End If
     End Function
 
@@ -119,7 +123,11 @@ Module helper
         If ((value < 0.001 And value > 0) Or (value > -0.001 And value < 0)) And length = 3 Then
             Return Replace(FormatNumber(value, 6,,, TriState.False), ",", ".")
         Else
-            Return Replace(FormatNumber(value, length,,, TriState.False), ",", ".")
+            If Not Int(value) = value Then
+                Return Replace(FormatNumber(value, length,,, TriState.False), ",", ".")
+            Else
+                Return "" & Int(value)
+            End If
         End If
     End Function
 

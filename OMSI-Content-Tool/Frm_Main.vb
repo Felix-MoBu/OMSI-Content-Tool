@@ -2861,6 +2861,21 @@ Class Frm_Main
                     AnimDetails(mesh, 0)
                 End If
 
+                'Innenbeleuchtung
+                Bel_CB0.SelectedIndex = 0
+                Bel_CB1.SelectedIndex = 0
+                Bel_CB2.SelectedIndex = 0
+                Bel_CB3.SelectedIndex = 0
+
+                If Not .illumination Is Nothing Then
+                    If .illumination.values.Count = 4 Then
+                        Bel_CB0.SelectedIndex = .illumination.values(0) + 1
+                        Bel_CB1.SelectedIndex = .illumination.values(1) + 1
+                        Bel_CB2.SelectedIndex = .illumination.values(2) + 1
+                        Bel_CB3.SelectedIndex = .illumination.values(3) + 1
+                    End If
+                End If
+
                 If .lodMin > lodVal Or .lodMax < lodVal Then
                     MsgBox("Das Objekt wir auf Grund der LOD Filterung nicht angezeigt. Der Filter kann unter Ansicht -> LOD-Filter verändert werden.")
                 End If
@@ -2908,7 +2923,7 @@ Class Frm_Main
             End If
 
             Anim_VSVar.Variable = .anim_var
-            Anim_TBValue.Text = .anim_val
+            Anim_TBValue.Text = fromSingle(.anim_val)
             If .origin_from_mesh Then
                 Anim_RBMesh.Checked = True
                 Anim_RBPoint.Checked = False
@@ -2920,6 +2935,9 @@ Class Frm_Main
                 Anim_PSRotPnt.Point = .origin_trans
                 Anim_PSRichtung.Point = .origin_rot
             End If
+
+            Anim_TBMaxSpeed.Text = fromSingle(.maxspeed)
+            Anim_TBDelay.Text = fromSingle(.delay)
         End With
     End Sub
 
@@ -2961,7 +2979,7 @@ Class Frm_Main
         If Not IsNumeric(Anim_TBValue.Text) Then
             Anim_TBValue.Text = "0"
         End If
-        getSelectedAnim.anim_val = Anim_TBValue.Text
+        getSelectedAnim.anim_val = toSingle(Anim_TBValue.Text)
     End Sub
 
     Private Sub Anim_RBDrehen_Click(sender As Object, e As EventArgs) Handles Anim_RBDrehen.Click
@@ -2977,6 +2995,24 @@ Class Frm_Main
     Private Sub Anim_PSRotPnt_Changed(sender As Object, e As EventArgs) Handles Anim_PSRotPnt.Changed
         If Anim_PSRotPnt.Enabled Then
             getSelectedAnim.origin_trans = Anim_PSRotPnt.Point
+        End If
+    End Sub
+
+    Private Sub Anim_TBMaxSpeed_KeyPress(sender As Object, e As Windows.Forms.KeyPressEventArgs) Handles Anim_TBMaxSpeed.KeyPress
+        If helper.NumbersOnly(e, sender, True, Double.MinValue, Double.MaxValue) Then
+            If Not getSelectedAnim() Is Nothing Then
+                getSelectedAnim.maxspeed = toSingle(Anim_TBMaxSpeed.Text)
+            End If
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub Anim_TBDelay_KeyPress(sender As Object, e As Windows.Forms.KeyPressEventArgs) Handles Anim_TBDelay.KeyPress
+        If helper.NumbersOnly(e, sender, True, Double.MinValue, Double.MaxValue) Then
+            If Not getSelectedAnim() Is Nothing Then
+                getSelectedAnim.delay = toSingle(Anim_TBDelay.Text)
+            End If
+            e.Handled = True
         End If
     End Sub
 
@@ -5020,7 +5056,5 @@ Class Frm_Main
         Next
         GlMain.Invalidate()
     End Sub
-
-
 End Class
 

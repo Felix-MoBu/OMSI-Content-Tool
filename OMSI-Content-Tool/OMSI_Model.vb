@@ -230,6 +230,7 @@ Public Class OMSI_Model
 
                                         Case "[mouseevent]"
                                             .mouseevent = allLines(i + 1)
+
                                         Case "[visible]"
                                             .visibleVar = allLines(i + 1)
                                             .visibleInt = allLines(i + 2)
