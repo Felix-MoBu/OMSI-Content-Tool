@@ -333,6 +333,10 @@ Partial Class Frm_Main
         Me.Bones_TBName = New System.Windows.Forms.TextBox()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.GBBel = New System.Windows.Forms.GroupBox()
+        Me.Label91 = New System.Windows.Forms.Label()
+        Me.Label90 = New System.Windows.Forms.Label()
+        Me.Label89 = New System.Windows.Forms.Label()
+        Me.Label88 = New System.Windows.Forms.Label()
         Me.Bel_MinMax = New System.Windows.Forms.Button()
         Me.Bel_BTKeine = New System.Windows.Forms.Button()
         Me.Bel_BTBerechnen = New System.Windows.Forms.Button()
@@ -488,10 +492,6 @@ Partial Class Frm_Main
         Me.Anim_PSRichtung = New O3D_Test.PointSelector()
         Me.Anim_PSRotPnt = New O3D_Test.PointSelector()
         Me.Anim_VSVar = New O3D_Test.VarSelector()
-        Me.Label88 = New System.Windows.Forms.Label()
-        Me.Label89 = New System.Windows.Forms.Label()
-        Me.Label90 = New System.Windows.Forms.Label()
-        Me.Label91 = New System.Windows.Forms.Label()
         Me.SS1.SuspendLayout()
         Me.MS1.SuspendLayout()
         Me.PanelMain.SuspendLayout()
@@ -2942,6 +2942,42 @@ Partial Class Frm_Main
         Me.GBBel.Text = "Beleuchtung"
         Me.GBBel.Visible = False
         '
+        'Label91
+        '
+        Me.Label91.AutoSize = True
+        Me.Label91.Location = New System.Drawing.Point(144, 49)
+        Me.Label91.Name = "Label91"
+        Me.Label91.Size = New System.Drawing.Size(13, 13)
+        Me.Label91.TabIndex = 41
+        Me.Label91.Text = "3"
+        '
+        'Label90
+        '
+        Me.Label90.AutoSize = True
+        Me.Label90.Location = New System.Drawing.Point(70, 49)
+        Me.Label90.Name = "Label90"
+        Me.Label90.Size = New System.Drawing.Size(13, 13)
+        Me.Label90.TabIndex = 40
+        Me.Label90.Text = "2"
+        '
+        'Label89
+        '
+        Me.Label89.AutoSize = True
+        Me.Label89.Location = New System.Drawing.Point(144, 21)
+        Me.Label89.Name = "Label89"
+        Me.Label89.Size = New System.Drawing.Size(13, 13)
+        Me.Label89.TabIndex = 39
+        Me.Label89.Text = "1"
+        '
+        'Label88
+        '
+        Me.Label88.AutoSize = True
+        Me.Label88.Location = New System.Drawing.Point(70, 21)
+        Me.Label88.Name = "Label88"
+        Me.Label88.Size = New System.Drawing.Size(13, 13)
+        Me.Label88.TabIndex = 38
+        Me.Label88.Text = "0"
+        '
         'Bel_MinMax
         '
         Me.Bel_MinMax.Location = New System.Drawing.Point(302, 0)
@@ -2973,6 +3009,7 @@ Partial Class Frm_Main
         '
         Me.Bel_CB1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Bel_CB1.FormattingEnabled = True
+        Me.Bel_CB1.Items.AddRange(New Object() {"-1"})
         Me.Bel_CB1.Location = New System.Drawing.Point(160, 18)
         Me.Bel_CB1.Name = "Bel_CB1"
         Me.Bel_CB1.Size = New System.Drawing.Size(55, 21)
@@ -2983,6 +3020,7 @@ Partial Class Frm_Main
         '
         Me.Bel_CB2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Bel_CB2.FormattingEnabled = True
+        Me.Bel_CB2.Items.AddRange(New Object() {"-1"})
         Me.Bel_CB2.Location = New System.Drawing.Point(86, 45)
         Me.Bel_CB2.Name = "Bel_CB2"
         Me.Bel_CB2.Size = New System.Drawing.Size(55, 21)
@@ -2993,6 +3031,7 @@ Partial Class Frm_Main
         '
         Me.Bel_CB3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Bel_CB3.FormattingEnabled = True
+        Me.Bel_CB3.Items.AddRange(New Object() {"-1"})
         Me.Bel_CB3.Location = New System.Drawing.Point(160, 46)
         Me.Bel_CB3.Name = "Bel_CB3"
         Me.Bel_CB3.Size = New System.Drawing.Size(55, 21)
@@ -3012,6 +3051,7 @@ Partial Class Frm_Main
         '
         Me.Bel_CB0.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Bel_CB0.FormattingEnabled = True
+        Me.Bel_CB0.Items.AddRange(New Object() {"-1"})
         Me.Bel_CB0.Location = New System.Drawing.Point(86, 18)
         Me.Bel_CB0.Name = "Bel_CB0"
         Me.Bel_CB0.Size = New System.Drawing.Size(55, 21)
@@ -4463,42 +4503,6 @@ Partial Class Frm_Main
         Me.Anim_VSVar.Size = New System.Drawing.Size(226, 20)
         Me.Anim_VSVar.TabIndex = 32
         Me.Anim_VSVar.Variable = ""
-        '
-        'Label88
-        '
-        Me.Label88.AutoSize = True
-        Me.Label88.Location = New System.Drawing.Point(70, 21)
-        Me.Label88.Name = "Label88"
-        Me.Label88.Size = New System.Drawing.Size(13, 13)
-        Me.Label88.TabIndex = 38
-        Me.Label88.Text = "0"
-        '
-        'Label89
-        '
-        Me.Label89.AutoSize = True
-        Me.Label89.Location = New System.Drawing.Point(144, 21)
-        Me.Label89.Name = "Label89"
-        Me.Label89.Size = New System.Drawing.Size(13, 13)
-        Me.Label89.TabIndex = 39
-        Me.Label89.Text = "1"
-        '
-        'Label90
-        '
-        Me.Label90.AutoSize = True
-        Me.Label90.Location = New System.Drawing.Point(70, 49)
-        Me.Label90.Name = "Label90"
-        Me.Label90.Size = New System.Drawing.Size(13, 13)
-        Me.Label90.TabIndex = 40
-        Me.Label90.Text = "2"
-        '
-        'Label91
-        '
-        Me.Label91.AutoSize = True
-        Me.Label91.Location = New System.Drawing.Point(144, 49)
-        Me.Label91.Name = "Label91"
-        Me.Label91.Size = New System.Drawing.Size(13, 13)
-        Me.Label91.TabIndex = 41
-        Me.Label91.Text = "3"
         '
         'Frm_Main
         '

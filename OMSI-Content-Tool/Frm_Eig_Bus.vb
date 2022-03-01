@@ -57,7 +57,7 @@ Public Class Frm_Eig_Bus
             CBAchsen.Text = "Benutzerdef."
             For i = 0 To .achsen.Count - 1
                 CBAchsen.Items.Add("Achse " & i)
-                If .achsen(i).achse_long = .drehpunkt Then CBAchsen.Text = "Achse " & i
+                If .achsen(i).Y = .drehpunkt Then CBAchsen.Text = "Achse " & i
             Next i
 
             If Not .sound_file Is Nothing Then TBSound.Text = .sound_file.name
@@ -269,7 +269,7 @@ Public Class Frm_Eig_Bus
 
     Private Sub CBAchsen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CBAchsen.SelectedIndexChanged
         If CBAchsen.SelectedIndex = 0 Then Exit Sub
-        TBDrehpunkt.Text = Projekt_Bus.achsen(CBAchsen.SelectedIndex - 1).achse_long
+        TBDrehpunkt.Text = Projekt_Bus.achsen(CBAchsen.SelectedIndex - 1).Y
     End Sub
 
     Private Function filepicker(tb As TextBox, folder As String, filetype As String)

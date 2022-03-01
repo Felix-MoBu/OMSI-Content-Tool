@@ -1,84 +1,84 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Public Class OMSI_Achse
-    Private achse_long_int As Single
-    Private achse_maxwidth_int As Single
-    Private achse_minwidth_int As Single
-    Private achse_raddurchmesser_int As Single
-    Public achse_feder As Single
-    Public achse_maxforce As Integer
-    Public achse_daempfer As Integer
-    Public achse_antrieb As Boolean
+    Private Y_int As Single
+    Private maxwidth_int As Single
+    Private minwidth_int As Single
+    Private raddurchmesser_int As Single
+    Public feder As Single
+    Public maxforce As Integer
+    Public daempfer As Integer
+    Public antrieb As Boolean
 
     Public vertices As Double()
     Public edges As Integer()
     Public edges_init As Integer() = {0, 1}
 
-    Public Property achse_long As Single
+    Public Property Y As Single
         Get
-            Return achse_long_int
+            Return Y_int
         End Get
         Set(value As Single)
-            achse_long_int = value
+            Y_int = value
             PositionAchse()
         End Set
     End Property
 
-    Public Property achse_maxwidth As Single
+    Public Property maxwidth As Single
         Get
-            Return achse_maxwidth_int
+            Return maxwidth_int
         End Get
         Set(value As Single)
-            achse_maxwidth_int = value
+            maxwidth_int = value
             PositionAchse()
         End Set
     End Property
 
-    Public Property achse_minwidth As Single
+    Public Property minwidth As Single
         Get
-            Return achse_minwidth_int
+            Return minwidth_int
         End Get
         Set(value As Single)
-            achse_minwidth_int = value
+            minwidth_int = value
             PositionAchse()
         End Set
     End Property
 
-    Public Property achse_raddurchmesser As Single
+    Public Property raddurchmesser As Single
         Get
-            Return achse_raddurchmesser_int
+            Return raddurchmesser_int
         End Get
         Set(value As Single)
-            achse_raddurchmesser_int = value
+            raddurchmesser_int = value
             PositionAchse()
         End Set
     End Property
 
 
     Private Sub PositionAchse()
-        If achse_minwidth_int = 0 Then Exit Sub
-        If achse_maxwidth_int = 0 Then Exit Sub
+        If minwidth_int = 0 Then Exit Sub
+        If maxwidth_int = 0 Then Exit Sub
 
         Dim vert As New List(Of Double)
         Dim edg As New List(Of Integer)
 
         'Achse an sich
-        vert.Add(-achse_maxwidth_int / 2 - 0.5)
-        vert.Add(achse_raddurchmesser_int / 2)
-        vert.Add(achse_long_int)
+        vert.Add(-maxwidth_int / 2 - 0.5)
+        vert.Add(raddurchmesser_int / 2)
+        vert.Add(Y_int)
 
-        vert.Add(achse_maxwidth_int / 2 + 0.5)
-        vert.Add(achse_raddurchmesser_int / 2)
-        vert.Add(achse_long_int)
+        vert.Add(maxwidth_int / 2 + 0.5)
+        vert.Add(raddurchmesser_int / 2)
+        vert.Add(Y_int)
 
         edges = edges_init
 
         'Außenringe
-        vert.AddRange(dwarCircle(New Point3D(achse_maxwidth_int / 2, 0, achse_long_int), New Point3D(achse_maxwidth_int / 2, achse_raddurchmesser_int / 2, achse_long_int)))
-        vert.AddRange(dwarCircle(New Point3D(-achse_maxwidth_int / 2, 0, achse_long_int), New Point3D(-achse_maxwidth_int / 2, achse_raddurchmesser_int / 2, achse_long_int)))
+        vert.AddRange(dwarCircle(New Point3D(maxwidth_int / 2, 0, Y_int), New Point3D(maxwidth_int / 2, raddurchmesser_int / 2, Y_int)))
+        vert.AddRange(dwarCircle(New Point3D(-maxwidth_int / 2, 0, Y_int), New Point3D(-maxwidth_int / 2, raddurchmesser_int / 2, Y_int)))
 
         'Innenringe
-        vert.AddRange(dwarCircle(New Point3D(achse_minwidth_int / 2, 0, achse_long_int), New Point3D(achse_minwidth_int / 2, achse_raddurchmesser_int / 2, achse_long_int)))
-        vert.AddRange(dwarCircle(New Point3D(-achse_minwidth_int / 2, 0, achse_long_int), New Point3D(-achse_minwidth_int / 2, achse_raddurchmesser_int / 2, achse_long_int)))
+        vert.AddRange(dwarCircle(New Point3D(minwidth_int / 2, 0, Y_int), New Point3D(minwidth_int / 2, raddurchmesser_int / 2, Y_int)))
+        vert.AddRange(dwarCircle(New Point3D(-minwidth_int / 2, 0, Y_int), New Point3D(-minwidth_int / 2, raddurchmesser_int / 2, Y_int)))
 
         vert.Add(0) '-> Damit der Speicherfehler nicht auftritt
         vertices = vert.ToArray

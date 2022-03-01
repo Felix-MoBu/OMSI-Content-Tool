@@ -243,9 +243,13 @@
     <Compile Include="Local3DObjekt.vb" />
     <Compile Include="Modifier.vb" />
     <Compile Include="OMSI_Attachment.vb" />
+    <Compile Include="OMSI_Body_osc.vb" />
     <Compile Include="OMSI_Bone.vb" />
+    <Compile Include="OMSI_Boogie.vb" />
     <Compile Include="OMSI_Cabin.vb" />
     <Compile Include="OMSI_Const.vb" />
+    <Compile Include="OMSI_ContactShoe.vb" />
+    <Compile Include="OMSI_ControlCabels.vb" />
     <Compile Include="OMSI_Door.vb" />
     <Compile Include="OMSI_Font.vb" />
     <Compile Include="OMSI_Illumination.vb" />
@@ -257,6 +261,7 @@
     <Compile Include="OMSI_Repaint.vb" />
     <Compile Include="OMSI_Rep_Var.vb" />
     <Compile Include="OMSI_Seat.vb" />
+    <Compile Include="OMSI_Sinus.vb" />
     <Compile Include="OMSI_Spot.vb" />
     <Compile Include="OMSI_TicketPnt.vb" />
     <Compile Include="OMSI_traffic_light.vb" />

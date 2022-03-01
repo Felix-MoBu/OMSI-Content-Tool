@@ -128,7 +128,7 @@ Public Class Frm_Einst
     Private Sub BTRepToolSuchen_Click(sender As Object, e As EventArgs) Handles BTRepToolSuchen.Click
         Dim fd As New OpenFileDialog
         If TBRepTool.Text <> "" Then
-            fd.InitialDirectory = TBRepTool.Text
+            fd.InitialDirectory = New Filename(TBRepTool.Text).path
         Else
             fd.InitialDirectory = TBOmsiPfad.Text
         End If

@@ -280,21 +280,21 @@ Public Class Proj_Bus
                             For i = linect + 1 To allLines.Count - 1
                                 Select Case allLines(i)
                                     Case "achse_long"
-                                        .achse_long = toSingle(allLines(i + 1))
+                                        .Y = toSingle(allLines(i + 1))
                                     Case "achse_maxwidth"
-                                        .achse_maxwidth = toSingle(allLines(i + 1))
+                                        .maxwidth = toSingle(allLines(i + 1))
                                     Case "achse_minwidth"
-                                        .achse_minwidth = toSingle(allLines(i + 1))
+                                        .minwidth = toSingle(allLines(i + 1))
                                     Case "achse_raddurchmesser"
-                                        .achse_raddurchmesser = toSingle(allLines(i + 1))
+                                        .raddurchmesser = toSingle(allLines(i + 1))
                                     Case "achse_feder"
-                                        .achse_feder = toSingle(allLines(i + 1))
+                                        .feder = toSingle(allLines(i + 1))
                                     Case "achse_maxforce"
-                                        .achse_maxforce = toSingle(allLines(i + 1))
+                                        .maxforce = toSingle(allLines(i + 1))
                                     Case "achse_daempfer"
-                                        .achse_daempfer = toSingle(allLines(i + 1))
+                                        .daempfer = toSingle(allLines(i + 1))
                                     Case "achse_antrieb"
-                                        .achse_antrieb = toSingle(allLines(i + 1))
+                                        .antrieb = toSingle(allLines(i + 1))
                                         Exit For
                                     Case Else
                                         If allLines(i).Contains("[") Then
@@ -596,14 +596,14 @@ Public Class Proj_Bus
 
             For Each achse In achsen
                 .Add("[newachse]")
-                .Add("achse_long" & vbCrLf & fromSingle(achse.achse_long))
-                .Add("achse_maxwidth" & vbCrLf & fromSingle(achse.achse_maxwidth))
-                .Add("achse_minwidth" & vbCrLf & fromSingle(achse.achse_minwidth))
-                .Add("achse_raddurchmesser" & vbCrLf & fromSingle(achse.achse_raddurchmesser))
-                .Add("achse_feder" & vbCrLf & fromSingle(achse.achse_feder))
-                .Add("achse_maxforce" & vbCrLf & fromSingle(achse.achse_maxforce))
-                .Add("achse_daempfer" & vbCrLf & fromSingle(achse.achse_daempfer))
-                .Add("achse_antrieb" & vbCrLf & fromBool(achse.achse_antrieb), True)
+                .Add("achse_long" & vbCrLf & fromSingle(achse.Y))
+                .Add("achse_maxwidth" & vbCrLf & fromSingle(achse.maxwidth))
+                .Add("achse_minwidth" & vbCrLf & fromSingle(achse.minwidth))
+                .Add("achse_raddurchmesser" & vbCrLf & fromSingle(achse.raddurchmesser))
+                .Add("achse_feder" & vbCrLf & fromSingle(achse.feder))
+                .Add("achse_maxforce" & vbCrLf & fromSingle(achse.maxforce))
+                .Add("achse_daempfer" & vbCrLf & fromSingle(achse.daempfer))
+                .Add("achse_antrieb" & vbCrLf & fromBool(achse.antrieb), True)
             Next
 
             If couple_back Then

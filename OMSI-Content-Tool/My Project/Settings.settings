@@ -117,7 +117,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="AutoConvertO3D" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="LineColor3D" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Black</Value>
