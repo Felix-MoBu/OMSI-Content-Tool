@@ -4359,7 +4359,8 @@ Class Frm_Main
                         GL.BindTexture(TextureTarget.Texture2D, .texturen(i).id)
                     Else
                         'GL.BindTexture(TextureTarget.Texture2D, overWriteTextures(origTexturen.IndexOf(.texturen(i).filename)).id)
-                        GL.BindTexture(TextureTarget.Texture2D, overWriteTextures(origTexturen.FindIndex(Function(s) s.Equals(.texturen(i).filename, StringComparison.CurrentCultureIgnoreCase))).id)
+                        Dim texturename As String = .texturen(i).filename
+                        GL.BindTexture(TextureTarget.Texture2D, overWriteTextures(origTexturen.FindIndex(Function(s) s.Equals(texturename, StringComparison.CurrentCultureIgnoreCase))).id)
                     End If
 
 
