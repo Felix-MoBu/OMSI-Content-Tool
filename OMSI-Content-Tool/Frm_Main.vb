@@ -4173,15 +4173,27 @@ Class Frm_Main
                                 End With
                             Next
 
-                            GL.Color3(My.Settings.CamPaxColor)
+
                             For i As Integer = 0 To Projekt_Bus.pax_cam_list.Count - 1
-                                GL.Color3(My.Settings.CamDriverColor)
+                                GL.Color3(My.Settings.CamPaxColor)
                                 If TVHelper.SelectedNode.FullPath.Contains("Fahrgastkameras\") And i = TVHelper.SelectedNode.Index Then GL.Color3(My.Settings.SelectionColor)
                                 With Projekt_Bus.pax_cam_list(i)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                     GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
                                 End With
                             Next
+
+                            If Projekt_Bus.couple_back Then
+                                GL.Color3(My.Settings.AchsenColor)
+                                If TVHelper.SelectedNode.FullPath.Contains("Kupplungspunkte\") Then GL.Color3(My.Settings.SelectionColor)
+                                If Not Projekt_Bus.couple_back_sphere Is Nothing Then
+                                    With Projekt_Bus.couple_back_sphere
+                                        GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
+                                        GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                    End With
+                                End If
+                            End If
+
 
                             For i As Integer = 0 To Projekt_Bus.achsen.Count - 1
                                 GL.Color3(My.Settings.AchsenColor)

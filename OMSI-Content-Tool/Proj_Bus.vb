@@ -59,6 +59,7 @@ Public Class Proj_Bus
     Public couple_back_point As Point3D
     Public couple_back_file As Filename
     Public couple_back_dir As Boolean
+    Public couple_back_sphere As LocalSphere
 
     Public couple_front As Boolean
     Public couple_front_point As Point3D
@@ -308,6 +309,7 @@ Public Class Proj_Bus
                     Case "[coupling_back]"
                         couple_back = True
                         couple_back_point = New Point3D(toSingle(allLines(linect + 1)), toSingle(allLines(linect + 2)), toSingle(allLines(linect + 3)))
+                        couple_back_sphere = New LocalSphere(couple_back_point, 0.3)
                     Case "[couple_back]"
                         couple_back_file = New Filename(allLines(linect + 1), filename.path)
                         couple_back_dir = stringToBool(allLines(linect + 2))
