@@ -463,6 +463,7 @@ Class Frm_Main
                 texture.lastChangeDate = IO.File.GetLastWriteTime(texture.filename)
                 GL.GenTextures(1, texture.id)
                 GL.BindTexture(TextureTarget.Texture2D, texture.id)
+
                 Dim texData As Imaging.BitmapData = loadImage(texture)
 
                 Select Case texData.PixelFormat
@@ -477,10 +478,12 @@ Class Frm_Main
                         GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, texData.Width, texData.Height, 0, PixelFormat.Bgr, PixelType.UnsignedByte, texData.Scan0)
                 End Select
 
+
                 GL.GenerateMipmap(GenerateMipmapTarget.Texture2D)
                 If Not AlleTexturen.Contains(texture.filename.name) Then AlleTexturen.Add(texture.filename.name)
                 If Not DDAlleTexturen.Items.Contains(texture.filename.name) Then DDAlleTexturen.Items.Add(texture.filename.name)
                 If overWrite Then Log.Add("Bilddatei neu geladen! (Datei: " & texture.filename.name & ")")
+
             Catch ex As Exception
                 Log.Add("Bilddatei beschädigt oder im falschen Format gespeichert! (Fehler: T999, Datei: " & texture.filename.name & ")", Log.TYPE_ERROR)
             End Try
@@ -3169,21 +3172,36 @@ Class Frm_Main
     End Sub
 
     Private Sub BTTexLoad_Click(sender As Object, e As EventArgs) Handles BTTexLoad.Click
+        allTexturesCheckLastChange()
+    End Sub
+
+    Private Sub TReloadTextures_Tick(sender As Object, e As EventArgs) Handles TReloadTextures.Tick
+        allTexturesCheckLastChange()
+    End Sub
+
+    Private Sub allTexturesCheckLastChange()
+
         For Each localObject In AlleObjekte
             For Each texture In localObject.texturen
-                TexturecheckLastChange(texture)
+                TextureCheckLastChange(texture)
             Next
         Next
         For Each texture In overWriteTextures
-            TexturecheckLastChange(texture)
+            TextureCheckLastChange(texture)
         Next
         GlMain.Invalidate()
     End Sub
 
-    Private Sub TexturecheckLastChange(texture As LocalTexture)
+    Dim lastReloadedTexture As New LocalTexture
+    Private Sub TextureCheckLastChange(ByRef texture As LocalTexture)
         If IO.File.Exists(texture.filename) Then
-            If Not IO.File.GetLastWriteTime(texture.filename) = texture.lastChangeDate Then
-                texture.lastChangeDate = IO.File.GetLastWriteTime(texture.filename)
+
+            'If lastReloadedTexture = texture Then Exit Sub
+            'lastReloadedTexture = texture
+
+            Dim lastChangedate As Date = IO.File.GetLastWriteTime(texture.filename)
+            If Not lastChangedate = texture.lastChangeDate Then
+                texture.lastChangeDate = lastChangedate
                 loadTexture(texture, True)
                 If texture.filename.name = DDAlleTexturen.Text Then
                     SelectedTextureChanged(DDAlleTexturen.Text)
@@ -4647,9 +4665,9 @@ Class Frm_Main
     End Sub
 
     Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
+
         checkForStdPos()
         'MsgBox(ToDouble("8180003F"))
-
         'MsgBox(AlleTexturen.Count)
     End Sub
 
@@ -5151,18 +5169,6 @@ Class Frm_Main
 
     Private Sub PSPos_KeyPress(sender As Object, e As EventArgs) Handles PSPos.KeyPress
 
-    End Sub
-
-    Private Sub TReloadTextures_Tick(sender As Object, e As EventArgs) Handles TReloadTextures.Tick
-        For Each localObject In AlleObjekte
-            For Each texture In localObject.texturen
-                TexturecheckLastChange(texture)
-            Next
-        Next
-        For Each texture In overWriteTextures
-            TexturecheckLastChange(texture)
-        Next
-        GlMain.Invalidate()
     End Sub
 
     Private Sub InnenlichtToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InnenlichtToolStripMenuItem.Click

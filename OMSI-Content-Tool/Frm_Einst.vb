@@ -39,6 +39,7 @@ Public Class Frm_Einst
             Else
                 Frm_Main.TReloadTextures.Stop()
             End If
+            .ShowAllParts = CBShowAllParts.Checked
 
             .CamDriverColor = TBColorDriverCam.BackColor
             .CamPaxColor = TBColorPaxCam.BackColor
@@ -88,6 +89,7 @@ Public Class Frm_Einst
             'Page "Darstellung"
             TBColor3D.BackColor = .BackColor3D
             CBTexAutoReload.Checked = .TexAutoReload
+            CBShowAllParts.Checked = .ShowAllParts
             TBColorDriverCam.BackColor = .CamDriverColor
             TBColorPaxCam.BackColor = .CamPaxColor
             TBColorReflexCam.BackColor = .CamReflexColor

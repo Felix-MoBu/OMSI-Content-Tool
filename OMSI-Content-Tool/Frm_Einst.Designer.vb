@@ -51,6 +51,7 @@ Partial Class Frm_Einst
         Me.BTRepToolSuchen = New System.Windows.Forms.Button()
         Me.TBRepTool = New System.Windows.Forms.TextBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.CBShowAllParts = New System.Windows.Forms.CheckBox()
         Me.CBTexAutoReload = New System.Windows.Forms.CheckBox()
         Me.GBPerformance = New System.Windows.Forms.GroupBox()
         Me.Label21 = New System.Windows.Forms.Label()
@@ -394,6 +395,7 @@ Partial Class Frm_Einst
         '
         'TabPage3
         '
+        Me.TabPage3.Controls.Add(Me.CBShowAllParts)
         Me.TabPage3.Controls.Add(Me.CBTexAutoReload)
         Me.TabPage3.Controls.Add(Me.GBPerformance)
         Me.TabPage3.Controls.Add(Me.GroupBox4)
@@ -407,6 +409,17 @@ Partial Class Frm_Einst
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Darstellung"
         Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'CBShowAllParts
+        '
+        Me.CBShowAllParts.AutoSize = True
+        Me.CBShowAllParts.Enabled = False
+        Me.CBShowAllParts.Location = New System.Drawing.Point(449, 9)
+        Me.CBShowAllParts.Name = "CBShowAllParts"
+        Me.CBShowAllParts.Size = New System.Drawing.Size(195, 17)
+        Me.CBShowAllParts.TabIndex = 10
+        Me.CBShowAllParts.Text = "Angekuppelte Wagenteile anzeigen"
+        Me.CBShowAllParts.UseVisualStyleBackColor = True
         '
         'CBTexAutoReload
         '
@@ -1031,4 +1044,5 @@ Partial Class Frm_Einst
     Friend WithEvents Label22 As Label
     Friend WithEvents TBColorSelectedObj As TextBox
     Friend WithEvents CBTexAutoReload As CheckBox
+    Friend WithEvents CBShowAllParts As CheckBox
 End Class

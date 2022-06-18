@@ -29,4 +29,20 @@ Public Class LocalTexture
 
     Public alpha As Double = 1
     Public sli_alpha As Byte
+
+    Public Shared Operator =(ByVal obj1 As LocalTexture, ByVal obj2 As LocalTexture) As Boolean
+        If obj1 Is Nothing Then Return False
+        If obj2 Is Nothing Then Return False
+        If obj1.filename <> obj2.filename Then Return False
+        If obj1.id <> obj2.id Then Return False
+        Return True
+    End Operator
+
+    Public Shared Operator <>(ByVal obj1 As LocalTexture, ByVal obj2 As LocalTexture) As Boolean
+        If obj1 Is Nothing Then Return True
+        If obj2 Is Nothing Then Return True
+        If obj1.filename <> obj2.filename Then Return True
+        If obj1.id <> obj2.id Then Return True
+        Return False
+    End Operator
 End Class

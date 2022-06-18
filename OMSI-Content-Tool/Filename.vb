@@ -93,31 +93,43 @@ Public Class Filename
     End Sub
 
     Public Shared Operator <>(ByVal obj1 As Filename, ByVal obj2 As Filename) As Boolean
+        If obj1 Is Nothing Then Return True
+        If obj2 Is Nothing Then Return True
         If obj1.ToString <> obj2.ToString Then Return True
         Return False
     End Operator
 
     Public Shared Operator =(ByVal obj1 As Filename, ByVal obj2 As Filename) As Boolean
+        If obj1 Is Nothing Then Return False
+        If obj2 Is Nothing Then Return False
         If obj1.ToString = obj2.ToString Then Return True
         Return False
     End Operator
 
     Public Shared Operator <>(ByVal obj1 As String, ByVal obj2 As Filename) As Boolean
+        If obj1 Is Nothing Then Return True
+        If obj2 Is Nothing Then Return True
         If obj1 <> obj2.ToString Then Return True
         Return False
     End Operator
 
     Public Shared Operator =(ByVal obj1 As String, ByVal obj2 As Filename) As Boolean
+        If obj1 Is Nothing Then Return False
+        If obj2 Is Nothing Then Return False
         If obj1 = obj2.ToString Then Return True
         Return False
     End Operator
 
     Public Shared Operator <>(ByVal obj1 As Filename, ByVal obj2 As String) As Boolean
+        If obj1 Is Nothing Then Return True
+        If obj2 Is Nothing Then Return True
         If obj1.ToString <> obj2 Then Return True
         Return False
     End Operator
 
     Public Shared Operator =(ByVal obj1 As Filename, ByVal obj2 As String) As Boolean
+        If obj1 Is Nothing Then Return False
+        If obj2 Is Nothing Then Return False
         If obj1.ToString = obj2 Then Return True
         Return False
     End Operator
