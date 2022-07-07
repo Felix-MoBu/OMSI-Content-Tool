@@ -108,6 +108,8 @@ Public Class Proj_Sco
                         surface = True
                     Case "[LightMapMapping]"
                         LightMapMapping = True
+                    Case "[NightMapMode]"
+                        nightmapmode = allLines(linect + 1)
                     Case "[onlyeditor]"
                         onlyeditor = True
                     Case "[shadow]"
