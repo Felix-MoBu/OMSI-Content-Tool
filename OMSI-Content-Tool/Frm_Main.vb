@@ -2699,7 +2699,7 @@ Class Frm_Main
                 If Not getProjTyp() = PROJ_TYPE_SLI Then
                     showSettings({GBMesh, GBMat, GBAnimation, GBBones, GBBel})
                 Else
-                    showSettings({GBSpline})
+                    showSettings({GBSpline, GBMat})
                 End If
             Case 1
                 showSettings(Nothing)
@@ -2857,11 +2857,35 @@ Class Frm_Main
     Private Sub LBMeshes_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBMeshes.SelectedIndexChanged
         selectedMeshesChanged = True
         If Not getSelectedMesh() Is Nothing Then
-            saveMeshProbs(lastSelectedMesh)
-            showMeshProps(getSelectedMesh)
+            If Not getProjTyp() = Proj_Sli.TYPE Then
+                saveMeshProbs(lastSelectedMesh)
+                showMeshProps(getSelectedMesh)
+            Else
+                'saveSliPartProps(lastSelectedMesh)
+                showSliPartProps(getSelectedMesh)
+            End If
+
         End If
         GlMain.Invalidate()
         lastSelectedMesh = getSelectedMesh()
+    End Sub
+
+    Private Sub showSliPartProps(mesh As OMSI_Mesh)
+        If Not mesh Is Nothing Then
+            Dim index As Integer = LBMeshes.SelectedIndex
+            With mesh
+
+                Spline_TBStartX.Text = Projekt_Sli.profiles(index).profilePnts(0).X
+                Spline_TBStartZ.Text = Projekt_Sli.profiles(index).profilePnts(0).Y
+
+                Spline_TBEndX.Text = Projekt_Sli.profiles(index).profilePnts(1).X
+                Spline_TBEndZ.Text = Projekt_Sli.profiles(index).profilePnts(1).Y
+
+                DDAlleTexturen.SelectedItem = Projekt_Sli.textures(Projekt_Sli.profiles(index).texIndex).filename.name
+
+                'hier weiter!
+            End With
+        End If
     End Sub
 
     Private Sub showMeshProps(mesh As OMSI_Mesh)

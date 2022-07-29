@@ -476,6 +476,14 @@ Partial Class Frm_Main
         Me.FDÖffnen = New System.Windows.Forms.OpenFileDialog()
         Me.TSave = New System.Windows.Forms.Timer(Me.components)
         Me.TReloadTextures = New System.Windows.Forms.Timer(Me.components)
+        Me.Label92 = New System.Windows.Forms.Label()
+        Me.Spline_TBStartX = New System.Windows.Forms.TextBox()
+        Me.Spline_TBEndX = New System.Windows.Forms.TextBox()
+        Me.Label93 = New System.Windows.Forms.Label()
+        Me.Spline_TBEndZ = New System.Windows.Forms.TextBox()
+        Me.Spline_TBStartZ = New System.Windows.Forms.TextBox()
+        Me.Label94 = New System.Windows.Forms.Label()
+        Me.Label95 = New System.Windows.Forms.Label()
         Me.Spot_PSRichtung = New O3D_Test.PointSelector()
         Me.Spot_CSFarbe = New O3D_Test.ColorSelector()
         Me.VarSelector1 = New O3D_Test.VarSelector()
@@ -492,6 +500,8 @@ Partial Class Frm_Main
         Me.Anim_PSRichtung = New O3D_Test.PointSelector()
         Me.Anim_PSRotPnt = New O3D_Test.PointSelector()
         Me.Anim_VSVar = New O3D_Test.VarSelector()
+        Me.Splines_CBCollision = New System.Windows.Forms.CheckBox()
+        Me.Spline_CBVisible = New System.Windows.Forms.CheckBox()
         Me.SS1.SuspendLayout()
         Me.MS1.SuspendLayout()
         Me.PanelMain.SuspendLayout()
@@ -2621,10 +2631,20 @@ Partial Class Frm_Main
         '
         'GBSpline
         '
+        Me.GBSpline.Controls.Add(Me.Spline_CBVisible)
+        Me.GBSpline.Controls.Add(Me.Splines_CBCollision)
+        Me.GBSpline.Controls.Add(Me.Label95)
+        Me.GBSpline.Controls.Add(Me.Label94)
+        Me.GBSpline.Controls.Add(Me.Spline_TBEndZ)
+        Me.GBSpline.Controls.Add(Me.Spline_TBStartZ)
+        Me.GBSpline.Controls.Add(Me.Label93)
+        Me.GBSpline.Controls.Add(Me.Spline_TBEndX)
+        Me.GBSpline.Controls.Add(Me.Spline_TBStartX)
+        Me.GBSpline.Controls.Add(Me.Label92)
         Me.GBSpline.Controls.Add(Me.Spline_MinMax)
         Me.GBSpline.Location = New System.Drawing.Point(4, 819)
         Me.GBSpline.Name = "GBSpline"
-        Me.GBSpline.Size = New System.Drawing.Size(327, 114)
+        Me.GBSpline.Size = New System.Drawing.Size(327, 102)
         Me.GBSpline.TabIndex = 26
         Me.GBSpline.TabStop = False
         Me.GBSpline.Text = "Spline"
@@ -4315,6 +4335,70 @@ Partial Class Frm_Main
         '
         Me.TReloadTextures.Interval = 2000
         '
+        'Label92
+        '
+        Me.Label92.AutoSize = True
+        Me.Label92.Location = New System.Drawing.Point(4, 24)
+        Me.Label92.Name = "Label92"
+        Me.Label92.Size = New System.Drawing.Size(39, 13)
+        Me.Label92.TabIndex = 37
+        Me.Label92.Text = "Start X"
+        '
+        'Spline_TBStartX
+        '
+        Me.Spline_TBStartX.Location = New System.Drawing.Point(69, 21)
+        Me.Spline_TBStartX.Name = "Spline_TBStartX"
+        Me.Spline_TBStartX.Size = New System.Drawing.Size(72, 20)
+        Me.Spline_TBStartX.TabIndex = 38
+        '
+        'Spline_TBEndX
+        '
+        Me.Spline_TBEndX.Location = New System.Drawing.Point(224, 21)
+        Me.Spline_TBEndX.Name = "Spline_TBEndX"
+        Me.Spline_TBEndX.Size = New System.Drawing.Size(71, 20)
+        Me.Spline_TBEndX.TabIndex = 39
+        '
+        'Label93
+        '
+        Me.Label93.AutoSize = True
+        Me.Label93.Location = New System.Drawing.Point(149, 24)
+        Me.Label93.Name = "Label93"
+        Me.Label93.Size = New System.Drawing.Size(36, 13)
+        Me.Label93.TabIndex = 40
+        Me.Label93.Text = "End X"
+        '
+        'Spline_TBEndZ
+        '
+        Me.Spline_TBEndZ.Location = New System.Drawing.Point(224, 47)
+        Me.Spline_TBEndZ.Name = "Spline_TBEndZ"
+        Me.Spline_TBEndZ.Size = New System.Drawing.Size(71, 20)
+        Me.Spline_TBEndZ.TabIndex = 42
+        '
+        'Spline_TBStartZ
+        '
+        Me.Spline_TBStartZ.Location = New System.Drawing.Point(69, 47)
+        Me.Spline_TBStartZ.Name = "Spline_TBStartZ"
+        Me.Spline_TBStartZ.Size = New System.Drawing.Size(72, 20)
+        Me.Spline_TBStartZ.TabIndex = 41
+        '
+        'Label94
+        '
+        Me.Label94.AutoSize = True
+        Me.Label94.Location = New System.Drawing.Point(4, 50)
+        Me.Label94.Name = "Label94"
+        Me.Label94.Size = New System.Drawing.Size(39, 13)
+        Me.Label94.TabIndex = 43
+        Me.Label94.Text = "Start Z"
+        '
+        'Label95
+        '
+        Me.Label95.AutoSize = True
+        Me.Label95.Location = New System.Drawing.Point(149, 50)
+        Me.Label95.Name = "Label95"
+        Me.Label95.Size = New System.Drawing.Size(36, 13)
+        Me.Label95.TabIndex = 44
+        Me.Label95.Text = "End Z"
+        '
         'Spot_PSRichtung
         '
         Me.Spot_PSRichtung.BackColor = System.Drawing.Color.Transparent
@@ -4504,6 +4588,30 @@ Partial Class Frm_Main
         Me.Anim_VSVar.TabIndex = 32
         Me.Anim_VSVar.Variable = ""
         '
+        'Splines_CBCollision
+        '
+        Me.Splines_CBCollision.AutoSize = True
+        Me.Splines_CBCollision.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Splines_CBCollision.Location = New System.Drawing.Point(7, 73)
+        Me.Splines_CBCollision.Name = "Splines_CBCollision"
+        Me.Splines_CBCollision.Size = New System.Drawing.Size(64, 17)
+        Me.Splines_CBCollision.TabIndex = 45
+        Me.Splines_CBCollision.Text = "Kollision"
+        Me.Splines_CBCollision.UseVisualStyleBackColor = True
+        '
+        'Spline_CBVisible
+        '
+        Me.Spline_CBVisible.AutoSize = True
+        Me.Spline_CBVisible.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Spline_CBVisible.Checked = True
+        Me.Spline_CBVisible.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Spline_CBVisible.Location = New System.Drawing.Point(86, 73)
+        Me.Spline_CBVisible.Name = "Spline_CBVisible"
+        Me.Spline_CBVisible.Size = New System.Drawing.Size(65, 17)
+        Me.Spline_CBVisible.TabIndex = 46
+        Me.Spline_CBVisible.Text = "Sichtbar"
+        Me.Spline_CBVisible.UseVisualStyleBackColor = True
+        '
         'Frm_Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -4550,6 +4658,7 @@ Partial Class Frm_Main
         Me.GBPfad.ResumeLayout(False)
         Me.GBPfad.PerformLayout()
         Me.GBSpline.ResumeLayout(False)
+        Me.GBSpline.PerformLayout()
         Me.GBAllgemein.ResumeLayout(False)
         Me.GBAllgemein.PerformLayout()
         Me.GBMesh.ResumeLayout(False)
@@ -5030,4 +5139,14 @@ Partial Class Frm_Main
     Friend WithEvents Label90 As Label
     Friend WithEvents Label89 As Label
     Friend WithEvents Label88 As Label
+    Friend WithEvents Label95 As Label
+    Friend WithEvents Label94 As Label
+    Friend WithEvents Spline_TBEndZ As TextBox
+    Friend WithEvents Spline_TBStartZ As TextBox
+    Friend WithEvents Label93 As Label
+    Friend WithEvents Spline_TBEndX As TextBox
+    Friend WithEvents Spline_TBStartX As TextBox
+    Friend WithEvents Label92 As Label
+    Friend WithEvents Spline_CBVisible As CheckBox
+    Friend WithEvents Splines_CBCollision As CheckBox
 End Class
