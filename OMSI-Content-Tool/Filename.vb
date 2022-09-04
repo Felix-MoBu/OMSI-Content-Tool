@@ -80,8 +80,11 @@ Public Class Filename
             End If
             If projectpath.Substring(projectpath.Length - 1) = "\" Then projectpath = projectpath.Substring(0, projectpath.Length - 1)
             Me.path = projectpath
+            If filename.Length + 1 > projectpath.Length Then
+                Me.name = filename.Substring(projectpath.Length + 1)
+            End If
         Else
-            Dim tempPath = Split(filename, "\")
+                Dim tempPath = Split(filename, "\")
             Me.name = tempPath(tempPath.Count - 1)
 
             Dim tempPath2 As String() = Split(filename, "\")

@@ -49,7 +49,7 @@ Public Class Frm_Eig_Sco
 
             CBLightmapMapping.Checked = .LightMapMapping
             CBShadow.Checked = .shadow
-            CBNormalBel.Checked = .nomaplighting
+            CBNormalBel.Checked = .nomallighting
             CBNightMapMode.SelectedIndex = .nightmapmode
         End With
     End Sub
@@ -103,7 +103,7 @@ Public Class Frm_Eig_Sco
 
             .LightMapMapping = CBLightmapMapping.Checked
             .shadow = CBShadow.Checked
-            .nomaplighting = CBNormalBel.Checked
+            .nomallighting = CBNormalBel.Checked
             .nightmapmode = CBNightMapMode.SelectedIndex
         End With
     End Sub

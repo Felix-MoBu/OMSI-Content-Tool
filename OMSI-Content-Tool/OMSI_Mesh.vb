@@ -17,16 +17,16 @@ Public Class OMSI_Mesh
     Public materials As New List(Of OMSI_Matl)
     Public visibleVar As String
     Public visibleInt As Integer
-    Public mouseevent As String
+    Public mouseEvent As String
     Public animations As New List(Of OMSI_Anim)
     Public bones As New List(Of OMSI_Bone)
-    Public smoothskin As Boolean
+    Public smoothSkin As Boolean
 
-    Public meshident As String
-    Public animparent As String
+    Public meshIdent As String
+    Public animParent As String
 
-    Public texchanges As String
-    Public isshadow As Boolean
+    Public texChanges As String
+    Public isShadow As Boolean
 
     Public Property center As Point3D
         Get

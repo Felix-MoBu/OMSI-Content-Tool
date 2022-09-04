@@ -35,6 +35,8 @@ Public Class OMSI_Matl
     Public asressClamp As Boolean
 
     Public matlChange As OMSI_MatlChange
+
+    'Public patchWorkChain As OMSI_MatlPatchWorkChain
     '...
 
 

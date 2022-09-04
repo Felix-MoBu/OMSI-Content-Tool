@@ -2881,6 +2881,8 @@ Class Frm_Main
                 Spline_TBEndX.Text = Projekt_Sli.profiles(index).profilePnts(1).X
                 Spline_TBEndZ.Text = Projekt_Sli.profiles(index).profilePnts(1).Y
 
+                'U ist X auf der Texture und V ist Texture pro Meter (0,16 macht 1,6 Mal die Texture für 10m Spline)
+
                 DDAlleTexturen.SelectedItem = Projekt_Sli.textures(Projekt_Sli.profiles(index).texIndex).filename.name
 
                 'hier weiter!
@@ -4701,8 +4703,7 @@ Class Frm_Main
     End Sub
 
     Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
-
-        checkForStdPos()
+        'checkForStdPos()
         'MsgBox(ToDouble("8180003F"))
         'MsgBox(AlleTexturen.Count)
     End Sub
