@@ -9,6 +9,10 @@ Public Class Local3DObjekt
     Public visible As Boolean = True
     Public tempHidden As Boolean = False
 
+    Public scaleX As New Point3D
+    Public scaleY As New Point3D
+    Public scaleZ As New Point3D
+
     Public A1 As New Point3D
     Public A2 As Double
     Public B1 As New Point3D

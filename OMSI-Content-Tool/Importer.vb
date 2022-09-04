@@ -710,19 +710,19 @@ Module Importer
         For ctLine = 0 To lines.Count - 1
             Select Case Split(Trim(lines(ctLine)), " ")(0)
                 Case "FrameTransformMatrix"
-                    temp3D.A1.X = Replace(Split(Trim(lines(ctLine + 1)), ",")(0), ".", ",")
-                    temp3D.A1.Z = Replace(Split(Trim(lines(ctLine + 1)), ",")(1), ".", ",")
-                    temp3D.A1.Y = Replace(Split(Trim(lines(ctLine + 1)), ",")(2), ".", ",")
+                    temp3D.scaleX.X = Replace(Split(Trim(lines(ctLine + 1)), ",")(0), ".", ",")
+                    temp3D.scaleX.Z = Replace(Split(Trim(lines(ctLine + 1)), ",")(1), ".", ",")
+                    temp3D.scaleX.Y = Replace(Split(Trim(lines(ctLine + 1)), ",")(2), ".", ",")
                     temp3D.A2 = Replace(Split(Trim(lines(ctLine + 1)), ",")(3), ".", ",")
 
-                    temp3D.B1.X = Replace(Split(Trim(lines(ctLine + 2)), ",")(0), ".", ",")
-                    temp3D.B1.Z = Replace(Split(Trim(lines(ctLine + 2)), ",")(1), ".", ",")
-                    temp3D.B1.Y = Replace(Split(Trim(lines(ctLine + 2)), ",")(2), ".", ",")
+                    temp3D.scaleY.X = Replace(Split(Trim(lines(ctLine + 2)), ",")(0), ".", ",")
+                    temp3D.scaleY.Z = Replace(Split(Trim(lines(ctLine + 2)), ",")(1), ".", ",")
+                    temp3D.scaleY.Y = Replace(Split(Trim(lines(ctLine + 2)), ",")(2), ".", ",")
                     temp3D.B2 = Replace(Split(Trim(lines(ctLine + 2)), ",")(3), ".", ",")
 
-                    temp3D.origin.X = Replace(Split(Trim(lines(ctLine + 3)), ",")(0), ".", ",")
-                    temp3D.origin.Z = Replace(Split(Trim(lines(ctLine + 3)), ",")(1), ".", ",")
-                    temp3D.origin.Y = Replace(Split(Trim(lines(ctLine + 3)), ",")(2), ".", ",")
+                    temp3D.scaleZ.X = Replace(Split(Trim(lines(ctLine + 3)), ",")(0), ".", ",")
+                    temp3D.scaleZ.Z = Replace(Split(Trim(lines(ctLine + 3)), ",")(1), ".", ",")
+                    temp3D.scaleZ.Y = Replace(Split(Trim(lines(ctLine + 3)), ",")(2), ".", ",")
                     temp3D.origin_scale = Replace(Split(Trim(lines(ctLine + 3)), ",")(3), ".", ",")
 
                     temp3D.center.X = Replace(Split(Trim(lines(ctLine + 4)), ",")(0), ".", ",")
@@ -734,9 +734,10 @@ Module Importer
                     'Mesh-Bereich
                     ctMesh = Replace(lines(ctLine + 1), ";", "")
                     For i = ctLine + 2 To ctLine + 2 + ctMesh - 1
-                        verticesTemp.Add(-Replace(Split(Trim(lines(i)), ";")(0), ".", ",") * temp3D.origin.X + temp3D.center.X)
-                        verticesTemp.Add(Replace(Split(Trim(lines(i)), ";")(2), ".", ",") * temp3D.origin.Z + temp3D.center.Z)
-                        verticesTemp.Add(Replace(Split(Trim(lines(i)), ";")(1), ".", ",") * temp3D.origin.Y + temp3D.center.Y)
+                        Dim newPoint = New Point3D(Replace(Split(Trim(lines(i)), ";")(0), ".", ","), Replace(Split(Trim(lines(i)), ";")(1), ".", ","), Replace(Split(Trim(lines(i)), ";")(2), ".", ","))
+                        verticesTemp.Add(newPoint.X * temp3D.scaleX.X + newPoint.Y * temp3D.scaleX.Y + newPoint.Z * temp3D.scaleX.Z + temp3D.center.X)
+                        verticesTemp.Add(-(newPoint.X * temp3D.scaleY.X + newPoint.Y * temp3D.scaleY.Y + newPoint.Z * temp3D.scaleY.Z + temp3D.center.Y))
+                        verticesTemp.Add(newPoint.X * temp3D.scaleZ.X + newPoint.Y * temp3D.scaleZ.Y + newPoint.Z * temp3D.scaleZ.Z + temp3D.center.Z)
                     Next
                     ctLine += 2 + ctMesh
 
@@ -745,19 +746,22 @@ Module Importer
                     For i = ctLine + 1 To ctLine + 1 + ctFaces - 1
                         lines(i) = Trim(Replace(lines(i), ";", ","))
                         Dim tempV As String() = Split(lines(i), ",")
-                        facesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(3) + ctMeshAlt, tempV(2) + ctMeshAlt})
+                        If tempV(0) = 3 Then
+                            facesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(3) + ctMeshAlt, tempV(2) + ctMeshAlt})
 
-                        linesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(3) + ctMeshAlt})
-                        linesTemp.AddRange({tempV(3) + ctMeshAlt, tempV(2) + ctMeshAlt})
-                        linesTemp.AddRange({tempV(3) + ctMeshAlt, tempV(1) + ctMeshAlt})
+                            linesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(1) + ctMeshAlt})
+                            linesTemp.AddRange({tempV(3) + ctMeshAlt, tempV(2) + ctMeshAlt})
+                            linesTemp.AddRange({tempV(3) + ctMeshAlt, tempV(3) + ctMeshAlt})
+                        ElseIf tempV(0) = 4 Then
+                            facesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(4) + ctMeshAlt, tempV(2) + ctMeshAlt})
+                            facesTemp.AddRange({tempV(2) + ctMeshAlt, tempV(4) + ctMeshAlt, tempV(3) + ctMeshAlt})
 
-                        For n As Integer = 3 To tempV(0) - 1
-                            facesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(n + 1) + ctMeshAlt, tempV(n) + ctMeshAlt})
-
-                            linesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(n + 1) + ctMeshAlt})
-                            linesTemp.AddRange({tempV(n + 1) + ctMeshAlt, tempV(n) + ctMeshAlt})
+                            linesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(2) + ctMeshAlt})
+                            linesTemp.AddRange({tempV(2) + ctMeshAlt, tempV(4) + ctMeshAlt})
+                            linesTemp.AddRange({tempV(2) + ctMeshAlt, tempV(3) + ctMeshAlt})
+                            linesTemp.AddRange({tempV(3) + ctMeshAlt, tempV(4) + ctMeshAlt})
                             addFaces.Add(i - ctLine - 1)
-                        Next
+                        End If
                     Next
                     ctMeshAlt = ctMesh
                     ctLine += ctFaces
