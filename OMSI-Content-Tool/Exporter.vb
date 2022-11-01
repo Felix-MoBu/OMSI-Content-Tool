@@ -182,16 +182,27 @@ Module Exporter
 
 
             zeilenEnde = ";,"
-            .Add("      MeshNormals {")
-            .Add("        " & Objekt.normals.Count / 3 & ";")
-            For ctNorm As Integer = 0 To Objekt.normals.Count - 1 Step 3
-                If ctNorm >= Objekt.normals.Count - 3 Then zeilenEnde = ";;"
-                .Add("         " & fromSingle(Objekt.normals(ctNorm), 6) & ";" & fromSingle(Objekt.normals(ctNorm + 2), 6) & ";" & fromSingle(Objekt.normals(ctNorm + 1), 6) & zeilenEnde)
-            Next
+            If Not Objekt.normals Is Nothing Then
+                .Add("        " & Objekt.normals.Count / 3 & ";")
+                For ctNorm As Integer = 0 To Objekt.normals.Count - 1 Step 3
+                    If ctNorm >= Objekt.normals.Count - 3 Then zeilenEnde = ";;"
+                    .Add("         " & fromSingle(Objekt.normals(ctNorm), 6) & ";" & fromSingle(Objekt.normals(ctNorm + 2), 6) & ";" & fromSingle(Objekt.normals(ctNorm + 1), 6) & zeilenEnde)
+                Next
 
-            .Add("      " & faceCount & ";")
-            .AddRange(tmpLines)     'Flächen nochmal für die Normals
-            .Add("      }")
+                .Add("      " & faceCount & ";")
+                .AddRange(tmpLines)     'Flächen nochmal für die Normals
+                .Add("      }")
+            Else
+                .Add("        " & Objekt.vertices.Count / 3 & ";")
+                For ctNorm As Integer = 0 To Objekt.vertices.Count - 1 Step 3
+                    If ctNorm >= Objekt.vertices.Count - 3 Then zeilenEnde = ";;"
+                    .Add("         0;0;0" & zeilenEnde)
+                Next
+
+                .Add("      " & faceCount & ";")
+                .AddRange(tmpLines)     'Flächen nochmal für die Normals
+                .Add("      }")
+            End If
 
 
             zeilenEnde = ";,"
