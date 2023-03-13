@@ -301,18 +301,18 @@ Module Importer
 
         For ctByte As Integer = 6 + addonOffset To (ctMesh * 32) + 6 - 1 + addonOffset Step 32
             '3D-Koordinaten
-            verticesTemp.Add(-BitConverter.ToSingle({bytes(ctByte), bytes(ctByte + 1), bytes(ctByte + 2), bytes(ctByte + 3)}, 0))
-            verticesTemp.Add(BitConverter.ToSingle({bytes(ctByte + 4), bytes(ctByte + 5), bytes(ctByte + 6), bytes(ctByte + 7)}, 0))
-            verticesTemp.Add(BitConverter.ToSingle({bytes(ctByte + 8), bytes(ctByte + 9), bytes(ctByte + 10), bytes(ctByte + 11)}, 0))
+            verticesTemp.Add(-BitConverter.ToSingle(bytes, ctByte))
+            verticesTemp.Add(BitConverter.ToSingle(bytes, ctByte + 4))
+            verticesTemp.Add(BitConverter.ToSingle(bytes, ctByte + 8))
 
             'Normals
-            normalsTemp.Add(BitConverter.ToSingle({bytes(ctByte + 12), bytes(ctByte + 13), bytes(ctByte + 14), bytes(ctByte + 15)}, 0))
-            normalsTemp.Add(BitConverter.ToSingle({bytes(ctByte + 16), bytes(ctByte + 17), bytes(ctByte + 18), bytes(ctByte + 19)}, 0))
-            normalsTemp.Add(BitConverter.ToSingle({bytes(ctByte + 20), bytes(ctByte + 21), bytes(ctByte + 22), bytes(ctByte + 23)}, 0))
+            normalsTemp.Add(BitConverter.ToSingle(bytes, ctByte + 12))
+            normalsTemp.Add(BitConverter.ToSingle(bytes, ctByte + 16))
+            normalsTemp.Add(BitConverter.ToSingle(bytes, ctByte + 20))
 
             '2D-Koordinaten
-            texCoordsTemp.Add(BitConverter.ToSingle({bytes(ctByte + 24), bytes(ctByte + 25), bytes(ctByte + 26), bytes(ctByte + 27)}, 0))
-            texCoordsTemp.Add(BitConverter.ToSingle({bytes(ctByte + 28), bytes(ctByte + 29), bytes(ctByte + 30), bytes(ctByte + 31)}, 0))
+            texCoordsTemp.Add(BitConverter.ToSingle(bytes, ctByte + 24))
+            texCoordsTemp.Add(BitConverter.ToSingle(bytes, ctByte + 28))
         Next
 
         If Not bytes(ctMesh * 32 + 6 + addonOffset) = &H49 Then
@@ -373,17 +373,17 @@ Module Importer
             Dim newTexture As New LocalTexture
 
             With newTexture
-                .diffuse.R = 255 * BitConverter.ToSingle({bytes(startTexture), bytes(startTexture + 1), bytes(startTexture + 2), bytes(startTexture + 3)}, 0)
-                .diffuse.G = 255 * BitConverter.ToSingle({bytes(startTexture + 4), bytes(startTexture + 5), bytes(startTexture + 6), bytes(startTexture + 7)}, 0)
-                .diffuse.B = 255 * BitConverter.ToSingle({bytes(startTexture + 8), bytes(startTexture + 9), bytes(startTexture + 10), bytes(startTexture + 11)}, 0)
-                .diffuseAlpha = BitConverter.ToSingle({bytes(startTexture + 12), bytes(startTexture + 13), bytes(startTexture + 14), bytes(startTexture + 15)}, 0)
-                .specular.R = 255 * BitConverter.ToSingle({bytes(startTexture + 16), bytes(startTexture + 17), bytes(startTexture + 18), bytes(startTexture + 19)}, 0)
-                .specular.G = 255 * BitConverter.ToSingle({bytes(startTexture + 20), bytes(startTexture + 21), bytes(startTexture + 22), bytes(startTexture + 23)}, 0)
-                .specular.B = 255 * BitConverter.ToSingle({bytes(startTexture + 24), bytes(startTexture + 25), bytes(startTexture + 26), bytes(startTexture + 27)}, 0)
-                .emissive.R = 255 * BitConverter.ToSingle({bytes(startTexture + 28), bytes(startTexture + 29), bytes(startTexture + 30), bytes(startTexture + 31)}, 0)
-                .emissive.G = 255 * BitConverter.ToSingle({bytes(startTexture + 32), bytes(startTexture + 33), bytes(startTexture + 34), bytes(startTexture + 35)}, 0)
-                .emissive.B = 255 * BitConverter.ToSingle({bytes(startTexture + 36), bytes(startTexture + 37), bytes(startTexture + 38), bytes(startTexture + 39)}, 0)
-                .power = BitConverter.ToSingle({bytes(startTexture + 40), bytes(startTexture + 41), bytes(startTexture + 42), bytes(startTexture + 43)}, 0)
+                .diffuse.R = 255 * BitConverter.ToSingle(bytes, startTexture)
+                .diffuse.G = 255 * BitConverter.ToSingle(bytes, startTexture + 4)
+                .diffuse.B = 255 * BitConverter.ToSingle(bytes, startTexture + 8)
+                .diffuseAlpha = BitConverter.ToSingle(bytes, startTexture + 12)
+                .specular.R = 255 * BitConverter.ToSingle(bytes, startTexture + 16)
+                .specular.G = 255 * BitConverter.ToSingle(bytes, startTexture + 20)
+                .specular.B = 255 * BitConverter.ToSingle(bytes, startTexture + 24)
+                .emissive.R = 255 * BitConverter.ToSingle(bytes, startTexture + 28)
+                .emissive.G = 255 * BitConverter.ToSingle(bytes, startTexture + 32)
+                .emissive.B = 255 * BitConverter.ToSingle(bytes, startTexture + 36)
+                .power = BitConverter.ToSingle(bytes, startTexture + 40)
 
                 lenTexturename = bytes(startCtTexturen + 45 * i + lenTexturenamen - 1)
                 texturenameTemp = ""
