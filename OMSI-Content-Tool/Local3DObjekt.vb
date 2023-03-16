@@ -2,6 +2,7 @@
 Public Class Local3DObjekt
     Public id As Integer
     Public parentMesh As String
+    Public o3dVersion As Integer = 1
 
     Public position As New Point3D
     Public center As New Point3D

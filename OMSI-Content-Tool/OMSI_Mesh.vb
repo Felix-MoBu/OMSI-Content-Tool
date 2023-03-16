@@ -2,6 +2,7 @@
 Public Class OMSI_Mesh
     Public index As Integer = 0
     Public isProtected As Boolean = True
+    Public o3dVersion As Integer
 
     Public filename As Filename
     Public ObjIds As New List(Of Int16)

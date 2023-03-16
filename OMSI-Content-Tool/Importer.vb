@@ -236,42 +236,40 @@ Module Importer
             Return Nothing
         End If
 
+        Dim isAddon As Boolean = False
+        Dim addonOffset As Integer = 0
+        Dim addonSerNr As Integer = 65535
 
-        If bytes(0) = &H84 And bytes(1) = &H19 And bytes(2) = &H5 And bytes(3) = &H0 Then       'Verschlüsselte Datei
-            Log.Add("Import fehlgeschlagen! (Fehler: I002a, Datei: " & filename & ")", Log.TYPE_ERROR)
+        If bytes(0) = &H84 And bytes(1) = &H19 Then
+            If bytes(3) = &H17 Then                                                                 'Standard O3D
+
+            End If
+            If bytes(3) = &H2 Then                                                                  'Originale und Addon-O3D
+                isAddon = True
+
+                addonSerNr = BitConverter.ToInt32(bytes, 4)
+                Log.Add("O3D '" & filename.name & "' aus Addon: " & addonSerNr)
+                addonOffset = 7
+
+            ElseIf bytes(3) = &H0 Then                                                              'Verschlüsselte Originaldatei
+                Log.Add("Import fehlgeschlagen! (Fehler: I002a, Datei: " & filename & ")", Log.TYPE_ERROR)
+                If Not ignoreImportFail Then
+                    Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002a, Datei: " & filename & ") verschlüsselte Datei!", vbAbortRetryIgnore)
+                    If result = vbIgnore Then ignoreImportFail = True
+                End If
+                Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
+                Return Nothing
+            End If
+        Else                                                                                        'keine O3D-Datei
+            Log.Add("Import fehlgeschlagen! (Fehler: I002, Datei: " & filename & ")", Log.TYPE_ERROR)
             If Not ignoreImportFail Then
-                Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002a, Datei: " & filename & ") verschlüsselte Datei!", vbAbortRetryIgnore)
+                Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002, Datei: " & filename & ") falsches Format", vbAbortRetryIgnore)
                 If result = vbIgnore Then ignoreImportFail = True
             End If
             Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
             Return Nothing
         End If
 
-
-        Dim isAddon As Boolean = False
-        Dim addonOffset As Integer = 0
-        If bytes(0) = &H84 And bytes(1) = &H19 And bytes(2) = &H5 Then                  'Originale und Addon-O3D
-            isAddon = True
-            If bytes(4) = &HFF And bytes(5) = &HFF And bytes(6) = &HFF And bytes(7) = &HFF Then
-                Log.Add("O3D '" & filename.name & "' aus Addon ohne ArtNr")
-            Else
-                Log.Add("O3D '" & filename.name & "' aus Addon: " & bytes(4) + bytes(5) * 256 + bytes(6) * 65536)
-            End If
-            addonOffset = 7
-        End If
-
-
-        If Not isAddon Then
-            If bytes(0) <> &H84 Or bytes(1) <> &H19 Or bytes(2) <> &H1 Or bytes(3) <> &H17 Then             'Normale O3D
-                Log.Add("Import fehlgeschlagen! (Fehler: I002, Datei: " & filename & ")", Log.TYPE_ERROR)
-                If Not ignoreImportFail Then
-                    Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002, Datei: " & filename & ") falsches Format", vbAbortRetryIgnore)
-                    If result = vbIgnore Then ignoreImportFail = True
-                End If
-                Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
-                Return Nothing
-            End If
-        End If
 
         Dim temp3D As New Local3DObjekt
 
@@ -285,6 +283,8 @@ Module Importer
 
 
         temp3D.center = New Point3D
+
+        temp3D.o3dVersion = bytes(2)
 
         Dim ctMesh As Integer
         If isAddon Then

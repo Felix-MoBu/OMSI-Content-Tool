@@ -374,6 +374,7 @@ Class Frm_Main
             newMesh.center = newObjekt.center
             newMesh.origin = newObjekt.origin
             newMesh.index = AlleObjekte.Count
+            newMesh.o3dVersion = newObjekt.o3dVersion
 
 
             newObjekt.parentMesh = newMesh.filename.name
