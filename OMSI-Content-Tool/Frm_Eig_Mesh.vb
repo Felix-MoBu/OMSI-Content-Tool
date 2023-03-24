@@ -17,7 +17,7 @@ Public Class Frm_Eig_Mesh
                         For Each subObjekt In .subObjekte
                             subObjekteCount += subObjekt.Count
                         Next
-                        addProp("Flächen", subObjekteCount)
+                        addProp("Flächen", subObjekteCount / 3)
 
                         addEmptProp()
                         For i As Integer = 0 To .Texturen.Count - 1

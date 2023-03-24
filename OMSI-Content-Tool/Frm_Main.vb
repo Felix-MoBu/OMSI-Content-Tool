@@ -265,7 +265,7 @@ Class Frm_Main
         With fd
 
             .Title = "Import"
-            .Filter = "Alle Formate (*.*)|*.*|OMSI-3D (*.o3d)|*.o3d|DirectX (*.x)|*.x|Extensible 3D (*.x3d)|*.x3d|Modell-Datei(*.cfg)|*.cfg|Mesh-Eigenschaften(*.txt)|*.txt"
+            .Filter = "Alle Formate (*.*)|*.*|OMSI-3D (*.o3d)|*.o3d|DirectX (*.x)|*.x|Extensible 3D (*.x3d)|*.x3d|Modell-Datei(*.cfg)|*.cfg|Mesh-Eigenschaften(*.txt)|*.txt|Map-Kachel(*.rdy)|*.rdy"
             .FilterIndex = My.Settings.lastImportFormat
             .Multiselect = True
             If getProj.filename.path <> "" Then
@@ -286,7 +286,7 @@ Class Frm_Main
                         newFilename = New Filename(file, getProj.filename.path)
                     End If
 
-                    If newFilename.extension.ToLower = "o3d" Or newFilename.extension.ToLower = "x" Or newFilename.extension.ToLower = "x3d" Then
+                    If newFilename.extension.ToLower = "o3d" Or newFilename.extension.ToLower = "x" Or newFilename.extension.ToLower = "x3d" Or newFilename.extension.ToLower = "rdy" Then
                         If getProj.model Is Nothing Then
                             getProj.model = New OMSI_Model
                         End If
@@ -4130,16 +4130,6 @@ Class Frm_Main
                                 GL.DrawElements(PrimitiveType.Lines, seat.lines.Count, DrawElementsType.UnsignedInt, seat.lines)
                             Next
                         End If
-
-                        If Not Projekt_Sco.ki_paths Is Nothing Then
-                            GL.Color3(Color.Black)
-                            For Each path In Projekt_Sco.ki_paths
-                                With path
-                                    GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                    GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
-                                End With
-                            Next
-                        End If
                     Case 2
                         GL.BindTexture(TextureTarget.Texture2D, 0)
                         Dim i As Integer = 0
@@ -4158,7 +4148,20 @@ Class Frm_Main
                             i += 1
                         Next
                     Case 3
-                        '# Paths!
+                        If Not Projekt_Sco.ki_paths Is Nothing Then
+                            Dim i As Integer = 0
+                            For Each path In Projekt_Sco.ki_paths
+                                If LBPfade.SelectedIndex = i Then
+                                    GL.Color3(My.Settings.SelectionColor)
+                                End If
+                                With path
+                                    GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
+                                    GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                End With
+                                GL.Color3(Color.Black)
+                                i += 1
+                            Next
+                        End If
                 End Select
             End If
 
@@ -4713,108 +4716,113 @@ Class Frm_Main
     Private Sub LBPfade_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBPfade.SelectedIndexChanged
 
         If Not getProj() Is Nothing Then
-            selectedPathChanging = True
-            TBName.Text = LBPfade.SelectedItem
-            PSPos.Point = getProj.paths.pathPoints(LBPfade.SelectedIndex)
+            If getProjTyp() = Proj_Bus.TYPE Or getProjTyp() = Proj_Ovh.TYPE Then
+                selectedPathChanging = True
+                TBName.Text = LBPfade.SelectedItem
+                PSPos.Point = getProj.paths.pathPoints(LBPfade.SelectedIndex)
 
-            Pfade_TBIndex.Text = LBPfade.SelectedIndex
+                Pfade_TBIndex.Text = LBPfade.SelectedIndex
 
-            Pfade_CBAusstieg.Checked = False
-            Pfade_CBEinstieg.Checked = False
+                Pfade_CBAusstieg.Checked = False
+                Pfade_CBEinstieg.Checked = False
 
-            Pfade_CBVerkauf.Checked = False
-            Pfade_CBTaster.Checked = False
+                Pfade_CBVerkauf.Checked = False
+                Pfade_CBTaster.Checked = False
 
-            Pfade_CBVerkauf.Enabled = False
-            Pfade_CBTaster.Enabled = False
+                Pfade_CBVerkauf.Enabled = False
+                Pfade_CBTaster.Enabled = False
 
-            If Not getProj.cabin Is Nothing Then
-                With getProj.cabin
-                    For Each door In .doors
-                        If LBPfade.SelectedIndex = door.pathindex Then
-                            If OMSI_Door.IS_ENTRY = door.direction Then
-                                Pfade_CBEinstieg.Checked = True
+                If Not getProj.cabin Is Nothing Then
+                    With getProj.cabin
+                        For Each door In .doors
+                            If LBPfade.SelectedIndex = door.pathindex Then
+                                If OMSI_Door.IS_ENTRY = door.direction Then
+                                    Pfade_CBEinstieg.Checked = True
 
-                                Pfade_CBVerkauf.Enabled = True
-                                Pfade_CBVerkauf.Checked = Not door.noticketsale
-                            Else
-                                Pfade_CBAusstieg.Checked = True
+                                    Pfade_CBVerkauf.Enabled = True
+                                    Pfade_CBVerkauf.Checked = Not door.noticketsale
+                                Else
+                                    Pfade_CBAusstieg.Checked = True
+                                End If
+
+
+                                Pfade_CBTaster.Enabled = True
+                                Pfade_CBTaster.Checked = door.withButton
+
                             End If
+                        Next
 
 
-                            Pfade_CBTaster.Enabled = True
-                            Pfade_CBTaster.Checked = door.withButton
 
+                        If .linkToNextVeh = LBPfade.SelectedIndex Then
+                            Pfade_CBNextWagen.Checked = True
+                        Else
+                            Pfade_CBNextWagen.Checked = False
                         End If
-                    Next
+
+                        If .linkToPrevVeh = LBPfade.SelectedIndex Then
+                            Pfade_CBVorWagen.Checked = True
+                        Else
+                            Pfade_CBVorWagen.Checked = False
+                        End If
+                    End With
+                Else
+                    MsgBox("Es können keine Türen definiert werden da keine Cabin-Datei ausgewählt wurde!")
+                End If
 
 
+                For Each control In GBPfade.Controls
+                    If control.name.contains("Pfade_PVerb") And Not control.name = "Pfade_PVerb0" Then
+                        GBPfade.Controls.Remove(control)
+                        GBPfade.Height -= Pfade_PVerb0.Height
+                        Pfade_BTHinzu.Top -= Pfade_PVerb0.Height
+                    End If
+                Next
 
-                    If .linkToNextVeh = LBPfade.SelectedIndex Then
-                        Pfade_CBNextWagen.Checked = True
-                    Else
-                        Pfade_CBNextWagen.Checked = False
+                GBPfade.Tag = ";"
+                Pfade_DDNachste_0.Text = ""
+                Pfade_PVerb0.Height = 0
+                Pfade_BTRem_0.Enabled = False
+
+                Dim counter As Integer = 0
+                For i = getProj.paths.pathLinks.count - 1 To 0 Step -1
+
+                    If getProj.paths.pathLinks(i).X = LBPfade.SelectedIndex Then
+                        counter += 1
+                        GBPfade.Tag = GBPfade.Tag & getProj.paths.pathLinks(i).Y & ";"
+                        If Not Pfade_DDNachste_0.Text = "" Then
+                            With getProj()
+                                addPathPntProperty(counter - 1, .paths.pathLinks(i).Y, .paths.roomheight(i), .paths.stemsounds(i), .paths.oneways.Contains(i))
+                            End With
+
+                        Else
+                            Dim pntName As String = getProj.paths.pathPoints(getProj.paths.pathLinks(i).Y).Tag
+                            If Not pntName Is Nothing Then
+                                Pfade_DDNachste_0.Text = pntName
+                            Else
+                                Pfade_DDNachste_0.Text = "Punkt_" & getProj.paths.pathLinks(i).Y
+                            End If
+                            Pfade_TBStehh_0.Text = getProj.paths.roomheight(i)
+                            Pfade_DDStepsound_0.Text = getProj.paths.stemsounds(i)
+                            Pfade_PVerb0.Height = 60
+                        End If
                     End If
 
-                    If .linkToPrevVeh = LBPfade.SelectedIndex Then
-                        Pfade_CBVorWagen.Checked = True
-                    Else
-                        Pfade_CBVorWagen.Checked = False
-                    End If
-                End With
-            Else
-                MsgBox("Es können keine Türen definiert werden da keine Cabin-Datei ausgewählt wurde!")
+                Next
+
+                Pfade_BTHinzu.Top = Pfade_PVerb0.Top + (Pfade_PVerb0.Height * counter)
+                GBPfade.Height = Pfade_BTHinzu.Height + Pfade_PVerb0.Top + (Pfade_PVerb0.Height * counter)
+                'Pfade_TBStehh.Text = getProj.paths.roomheight(LBPfade.SelectedIndex)
+                'Pfade_DDStepsound.Text = getProj.paths.stemsounds(LBPfade.SelectedIndex)
+
+
+
+                GlMain.Invalidate()
+                selectedPathChanging = False
+            ElseIf getProjTyp() = Proj_Sli.TYPE Or getProjTyp() = Proj_Sco.TYPE Then
+                ' KI-Paths von Spline und Sco
             End If
 
-
-            For Each control In GBPfade.Controls
-                If control.name.contains("Pfade_PVerb") And Not control.name = "Pfade_PVerb0" Then
-                    GBPfade.Controls.Remove(control)
-                    GBPfade.Height -= Pfade_PVerb0.Height
-                    Pfade_BTHinzu.Top -= Pfade_PVerb0.Height
-                End If
-            Next
-
-            GBPfade.Tag = ";"
-            Pfade_DDNachste_0.Text = ""
-            Pfade_PVerb0.Height = 0
-            Pfade_BTRem_0.Enabled = False
-
-            Dim counter As Integer = 0
-            For i = getProj.paths.pathLinks.count - 1 To 0 Step -1
-
-                If getProj.paths.pathLinks(i).X = LBPfade.SelectedIndex Then
-                    counter += 1
-                    GBPfade.Tag = GBPfade.Tag & getProj.paths.pathLinks(i).Y & ";"
-                    If Not Pfade_DDNachste_0.Text = "" Then
-                        With getProj()
-                            addPathPntProperty(counter - 1, .paths.pathLinks(i).Y, .paths.roomheight(i), .paths.stemsounds(i), .paths.oneways.Contains(i))
-                        End With
-
-                    Else
-                        Dim pntName As String = getProj.paths.pathPoints(getProj.paths.pathLinks(i).Y).Tag
-                        If Not pntName Is Nothing Then
-                            Pfade_DDNachste_0.Text = pntName
-                        Else
-                            Pfade_DDNachste_0.Text = "Punkt_" & getProj.paths.pathLinks(i).Y
-                        End If
-                        Pfade_TBStehh_0.Text = getProj.paths.roomheight(i)
-                        Pfade_DDStepsound_0.Text = getProj.paths.stemsounds(i)
-                        Pfade_PVerb0.Height = 60
-                    End If
-                End If
-
-            Next
-
-            Pfade_BTHinzu.Top = Pfade_PVerb0.Top + (Pfade_PVerb0.Height * counter)
-            GBPfade.Height = Pfade_BTHinzu.Height + Pfade_PVerb0.Top + (Pfade_PVerb0.Height * counter)
-            'Pfade_TBStehh.Text = getProj.paths.roomheight(LBPfade.SelectedIndex)
-            'Pfade_DDStepsound.Text = getProj.paths.stemsounds(LBPfade.SelectedIndex)
-
-
-
-            GlMain.Invalidate()
-            selectedPathChanging = False
         End If
     End Sub
 

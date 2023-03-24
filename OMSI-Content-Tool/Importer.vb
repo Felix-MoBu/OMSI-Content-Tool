@@ -3,7 +3,7 @@ Imports System.Xml
 Imports System.IO
 
 Module Importer
-    Public ReadOnly KNOWN_FILE_TYPES As String() = {"o3d", "x", "x3d", "sli", "txt"}
+    Public ReadOnly KNOWN_FILE_TYPES As String() = {"o3d", "x", "x3d", "sli", "txt", "rdy"}
     Public stopImport As Boolean = False
 
 
@@ -26,6 +26,8 @@ Module Importer
                 Return readSli(filename)
             Case KNOWN_FILE_TYPES(4)
                 Return readtxt(filename)
+            Case KNOWN_FILE_TYPES(5)
+                Return readO3D(filename)
             Case Else
                 Log.Add("Dateiformat nicht unterstützt! (Fehler: I000, Datei: " & filename & ")", Log.TYPE_WARNUNG)
                 importWarnung("Dateiformat nicht unterstützt!", "I999", filename, "Dateiformat nicht unterstützt!")
@@ -241,25 +243,39 @@ Module Importer
         Dim addonSerNr As Integer = 65535
 
         If bytes(0) = &H84 And bytes(1) = &H19 Then
-            If bytes(3) = &H17 Then                                                                 'Standard O3D
+            Select Case bytes(3)
+                Case &H0                                                                            'Verschlüsselte Originaldatei
+                    Log.Add("Import fehlgeschlagen! (Fehler: I002a, Datei: " & filename & ")", Log.TYPE_ERROR)
+                    If Not ignoreImportFail Then
+                        Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002a, Datei: " & filename & ") verschlüsselte Datei!", vbAbortRetryIgnore)
+                        If result = vbIgnore Then ignoreImportFail = True
+                    End If
+                    Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
+                    Return Nothing
 
-            End If
-            If bytes(3) = &H2 Then                                                                  'Originale und Addon-O3D
-                isAddon = True
+                Case &H1                                                                            'Map *.rdy
+                    isAddon = True
+                    addonSerNr = BitConverter.ToInt32(bytes, 4)
+                    Log.Add("O3D '" & filename.name & "' aus Addon: " & addonSerNr)
+                    addonOffset = 7
 
-                addonSerNr = BitConverter.ToInt32(bytes, 4)
-                Log.Add("O3D '" & filename.name & "' aus Addon: " & addonSerNr)
-                addonOffset = 7
+                Case &H2                                                                            'Originale und Addon-O3D
+                    isAddon = True
+                    addonSerNr = BitConverter.ToInt32(bytes, 4)
+                    Log.Add("O3D '" & filename.name & "' aus Addon: " & addonSerNr)
+                    addonOffset = 7
 
-            ElseIf bytes(3) = &H0 Then                                                              'Verschlüsselte Originaldatei
-                Log.Add("Import fehlgeschlagen! (Fehler: I002a, Datei: " & filename & ")", Log.TYPE_ERROR)
-                If Not ignoreImportFail Then
-                    Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002a, Datei: " & filename & ") verschlüsselte Datei!", vbAbortRetryIgnore)
-                    If result = vbIgnore Then ignoreImportFail = True
-                End If
-                Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
-                Return Nothing
-            End If
+                Case &H17                                                                           'Standard O3D
+
+                Case Else                                                                           'keine O3D-Datei
+                    Log.Add("Import fehlgeschlagen! (Fehler: I002, Datei: " & filename & ")", Log.TYPE_ERROR)
+                    If Not ignoreImportFail Then
+                        Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002, Datei: " & filename & ") falsches Format", vbAbortRetryIgnore)
+                        If result = vbIgnore Then ignoreImportFail = True
+                    End If
+                    Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
+                    Return Nothing
+            End Select
         Else                                                                                        'keine O3D-Datei
             Log.Add("Import fehlgeschlagen! (Fehler: I002, Datei: " & filename & ")", Log.TYPE_ERROR)
             If Not ignoreImportFail Then
@@ -333,18 +349,31 @@ Module Importer
 
 
         'Längentest
-        If bytes.Count < (ctMesh * 32) + 9 + (ctFaces * 8) - 1 + addonOffset Then
-            Log.Add("O3D-Datei Fehlerhaft / nicht Unterstütz! (Fehler: I000b, Datei: " & filename & ")", Log.TYPE_ERROR)
-            Return Nothing
+        Dim faceBytes As Integer = 8
+        If bytes.Count < (ctMesh * 32) + 9 + (ctFaces * 14) - 1 + addonOffset Then
+            If bytes.Count < (ctMesh * 32) + 9 + (ctFaces * faceBytes) - 1 + addonOffset Then
+                Log.Add("O3D-Datei Fehlerhaft / nicht Unterstütz! (Fehler: I000b, Datei: " & filename & ")", Log.TYPE_ERROR)
+                Return Nothing
+            End If
+        Else
+            faceBytes = 14
         End If
 
         If isAddon Then addonOffset += 2
 
-        For ctByte = (ctMesh * 32) + 9 + addonOffset To (ctMesh * 32) + 9 + (ctFaces * 8) - 1 + addonOffset Step 8
-            For n = 0 To 5 Step 2
-                facesTemp.Add(bytes(ctByte + n) + bytes(ctByte + n + 1) * 256)
-            Next
-            matlistTemp.Add(bytes(ctByte + 6) + bytes(ctByte + 7) * 256)
+        For ctByte = (ctMesh * 32) + 9 + addonOffset To (ctMesh * 32) + 9 + (ctFaces * faceBytes) - 1 + addonOffset Step faceBytes
+            If faceBytes = 8 Then
+                For n = 0 To 5 Step 2
+                    facesTemp.Add(bytes(ctByte + n) + bytes(ctByte + n + 1) * 256)
+                Next
+                matlistTemp.Add(bytes(ctByte + 6) + bytes(ctByte + 7) * 256)
+            Else
+                For n = 0 To 11 Step 4
+                    facesTemp.Add(BitConverter.ToInt16(bytes, ctByte + n))
+                Next
+                matlistTemp.Add(bytes(ctByte + 12) + bytes(ctByte + 13) * 256)
+            End If
+
         Next
 
         'Texture Bereich
@@ -355,18 +384,18 @@ Module Importer
 
         If isAddon Then
             'addonOffset += 2
-            ctTexture = bytes(ctFaces * 8 + ctMesh * 32 + 10 + addonOffset) + bytes(ctFaces * 8 + ctMesh * 32 + 11 + addonOffset) * 256 + bytes(ctFaces * 8 + ctMesh * 32 + 12 + addonOffset) * 4096
+            ctTexture = bytes(ctFaces * faceBytes + ctMesh * 32 + 10 + addonOffset) + bytes(ctFaces * faceBytes + ctMesh * 32 + 11 + addonOffset) * 256 + bytes(ctFaces * faceBytes + ctMesh * 32 + 12 + addonOffset) * 4096
         Else
-            ctTexture = bytes(ctFaces * 8 + ctMesh * 32 + 10) + bytes(ctFaces * 8 + ctMesh * 32 + 11) * 256
+            ctTexture = bytes(ctFaces * faceBytes + ctMesh * 32 + 10) + bytes(ctFaces * faceBytes + ctMesh * 32 + 11) * 256
         End If
 
         'Längentest
-        If bytes.Count <= ctFaces * 8 + ctMesh * 32 + 12 + addonOffset + 1 + ctTexture * 45 - 2 Then
+        If bytes.Count <= ctFaces * faceBytes + ctMesh * 32 + 12 + addonOffset + 1 + ctTexture * 45 - 2 Then
             Log.Add("O3D-Datei Fehlerhaft / nicht Unterstütz! (Fehler: I000c, Datei: " & filename & ")", Log.TYPE_ERROR)
             Return Nothing
         End If
 
-        Dim startCtTexturen As Integer = ctFaces * 8 + ctMesh * 32 + 12 + addonOffset
+        Dim startCtTexturen As Integer = ctFaces * faceBytes + ctMesh * 32 + 12 + addonOffset
 
         For i = 1 To ctTexture
             Dim startTexture As Integer = startCtTexturen + lenTexturenamen + (i - 1) * 45
@@ -403,22 +432,22 @@ Module Importer
         'Center
         Dim startCenter As Integer = startCtTexturen + lenTexturenamen + ctTexture * 45 + 1
         With temp3D
-            .A1.X = Math.Round(BitConverter.ToSingle({bytes(startCenter), bytes(startCenter + 1), bytes(startCenter + 2), bytes(startCenter + 3)}, 0), 6)
-            .A1.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 4), bytes(startCenter + 5), bytes(startCenter + 6), bytes(startCenter + 7)}, 0), 6)
-            .A1.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 8), bytes(startCenter + 9), bytes(startCenter + 10), bytes(startCenter + 11)}, 0), 6)
-            .A2 = Math.Round(BitConverter.ToSingle({bytes(startCenter + 12), bytes(startCenter + 13), bytes(startCenter + 14), bytes(startCenter + 15)}, 0), 6)
-            .B1.X = Math.Round(BitConverter.ToSingle({bytes(startCenter + 16), bytes(startCenter + 17), bytes(startCenter + 18), bytes(startCenter + 19)}, 0), 6)
-            .B1.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 20), bytes(startCenter + 21), bytes(startCenter + 22), bytes(startCenter + 23)}, 0), 6)
-            .B1.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 24), bytes(startCenter + 25), bytes(startCenter + 26), bytes(startCenter + 27)}, 0), 6)
-            .B2 = Math.Round(BitConverter.ToSingle({bytes(startCenter + 28), bytes(startCenter + 29), bytes(startCenter + 30), bytes(startCenter + 31)}, 0), 6)
-            .origin.X = Math.Round(BitConverter.ToSingle({bytes(startCenter + 32), bytes(startCenter + 33), bytes(startCenter + 34), bytes(startCenter + 35)}, 0), 6)
-            .origin.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 36), bytes(startCenter + 37), bytes(startCenter + 38), bytes(startCenter + 39)}, 0), 6)
-            .origin.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 40), bytes(startCenter + 41), bytes(startCenter + 42), bytes(startCenter + 43)}, 0), 6)
-            .origin_scale = Math.Round(BitConverter.ToSingle({bytes(startCenter + 44), bytes(startCenter + 45), bytes(startCenter + 46), bytes(startCenter + 47)}, 0), 6)
-            .center.X = Math.Round(BitConverter.ToSingle({bytes(startCenter + 48), bytes(startCenter + 49), bytes(startCenter + 50), bytes(startCenter + 51)}, 0), 6)
-            .center.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 52), bytes(startCenter + 53), bytes(startCenter + 54), bytes(startCenter + 55)}, 0), 6)
-            .center.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 56), bytes(startCenter + 57), bytes(startCenter + 58), bytes(startCenter + 59)}, 0), 6)
-            .scale = Math.Round(BitConverter.ToSingle({bytes(startCenter + 60), bytes(startCenter + 61), bytes(startCenter + 62), bytes(startCenter + 63)}, 0), 6)
+            .A1.X = Math.Round(BitConverter.ToSingle(bytes, startCenter), 6)
+            .A1.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 4), 6)
+            .A1.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 8), 6)
+            .A2 = Math.Round(BitConverter.ToSingle(bytes, startCenter + 12), 6)
+            .B1.X = Math.Round(BitConverter.ToSingle(bytes, startCenter + 16), 6)
+            .B1.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 20), 6)
+            .B1.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 24), 6)
+            .B2 = Math.Round(BitConverter.ToSingle(bytes, startCenter + 28), 6)
+            .origin.X = Math.Round(BitConverter.ToSingle(bytes, startCenter + 32), 6)
+            .origin.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 36), 6)
+            .origin.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 40), 6)
+            .origin_scale = Math.Round(BitConverter.ToSingle(bytes, startCenter + 44), 6)
+            .center.X = Math.Round(BitConverter.ToSingle(bytes, startCenter + 48), 6)
+            .center.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 52), 6)
+            .center.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 56), 6)
+            .scale = Math.Round(BitConverter.ToSingle(bytes, startCenter + 60), 6)
 
             'Werte an Objekt übergeben
             .vertices = verticesTemp.ToArray
