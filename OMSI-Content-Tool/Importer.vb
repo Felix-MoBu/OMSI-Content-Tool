@@ -245,13 +245,20 @@ Module Importer
         If bytes(0) = &H84 And bytes(1) = &H19 Then
             Select Case bytes(3)
                 Case &H0                                                                            'Verschlüsselte Originaldatei
-                    Log.Add("Import fehlgeschlagen! (Fehler: I002a, Datei: " & filename & ")", Log.TYPE_ERROR)
-                    If Not ignoreImportFail Then
-                        Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002a, Datei: " & filename & ") verschlüsselte Datei!", vbAbortRetryIgnore)
-                        If result = vbIgnore Then ignoreImportFail = True
+                    addonSerNr = BitConverter.ToInt32(bytes, 4)
+                    If Not addonSerNr = -1 Then
+                        Log.Add("Import fehlgeschlagen! (Fehler: I002a, Datei: " & filename & ")", Log.TYPE_ERROR)
+                        If Not ignoreImportFail Then
+                            Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002a, Datei: " & filename & ") verschlüsselte Datei!", vbAbortRetryIgnore)
+                            If result = vbIgnore Then ignoreImportFail = True
+                        End If
+                        Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
+                        Return Nothing
+                    Else
+                        isAddon = True
+                        addonSerNr = BitConverter.ToInt32(bytes, 4)
+                        addonOffset = 7
                     End If
-                    Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
-                    Return Nothing
 
                 Case &H1                                                                            'Map *.rdy
                     isAddon = True

@@ -26,6 +26,7 @@ Class Frm_Main
     Dim movePanelObjekte As Boolean
     Dim movePanelTexture As Boolean
     Dim movePanelEigenschaften As Boolean
+    Dim movePanelTimeline As Boolean
     Dim resizePanelObjekte As Boolean
     Dim rotateObjekt As Boolean
     Dim mainShift As Boolean
@@ -1412,6 +1413,16 @@ Class Frm_Main
         savePositions()
     End Sub
 
+
+    Private Sub TimelineLogFensterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TimelineLogFensterToolStripMenuItem.Click
+        PanelTimeline.Visible = Not PanelTimeline.Visible
+        savePositions()
+    End Sub
+
+    Private Sub TCTimeline_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TCTimeline.SelectedIndexChanged
+        savePositions()
+    End Sub
+
     Private Sub SoundToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SoundToolStripMenuItem.Click
         If getProj() Is Projekt_Bus Or getProj() Is Projekt_Ovh Then
             Frm_Sounds.Show()
@@ -1826,12 +1837,17 @@ Class Frm_Main
             .PEigenschaftenH = PanelEigenschaften.Height
             .PEigenschaftenV = PanelEigenschaften.Visible
 
+            .PTimelineX = PanelTimeline.Left
+            .PTimelineY = PanelTimeline.Top
+            .PTimelineV = PanelTimeline.Visible
+            .PTimelineSelTab = TCTimeline.SelectedIndex
 
             .WireframeV = WireframeToolStripMenuItem.Checked
             .GitterV = GitterToolStripMenuItem.Checked
             .ShowAlpha = AlphaAnzeigenToolStripMenuItem.Checked
             ObjekteToolStripMenuItem.Checked = PanelObjekte.Visible
             TextureToolStripMenuItem.Checked = PanelTexture.Visible
+            TimelineLogFensterToolStripMenuItem.Checked = PanelTimeline.Visible
             EigenschaftenFensterToolStripMenuItem.Checked = PanelEigenschaften.Visible
 
         End With
@@ -1862,11 +1878,17 @@ Class Frm_Main
             BTEigenschafteResize.Top = .PEigenschaftenH - 3
             PanelEigenschaften1.Height = .PEigenschaftenH - 28
 
+            PanelTimeline.Left = .PTimelineX
+            PanelTimeline.Top = .PTimelineY
+            PanelTimeline.Visible = .PTimelineV
+            TCTimeline.SelectedIndex = .PTimelineSelTab
+
             WireframeToolStripMenuItem.Checked = .WireframeV
             GitterToolStripMenuItem.Checked = .GitterV
             AlphaAnzeigenToolStripMenuItem.Checked = .ShowAlpha
             ObjekteToolStripMenuItem.Checked = PanelObjekte.Visible
             TextureToolStripMenuItem.Checked = PanelTexture.Visible
+            TimelineLogFensterToolStripMenuItem.Checked = PanelTimeline.Visible
             EigenschaftenFensterToolStripMenuItem.Checked = PanelEigenschaften.Visible
 
             PfadeInOriginalbreiteToolStripMenuItem.Checked = .PfadeOrigBreite
@@ -1874,6 +1896,7 @@ Class Frm_Main
             checkPanelPosition(PanelEigenschaften)
             checkPanelPosition(PanelTexture)
             checkPanelPosition(PanelObjekte)
+            checkPanelPosition(PanelTimeline)
         End With
     End Sub
 
@@ -1897,14 +1920,15 @@ Class Frm_Main
 
     Private Sub checkPanelPosition(e As Panel)
         If e.Visible = False Then Exit Sub
-        If e.Top < 0 Then e.Top = 5
-        If e.Left < 0 Then e.Left = 5
+        If e.Top < 5 Then e.Top = 5
+        If e.Left < 5 Then e.Left = 5
         If e.Top + e.Height > PanelMain.Height Then e.Top = PanelMain.Height - e.Height - 5
         If e.Left + e.Width > PanelMain.Width Then e.Left = PanelMain.Width - e.Width - 5
 
         panelCollision(e, PanelTexture)
         panelCollision(e, PanelObjekte)
         panelCollision(e, PanelEigenschaften)
+        panelCollision(e, PanelTimeline)
     End Sub
 
     Private Sub panelCollision(e As Panel, o As Panel)
@@ -1916,14 +1940,6 @@ Class Frm_Main
                     End If
                     If e.Left <= o.Left And e.Left + e.Width >= o.Left Then
                         e.Left = o.Left - e.Width - 3
-                    End If
-                    If e.Left < 5 Then
-                        e.Left = 5
-                        o.Left = e.Width + 8
-                    End If
-                    If e.Top < 5 Then
-                        e.Top = 3
-                        o.Top = e.Height + 8
                     End If
                     If e.Left + e.Width > PanelMain.Width Then
                         e.Left = PanelMain.Width - e.Width - 5
@@ -3733,8 +3749,34 @@ Class Frm_Main
                 getSelectedSpot.range = Spot_TBLeuchtweite.Text
             End If
             e.Handled = True
-            End If
+        End If
     End Sub
+
+
+    '### Panel Timeline ###
+
+    Private Sub PanelTimeline_MouseDown(sender As Object, e As MouseEventArgs) Handles PanelTimeline.MouseDown
+        movePanelTimeline = True
+    End Sub
+
+    Private Sub PanelTimeline_MouseUp(sender As Object, e As MouseEventArgs) Handles PanelTimeline.MouseUp
+        checkPanelPosition(PanelTimeline)
+        savePositions()
+        movePanelTimeline = False
+    End Sub
+
+    Private Sub PanelTimeline_MouseMove(sender As Object, e As MouseEventArgs) Handles PanelTimeline.MouseMove
+        If movePanelTimeline Then
+            Dim ctl As Control = CType(PanelTimeline, Control)
+            ctl.Location = PointToClient(Cursor.Position - New Point(ctl.Width \ 2, 30))
+        End If
+    End Sub
+
+    Private Sub BTPanelTimelineClose_Click(sender As Object, e As EventArgs) Handles BTPanelTimelineClose.Click
+        PanelTimeline.Visible = Not PanelTimeline.Visible
+        savePositions()
+    End Sub
+
 
     '################
     '3D-Panel
@@ -4084,22 +4126,24 @@ Class Frm_Main
                 Case 1
                     drawCabin(Projekt_Emt.cabin)
                 Case 2
-                    GL.BindTexture(TextureTarget.Texture2D, 0)
+                    If Not Projekt_Emt.model Is Nothing Then
+                        GL.BindTexture(TextureTarget.Texture2D, 0)
                     Dim i As Integer = 0
-                    For Each licht In Projekt_Emt.model.lichter
-                        With licht
-                            GL.Color3(.color.R, .color.G, .color.B)
-                            If i = LBLichter.SelectedIndex Then
-                                If timerBool Then
-                                    GL.Color3(Color.Black)
+                        For Each licht In Projekt_Emt.model.lichter
+                            With licht
+                                GL.Color3(.color.R, .color.G, .color.B)
+                                If i = LBLichter.SelectedIndex Then
+                                    If timerBool Then
+                                        GL.Color3(Color.Black)
+                                    End If
                                 End If
-                            End If
 
-                            GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                            GL.DrawElements(PrimitiveType.TriangleFan, .edges.Count, DrawElementsType.UnsignedInt, .edges)
-                        End With
-                        i += 1
-                    Next
+                                GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
+                                GL.DrawElements(PrimitiveType.TriangleFan, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                            End With
+                            i += 1
+                        Next
+                    End If
                 Case 3
                     drawPaths(Projekt_Emt.paths)
             End Select
