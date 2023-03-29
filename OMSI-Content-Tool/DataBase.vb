@@ -29,7 +29,7 @@ Public Class DataBase
 
         Log.Add("Projektdatenbank laden...")
 
-        Dim allLines As String() = Split(Replace(My.Computer.FileSystem.ReadAllText(filename, Encoding.GetEncoding(1252)), vbCr, ""), vbLf)
+        Dim allLines As String() = System.IO.File.ReadAllLines(filename, Encoding.GetEncoding(1252))
 
         For linect = 0 To allLines.Count - 1
             If Trim(allLines(linect)) <> "" Then

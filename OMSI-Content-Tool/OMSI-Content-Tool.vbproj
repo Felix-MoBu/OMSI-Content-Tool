@@ -26,9 +26,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -68,6 +69,18 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>205C7E62E49949A44E018D13AC46FF63531EF8C4</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>OMSI-Content-Tool_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
@@ -239,13 +252,18 @@
     <Compile Include="History.vb" />
     <Compile Include="Importer.vb" />
     <Compile Include="KI_Path.vb" />
+    <Compile Include="LocalSphere.vb" />
     <Compile Include="Log.vb" />
     <Compile Include="Local3DObjekt.vb" />
     <Compile Include="Modifier.vb" />
     <Compile Include="OMSI_Attachment.vb" />
+    <Compile Include="OMSI_Body_osc.vb" />
     <Compile Include="OMSI_Bone.vb" />
+    <Compile Include="OMSI_Boogie.vb" />
     <Compile Include="OMSI_Cabin.vb" />
     <Compile Include="OMSI_Const.vb" />
+    <Compile Include="OMSI_ContactShoe.vb" />
+    <Compile Include="OMSI_ControlCabels.vb" />
     <Compile Include="OMSI_Door.vb" />
     <Compile Include="OMSI_Font.vb" />
     <Compile Include="OMSI_Illumination.vb" />
@@ -257,6 +275,7 @@
     <Compile Include="OMSI_Repaint.vb" />
     <Compile Include="OMSI_Rep_Var.vb" />
     <Compile Include="OMSI_Seat.vb" />
+    <Compile Include="OMSI_Sinus.vb" />
     <Compile Include="OMSI_Spot.vb" />
     <Compile Include="OMSI_TicketPnt.vb" />
     <Compile Include="OMSI_traffic_light.vb" />

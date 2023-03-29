@@ -33,7 +33,7 @@ Public Class OMSI_Model
         If My.Computer.FileSystem.FileExists(filename) Then
             Log.Add("Model-Datei """ & filename & """ laden...")
             Me.filename = filename
-            Dim allLines As String() = Split(Replace(My.Computer.FileSystem.ReadAllText(filename, Encoding.GetEncoding(1252)), vbCr, ""), vbLf)
+            Dim allLines As String() = System.IO.File.ReadAllLines(filename, Encoding.GetEncoding(1252))
 
             Dim text_tex_index As Integer = 0
             Dim tempLODMin As Single = 0
@@ -108,6 +108,7 @@ Public Class OMSI_Model
                         Case "[spotlight]"
                             Dim spot As New OMSI_Spot
                             With spot
+                                .name = Trim(allLines(linect - 1))
                                 .position.X = toSingle(allLines(linect + 1))
                                 .position.Y = toSingle(allLines(linect + 2))
                                 .position.Z = toSingle(allLines(linect + 3))
@@ -171,7 +172,6 @@ Public Class OMSI_Model
                                 .position.X = toSingle(allLines(linect + 6))
                                 .position.Y = toSingle(allLines(linect + 7))
                                 .position.Z = toSingle(allLines(linect + 8))
-                                .parent = meshes(meshes.Count - 1).filename.name
                             End With
                             intLichter.Add(intLicht)
                             linect += 8
@@ -513,6 +513,8 @@ Public Class OMSI_Model
                 Next
             End If
 
+            .teilüberschrift("Feststehende Beleuchtung")
+
             For Each spot In spots
                 If spot.name <> "" Then .Add(spot.name)
                 .Add("[spotlight]")
@@ -528,6 +530,19 @@ Public Class OMSI_Model
                 .Add(spot.range)
                 .Add(spot.innerCone)
                 .Add(spot.outerCone, True)
+            Next
+
+            For Each intLicht In intLichter
+                If intLicht.name <> "" Then .Add(intLicht.name)
+                .Add("[interiorlight]")
+                .Add(intLicht.var)
+                .Add(intLicht.reichweite)
+                .Add(intLicht.color.R)
+                .Add(intLicht.color.G)
+                .Add(intLicht.color.B)
+                .Add(intLicht.position.X)
+                .Add(intLicht.position.Y)
+                .Add(intLicht.position.Z, True)
             Next
 
             If meshes.Count > 0 Then
@@ -575,21 +590,6 @@ Public Class OMSI_Model
                             .Add(licht.timeconst)
                             If licht.bitmap <> "" Then .Add(licht.bitmap)
                             .Add(vbCrLf)
-                        End If
-                    Next
-
-                    For Each intLicht In intLichter
-                        If intLicht.parent = mesh.filename.name Then
-                            If intLicht.name <> "" Then .Add(intLicht.name)
-                            .Add("[interiorlight]")
-                            .Add(intLicht.var)
-                            .Add(intLicht.reichweite)
-                            .Add(intLicht.color.R)
-                            .Add(intLicht.color.G)
-                            .Add(intLicht.color.B)
-                            .Add(intLicht.position.X)
-                            .Add(intLicht.position.Y)
-                            .Add(intLicht.position.Z, True)
                         End If
                     Next
 

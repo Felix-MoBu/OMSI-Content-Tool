@@ -26,7 +26,7 @@ Public Class Proj_Sli
     Public patchwork_chains As New List(Of Sli_PatchworkChain)
 
     Public profiles As New List(Of Sli_Profile)
-    Public paths As New List(Of KI_Path)
+    Public ki_paths As New List(Of KI_Path)
 
     Public ProjDataBase As DataBase
 
@@ -38,7 +38,7 @@ Public Class Proj_Sli
     Public Sub New(filepath As String)
         filename = New Filename(filepath)
         If My.Computer.FileSystem.FileExists(filename.path & "\" & filename.name) Then
-            Dim allLines As String() = Split(Replace(My.Computer.FileSystem.ReadAllText(filename, Encoding.GetEncoding(1252)), vbCr, ""), vbLf)
+            Dim allLines As String() = System.IO.File.ReadAllLines(filename, Encoding.GetEncoding(1252))
 
             If Not allLines.Contains("[profilepnt]") Then
                 Log.Add("Spline hat keine Profilpunkte!", Log.TYPE_WARNUNG)
@@ -139,7 +139,7 @@ Public Class Proj_Sli
                             .length = length
                         End With
                         linect += 5
-                        paths.Add(newPath)
+                        ki_paths.Add(newPath)
                 End Select
 
                 If linect > allLines.Count - 1 Then Exit For
@@ -312,10 +312,10 @@ Public Class Proj_Sli
                 Next
             End If
 
-            If paths.Count > 0 Then
+            If ki_paths.Count > 0 Then
                 .teilüberschrift("Paths")
 
-                For Each path In paths
+                For Each path In ki_paths
                     .Add("[path]")
                     .Add(path.type)
                     .Add(path.position.X)

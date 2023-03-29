@@ -23,6 +23,7 @@ Module Log
                 typeS = "Info"
         End Select
         My.Computer.FileSystem.WriteAllText(Application.StartupPath & logfile, vbCrLf & typeS & vbTab & "(" & TimeString & ") - " & addText, True)
+        Frm_Main.TBLogfile.AppendText(typeS & vbTab & "(" & TimeString & ") - " & addText & vbCrLf)
 
         If popup Then
             If type = TYPE_ERROR Then

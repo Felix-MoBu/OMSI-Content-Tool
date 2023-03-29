@@ -3,7 +3,7 @@ Imports System.Xml
 Imports System.IO
 
 Module Importer
-    Public ReadOnly KNOWN_FILE_TYPES As String() = {"o3d", "x", "x3d", "sli", "txt"}
+    Public ReadOnly KNOWN_FILE_TYPES As String() = {"o3d", "x", "x3d", "sli", "txt", "rdy"}
     Public stopImport As Boolean = False
 
 
@@ -15,7 +15,7 @@ Module Importer
 
         Frm_Main.SSLBStatus.Text = "Import erfolgreich!"
 
-        Select Case filename.extension
+        Select Case filename.extension.ToLower
             Case KNOWN_FILE_TYPES(0)
                 Return readO3D(filename)
             Case KNOWN_FILE_TYPES(1)
@@ -26,6 +26,8 @@ Module Importer
                 Return readSli(filename)
             Case KNOWN_FILE_TYPES(4)
                 Return readtxt(filename)
+            Case KNOWN_FILE_TYPES(5)
+                Return readO3D(filename)
             Case Else
                 Log.Add("Dateiformat nicht unterstützt! (Fehler: I000, Datei: " & filename & ")", Log.TYPE_WARNUNG)
                 importWarnung("Dateiformat nicht unterstützt!", "I999", filename, "Dateiformat nicht unterstützt!")
@@ -236,42 +238,61 @@ Module Importer
             Return Nothing
         End If
 
+        Dim isAddon As Boolean = False
+        Dim addonOffset As Integer = 0
+        Dim addonSerNr As Integer = 0
 
-        If bytes(0) = &H84 And bytes(1) = &H19 And bytes(2) = &H5 And bytes(3) = &H0 Then       'Verschlüsselte Datei
-            Log.Add("Import fehlgeschlagen! (Fehler: I002a, Datei: " & filename & ")", Log.TYPE_ERROR)
+        If bytes(0) = &H84 And bytes(1) = &H19 Then
+            Select Case bytes(3)
+                Case &H0                                                                            'Verschlüsselte Originaldatei
+                    addonSerNr = BitConverter.ToInt32(bytes, 4)
+                    If Not addonSerNr = -1 Then
+                        Log.Add("Import fehlgeschlagen! (Fehler: I002a, Datei: " & filename & ")", Log.TYPE_ERROR)
+                        If Not ignoreImportFail Then
+                            Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002a, Datei: " & filename & ") verschlüsselte Datei!", vbAbortRetryIgnore)
+                            If result = vbIgnore Then ignoreImportFail = True
+                        End If
+                        Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
+                        Return Nothing
+                    Else
+                        isAddon = True
+                        addonSerNr = BitConverter.ToInt32(bytes, 4)
+                        addonOffset = 7
+                    End If
+
+                Case &H1                                                                            'Map *.rdy
+                    isAddon = True
+                    addonSerNr = BitConverter.ToInt32(bytes, 4)
+                    Log.Add("O3D '" & filename.name & "' aus Addon: " & addonSerNr)
+                    addonOffset = 7
+
+                Case &H2                                                                            'Originale und Addon-O3D
+                    isAddon = True
+                    addonSerNr = BitConverter.ToInt32(bytes, 4)
+                    Log.Add("O3D '" & filename.name & "' aus Addon: " & addonSerNr)
+                    addonOffset = 7
+
+                Case &H17                                                                           'Standard O3D
+
+                Case Else                                                                           'keine O3D-Datei
+                    Log.Add("Import fehlgeschlagen! (Fehler: I002, Datei: " & filename & ")", Log.TYPE_ERROR)
+                    If Not ignoreImportFail Then
+                        Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002, Datei: " & filename & ") falsches Format", vbAbortRetryIgnore)
+                        If result = vbIgnore Then ignoreImportFail = True
+                    End If
+                    Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
+                    Return Nothing
+            End Select
+        Else                                                                                        'keine O3D-Datei
+            Log.Add("Import fehlgeschlagen! (Fehler: I002, Datei: " & filename & ")", Log.TYPE_ERROR)
             If Not ignoreImportFail Then
-                Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002a, Datei: " & filename & ") verschlüsselte Datei!", vbAbortRetryIgnore)
+                Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002, Datei: " & filename & ") falsches Format", vbAbortRetryIgnore)
                 If result = vbIgnore Then ignoreImportFail = True
             End If
             Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
             Return Nothing
         End If
 
-
-        Dim isAddon As Boolean = False
-        Dim addonOffset As Integer = 0
-        If bytes(0) = &H84 And bytes(1) = &H19 And bytes(2) = &H5 Then                  'Originale und Addon-O3D
-            isAddon = True
-            If bytes(4) = &HFF And bytes(5) = &HFF And bytes(6) = &HFF And bytes(7) = &HFF Then
-                Log.Add("O3D '" & filename.name & "' aus Addon ohne ArtNr")
-            Else
-                Log.Add("O3D '" & filename.name & "' aus Addon: " & bytes(4) + bytes(5) * 256 + bytes(6) * 65536)
-            End If
-            addonOffset = 7
-        End If
-
-
-        If Not isAddon Then
-            If bytes(0) <> &H84 Or bytes(1) <> &H19 Or bytes(2) <> &H1 Or bytes(3) <> &H17 Then             'Normale O3D
-                Log.Add("Import fehlgeschlagen! (Fehler: I002, Datei: " & filename & ")", Log.TYPE_ERROR)
-                If Not ignoreImportFail Then
-                    Dim result = MsgBox("Import fehlgeschlagen!" & vbCrLf & "(Fehler: I002, Datei: " & filename & ") falsches Format", vbAbortRetryIgnore)
-                    If result = vbIgnore Then ignoreImportFail = True
-                End If
-                Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
-                Return Nothing
-            End If
-        End If
 
         Dim temp3D As New Local3DObjekt
 
@@ -285,6 +306,8 @@ Module Importer
 
 
         temp3D.center = New Point3D
+
+        temp3D.o3dVersion = bytes(2)
 
         Dim ctMesh As Integer
         If isAddon Then
@@ -301,18 +324,18 @@ Module Importer
 
         For ctByte As Integer = 6 + addonOffset To (ctMesh * 32) + 6 - 1 + addonOffset Step 32
             '3D-Koordinaten
-            verticesTemp.Add(-BitConverter.ToSingle({bytes(ctByte), bytes(ctByte + 1), bytes(ctByte + 2), bytes(ctByte + 3)}, 0))
-            verticesTemp.Add(BitConverter.ToSingle({bytes(ctByte + 4), bytes(ctByte + 5), bytes(ctByte + 6), bytes(ctByte + 7)}, 0))
-            verticesTemp.Add(BitConverter.ToSingle({bytes(ctByte + 8), bytes(ctByte + 9), bytes(ctByte + 10), bytes(ctByte + 11)}, 0))
+            verticesTemp.Add(-BitConverter.ToSingle(bytes, ctByte))
+            verticesTemp.Add(BitConverter.ToSingle(bytes, ctByte + 4))
+            verticesTemp.Add(BitConverter.ToSingle(bytes, ctByte + 8))
 
             'Normals
-            normalsTemp.Add(BitConverter.ToSingle({bytes(ctByte + 12), bytes(ctByte + 13), bytes(ctByte + 14), bytes(ctByte + 15)}, 0))
-            normalsTemp.Add(BitConverter.ToSingle({bytes(ctByte + 16), bytes(ctByte + 17), bytes(ctByte + 18), bytes(ctByte + 19)}, 0))
-            normalsTemp.Add(BitConverter.ToSingle({bytes(ctByte + 20), bytes(ctByte + 21), bytes(ctByte + 22), bytes(ctByte + 23)}, 0))
+            normalsTemp.Add(BitConverter.ToSingle(bytes, ctByte + 12))
+            normalsTemp.Add(BitConverter.ToSingle(bytes, ctByte + 16))
+            normalsTemp.Add(BitConverter.ToSingle(bytes, ctByte + 20))
 
             '2D-Koordinaten
-            texCoordsTemp.Add(BitConverter.ToSingle({bytes(ctByte + 24), bytes(ctByte + 25), bytes(ctByte + 26), bytes(ctByte + 27)}, 0))
-            texCoordsTemp.Add(BitConverter.ToSingle({bytes(ctByte + 28), bytes(ctByte + 29), bytes(ctByte + 30), bytes(ctByte + 31)}, 0))
+            texCoordsTemp.Add(BitConverter.ToSingle(bytes, ctByte + 24))
+            texCoordsTemp.Add(BitConverter.ToSingle(bytes, ctByte + 28))
         Next
 
         If Not bytes(ctMesh * 32 + 6 + addonOffset) = &H49 Then
@@ -323,28 +346,37 @@ Module Importer
 
 
         'Face Bereich
-        Dim ctFaces As Integer
-        If isAddon Then
-            'addonOffset += 3
-            ctFaces = bytes(ctMesh * 32 + 7 + addonOffset) + bytes(ctMesh * 32 + 8 + addonOffset) * 256 ' + bytes(ctMesh * 32 + 9 + addonOffset) * 4096
-        Else
-            ctFaces = bytes(ctMesh * 32 + 7) + bytes(ctMesh * 32 + 8) * 256
-        End If
+        Dim ctFaces = bytes(ctMesh * 32 + 7 + addonOffset) + bytes(ctMesh * 32 + 8 + addonOffset) * 256 ' + bytes(ctMesh * 32 + 9 + addonOffset) * 4096
 
+
+        Dim faceBytes As Integer = 8
+        'If temp3D.o3dVersion < 5 Then
+        '    faceBytes = 8
+        'Else
+        '    faceBytes = 14
+        'End If
 
         'Längentest
-        If bytes.Count < (ctMesh * 32) + 9 + (ctFaces * 8) - 1 + addonOffset Then
+        If bytes.Count < (ctMesh * 32) + 9 + (ctFaces * faceBytes) - 1 + addonOffset Then
             Log.Add("O3D-Datei Fehlerhaft / nicht Unterstütz! (Fehler: I000b, Datei: " & filename & ")", Log.TYPE_ERROR)
             Return Nothing
         End If
 
         If isAddon Then addonOffset += 2
 
-        For ctByte = (ctMesh * 32) + 9 + addonOffset To (ctMesh * 32) + 9 + (ctFaces * 8) - 1 + addonOffset Step 8
-            For n = 0 To 5 Step 2
-                facesTemp.Add(bytes(ctByte + n) + bytes(ctByte + n + 1) * 256)
-            Next
-            matlistTemp.Add(bytes(ctByte + 6) + bytes(ctByte + 7) * 256)
+        For ctByte = (ctMesh * 32) + 9 + addonOffset To (ctMesh * 32) + 9 + (ctFaces * faceBytes) - 1 + addonOffset Step faceBytes
+            If faceBytes = 8 Then
+                For n = 0 To 5 Step 2
+                    facesTemp.Add(bytes(ctByte + n) + bytes(ctByte + n + 1) * 256)
+                Next
+                matlistTemp.Add(bytes(ctByte + 6) + bytes(ctByte + 7) * 256)
+            Else
+                For n = 0 To 11 Step 4
+                    facesTemp.Add(BitConverter.ToInt16(bytes, ctByte + n))
+                Next
+                matlistTemp.Add(bytes(ctByte + 12) + bytes(ctByte + 13) * 256)
+            End If
+
         Next
 
         'Texture Bereich
@@ -353,37 +385,37 @@ Module Importer
         Dim lenTexturename As Integer
         Dim texturenameTemp As String
 
-        If isAddon Then
-            'addonOffset += 2
-            ctTexture = bytes(ctFaces * 8 + ctMesh * 32 + 10 + addonOffset) + bytes(ctFaces * 8 + ctMesh * 32 + 11 + addonOffset) * 256 + bytes(ctFaces * 8 + ctMesh * 32 + 12 + addonOffset) * 4096
-        Else
-            ctTexture = bytes(ctFaces * 8 + ctMesh * 32 + 10) + bytes(ctFaces * 8 + ctMesh * 32 + 11) * 256
-        End If
+        'If isAddon Then
+        '    'addonOffset += 2
+        '    ctTexture = bytes(ctFaces * faceBytes + ctMesh * 32 + 10 + addonOffset) + bytes(ctFaces * faceBytes + ctMesh * 32 + 11 + addonOffset) * 256 + bytes(ctFaces * faceBytes + ctMesh * 32 + 12 + addonOffset) * 4096
+        'Else
+        ctTexture = bytes(ctFaces * faceBytes + ctMesh * 32 + 10 + addonOffset) + bytes(ctFaces * faceBytes + ctMesh * 32 + 11 + addonOffset) * 256
+        'End If
 
         'Längentest
-        If bytes.Count <= ctFaces * 8 + ctMesh * 32 + 12 + addonOffset + 1 + ctTexture * 45 - 2 Then
+        If bytes.Count <= ctFaces * faceBytes + ctMesh * 32 + 12 + addonOffset + 1 + ctTexture * 45 - 2 Then
             Log.Add("O3D-Datei Fehlerhaft / nicht Unterstütz! (Fehler: I000c, Datei: " & filename & ")", Log.TYPE_ERROR)
             Return Nothing
         End If
 
-        Dim startCtTexturen As Integer = ctFaces * 8 + ctMesh * 32 + 12 + addonOffset
+        Dim startCtTexturen As Integer = ctFaces * faceBytes + ctMesh * 32 + 12 + addonOffset
 
         For i = 1 To ctTexture
             Dim startTexture As Integer = startCtTexturen + lenTexturenamen + (i - 1) * 45
             Dim newTexture As New LocalTexture
 
             With newTexture
-                .diffuse.R = 255 * BitConverter.ToSingle({bytes(startTexture), bytes(startTexture + 1), bytes(startTexture + 2), bytes(startTexture + 3)}, 0)
-                .diffuse.G = 255 * BitConverter.ToSingle({bytes(startTexture + 4), bytes(startTexture + 5), bytes(startTexture + 6), bytes(startTexture + 7)}, 0)
-                .diffuse.B = 255 * BitConverter.ToSingle({bytes(startTexture + 8), bytes(startTexture + 9), bytes(startTexture + 10), bytes(startTexture + 11)}, 0)
-                .diffuseAlpha = BitConverter.ToSingle({bytes(startTexture + 12), bytes(startTexture + 13), bytes(startTexture + 14), bytes(startTexture + 15)}, 0)
-                .specular.R = 255 * BitConverter.ToSingle({bytes(startTexture + 16), bytes(startTexture + 17), bytes(startTexture + 18), bytes(startTexture + 19)}, 0)
-                .specular.G = 255 * BitConverter.ToSingle({bytes(startTexture + 20), bytes(startTexture + 21), bytes(startTexture + 22), bytes(startTexture + 23)}, 0)
-                .specular.B = 255 * BitConverter.ToSingle({bytes(startTexture + 24), bytes(startTexture + 25), bytes(startTexture + 26), bytes(startTexture + 27)}, 0)
-                .emissive.R = 255 * BitConverter.ToSingle({bytes(startTexture + 28), bytes(startTexture + 29), bytes(startTexture + 30), bytes(startTexture + 31)}, 0)
-                .emissive.G = 255 * BitConverter.ToSingle({bytes(startTexture + 32), bytes(startTexture + 33), bytes(startTexture + 34), bytes(startTexture + 35)}, 0)
-                .emissive.B = 255 * BitConverter.ToSingle({bytes(startTexture + 36), bytes(startTexture + 37), bytes(startTexture + 38), bytes(startTexture + 39)}, 0)
-                .power = BitConverter.ToSingle({bytes(startTexture + 40), bytes(startTexture + 41), bytes(startTexture + 42), bytes(startTexture + 43)}, 0)
+                .diffuse.R = 255 * BitConverter.ToSingle(bytes, startTexture)
+                .diffuse.G = 255 * BitConverter.ToSingle(bytes, startTexture + 4)
+                .diffuse.B = 255 * BitConverter.ToSingle(bytes, startTexture + 8)
+                .diffuseAlpha = BitConverter.ToSingle(bytes, startTexture + 12)
+                .specular.R = 255 * BitConverter.ToSingle(bytes, startTexture + 16)
+                .specular.G = 255 * BitConverter.ToSingle(bytes, startTexture + 20)
+                .specular.B = 255 * BitConverter.ToSingle(bytes, startTexture + 24)
+                .emissive.R = 255 * BitConverter.ToSingle(bytes, startTexture + 28)
+                .emissive.G = 255 * BitConverter.ToSingle(bytes, startTexture + 32)
+                .emissive.B = 255 * BitConverter.ToSingle(bytes, startTexture + 36)
+                .power = BitConverter.ToSingle(bytes, startTexture + 40)
 
                 lenTexturename = bytes(startCtTexturen + 45 * i + lenTexturenamen - 1)
                 texturenameTemp = ""
@@ -403,22 +435,22 @@ Module Importer
         'Center
         Dim startCenter As Integer = startCtTexturen + lenTexturenamen + ctTexture * 45 + 1
         With temp3D
-            .A1.X = Math.Round(BitConverter.ToSingle({bytes(startCenter), bytes(startCenter + 1), bytes(startCenter + 2), bytes(startCenter + 3)}, 0), 6)
-            .A1.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 4), bytes(startCenter + 5), bytes(startCenter + 6), bytes(startCenter + 7)}, 0), 6)
-            .A1.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 8), bytes(startCenter + 9), bytes(startCenter + 10), bytes(startCenter + 11)}, 0), 6)
-            .A2 = Math.Round(BitConverter.ToSingle({bytes(startCenter + 12), bytes(startCenter + 13), bytes(startCenter + 14), bytes(startCenter + 15)}, 0), 6)
-            .B1.X = Math.Round(BitConverter.ToSingle({bytes(startCenter + 16), bytes(startCenter + 17), bytes(startCenter + 18), bytes(startCenter + 19)}, 0), 6)
-            .B1.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 20), bytes(startCenter + 21), bytes(startCenter + 22), bytes(startCenter + 23)}, 0), 6)
-            .B1.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 24), bytes(startCenter + 25), bytes(startCenter + 26), bytes(startCenter + 27)}, 0), 6)
-            .B2 = Math.Round(BitConverter.ToSingle({bytes(startCenter + 28), bytes(startCenter + 29), bytes(startCenter + 30), bytes(startCenter + 31)}, 0), 6)
-            .origin.X = Math.Round(BitConverter.ToSingle({bytes(startCenter + 32), bytes(startCenter + 33), bytes(startCenter + 34), bytes(startCenter + 35)}, 0), 6)
-            .origin.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 36), bytes(startCenter + 37), bytes(startCenter + 38), bytes(startCenter + 39)}, 0), 6)
-            .origin.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 40), bytes(startCenter + 41), bytes(startCenter + 42), bytes(startCenter + 43)}, 0), 6)
-            .origin_scale = Math.Round(BitConverter.ToSingle({bytes(startCenter + 44), bytes(startCenter + 45), bytes(startCenter + 46), bytes(startCenter + 47)}, 0), 6)
-            .center.X = Math.Round(BitConverter.ToSingle({bytes(startCenter + 48), bytes(startCenter + 49), bytes(startCenter + 50), bytes(startCenter + 51)}, 0), 6)
-            .center.Z = Math.Round(BitConverter.ToSingle({bytes(startCenter + 52), bytes(startCenter + 53), bytes(startCenter + 54), bytes(startCenter + 55)}, 0), 6)
-            .center.Y = Math.Round(BitConverter.ToSingle({bytes(startCenter + 56), bytes(startCenter + 57), bytes(startCenter + 58), bytes(startCenter + 59)}, 0), 6)
-            .scale = Math.Round(BitConverter.ToSingle({bytes(startCenter + 60), bytes(startCenter + 61), bytes(startCenter + 62), bytes(startCenter + 63)}, 0), 6)
+            .A1.X = Math.Round(BitConverter.ToSingle(bytes, startCenter), 6)
+            .A1.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 4), 6)
+            .A1.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 8), 6)
+            .A2 = Math.Round(BitConverter.ToSingle(bytes, startCenter + 12), 6)
+            .B1.X = Math.Round(BitConverter.ToSingle(bytes, startCenter + 16), 6)
+            .B1.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 20), 6)
+            .B1.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 24), 6)
+            .B2 = Math.Round(BitConverter.ToSingle(bytes, startCenter + 28), 6)
+            .origin.X = Math.Round(BitConverter.ToSingle(bytes, startCenter + 32), 6)
+            .origin.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 36), 6)
+            .origin.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 40), 6)
+            .origin_scale = Math.Round(BitConverter.ToSingle(bytes, startCenter + 44), 6)
+            .center.X = Math.Round(BitConverter.ToSingle(bytes, startCenter + 48), 6)
+            .center.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 52), 6)
+            .center.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 56), 6)
+            .scale = Math.Round(BitConverter.ToSingle(bytes, startCenter + 60), 6)
 
             'Werte an Objekt übergeben
             .vertices = verticesTemp.ToArray
@@ -458,7 +490,7 @@ Module Importer
             Return Nothing
         End If
 
-        Dim lines = Split(My.Computer.FileSystem.ReadAllText(filename), vbCrLf)
+        Dim lines = File.ReadAllLines(filename)
 
         Select Case Trim(lines(0))
             Case "xof 0302txt 0032"
@@ -710,19 +742,19 @@ Module Importer
         For ctLine = 0 To lines.Count - 1
             Select Case Split(Trim(lines(ctLine)), " ")(0)
                 Case "FrameTransformMatrix"
-                    temp3D.A1.X = Replace(Split(Trim(lines(ctLine + 1)), ",")(0), ".", ",")
-                    temp3D.A1.Z = Replace(Split(Trim(lines(ctLine + 1)), ",")(1), ".", ",")
-                    temp3D.A1.Y = Replace(Split(Trim(lines(ctLine + 1)), ",")(2), ".", ",")
+                    temp3D.scaleX.X = Replace(Split(Trim(lines(ctLine + 1)), ",")(0), ".", ",")
+                    temp3D.scaleX.Z = Replace(Split(Trim(lines(ctLine + 1)), ",")(1), ".", ",")
+                    temp3D.scaleX.Y = Replace(Split(Trim(lines(ctLine + 1)), ",")(2), ".", ",")
                     temp3D.A2 = Replace(Split(Trim(lines(ctLine + 1)), ",")(3), ".", ",")
 
-                    temp3D.B1.X = Replace(Split(Trim(lines(ctLine + 2)), ",")(0), ".", ",")
-                    temp3D.B1.Z = Replace(Split(Trim(lines(ctLine + 2)), ",")(1), ".", ",")
-                    temp3D.B1.Y = Replace(Split(Trim(lines(ctLine + 2)), ",")(2), ".", ",")
+                    temp3D.scaleY.X = Replace(Split(Trim(lines(ctLine + 2)), ",")(0), ".", ",")
+                    temp3D.scaleY.Z = Replace(Split(Trim(lines(ctLine + 2)), ",")(1), ".", ",")
+                    temp3D.scaleY.Y = Replace(Split(Trim(lines(ctLine + 2)), ",")(2), ".", ",")
                     temp3D.B2 = Replace(Split(Trim(lines(ctLine + 2)), ",")(3), ".", ",")
 
-                    temp3D.origin.X = Replace(Split(Trim(lines(ctLine + 3)), ",")(0), ".", ",")
-                    temp3D.origin.Z = Replace(Split(Trim(lines(ctLine + 3)), ",")(1), ".", ",")
-                    temp3D.origin.Y = Replace(Split(Trim(lines(ctLine + 3)), ",")(2), ".", ",")
+                    temp3D.scaleZ.X = Replace(Split(Trim(lines(ctLine + 3)), ",")(0), ".", ",")
+                    temp3D.scaleZ.Z = Replace(Split(Trim(lines(ctLine + 3)), ",")(1), ".", ",")
+                    temp3D.scaleZ.Y = Replace(Split(Trim(lines(ctLine + 3)), ",")(2), ".", ",")
                     temp3D.origin_scale = Replace(Split(Trim(lines(ctLine + 3)), ",")(3), ".", ",")
 
                     temp3D.center.X = Replace(Split(Trim(lines(ctLine + 4)), ",")(0), ".", ",")
@@ -734,9 +766,10 @@ Module Importer
                     'Mesh-Bereich
                     ctMesh = Replace(lines(ctLine + 1), ";", "")
                     For i = ctLine + 2 To ctLine + 2 + ctMesh - 1
-                        verticesTemp.Add(-Replace(Split(Trim(lines(i)), ";")(0), ".", ",") * temp3D.origin.X + temp3D.center.X)
-                        verticesTemp.Add(Replace(Split(Trim(lines(i)), ";")(2), ".", ",") * temp3D.origin.Z + temp3D.center.Z)
-                        verticesTemp.Add(Replace(Split(Trim(lines(i)), ";")(1), ".", ",") * temp3D.origin.Y + temp3D.center.Y)
+                        Dim newPoint = New Point3D(Replace(Split(Trim(lines(i)), ";")(0), ".", ","), Replace(Split(Trim(lines(i)), ";")(1), ".", ","), Replace(Split(Trim(lines(i)), ";")(2), ".", ","))
+                        verticesTemp.Add(newPoint.X * temp3D.scaleX.X + newPoint.Y * temp3D.scaleX.Y + newPoint.Z * temp3D.scaleX.Z + temp3D.center.X)
+                        verticesTemp.Add(-(newPoint.X * temp3D.scaleY.X + newPoint.Y * temp3D.scaleY.Y + newPoint.Z * temp3D.scaleY.Z + temp3D.center.Y))
+                        verticesTemp.Add(newPoint.X * temp3D.scaleZ.X + newPoint.Y * temp3D.scaleZ.Y + newPoint.Z * temp3D.scaleZ.Z + temp3D.center.Z)
                     Next
                     ctLine += 2 + ctMesh
 
@@ -745,19 +778,22 @@ Module Importer
                     For i = ctLine + 1 To ctLine + 1 + ctFaces - 1
                         lines(i) = Trim(Replace(lines(i), ";", ","))
                         Dim tempV As String() = Split(lines(i), ",")
-                        facesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(3) + ctMeshAlt, tempV(2) + ctMeshAlt})
+                        If tempV(0) = 3 Then
+                            facesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(3) + ctMeshAlt, tempV(2) + ctMeshAlt})
 
-                        linesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(3) + ctMeshAlt})
-                        linesTemp.AddRange({tempV(3) + ctMeshAlt, tempV(2) + ctMeshAlt})
-                        linesTemp.AddRange({tempV(3) + ctMeshAlt, tempV(1) + ctMeshAlt})
+                            linesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(1) + ctMeshAlt})
+                            linesTemp.AddRange({tempV(3) + ctMeshAlt, tempV(2) + ctMeshAlt})
+                            linesTemp.AddRange({tempV(3) + ctMeshAlt, tempV(3) + ctMeshAlt})
+                        ElseIf tempV(0) = 4 Then
+                            facesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(4) + ctMeshAlt, tempV(2) + ctMeshAlt})
+                            facesTemp.AddRange({tempV(2) + ctMeshAlt, tempV(4) + ctMeshAlt, tempV(3) + ctMeshAlt})
 
-                        For n As Integer = 3 To tempV(0) - 1
-                            facesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(n + 1) + ctMeshAlt, tempV(n) + ctMeshAlt})
-
-                            linesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(n + 1) + ctMeshAlt})
-                            linesTemp.AddRange({tempV(n + 1) + ctMeshAlt, tempV(n) + ctMeshAlt})
+                            linesTemp.AddRange({tempV(1) + ctMeshAlt, tempV(2) + ctMeshAlt})
+                            linesTemp.AddRange({tempV(2) + ctMeshAlt, tempV(4) + ctMeshAlt})
+                            linesTemp.AddRange({tempV(2) + ctMeshAlt, tempV(3) + ctMeshAlt})
+                            linesTemp.AddRange({tempV(3) + ctMeshAlt, tempV(4) + ctMeshAlt})
                             addFaces.Add(i - ctLine - 1)
-                        Next
+                        End If
                     Next
                     ctMeshAlt = ctMesh
                     ctLine += ctFaces

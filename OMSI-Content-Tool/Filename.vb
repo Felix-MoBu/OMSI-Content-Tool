@@ -80,8 +80,11 @@ Public Class Filename
             End If
             If projectpath.Substring(projectpath.Length - 1) = "\" Then projectpath = projectpath.Substring(0, projectpath.Length - 1)
             Me.path = projectpath
+            If filename.Length + 1 > projectpath.Length Then
+                Me.name = filename.Substring(projectpath.Length + 1)
+            End If
         Else
-            Dim tempPath = Split(filename, "\")
+                Dim tempPath = Split(filename, "\")
             Me.name = tempPath(tempPath.Count - 1)
 
             Dim tempPath2 As String() = Split(filename, "\")
@@ -93,31 +96,43 @@ Public Class Filename
     End Sub
 
     Public Shared Operator <>(ByVal obj1 As Filename, ByVal obj2 As Filename) As Boolean
+        If obj1 Is Nothing Then Return True
+        If obj2 Is Nothing Then Return True
         If obj1.ToString <> obj2.ToString Then Return True
         Return False
     End Operator
 
     Public Shared Operator =(ByVal obj1 As Filename, ByVal obj2 As Filename) As Boolean
+        If obj1 Is Nothing Then Return False
+        If obj2 Is Nothing Then Return False
         If obj1.ToString = obj2.ToString Then Return True
         Return False
     End Operator
 
     Public Shared Operator <>(ByVal obj1 As String, ByVal obj2 As Filename) As Boolean
+        If obj1 Is Nothing Then Return True
+        If obj2 Is Nothing Then Return True
         If obj1 <> obj2.ToString Then Return True
         Return False
     End Operator
 
     Public Shared Operator =(ByVal obj1 As String, ByVal obj2 As Filename) As Boolean
+        If obj1 Is Nothing Then Return False
+        If obj2 Is Nothing Then Return False
         If obj1 = obj2.ToString Then Return True
         Return False
     End Operator
 
     Public Shared Operator <>(ByVal obj1 As Filename, ByVal obj2 As String) As Boolean
+        If obj1 Is Nothing Then Return True
+        If obj2 Is Nothing Then Return True
         If obj1.ToString <> obj2 Then Return True
         Return False
     End Operator
 
     Public Shared Operator =(ByVal obj1 As Filename, ByVal obj2 As String) As Boolean
+        If obj1 Is Nothing Then Return False
+        If obj2 Is Nothing Then Return False
         If obj1.ToString = obj2 Then Return True
         Return False
     End Operator

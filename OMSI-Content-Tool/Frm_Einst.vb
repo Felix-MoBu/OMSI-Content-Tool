@@ -39,6 +39,7 @@ Public Class Frm_Einst
             Else
                 Frm_Main.TReloadTextures.Stop()
             End If
+            .ShowAllParts = CBShowAllParts.Checked
 
             .CamDriverColor = TBColorDriverCam.BackColor
             .CamPaxColor = TBColorPaxCam.BackColor
@@ -88,6 +89,7 @@ Public Class Frm_Einst
             'Page "Darstellung"
             TBColor3D.BackColor = .BackColor3D
             CBTexAutoReload.Checked = .TexAutoReload
+            CBShowAllParts.Checked = .ShowAllParts
             TBColorDriverCam.BackColor = .CamDriverColor
             TBColorPaxCam.BackColor = .CamPaxColor
             TBColorReflexCam.BackColor = .CamReflexColor
@@ -128,7 +130,7 @@ Public Class Frm_Einst
     Private Sub BTRepToolSuchen_Click(sender As Object, e As EventArgs) Handles BTRepToolSuchen.Click
         Dim fd As New OpenFileDialog
         If TBRepTool.Text <> "" Then
-            fd.InitialDirectory = TBRepTool.Text
+            fd.InitialDirectory = New Filename(TBRepTool.Text).path
         Else
             fd.InitialDirectory = TBOmsiPfad.Text
         End If

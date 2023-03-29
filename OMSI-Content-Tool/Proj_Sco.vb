@@ -41,7 +41,7 @@ Public Class Proj_Sco
     Public onlyeditor As Boolean
     Public shadow As Boolean
     Public petrolstation As Boolean
-    Public nomaplighting As Boolean
+    Public nomallighting As Boolean
 
     Public busstop As Boolean
     Public carpark_p As Boolean
@@ -76,7 +76,7 @@ Public Class Proj_Sco
         filename = New Filename(filepath)
         If My.Computer.FileSystem.FileExists(filepath) Then
             Log.Add("Projekt """ & filename.name & """ laden...")
-            Dim allLines As String() = Split(Replace(My.Computer.FileSystem.ReadAllText(filename, Encoding.GetEncoding(1252)), vbCr, ""), vbLf)
+            Dim allLines As String() = System.IO.File.ReadAllLines(filename, Encoding.GetEncoding(1252))
 
             If allLines.Contains("[particle_emitter]") Then
                 MsgBox("Feuerwerk wird nicht unterstützt!")
@@ -108,6 +108,8 @@ Public Class Proj_Sco
                         surface = True
                     Case "[LightMapMapping]"
                         LightMapMapping = True
+                    Case "[NightMapMode]"
+                        nightmapmode = allLines(linect + 1)
                     Case "[onlyeditor]"
                         onlyeditor = True
                     Case "[shadow]"
@@ -127,7 +129,7 @@ Public Class Proj_Sco
                     Case "[helparrow]"
                         helparrow = True
                     Case "[nomaplighting]"
-                        nomaplighting = True
+                        nomallighting = True
                     Case "[complexity]"
                         complexity = allLines(linect + 1)
                     Case "[collision_mesh]"
@@ -384,7 +386,7 @@ Public Class Proj_Sco
             If carpark_p Then .Add("[carpark_p]", True)
             If entrypoint Then .Add("[entrypoint]", True)
             If helparrow Then .Add("[helparrow]", True)
-            If nomaplighting Then .Add("[nomaplighting]", True)
+            If nomallighting Then .Add("[nomaplighting]", True)
 
             If complexity <> 0 Then
                 .Add("[complexity]")

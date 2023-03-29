@@ -35,7 +35,7 @@ Public Class OMSI_Cabin
 
         If My.Computer.FileSystem.FileExists(filename) Then
             Log.Add("Cabin-Datei """ & filename.name & """ laden...")
-            Dim allLines As String() = Split(My.Computer.FileSystem.ReadAllText(filename), vbCrLf)
+            Dim allLines As String() = System.IO.File.ReadAllLines(filename)
 
             For linect = 0 To allLines.Count - 1
                 Select Case allLines(linect)
