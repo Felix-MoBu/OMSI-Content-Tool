@@ -76,7 +76,7 @@ Public Class Proj_Sco
         filename = New Filename(filepath)
         If My.Computer.FileSystem.FileExists(filepath) Then
             Log.Add("Projekt """ & filename.name & """ laden...")
-            Dim allLines As String() = Split(Replace(My.Computer.FileSystem.ReadAllText(filename, Encoding.GetEncoding(1252)), vbCr, ""), vbLf)
+            Dim allLines As String() = System.IO.File.ReadAllLines(filename, Encoding.GetEncoding(1252))
 
             If allLines.Contains("[particle_emitter]") Then
                 MsgBox("Feuerwerk wird nicht unterstützt!")

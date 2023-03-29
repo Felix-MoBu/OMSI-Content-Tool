@@ -33,7 +33,7 @@ Public Class OMSI_Paths
             Log.Add("Pfad-Datei """ & filename.name & """ existiert nicht!", Log.TYPE_ERROR)
         End If
         Log.Add("Pfad-Datei """ & filename.name & """ laden...")
-        Dim allLines As String() = Split(My.Computer.FileSystem.ReadAllText(filename), vbCrLf)
+        Dim allLines As String() = System.IO.File.ReadAllLines(filename)
 
         Me.filename = filename
 

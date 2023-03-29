@@ -15,7 +15,7 @@ Module Importer
 
         Frm_Main.SSLBStatus.Text = "Import erfolgreich!"
 
-        Select Case filename.extension
+        Select Case filename.extension.ToLower
             Case KNOWN_FILE_TYPES(0)
                 Return readO3D(filename)
             Case KNOWN_FILE_TYPES(1)
@@ -487,7 +487,7 @@ Module Importer
             Return Nothing
         End If
 
-        Dim lines = Split(My.Computer.FileSystem.ReadAllText(filename), vbCrLf)
+        Dim lines = File.ReadAllLines(filename)
 
         Select Case Trim(lines(0))
             Case "xof 0302txt 0032"
