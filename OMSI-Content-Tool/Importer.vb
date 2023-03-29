@@ -240,7 +240,7 @@ Module Importer
 
         Dim isAddon As Boolean = False
         Dim addonOffset As Integer = 0
-        Dim addonSerNr As Integer = 65535
+        Dim addonSerNr As Integer = 0
 
         If bytes(0) = &H84 And bytes(1) = &H19 Then
             Select Case bytes(3)
@@ -346,24 +346,20 @@ Module Importer
 
 
         'Face Bereich
-        Dim ctFaces As Integer
-        If isAddon Then
-            'addonOffset += 3
-            ctFaces = bytes(ctMesh * 32 + 7 + addonOffset) + bytes(ctMesh * 32 + 8 + addonOffset) * 256 ' + bytes(ctMesh * 32 + 9 + addonOffset) * 4096
-        Else
-            ctFaces = bytes(ctMesh * 32 + 7) + bytes(ctMesh * 32 + 8) * 256
-        End If
+        Dim ctFaces = bytes(ctMesh * 32 + 7 + addonOffset) + bytes(ctMesh * 32 + 8 + addonOffset) * 256 ' + bytes(ctMesh * 32 + 9 + addonOffset) * 4096
 
+
+        Dim faceBytes As Integer = 8
+        'If temp3D.o3dVersion < 5 Then
+        '    faceBytes = 8
+        'Else
+        '    faceBytes = 14
+        'End If
 
         'Längentest
-        Dim faceBytes As Integer = 8
-        If bytes.Count < (ctMesh * 32) + 9 + (ctFaces * 14) - 1 + addonOffset Then
-            If bytes.Count < (ctMesh * 32) + 9 + (ctFaces * faceBytes) - 1 + addonOffset Then
-                Log.Add("O3D-Datei Fehlerhaft / nicht Unterstütz! (Fehler: I000b, Datei: " & filename & ")", Log.TYPE_ERROR)
-                Return Nothing
-            End If
-        Else
-            faceBytes = 14
+        If bytes.Count < (ctMesh * 32) + 9 + (ctFaces * faceBytes) - 1 + addonOffset Then
+            Log.Add("O3D-Datei Fehlerhaft / nicht Unterstütz! (Fehler: I000b, Datei: " & filename & ")", Log.TYPE_ERROR)
+            Return Nothing
         End If
 
         If isAddon Then addonOffset += 2
@@ -389,12 +385,12 @@ Module Importer
         Dim lenTexturename As Integer
         Dim texturenameTemp As String
 
-        If isAddon Then
-            'addonOffset += 2
-            ctTexture = bytes(ctFaces * faceBytes + ctMesh * 32 + 10 + addonOffset) + bytes(ctFaces * faceBytes + ctMesh * 32 + 11 + addonOffset) * 256 + bytes(ctFaces * faceBytes + ctMesh * 32 + 12 + addonOffset) * 4096
-        Else
-            ctTexture = bytes(ctFaces * faceBytes + ctMesh * 32 + 10) + bytes(ctFaces * faceBytes + ctMesh * 32 + 11) * 256
-        End If
+        'If isAddon Then
+        '    'addonOffset += 2
+        '    ctTexture = bytes(ctFaces * faceBytes + ctMesh * 32 + 10 + addonOffset) + bytes(ctFaces * faceBytes + ctMesh * 32 + 11 + addonOffset) * 256 + bytes(ctFaces * faceBytes + ctMesh * 32 + 12 + addonOffset) * 4096
+        'Else
+        ctTexture = bytes(ctFaces * faceBytes + ctMesh * 32 + 10 + addonOffset) + bytes(ctFaces * faceBytes + ctMesh * 32 + 11 + addonOffset) * 256
+        'End If
 
         'Längentest
         If bytes.Count <= ctFaces * faceBytes + ctMesh * 32 + 12 + addonOffset + 1 + ctTexture * 45 - 2 Then
