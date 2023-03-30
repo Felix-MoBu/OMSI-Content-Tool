@@ -24,7 +24,7 @@ Public Class Frm_Hof
     Private Sub BTEntfernen_Click(sender As Object, e As EventArgs) Handles BTEntfernen.Click
         Dim x = MsgBox("Sicher, dass die Datei unwiderruflich gelöscht werden soll?", vbYesNo)
         If x = vbYes Then
-            My.Computer.FileSystem.DeleteFile(files(LBHofdateien.SelectedIndex))
+            System.IO.File.Delete(files(LBHofdateien.SelectedIndex))
             einlesen()
         End If
     End Sub
@@ -56,8 +56,8 @@ Public Class Frm_Hof
 
     Public Sub copyNewHof(oldFile As String)
         Dim newFile = New Filename(oldFile.Split("\").Last, Frm_Main.getProj.filename.path)
-        If Not My.Computer.FileSystem.FileExists(newFile) Then
-            My.Computer.FileSystem.CopyFile(oldFile, newFile)
+        If Not System.IO.File.Exists(newFile) Then
+            System.IO.File.Copy(oldFile, newFile)
             Log.Add("Hofdatei importiert! (Datei: " & newFile.name & ")")
 
             einlesen()

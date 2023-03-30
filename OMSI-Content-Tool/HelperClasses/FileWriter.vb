@@ -65,7 +65,7 @@ Public Class FileWriter
 
         'Backup anlegen
         If My.Settings.BackupAnlegen Then
-            If My.Computer.FileSystem.FileExists(filename) Then
+            If System.IO.File.Exists(filename) Then
                 My.Computer.FileSystem.CopyFile(filename, filename & "_bak")
             End If
         End If

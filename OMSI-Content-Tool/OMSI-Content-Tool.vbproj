@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="HelperClasses\ApplicationEvents.vb" />
     <Compile Include="GLComponents\Arrow.vb" />
+    <Compile Include="HelperClasses\Git.vb" />
     <Compile Include="OMSI_Classes\OMSI_BBox.vb" />
     <Compile Include="Selectors\ColorSelector.Designer.vb">
       <DependentUpon>ColorSelector.vb</DependentUpon>

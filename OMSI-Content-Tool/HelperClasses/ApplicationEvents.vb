@@ -24,7 +24,7 @@ Namespace My
         '        End If
         '        If e.CommandLine.ToArray.Count = 1 Then
         '            MsgBox(e.CommandLine.ToArray(0))
-        '            If My.Computer.FileSystem.FileExists(e.CommandLine.ToArray(0)) Then
+        '            If System.IO.File.Exists(e.CommandLine.ToArray(0)) Then
         '                Frm_Main.fileimport2(New Filename(e.CommandLine.ToArray(0)))
         '            Else
         '                O3D_Test.Log.Add("Die angegebene Datei konnte nicht gefunden werden! (Datei: " & e.CommandLine.ToArray(0) & ")", O3D_Test.Log.TYPE_ERROR)

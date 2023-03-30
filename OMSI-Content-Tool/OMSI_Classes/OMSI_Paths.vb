@@ -29,7 +29,7 @@ Public Class OMSI_Paths
 
     Public Sub New(filename As Filename)
 
-        If Not My.Computer.FileSystem.FileExists(filename) Then
+        If Not System.IO.File.Exists(filename) Then
             Log.Add("Pfad-Datei """ & filename.name & """ existiert nicht!", Log.TYPE_ERROR)
         End If
         Log.Add("Pfad-Datei """ & filename.name & """ laden...")

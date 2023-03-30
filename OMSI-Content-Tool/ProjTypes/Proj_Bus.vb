@@ -91,7 +91,7 @@ Public Class Proj_Bus
         Dim camReflexIndex As Byte = 0
 
         filename = New Filename(filepath)
-        If My.Computer.FileSystem.FileExists(filename.path & "\" & filename.name) Then
+        If System.IO.File.Exists(filename.path & "\" & filename.name) Then
             Log.Add("Projekt """ & filename.name & """ laden...")
             Dim allLines As String() = System.IO.File.ReadAllLines(filename, Encoding.GetEncoding(1252))
 

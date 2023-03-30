@@ -177,7 +177,7 @@ Public Class Frm_Rep
                     RepFolder = Projekt_Bus.filename.path & "\Texture"
                 End If
 
-                If My.Computer.FileSystem.FileExists(RepFolder & "\" & control.text) Then
+                If System.IO.File.Exists(RepFolder & "\" & control.text) Then
                     Process.Start(RepFolder & "\" & control.text)
                     Exit For
                 Else
@@ -283,7 +283,7 @@ Public Class Frm_Rep
 
                 For Each control In PMain.Controls
                     If control.Name = "CB" & i Then
-                        If My.Computer.FileSystem.FileExists(RepFolder & "\" & repaint.file) Then
+                        If System.IO.File.Exists(RepFolder & "\" & repaint.file) Then
                             control.selecteditem = repaint.file
                         Else
                             control.backcolor = Color.Red
@@ -610,7 +610,7 @@ Public Class Frm_Rep
     End Sub
 
     Private Sub BTRepTool_Click(sender As Object, e As EventArgs) Handles BTRepTool.Click
-        If My.Computer.FileSystem.FileExists(My.Settings.RepToolPfad) Then
+        If System.IO.File.Exists(My.Settings.RepToolPfad) Then
             Process.Start(My.Settings.RepToolPfad)
         Else
             MsgBox("Bitte wähle zunächst in den Einstellungen den Pfad zum Repaint-Tool aus!")

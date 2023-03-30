@@ -87,7 +87,7 @@ Public Class Frm_Listen
     Private Sub LBAusgewählt_DoubleClick(sender As Object, e As EventArgs) Handles LBAusgewählt.DoubleClick
         Dim filename As String = Projekt.filename.path & "\" & LBAusgewählt.SelectedItem
 
-        If My.Computer.FileSystem.FileExists(filename) Then
+        If System.IO.File.Exists(filename) Then
             Process.Start(filename)
         Else
             Log.Add("Script-Datei nicht gefunden! (Fehler:L002, Datei:" & filename & ")")

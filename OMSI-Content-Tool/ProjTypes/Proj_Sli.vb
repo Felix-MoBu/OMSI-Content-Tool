@@ -37,7 +37,7 @@ Public Class Proj_Sli
 
     Public Sub New(filepath As String)
         filename = New Filename(filepath)
-        If My.Computer.FileSystem.FileExists(filename.path & "\" & filename.name) Then
+        If System.IO.File.Exists(filename.path & "\" & filename.name) Then
             Dim allLines As String() = System.IO.File.ReadAllLines(filename, Encoding.GetEncoding(1252))
 
             If Not allLines.Contains("[profilepnt]") Then

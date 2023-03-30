@@ -88,7 +88,7 @@ Public Class Frm_Eig_Bus
 
     Private Sub LoadWagenNr()
         With TBWagennrFile
-            If My.Computer.FileSystem.FileExists(TBPath.Text & "\" & .Text) Then
+            If System.IO.File.Exists(TBPath.Text & "\" & .Text) Then
                 TBWagennummern.Text = My.Computer.FileSystem.ReadAllText(TBPath.Text & "\" & .Text, Encoding.GetEncoding(1252))
                 .ForeColor = Color.Black
             Else
@@ -98,7 +98,7 @@ Public Class Frm_Eig_Bus
     End Sub
 
     Private Sub SaveWagenNr()
-        If My.Computer.FileSystem.FileExists(TBPath.Text & "\" & TBWagennrFile.Text) Then
+        If System.IO.File.Exists(TBPath.Text & "\" & TBWagennrFile.Text) Then
             My.Computer.FileSystem.WriteAllText(TBPath.Text & "\" & TBWagennrFile.Text, TBWagennummern.Text, False)
         End If
     End Sub

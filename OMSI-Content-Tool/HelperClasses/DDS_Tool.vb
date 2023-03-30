@@ -10,7 +10,7 @@ Module DDS_Tool
             Return Nothing
         End If
 
-        If Not My.Computer.FileSystem.FileExists(DDSfile) Then
+        If Not System.IO.File.Exists(DDSfile) Then
             Log.Add("DDS-Datei existiert nicht (Datei: " & DDSfile & ")", Log.TYPE_WARNUNG)
             Return Nothing
         Else

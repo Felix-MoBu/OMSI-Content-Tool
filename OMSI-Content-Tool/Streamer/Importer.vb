@@ -1007,7 +1007,7 @@ Module Importer
 
 
     Private Function checkIfExist(filename As Filename) As Boolean
-        If Not My.Computer.FileSystem.FileExists(filename) Then
+        If Not System.IO.File.Exists(filename) Then
             Log.Add("Import fehlgeschlagen! (Fehler: I001, Datei: " & filename & ") nicht gefunden", Log.TYPE_ERROR)
             importWarnung("Import fehlgeschlagen!", "I001", filename, "Datei nicht gefunden")
 

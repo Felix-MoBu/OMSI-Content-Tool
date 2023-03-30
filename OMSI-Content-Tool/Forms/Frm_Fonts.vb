@@ -28,12 +28,12 @@ Public Class Frm_Fonts
                             If textTexture.font = .name Then .isUsed = True
                         Next
 
-                        If Not My.Computer.FileSystem.FileExists(.bitmap) Then
+                        If Not System.IO.File.Exists(.bitmap) Then
                             Log.Add("Bitmap konnte nicht geladen werden Font: " & .name & " Datei: " & .bitmap, Log.TYPE_WARNUNG)
                             Continue For
                         End If
 
-                        If Not My.Computer.FileSystem.FileExists(.alpha) Then
+                        If Not System.IO.File.Exists(.alpha) Then
                             Log.Add("AlphaMap konnte nicht geladen werden Font: " & .name & " Datei: " & .alpha, Log.TYPE_WARNUNG)
                             Continue For
                         End If

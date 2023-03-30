@@ -125,6 +125,10 @@ Class Frm_Main
 
         If My.Settings.TexAutoReload Then TReloadTextures.Start()
 
+        If CreateObject("WScript.Shell").Exec("git --version").StdOut.ReadAll.ToString.Split(" ")(0) = "git" Then
+            GitToolStripMenuItem.Visible = True
+        End If
+
         'Datei laden die übergeben wurde
         Try
             If My.Application.CommandLineArgs.Count > 0 Then
@@ -312,7 +316,7 @@ Class Frm_Main
                         End If
                     ElseIf newFilename.extension.ToLower = "cfg" Then
 
-                        If My.Computer.FileSystem.FileExists(newFilename) Then
+                        If System.IO.File.Exists(newFilename) Then
                             Dim fileContent As String = My.Computer.FileSystem.ReadAllText(newFilename)
 
                             If fileContent.Contains("[mesh]") Or fileContent.Contains("[smoke]") _
@@ -555,13 +559,13 @@ Class Frm_Main
         objektpfad &= "Texture"
         texture.filename.path = objektpfad
 
-        If My.Computer.FileSystem.FileExists(objektpfad & "\" & texture.filename.name) Then
+        If System.IO.File.Exists(objektpfad & "\" & texture.filename.name) Then
             texture.filename.path = objektpfad
         Else
-            If My.Computer.FileSystem.FileExists(Join(tmppath, "\") & "\" & texture.filename.name) Then
+            If System.IO.File.Exists(Join(tmppath, "\") & "\" & texture.filename.name) Then
                 texture.filename.path = Join(tmppath, "\")
             Else
-                If My.Computer.FileSystem.FileExists(Join(tmppath, "\") & "\Texture\" & texture.filename.name) Then
+                If System.IO.File.Exists(Join(tmppath, "\") & "\Texture\" & texture.filename.name) Then
                     texture.filename.path = Join(tmppath, "\") & "\Texture\"
                 Else
                     texture.filename.path = ""
@@ -801,7 +805,7 @@ Class Frm_Main
     End Sub
 
     Private Sub öffneLetzte(ByVal sender As Object, ByVal e As EventArgs)
-        If My.Computer.FileSystem.FileExists(sender.text) Then
+        If System.IO.File.Exists(sender.text) Then
             ProjÖffnen(sender.Text)
         Else
             Dim result = MsgBox("Die Datei existiert nicht! Soll sie von der Liste entfernt werden?", MsgBoxStyle.YesNo)
@@ -894,6 +898,7 @@ Class Frm_Main
         loadProjDataBase()
         GlMain.Invalidate()
         TCObjekte_SelectedIndexChanged(TCObjekte, Nothing)
+        Git.tryFindRepoAt(New Filename(filename).path)
 
         If Not Importer.stopImport Then
             Text = filename & " - " & My.Application.Info.Title
@@ -1648,10 +1653,31 @@ Class Frm_Main
         mainStrg = False
     End Sub
 
+
+    Private Sub NeuesRepoKlonenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NeuesRepoKlonenToolStripMenuItem.Click
+        Git.Connect(InputBox("Repository URL:"))
+    End Sub
+
+    Private Sub CommitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CommitToolStripMenuItem.Click
+        Git.Commit()
+    End Sub
+
+    Private Sub PullToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PullToolStripMenuItem.Click
+        Git.Pull()
+    End Sub
+
+    Private Sub PushToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PushToolStripMenuItem.Click
+        Git.Push()
+    End Sub
+
+    Private Sub SyncToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SyncToolStripMenuItem.Click
+        Git.Sync()
+    End Sub
+
     Private Sub ReadmetxtToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReadmetxtToolStripMenuItem.Click
         If Not getProj() Is Nothing Then
             Dim readmeFile As String = getProj.filename.path & "\readme.txt"
-            If Not My.Computer.FileSystem.FileExists(readmeFile) Then
+            If Not System.IO.File.Exists(readmeFile) Then
                 Dim fw As New FileWriter(New Filename(readmeFile))
                 fw.Write()
             End If
@@ -2835,7 +2861,7 @@ Class Frm_Main
             Licht_TBKegel.Text = .cone
             Licht_TBZeitkonst.Text = .timeconst
             Licht_TBTexture.Text = .bitmap
-            If .bitmap = "" Or My.Computer.FileSystem.FileExists(getProj.filename.path & "\Texture\" & .bitmap) Then
+            If .bitmap = "" Or System.IO.File.Exists(getProj.filename.path & "\Texture\" & .bitmap) Then
                 Licht_TBTexture.BackColor = SystemColors.Control
             Else
                 Licht_TBTexture.BackColor = Color.Red
@@ -3206,7 +3232,7 @@ Class Frm_Main
             For Each Objekt In AlleObjekte
                 For Each texture In Objekt.texturen
                     If texture.filename.name = file Then
-                        If My.Computer.FileSystem.FileExists(texture.filename) Then
+                        If System.IO.File.Exists(texture.filename) Then
                             PBTexture.Tag = texture.filename
                             DisplayImage(PBTexture)
 
@@ -5292,6 +5318,20 @@ Class Frm_Main
                 TVHelper.Nodes(4).Nodes.Add("Innen Licht " & getProj.model.intLichter.Count - 1)
                 loadIntLichter()
             End If
+        End If
+    End Sub
+
+    Private Sub NeuesRepositoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NeuesRepositoryToolStripMenuItem.Click
+        If getProj.filename <> "" Then
+            Git.NewRepoAt(getProj.filename.Path)
+        Else
+            Log.Add("Es kann kein neues Repository erstellt werden. Bitte erst ein Projekt öffnen oder erstellen")
+        End If
+    End Sub
+
+    Private Sub UnGitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UnGitToolStripMenuItem.Click
+        If MsgBox("Dieses Projekt aus der Nachverfolgung mit Git entfernen?" & vbCrLf & "(alle Dateien und Änderungen bleiben erhalten)", vbYesNo) = vbYes Then
+            Git.delete()
         End If
     End Sub
 End Class

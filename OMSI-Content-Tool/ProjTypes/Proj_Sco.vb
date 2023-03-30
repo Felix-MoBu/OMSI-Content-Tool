@@ -74,7 +74,7 @@ Public Class Proj_Sco
 
     Public Sub New(filepath As String)
         filename = New Filename(filepath)
-        If My.Computer.FileSystem.FileExists(filepath) Then
+        If System.IO.File.Exists(filepath) Then
             Log.Add("Projekt """ & filename.name & """ laden...")
             Dim allLines As String() = System.IO.File.ReadAllLines(filename, Encoding.GetEncoding(1252))
 

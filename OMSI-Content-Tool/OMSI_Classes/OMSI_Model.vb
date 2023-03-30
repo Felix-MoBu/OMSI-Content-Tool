@@ -30,7 +30,7 @@ Public Class OMSI_Model
     End Sub
 
     Public Sub New(filename As Filename)
-        If My.Computer.FileSystem.FileExists(filename) Then
+        If System.IO.File.Exists(filename) Then
             Log.Add("Model-Datei """ & filename & """ laden...")
             Me.filename = filename
             Dim allLines As String() = System.IO.File.ReadAllLines(filename, Encoding.GetEncoding(1252))

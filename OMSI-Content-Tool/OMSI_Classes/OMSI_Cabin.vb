@@ -33,7 +33,7 @@ Public Class OMSI_Cabin
     Public Sub New(filename As Filename)
         Me.filename = filename
 
-        If My.Computer.FileSystem.FileExists(filename) Then
+        If System.IO.File.Exists(filename) Then
             Log.Add("Cabin-Datei """ & filename.name & """ laden...")
             Dim allLines As String() = System.IO.File.ReadAllLines(filename)
 
