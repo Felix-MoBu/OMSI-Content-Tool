@@ -35,21 +35,27 @@
         If url = "" Then
 
         Else
-
+            Execute("git clone " & url)
         End If
     End Sub
 
     Public Sub Commit()
-        Dim message As String = InputBox("Kommentar")
-        Execute("git commit -m '" & message & "'")
+        If gitPath <> "" Then
+            Dim message As String = InputBox("Kommentar")
+            Execute("git commit -m '" & message & "'")
+        End If
     End Sub
 
     Public Sub Pull()
-        Execute("git pull")
+        If gitPath <> "" Then
+            Execute("git pull")
+        End If
     End Sub
 
     Public Sub Push()
-        Execute("git push origin " & getOrigin())
+        If gitPath <> "" Then
+            Execute("git push origin " & getOrigin())
+        End If
     End Sub
 
     Public Sub Sync()

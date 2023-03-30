@@ -193,7 +193,8 @@ Public Class Proj_Sco
                             For i = linect To allLines.Count - 1
                                 If allLines(i) = "[use_traffic_light]" Then
                                     .traffic_light = allLines(i + 1)
-                                    Exit For
+                                ElseIf allLines(i) = "[crossingproblem]" Then
+                                    .crossingproblem = True
                                 Else
                                     If allLines(i).Contains("[") Then Exit For
                                 End If

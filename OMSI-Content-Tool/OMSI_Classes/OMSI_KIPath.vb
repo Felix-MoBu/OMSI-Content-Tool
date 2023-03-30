@@ -18,6 +18,7 @@ Public Class OMSI_KIPath
     Public blinker As Byte      '0: nix, 1: gerade, 2: links, 3: rechts
 
     Public traffic_light As Integer = -1
+    Public crossingproblem As Boolean = False
 
     Public Const TYPE_CAR As Byte = 0
     Public Const TYPE_HUM As Byte = 1

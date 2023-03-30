@@ -166,7 +166,7 @@ Module Importer
                                 Next
                             Next
                         Else
-                            If Frm_Main.getProjTyp = Proj_Bus.TYPE Then
+                            If Frm_Main.getProjType = Proj_Bus.TYPE Then
                                 Dim newCam As New OMSI_Camera
                                 With transformNodes
                                     newCam.position = New Point3D(toSingle(.firstchild.getattribute("translation").split(" ")(0)), toSingle(.firstchild.getattribute("translation").split(" ")(0)), toSingle(.firstchild.getattribute("translation").split(" ")(0)))

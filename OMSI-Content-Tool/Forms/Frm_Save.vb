@@ -3,7 +3,7 @@ Public Class Frm_Save
     Private Sub Frm_Save_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Location = New Point(Frm_Main.Width / 2 - Me.Width / 2, Frm_Main.Height / 2 - Me.Height / 2)
 
-        Select Case Frm_Main.getProjTyp
+        Select Case Frm_Main.getProjType
             Case Proj_Bus.TYPE
                 LBProjDatei.Text = "Bus-Datei"
             Case Proj_Emt.TYPE

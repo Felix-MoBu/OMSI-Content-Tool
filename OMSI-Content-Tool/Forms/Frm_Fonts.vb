@@ -1,5 +1,6 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Imports System.ComponentModel
+Imports System.Text
 
 Public Class Frm_Fonts
     Dim alleFonts As New List(Of OMSI_Font)
@@ -8,10 +9,16 @@ Public Class Frm_Fonts
         Me.Location = New Point(Frm_Main.Width / 2 - Me.Width / 2, Frm_Main.Height / 2 - Me.Height / 2)
         Dim fontPath As String = My.Settings.OmsiPfad & "\Fonts"
 
+        If Not System.IO.Directory.Exists(fontPath) Then
+            Log.Add("Der Ordner 'Fonts' im OMSI-Verzeichnis wurde nicht gefunden. Einige Optionen sind dadurch nicht vollstädnig!", , True)
+            Me.Close()
+            Exit Sub
+        End If
+
         For Each file In My.Computer.FileSystem.GetFiles(fontPath)
             If Not file.Substring(file.Length - 4) = ".oft" Then Continue For
 
-            Dim lines As String() = My.Computer.FileSystem.ReadAllText(file).Split(vbCr)
+            Dim lines As String() = System.IO.File.ReadAllLines(file, Encoding.GetEncoding(1252))
 
             For ctline = 0 To lines.Count - 1
 

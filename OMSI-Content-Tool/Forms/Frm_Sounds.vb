@@ -6,7 +6,7 @@ Public Class Frm_Sounds
         LBGruppen.Items.Clear()
         LBDateien.Items.Clear()
 
-        If Frm_Main.getProjTyp = Proj_Bus.TYPE Then
+        If Frm_Main.getProjType = Proj_Bus.TYPE Then
             If Not Frm_Main.getProj.paths Is Nothing Then
                 For i As Integer = 0 To Frm_Main.getProj.paths.soundpacks.count - 1
                     LBGruppen.Items.Add(i)
