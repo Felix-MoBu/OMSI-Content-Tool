@@ -366,7 +366,7 @@
     <Compile Include="HelperClasses\RGBColor.vb" />
     <Compile Include="OMSI_Classes\Sli_ProfilePnt.vb" />
     <Compile Include="OMSI_Classes\OMSI_ScriptTexture.vb" />
-    <Compile Include="HelperClasses\Settings.vb" />
+    <Compile Include="HelperClasses\MySettings.vb" />
     <Compile Include="OMSI_Classes\Sli_PatchworkChain.vb" />
     <Compile Include="OMSI_Classes\Sli_Profile.vb" />
     <Compile Include="OMSI_Classes\OMSI_Splinehelper.vb" />

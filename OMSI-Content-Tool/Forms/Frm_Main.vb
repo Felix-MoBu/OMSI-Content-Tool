@@ -260,7 +260,14 @@ Class Frm_Main
         With fd
 
             .Title = "Import"
-            .Filter = "Alle Formate (*.*)|*.*|OMSI-3D (*.o3d)|*.o3d|DirectX (*.x)|*.x|Extensible 3D (*.x3d)|*.x3d|Modell-Datei(*.cfg)|*.cfg|Mesh-Eigenschaften(*.txt)|*.txt|Map-Kachel(*.rdy)|*.rdy"
+            .Filter = "Alle Formate (*.*)|*.*|" &
+                      "OMSI-3D (*.o3d)|*.o3d|" &
+                      "DirectX (*.x)|*.x|" &
+                      "Extensible 3D (*.x3d)|*.x3d|" &
+                      "Modell-Datei (*.cfg)|*.cfg|" &
+                      "Mesh-Eigenschaften (*.txt)|*.txt|" &
+                      "Map-Kachel (*.rdy)|*.rdy|" &
+                      "Hof-Datei (*.hof)|*.hof"
             .FilterIndex = My.Settings.lastImportFormat
             .Multiselect = True
             If getProj.filename.path <> "" Then
@@ -278,10 +285,14 @@ Class Frm_Main
                     If file.ToLower.Contains("\model\") And getProj.filename.path <> "" Then
                         newFilename = New Filename(file, getProj.filename.path & "\Model\")
                     Else
-                        newFilename = New Filename(file, getProj.filename.path)
+                        If InStr(file, getProj.filename.path) Then
+                            newFilename = New Filename(file, getProj.filename.path)
+                        Else
+                            newFilename = New Filename(file)
+                        End If
                     End If
 
-                    If newFilename.extension.ToLower = "o3d" Or newFilename.extension.ToLower = "x" Or newFilename.extension.ToLower = "x3d" Or newFilename.extension.ToLower = "rdy" Then
+                        If newFilename.extension.ToLower = "o3d" Or newFilename.extension.ToLower = "x" Or newFilename.extension.ToLower = "x3d" Or newFilename.extension.ToLower = "rdy" Then
                         If getProj.model Is Nothing Then
                             getProj.model = New OMSI_Model
                         End If
@@ -346,6 +357,10 @@ Class Frm_Main
                             Log.Add("Datei konnte beim Import nicht gefunden werden! (Datei: " & newFilename & ")")
                             MsgBox("Datei konnte nicht gefunden werden! (Datei: " & newFilename & ")")
                         End If
+
+                    ElseIf newFilename.extension.ToLower = "hof" Then
+                        Frm_Hof.copyNewHof(newFilename)
+                        SSLBStatus.Text = "Hofdatei importiert"
                     End If
 
                 Next
@@ -808,10 +823,22 @@ Class Frm_Main
         With LetzteToolStripMenuItem
             .DropDownItems.Clear()
             For Each item In Split(My.Settings.Letzte, ";")
-                Dim newitem As New ToolStripMenuItem()
-                AddHandler newitem.Click, AddressOf öffneLetzte
-                newitem.Text = item
-                If item <> "" Then .DropDownItems.Add(newitem)
+                If item <> "" Then
+                    Dim newitem As New ToolStripMenuItem()
+                    AddHandler newitem.Click, AddressOf öffneLetzte
+                    newitem.Text = item
+                    Select Case item.Substring(item.Length - 3).ToLower
+                        Case "bus"
+                            newitem.Image = My.Resources.Bus
+                        Case "ovh"
+                            newitem.Image = My.Resources.Ovh
+                        Case "sco"
+                            newitem.Image = My.Resources.Sco
+                        Case "sli"
+                            newitem.Image = My.Resources.sli
+                    End Select
+                    .DropDownItems.Add(newitem)
+                End If
             Next
             If .DropDownItems.Count = 0 Then
                 .Enabled = False

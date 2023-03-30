@@ -43,16 +43,25 @@ Public Class Frm_Hof
             .Title = "Hof-Datei Auswählen..."
             .Filter = "Hof-Datei (*.hof)|*.hof"
             .InitialDirectory = My.Settings.OpenPath
+            .Multiselect = True
             If .ShowDialog() Then
-                If .FileName <> "" Then
-                    Dim newFile = New Filename(.FileName.Split("\").Last, Frm_Main.getProj.filename.path)
-                    My.Computer.FileSystem.CopyFile(.FileName, newFile)
-                    Log.Add("Hofdatei importiert! (Datei: " & newFile.name & ")")
-
-                    einlesen()
-                End If
+                For Each FileName In .FileNames
+                    If .FileName <> "" Then
+                        copyNewHof(.FileName)
+                    End If
+                Next
             End If
         End With
+    End Sub
+
+    Public Sub copyNewHof(oldFile As String)
+        Dim newFile = New Filename(oldFile.Split("\").Last, Frm_Main.getProj.filename.path)
+        If Not My.Computer.FileSystem.FileExists(newFile) Then
+            My.Computer.FileSystem.CopyFile(oldFile, newFile)
+            Log.Add("Hofdatei importiert! (Datei: " & newFile.name & ")")
+
+            einlesen()
+        End If
     End Sub
 
     Private Sub Frm_Hof_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
