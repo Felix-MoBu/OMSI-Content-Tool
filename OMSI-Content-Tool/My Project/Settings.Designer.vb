@@ -429,12 +429,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Pink")>  _
-        Public Property PassColor() As Global.System.Drawing.Color
+        Public Property PaxColor() As Global.System.Drawing.Color
             Get
-                Return CType(Me("PassColor"),Global.System.Drawing.Color)
+                Return CType(Me("PaxColor"),Global.System.Drawing.Color)
             End Get
             Set
-                Me("PassColor") = value
+                Me("PaxColor") = value
             End Set
         End Property
         
@@ -645,12 +645,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property nickname() As String
+        Public Property NickName() As String
             Get
-                Return CType(Me("nickname"),String)
+                Return CType(Me("NickName"),String)
             End Get
             Set
-                Me("nickname") = value
+                Me("NickName") = value
             End Set
         End Property
         

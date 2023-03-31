@@ -15,7 +15,7 @@ Public Class Frm_Einst
             .LogDebug = CBLogDebug.Checked
             .AutoConvertO3D = CBautoO3d.Checked
             .CreatorID = Convert.ToInt32(TBCreatorID.Text)
-            .nickname = TBNickname.Text
+            .NickName = TBNickname.Text
             Frm_Main.TimerReset()
 
             'Page "OMSI"
@@ -44,7 +44,7 @@ Public Class Frm_Einst
             .CamDriverColor = TBColorDriverCam.BackColor
             .CamPaxColor = TBColorPaxCam.BackColor
             .CamReflexColor = TBColorReflexCam.BackColor
-            .PassColor = TBColorPassengers.BackColor
+            .PaxColor = TBColorPassengers.BackColor
             .DriverColor = TBColorDriver.BackColor
             .AchsenColor = TBColorAchsen.BackColor
             .SelectionColor = TBColorSelectedObj.BackColor
@@ -80,7 +80,7 @@ Public Class Frm_Einst
             CBLogDebug.Checked = .LogDebug
             CBautoO3d.Checked = .AutoConvertO3D
             TBCreatorID.Text = Convert.ToString(.CreatorID)
-            TBNickname.Text = .nickname
+            TBNickname.Text = .NickName
 
             'Page "OMSI"
             TBOmsiPfad.Text = .OmsiPfad
@@ -94,7 +94,7 @@ Public Class Frm_Einst
             TBColorPaxCam.BackColor = .CamPaxColor
             TBColorReflexCam.BackColor = .CamReflexColor
             TBColorDriver.BackColor = .DriverColor
-            TBColorPassengers.BackColor = .PassColor
+            TBColorPassengers.BackColor = .PaxColor
             TBColorAchsen.BackColor = .AchsenColor
             TBColorSelectedObj.BackColor = .SelectionColor
             TBMaxFPS.Text = Convert.ToString(.fpsLimit)

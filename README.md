@@ -4,7 +4,7 @@ Tool to develop buses, cars, splines and objects for OMSI-Bussimulator
 <b>English below!</b>
 
 <b>Verwenung des Tools auf eigene Gefahr! Bitte keine scharfen Projekte ohne Sicherheitskopie öffnen!</b><br>
-Aktueller Build zum Download: <i>noch nicht verfügbar</i>
+Aktueller Build zum Download: https://github.com/Felix-MoBu/OMSI-Content-Tool/releases (beta!)
 
 Wir suchen:
 - GitHub Administrator
@@ -19,7 +19,7 @@ Support mail: omsi.modellbusse[at]gmail.com
 
 ## ENG
 <b>Use the tool under your own risk! Please do not open an active project without backup!</b><br>
-Latest build download: <i>not yet available</i>
+Latest build download: https://github.com/Felix-MoBu/OMSI-Content-Tool/releases (beta)
 
 We need some help in:
 - GitHub administration

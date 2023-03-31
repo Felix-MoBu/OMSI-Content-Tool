@@ -95,7 +95,7 @@
     <Setting Name="SaveIntervalAuto" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="PassColor" Type="System.Drawing.Color" Scope="User">
+    <Setting Name="PaxColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Pink</Value>
     </Setting>
     <Setting Name="DriverColor" Type="System.Drawing.Color" Scope="User">
