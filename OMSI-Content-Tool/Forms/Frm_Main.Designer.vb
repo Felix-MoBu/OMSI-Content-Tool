@@ -24,35 +24,35 @@ Partial Class Frm_Main
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Main))
-        Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Achsen")
-        Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Boundingbox")
-        Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Fahrerkameras")
-        Dim TreeNode4 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Fahrgastkameras")
-        Dim TreeNode5 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Kameras", New System.Windows.Forms.TreeNode() {TreeNode3, TreeNode4})
-        Dim TreeNode6 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Kupplungspunkte")
-        Dim TreeNode7 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Innenlichter")
-        Dim TreeNode8 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Rauch")
-        Dim TreeNode9 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Spiegel")
-        Dim TreeNode10 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Sitz-/ Stehplätze")
-        Dim TreeNode11 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Entwerter")
-        Dim TreeNode12 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Ticketblöcke")
-        Dim TreeNode13 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Geldablage")
-        Dim TreeNode14 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Geldrückgabe")
-        Dim TreeNode15 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Tickets", New System.Windows.Forms.TreeNode() {TreeNode11, TreeNode12, TreeNode13, TreeNode14})
-        Dim TreeNode16 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Attachpoints")
-        Dim TreeNode17 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Splinehelper")
-        Dim TreeNode18 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Spots")
-        Dim Point3D1 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim RgbColor1 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
-        Dim Point3D2 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D3 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D4 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D5 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D6 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D7 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim RgbColor2 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
-        Dim Point3D8 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D9 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim TreeNode19 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Achsen")
+        Dim TreeNode20 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Boundingbox")
+        Dim TreeNode21 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Fahrerkameras")
+        Dim TreeNode22 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Fahrgastkameras")
+        Dim TreeNode23 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Kameras", New System.Windows.Forms.TreeNode() {TreeNode21, TreeNode22})
+        Dim TreeNode24 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Kupplungspunkte")
+        Dim TreeNode25 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Innenlichter")
+        Dim TreeNode26 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Rauch")
+        Dim TreeNode27 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Spiegel")
+        Dim TreeNode28 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Sitz-/ Stehplätze")
+        Dim TreeNode29 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Entwerter")
+        Dim TreeNode30 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Ticketblöcke")
+        Dim TreeNode31 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Geldablage")
+        Dim TreeNode32 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Geldrückgabe")
+        Dim TreeNode33 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Tickets", New System.Windows.Forms.TreeNode() {TreeNode29, TreeNode30, TreeNode31, TreeNode32})
+        Dim TreeNode34 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Attachpoints")
+        Dim TreeNode35 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Splinehelper")
+        Dim TreeNode36 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Spots")
+        Dim Point3D10 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim RgbColor3 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
+        Dim Point3D11 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D12 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D13 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D14 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D15 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D16 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim RgbColor4 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
+        Dim Point3D17 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D18 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Me.SS1 = New System.Windows.Forms.StatusStrip()
         Me.PBMain = New System.Windows.Forms.ToolStripProgressBar()
         Me.SSLBStatus = New System.Windows.Forms.ToolStripStatusLabel()
@@ -195,6 +195,8 @@ Partial Class Frm_Main
         Me.BTEigenschafteResize = New System.Windows.Forms.Button()
         Me.BTPanelEingenschaftenClose = New System.Windows.Forms.Button()
         Me.PanelEigenschaften1 = New System.Windows.Forms.Panel()
+        Me.GBSplinePfad = New System.Windows.Forms.GroupBox()
+        Me.SplinePfad_MinMax = New System.Windows.Forms.Button()
         Me.GBSpot = New System.Windows.Forms.GroupBox()
         Me.Label84 = New System.Windows.Forms.Label()
         Me.Label82 = New System.Windows.Forms.Label()
@@ -507,8 +509,6 @@ Partial Class Frm_Main
         Me.FDÖffnen = New System.Windows.Forms.OpenFileDialog()
         Me.TSave = New System.Windows.Forms.Timer(Me.components)
         Me.TReloadTextures = New System.Windows.Forms.Timer(Me.components)
-        Me.GBSplinePfad = New System.Windows.Forms.GroupBox()
-        Me.SplinePfad_MinMax = New System.Windows.Forms.Button()
         Me.Spot_PSRichtung = New O3D_Test.PointSelector()
         Me.Spot_CSFarbe = New O3D_Test.ColorSelector()
         Me.VarSelector1 = New O3D_Test.VarSelector()
@@ -535,6 +535,7 @@ Partial Class Frm_Main
         Me.TabPage2.SuspendLayout()
         Me.PanelEigenschaften.SuspendLayout()
         Me.PanelEigenschaften1.SuspendLayout()
+        Me.GBSplinePfad.SuspendLayout()
         Me.GBSpot.SuspendLayout()
         Me.GBPlatz.SuspendLayout()
         Me.GBRauch.SuspendLayout()
@@ -574,7 +575,6 @@ Partial Class Frm_Main
         Me.CMSLichter.SuspendLayout()
         Me.TCObjektePPfade.SuspendLayout()
         Me.CMSPfade.SuspendLayout()
-        Me.GBSplinePfad.SuspendLayout()
         Me.SuspendLayout()
         '
         'SS1
@@ -1427,6 +1427,7 @@ Partial Class Frm_Main
         Me.PanelTimeline.Padding = New System.Windows.Forms.Padding(3)
         Me.PanelTimeline.Size = New System.Drawing.Size(820, 130)
         Me.PanelTimeline.TabIndex = 3
+        Me.PanelTimeline.Visible = False
         '
         'BTPanelTimelineClose
         '
@@ -1596,6 +1597,25 @@ Partial Class Frm_Main
         Me.PanelEigenschaften1.Name = "PanelEigenschaften1"
         Me.PanelEigenschaften1.Size = New System.Drawing.Size(353, 975)
         Me.PanelEigenschaften1.TabIndex = 1
+        '
+        'GBSplinePfad
+        '
+        Me.GBSplinePfad.Controls.Add(Me.SplinePfad_MinMax)
+        Me.GBSplinePfad.Location = New System.Drawing.Point(4, 927)
+        Me.GBSplinePfad.Name = "GBSplinePfad"
+        Me.GBSplinePfad.Size = New System.Drawing.Size(327, 124)
+        Me.GBSplinePfad.TabIndex = 37
+        Me.GBSplinePfad.TabStop = False
+        Me.GBSplinePfad.Text = "Spline Pfad"
+        '
+        'SplinePfad_MinMax
+        '
+        Me.SplinePfad_MinMax.Location = New System.Drawing.Point(303, 0)
+        Me.SplinePfad_MinMax.Name = "SplinePfad_MinMax"
+        Me.SplinePfad_MinMax.Size = New System.Drawing.Size(26, 19)
+        Me.SplinePfad_MinMax.TabIndex = 37
+        Me.SplinePfad_MinMax.Text = "-"
+        Me.SplinePfad_MinMax.UseVisualStyleBackColor = True
         '
         'GBSpot
         '
@@ -4416,61 +4436,61 @@ Partial Class Frm_Main
         Me.TVHelper.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TVHelper.Location = New System.Drawing.Point(3, 3)
         Me.TVHelper.Name = "TVHelper"
-        TreeNode1.Name = "KAchsen"
-        TreeNode1.Text = "Achsen"
-        TreeNode1.ToolTipText = "Achsen für das Fahrverhalten des Fahrzeuges"
-        TreeNode2.Name = "KBoundingbox"
-        TreeNode2.Text = "Boundingbox"
-        TreeNode2.ToolTipText = "Kollisionsbox um das Fahrzeug / Objekt"
-        TreeNode3.Name = "KFahrerkameras"
-        TreeNode3.Text = "Fahrerkameras"
-        TreeNode3.ToolTipText = "Perspektiven in der F1 Ansicht"
-        TreeNode4.Name = "KFahrgastkameras"
-        TreeNode4.Text = "Fahrgastkameras"
-        TreeNode4.ToolTipText = "Perspektiven in der F2 Ansicht"
-        TreeNode5.Name = "KKameras"
-        TreeNode5.Text = "Kameras"
-        TreeNode5.ToolTipText = "Ansichten / Kameras"
-        TreeNode6.Name = "KKupplung"
-        TreeNode6.Text = "Kupplungspunkte"
-        TreeNode6.ToolTipText = "Verbindungspunkte zu anderen Fahrzeug(teil)en"
-        TreeNode7.Name = "KInnenlichter"
-        TreeNode7.Text = "Innenlichter"
-        TreeNode7.ToolTipText = "Innenbeleuchtung"
-        TreeNode8.Name = "KRauch"
-        TreeNode8.Text = "Rauch"
-        TreeNode8.ToolTipText = "Partikelsystem"
-        TreeNode9.Name = "KSpiegel"
-        TreeNode9.Text = "Spiegel"
-        TreeNode9.ToolTipText = "Reflexions Kameras"
-        TreeNode10.Name = "KSitzSteh"
-        TreeNode10.Text = "Sitz-/ Stehplätze"
-        TreeNode10.ToolTipText = "Sitzplätze für Fahrgäste"
-        TreeNode11.Name = "KTEntwerter"
-        TreeNode11.Text = "Entwerter"
-        TreeNode11.ToolTipText = "Ticket stempler"
-        TreeNode12.Name = "KTicketblöcke"
-        TreeNode12.Text = "Ticketblöcke"
-        TreeNode12.ToolTipText = "Abreistickets"
-        TreeNode13.Name = "KTGeldablage"
-        TreeNode13.Text = "Geldablage"
-        TreeNode13.ToolTipText = "Dort legen Fahrgäste ihr Geld ab"
-        TreeNode14.Name = "KTGeldRückgabe"
-        TreeNode14.Text = "Geldrückgabe"
-        TreeNode14.ToolTipText = "Hier bekommen Fahrgäste ihr Wechselgeld"
-        TreeNode15.Name = "KTTickets"
-        TreeNode15.Text = "Tickets"
-        TreeNode15.ToolTipText = "Tickets im Bus"
-        TreeNode16.Name = "KAttach"
-        TreeNode16.Text = "Attachpoints"
-        TreeNode16.ToolTipText = "Befestigungspunkte"
-        TreeNode17.Name = "KSplinehelper"
-        TreeNode17.Text = "Splinehelper"
-        TreeNode17.ToolTipText = "Splines zum Anpassen von Pfaden"
-        TreeNode18.Name = "KSpots"
-        TreeNode18.Text = "Spots"
-        TreeNode18.ToolTipText = "Lichtschein auf der Karte"
-        Me.TVHelper.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode2, TreeNode5, TreeNode6, TreeNode7, TreeNode8, TreeNode9, TreeNode10, TreeNode15, TreeNode16, TreeNode17, TreeNode18})
+        TreeNode19.Name = "KAchsen"
+        TreeNode19.Text = "Achsen"
+        TreeNode19.ToolTipText = "Achsen für das Fahrverhalten des Fahrzeuges"
+        TreeNode20.Name = "KBoundingbox"
+        TreeNode20.Text = "Boundingbox"
+        TreeNode20.ToolTipText = "Kollisionsbox um das Fahrzeug / Objekt"
+        TreeNode21.Name = "KFahrerkameras"
+        TreeNode21.Text = "Fahrerkameras"
+        TreeNode21.ToolTipText = "Perspektiven in der F1 Ansicht"
+        TreeNode22.Name = "KFahrgastkameras"
+        TreeNode22.Text = "Fahrgastkameras"
+        TreeNode22.ToolTipText = "Perspektiven in der F2 Ansicht"
+        TreeNode23.Name = "KKameras"
+        TreeNode23.Text = "Kameras"
+        TreeNode23.ToolTipText = "Ansichten / Kameras"
+        TreeNode24.Name = "KKupplung"
+        TreeNode24.Text = "Kupplungspunkte"
+        TreeNode24.ToolTipText = "Verbindungspunkte zu anderen Fahrzeug(teil)en"
+        TreeNode25.Name = "KInnenlichter"
+        TreeNode25.Text = "Innenlichter"
+        TreeNode25.ToolTipText = "Innenbeleuchtung"
+        TreeNode26.Name = "KRauch"
+        TreeNode26.Text = "Rauch"
+        TreeNode26.ToolTipText = "Partikelsystem"
+        TreeNode27.Name = "KSpiegel"
+        TreeNode27.Text = "Spiegel"
+        TreeNode27.ToolTipText = "Reflexions Kameras"
+        TreeNode28.Name = "KSitzSteh"
+        TreeNode28.Text = "Sitz-/ Stehplätze"
+        TreeNode28.ToolTipText = "Sitzplätze für Fahrgäste"
+        TreeNode29.Name = "KTEntwerter"
+        TreeNode29.Text = "Entwerter"
+        TreeNode29.ToolTipText = "Ticket stempler"
+        TreeNode30.Name = "KTicketblöcke"
+        TreeNode30.Text = "Ticketblöcke"
+        TreeNode30.ToolTipText = "Abreistickets"
+        TreeNode31.Name = "KTGeldablage"
+        TreeNode31.Text = "Geldablage"
+        TreeNode31.ToolTipText = "Dort legen Fahrgäste ihr Geld ab"
+        TreeNode32.Name = "KTGeldRückgabe"
+        TreeNode32.Text = "Geldrückgabe"
+        TreeNode32.ToolTipText = "Hier bekommen Fahrgäste ihr Wechselgeld"
+        TreeNode33.Name = "KTTickets"
+        TreeNode33.Text = "Tickets"
+        TreeNode33.ToolTipText = "Tickets im Bus"
+        TreeNode34.Name = "KAttach"
+        TreeNode34.Text = "Attachpoints"
+        TreeNode34.ToolTipText = "Befestigungspunkte"
+        TreeNode35.Name = "KSplinehelper"
+        TreeNode35.Text = "Splinehelper"
+        TreeNode35.ToolTipText = "Splines zum Anpassen von Pfaden"
+        TreeNode36.Name = "KSpots"
+        TreeNode36.Text = "Spots"
+        TreeNode36.ToolTipText = "Lichtschein auf der Karte"
+        Me.TVHelper.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode19, TreeNode20, TreeNode23, TreeNode24, TreeNode25, TreeNode26, TreeNode27, TreeNode28, TreeNode33, TreeNode34, TreeNode35, TreeNode36})
         Me.TVHelper.Size = New System.Drawing.Size(257, 296)
         Me.TVHelper.TabIndex = 1
         '
@@ -4640,25 +4660,6 @@ Partial Class Frm_Main
         '
         Me.TReloadTextures.Interval = 2000
         '
-        'GBSplinePfad
-        '
-        Me.GBSplinePfad.Controls.Add(Me.SplinePfad_MinMax)
-        Me.GBSplinePfad.Location = New System.Drawing.Point(4, 927)
-        Me.GBSplinePfad.Name = "GBSplinePfad"
-        Me.GBSplinePfad.Size = New System.Drawing.Size(327, 124)
-        Me.GBSplinePfad.TabIndex = 37
-        Me.GBSplinePfad.TabStop = False
-        Me.GBSplinePfad.Text = "Spline Pfad"
-        '
-        'SplinePfad_MinMax
-        '
-        Me.SplinePfad_MinMax.Location = New System.Drawing.Point(303, 0)
-        Me.SplinePfad_MinMax.Name = "SplinePfad_MinMax"
-        Me.SplinePfad_MinMax.Size = New System.Drawing.Size(26, 19)
-        Me.SplinePfad_MinMax.TabIndex = 37
-        Me.SplinePfad_MinMax.Text = "-"
-        Me.SplinePfad_MinMax.UseVisualStyleBackColor = True
-        '
         'Spot_PSRichtung
         '
         Me.Spot_PSRichtung.BackColor = System.Drawing.Color.Transparent
@@ -4666,7 +4667,7 @@ Partial Class Frm_Main
         Me.Spot_PSRichtung.Max = 1.7976931348623157E+308R
         Me.Spot_PSRichtung.Min = -1.7976931348623157E+308R
         Me.Spot_PSRichtung.Name = "Spot_PSRichtung"
-        Me.Spot_PSRichtung.Point = Point3D1
+        Me.Spot_PSRichtung.Point = Point3D10
         Me.Spot_PSRichtung.Size = New System.Drawing.Size(254, 20)
         Me.Spot_PSRichtung.TabIndex = 3
         Me.Spot_PSRichtung.X = 0R
@@ -4678,8 +4679,8 @@ Partial Class Frm_Main
         Me.Spot_CSFarbe.BackColor = System.Drawing.Color.Transparent
         Me.Spot_CSFarbe.Location = New System.Drawing.Point(69, 45)
         Me.Spot_CSFarbe.Name = "Spot_CSFarbe"
-        RgbColor1.SelectedColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Spot_CSFarbe.SelectedColor = RgbColor1
+        RgbColor3.SelectedColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Spot_CSFarbe.SelectedColor = RgbColor3
         Me.Spot_CSFarbe.Size = New System.Drawing.Size(253, 24)
         Me.Spot_CSFarbe.TabIndex = 0
         '
@@ -4698,7 +4699,7 @@ Partial Class Frm_Main
         Me.PointSelector2.Max = 1.7976931348623157E+308R
         Me.PointSelector2.Min = 0R
         Me.PointSelector2.Name = "PointSelector2"
-        Me.PointSelector2.Point = Point3D2
+        Me.PointSelector2.Point = Point3D11
         Me.PointSelector2.Size = New System.Drawing.Size(255, 20)
         Me.PointSelector2.TabIndex = 0
         Me.PointSelector2.X = 0R
@@ -4712,7 +4713,7 @@ Partial Class Frm_Main
         Me.BBox_PSSize.Max = 1.7976931348623157E+308R
         Me.BBox_PSSize.Min = -1.7976931348623157E+308R
         Me.BBox_PSSize.Name = "BBox_PSSize"
-        Me.BBox_PSSize.Point = Point3D3
+        Me.BBox_PSSize.Point = Point3D12
         Me.BBox_PSSize.Size = New System.Drawing.Size(255, 20)
         Me.BBox_PSSize.TabIndex = 23
         Me.BBox_PSSize.X = 0R
@@ -4726,7 +4727,7 @@ Partial Class Frm_Main
         Me.PSPos.Max = 1.7976931348623157E+308R
         Me.PSPos.Min = -1.7976931348623157E+308R
         Me.PSPos.Name = "PSPos"
-        Me.PSPos.Point = Point3D4
+        Me.PSPos.Point = Point3D13
         Me.PSPos.Size = New System.Drawing.Size(255, 20)
         Me.PSPos.TabIndex = 22
         Me.PSPos.X = 0R
@@ -4757,7 +4758,7 @@ Partial Class Frm_Main
         Me.Mesh_PSCenter.Max = 1.7976931348623157E+308R
         Me.Mesh_PSCenter.Min = -1.7976931348623157E+308R
         Me.Mesh_PSCenter.Name = "Mesh_PSCenter"
-        Me.Mesh_PSCenter.Point = Point3D5
+        Me.Mesh_PSCenter.Point = Point3D14
         Me.Mesh_PSCenter.Size = New System.Drawing.Size(255, 20)
         Me.Mesh_PSCenter.TabIndex = 26
         Me.Mesh_PSCenter.X = 0R
@@ -4779,7 +4780,7 @@ Partial Class Frm_Main
         Me.Licht_PSVector.Max = 2.0R
         Me.Licht_PSVector.Min = 0R
         Me.Licht_PSVector.Name = "Licht_PSVector"
-        Me.Licht_PSVector.Point = Point3D6
+        Me.Licht_PSVector.Point = Point3D15
         Me.Licht_PSVector.Size = New System.Drawing.Size(255, 20)
         Me.Licht_PSVector.TabIndex = 58
         Me.Licht_PSVector.X = 0R
@@ -4793,7 +4794,7 @@ Partial Class Frm_Main
         Me.Licht_PSRichtung.Max = 1.0R
         Me.Licht_PSRichtung.Min = -1.0R
         Me.Licht_PSRichtung.Name = "Licht_PSRichtung"
-        Me.Licht_PSRichtung.Point = Point3D7
+        Me.Licht_PSRichtung.Point = Point3D16
         Me.Licht_PSRichtung.Size = New System.Drawing.Size(255, 20)
         Me.Licht_PSRichtung.TabIndex = 57
         Me.Licht_PSRichtung.X = 0R
@@ -4805,8 +4806,8 @@ Partial Class Frm_Main
         Me.Licht_CSFarbe.BackColor = System.Drawing.Color.Transparent
         Me.Licht_CSFarbe.Location = New System.Drawing.Point(70, 126)
         Me.Licht_CSFarbe.Name = "Licht_CSFarbe"
-        RgbColor2.SelectedColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Licht_CSFarbe.SelectedColor = RgbColor2
+        RgbColor4.SelectedColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Licht_CSFarbe.SelectedColor = RgbColor4
         Me.Licht_CSFarbe.Size = New System.Drawing.Size(257, 24)
         Me.Licht_CSFarbe.TabIndex = 22
         '
@@ -4818,7 +4819,7 @@ Partial Class Frm_Main
         Me.Anim_PSRichtung.Max = 360.0R
         Me.Anim_PSRichtung.Min = -360.0R
         Me.Anim_PSRichtung.Name = "Anim_PSRichtung"
-        Me.Anim_PSRichtung.Point = Point3D8
+        Me.Anim_PSRichtung.Point = Point3D17
         Me.Anim_PSRichtung.Size = New System.Drawing.Size(255, 20)
         Me.Anim_PSRichtung.TabIndex = 59
         Me.Anim_PSRichtung.X = 0R
@@ -4833,7 +4834,7 @@ Partial Class Frm_Main
         Me.Anim_PSRotPnt.Max = 1.7976931348623157E+308R
         Me.Anim_PSRotPnt.Min = 0R
         Me.Anim_PSRotPnt.Name = "Anim_PSRotPnt"
-        Me.Anim_PSRotPnt.Point = Point3D9
+        Me.Anim_PSRotPnt.Point = Point3D18
         Me.Anim_PSRotPnt.Size = New System.Drawing.Size(256, 20)
         Me.Anim_PSRotPnt.TabIndex = 39
         Me.Anim_PSRotPnt.X = 0R
@@ -4876,6 +4877,7 @@ Partial Class Frm_Main
         Me.PanelEigenschaften.ResumeLayout(False)
         Me.PanelEigenschaften.PerformLayout()
         Me.PanelEigenschaften1.ResumeLayout(False)
+        Me.GBSplinePfad.ResumeLayout(False)
         Me.GBSpot.ResumeLayout(False)
         Me.GBSpot.PerformLayout()
         Me.GBPlatz.ResumeLayout(False)
@@ -4939,7 +4941,6 @@ Partial Class Frm_Main
         Me.CMSLichter.ResumeLayout(False)
         Me.TCObjektePPfade.ResumeLayout(False)
         Me.CMSPfade.ResumeLayout(False)
-        Me.GBSplinePfad.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
