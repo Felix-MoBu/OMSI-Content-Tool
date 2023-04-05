@@ -584,7 +584,7 @@ Module Importer
                         Next
 
                     Next
-                    ctMeshAlt = ctMesh
+                    ctMeshAlt += ctMesh
                     ctLine += ctFaces
 
                 Case "MeshTextureCoords"
@@ -764,6 +764,7 @@ Module Importer
                     ctLine += 4
                 Case "Mesh"
                     'Mesh-Bereich
+                    addFaces.Clear()
                     ctMesh = Replace(lines(ctLine + 1), ";", "")
                     For i = ctLine + 2 To ctLine + 2 + ctMesh - 1
                         Dim newPoint = New Point3D(Replace(Split(Trim(lines(i)), ";")(0), ".", ","), Replace(Split(Trim(lines(i)), ";")(1), ".", ","), Replace(Split(Trim(lines(i)), ";")(2), ".", ","))
@@ -795,7 +796,7 @@ Module Importer
                             addFaces.Add(i - ctLine - 1)
                         End If
                     Next
-                    ctMeshAlt = ctMesh
+                    ctMeshAlt += ctMesh
                     ctLine += ctFaces
 
                 Case "MeshTextureCoords"
@@ -832,16 +833,15 @@ Module Importer
                         ctMatlist = Replace(lines(ctLine + 2), ";", "")
                         For i = ctLine + 3 To ctLine + 3 + ctMatlist - 1
                             matlistTemp.Add(Replace(Trim(lines(i)), ";", "") + ctMatlistAlt)
-                            If addFaces.Contains(i - ctLine - 3) Then   'Wenn 4 Edges zu diesem Face gehörten
-                                For Each item In addFaces
-                                    If item = i - ctLine - 3 Then
-                                        matlistTemp.Add(Replace(Trim(lines(i)), ";", "") + ctMatlistAlt)
-                                    End If
-                                Next
-                            End If
+                            For Each item In addFaces
+                                If item = i - ctLine - 3 Then 'Wenn 4 Edges zu diesem Face gehörten
+                                    matlistTemp.Add(Replace(Trim(lines(i)), ";", "") + ctMatlistAlt)
+                                End If
+                            Next
                         Next
-
+                        ctLine += ctMatlist
                     End If
+
 
 
                     'Material-Bereich
@@ -869,7 +869,7 @@ Module Importer
                                 .emissive.B = toSingle(Split(lines(ctLine + 4), ";")(2)) * 255
 
                                 .filename = New Filename(Split(lines(ctLine + 5), """")(1))
-                                .matName = Split(lines(materialLines(materialLines.Count - 1)), " ")(1)
+                                .matName = lines(ctLine).Trim.Substring(9).Replace(" {", "")
 
                                 textureNames.Add(.filename.name)
                             End With
