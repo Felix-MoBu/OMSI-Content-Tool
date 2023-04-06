@@ -135,7 +135,7 @@
     <Compile Include="HelperClasses\DDS_Tool.vb" />
     <Compile Include="Streamer\Exporter.vb" />
     <Compile Include="HelperClasses\Filename.vb" />
-    <Compile Include="HelperClasses\FileWriter.vb" />
+    <Compile Include="Streamer\FileWriter.vb" />
     <Compile Include="Forms\Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
     </Compile>

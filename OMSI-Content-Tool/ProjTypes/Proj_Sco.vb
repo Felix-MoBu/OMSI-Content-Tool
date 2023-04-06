@@ -167,7 +167,7 @@ Public Class Proj_Sco
                     Case "[splinehelper]"
                         Dim tmpHelper As New OMSI_Splinehelper
                         With tmpHelper
-                            .spline = New Filename(allLines(linect + 1), My.Settings.OmsiPfad)
+                            .spline = New Filename(allLines(linect + 1), Settings.OmsiPfad)
                             .position = New Point3D(toSingle(allLines(linect + 2)), toSingle(allLines(linect + 3)), toSingle(allLines(linect + 4)))
                             .rotation = New Point3D(toSingle(allLines(linect + 5)), toSingle(allLines(linect + 6)), toSingle(allLines(linect + 7)))
                         End With

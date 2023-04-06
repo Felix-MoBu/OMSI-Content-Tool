@@ -81,7 +81,7 @@ Module Exporter
                 .AddRange(ToHex(texture.diffuse.G / 255))
                 .AddRange(ToHex(texture.diffuse.B / 255))
                 .AddRange(ToHex(texture.diffuseAlpha))
-                If Not My.Settings.o3dRemoveSpec Then
+                If Not Settings.o3dRemoveSpec Then
                     .AddRange(ToHex(texture.specular.R / 255))
                     .AddRange(ToHex(texture.specular.G / 255))
                     .AddRange(ToHex(texture.specular.B / 255))

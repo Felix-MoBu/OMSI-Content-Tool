@@ -57,6 +57,7 @@ Partial Class Frm_Einst
         Me.Label21 = New System.Windows.Forms.Label()
         Me.TBMaxFPS = New System.Windows.Forms.TextBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.BTResetTimeline = New System.Windows.Forms.Button()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.BTResetEig = New System.Windows.Forms.Button()
         Me.BTResetTex = New System.Windows.Forms.Button()
@@ -106,8 +107,9 @@ Partial Class Frm_Einst
         Me.CDColorPassenger = New System.Windows.Forms.ColorDialog()
         Me.CDColorDriver = New System.Windows.Forms.ColorDialog()
         Me.CDColorAchsen = New System.Windows.Forms.ColorDialog()
-        Me.BTEinstExp = New System.Windows.Forms.Button()
-        Me.BTEinstImport = New System.Windows.Forms.Button()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.TBColorFenster = New System.Windows.Forms.TextBox()
+        Me.CDColorFenster = New System.Windows.Forms.ColorDialog()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -460,16 +462,28 @@ Partial Class Frm_Einst
         '
         'GroupBox4
         '
+        Me.GroupBox4.Controls.Add(Me.TBColorFenster)
+        Me.GroupBox4.Controls.Add(Me.Label23)
+        Me.GroupBox4.Controls.Add(Me.BTResetTimeline)
         Me.GroupBox4.Controls.Add(Me.Label10)
         Me.GroupBox4.Controls.Add(Me.BTResetEig)
         Me.GroupBox4.Controls.Add(Me.BTResetTex)
         Me.GroupBox4.Controls.Add(Me.BTResetObj)
         Me.GroupBox4.Location = New System.Drawing.Point(8, 165)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(251, 80)
+        Me.GroupBox4.Size = New System.Drawing.Size(426, 80)
         Me.GroupBox4.TabIndex = 7
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Fenster"
+        '
+        'BTResetTimeline
+        '
+        Me.BTResetTimeline.Location = New System.Drawing.Point(251, 40)
+        Me.BTResetTimeline.Name = "BTResetTimeline"
+        Me.BTResetTimeline.Size = New System.Drawing.Size(75, 23)
+        Me.BTResetTimeline.TabIndex = 4
+        Me.BTResetTimeline.Text = "Timeline"
+        Me.BTResetTimeline.UseVisualStyleBackColor = True
         '
         'Label10
         '
@@ -895,31 +909,28 @@ Partial Class Frm_Einst
         '
         Me.CDColor3D.Color = System.Drawing.Color.White
         '
-        'BTEinstExp
+        'Label23
         '
-        Me.BTEinstExp.Location = New System.Drawing.Point(4, 352)
-        Me.BTEinstExp.Name = "BTEinstExp"
-        Me.BTEinstExp.Size = New System.Drawing.Size(75, 23)
-        Me.BTEinstExp.TabIndex = 1
-        Me.BTEinstExp.Text = "Einst. Export"
-        Me.BTEinstExp.UseVisualStyleBackColor = True
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(329, 16)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(75, 13)
+        Me.Label23.TabIndex = 5
+        Me.Label23.Text = "Fenster Farbe:"
         '
-        'BTEinstImport
+        'TBColorFenster
         '
-        Me.BTEinstImport.Location = New System.Drawing.Point(85, 352)
-        Me.BTEinstImport.Name = "BTEinstImport"
-        Me.BTEinstImport.Size = New System.Drawing.Size(75, 23)
-        Me.BTEinstImport.TabIndex = 6
-        Me.BTEinstImport.Text = "Einst. Import"
-        Me.BTEinstImport.UseVisualStyleBackColor = True
+        Me.TBColorFenster.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TBColorFenster.Location = New System.Drawing.Point(332, 40)
+        Me.TBColorFenster.Name = "TBColorFenster"
+        Me.TBColorFenster.Size = New System.Drawing.Size(75, 20)
+        Me.TBColorFenster.TabIndex = 11
         '
         'Frm_Einst
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(654, 383)
-        Me.Controls.Add(Me.BTEinstImport)
-        Me.Controls.Add(Me.BTEinstExp)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.BTAbbrechen)
         Me.Controls.Add(Me.OBUebernehmen)
@@ -1017,8 +1028,6 @@ Partial Class Frm_Einst
     Friend WithEvents CBLogDebug As CheckBox
     Friend WithEvents GroupBox5 As GroupBox
     Friend WithEvents CBautoO3d As CheckBox
-    Friend WithEvents BTEinstExp As Button
-    Friend WithEvents BTEinstImport As Button
     Friend WithEvents BTEinstReset As Button
     Friend WithEvents GroupBox6 As GroupBox
     Friend WithEvents TBCreatorID As TextBox
@@ -1045,4 +1054,8 @@ Partial Class Frm_Einst
     Friend WithEvents TBColorSelectedObj As TextBox
     Friend WithEvents CBTexAutoReload As CheckBox
     Friend WithEvents CBShowAllParts As CheckBox
+    Friend WithEvents BTResetTimeline As Button
+    Friend WithEvents TBColorFenster As TextBox
+    Friend WithEvents Label23 As Label
+    Friend WithEvents CDColorFenster As ColorDialog
 End Class

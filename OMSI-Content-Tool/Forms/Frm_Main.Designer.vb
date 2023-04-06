@@ -195,6 +195,8 @@ Partial Class Frm_Main
         Me.BTEigenschafteResize = New System.Windows.Forms.Button()
         Me.BTPanelEingenschaftenClose = New System.Windows.Forms.Button()
         Me.PanelEigenschaften1 = New System.Windows.Forms.Panel()
+        Me.GBSplinePfad = New System.Windows.Forms.GroupBox()
+        Me.SplinePfad_MinMax = New System.Windows.Forms.Button()
         Me.GBSpot = New System.Windows.Forms.GroupBox()
         Me.Label84 = New System.Windows.Forms.Label()
         Me.Label82 = New System.Windows.Forms.Label()
@@ -450,7 +452,7 @@ Partial Class Frm_Main
         Me.BTTexNew = New System.Windows.Forms.Button()
         Me.DDAlleTexturen = New System.Windows.Forms.ComboBox()
         Me.PBTexture = New System.Windows.Forms.PictureBox()
-        Me.PanelTextureFill = New System.Windows.Forms.Button()
+        Me.BTPanelTextureFill = New System.Windows.Forms.Button()
         Me.LBPanelTexture = New System.Windows.Forms.Label()
         Me.BTPanelTextureClose = New System.Windows.Forms.Button()
         Me.MSTexturen = New System.Windows.Forms.MenuStrip()
@@ -507,8 +509,6 @@ Partial Class Frm_Main
         Me.FDÖffnen = New System.Windows.Forms.OpenFileDialog()
         Me.TSave = New System.Windows.Forms.Timer(Me.components)
         Me.TReloadTextures = New System.Windows.Forms.Timer(Me.components)
-        Me.GBSplinePfad = New System.Windows.Forms.GroupBox()
-        Me.SplinePfad_MinMax = New System.Windows.Forms.Button()
         Me.Spot_PSRichtung = New O3D_Test.PointSelector()
         Me.Spot_CSFarbe = New O3D_Test.ColorSelector()
         Me.VarSelector1 = New O3D_Test.VarSelector()
@@ -535,6 +535,7 @@ Partial Class Frm_Main
         Me.TabPage2.SuspendLayout()
         Me.PanelEigenschaften.SuspendLayout()
         Me.PanelEigenschaften1.SuspendLayout()
+        Me.GBSplinePfad.SuspendLayout()
         Me.GBSpot.SuspendLayout()
         Me.GBPlatz.SuspendLayout()
         Me.GBRauch.SuspendLayout()
@@ -574,7 +575,6 @@ Partial Class Frm_Main
         Me.CMSLichter.SuspendLayout()
         Me.TCObjektePPfade.SuspendLayout()
         Me.CMSPfade.SuspendLayout()
-        Me.GBSplinePfad.SuspendLayout()
         Me.SuspendLayout()
         '
         'SS1
@@ -1427,6 +1427,7 @@ Partial Class Frm_Main
         Me.PanelTimeline.Padding = New System.Windows.Forms.Padding(3)
         Me.PanelTimeline.Size = New System.Drawing.Size(820, 130)
         Me.PanelTimeline.TabIndex = 3
+        Me.PanelTimeline.Visible = False
         '
         'BTPanelTimelineClose
         '
@@ -1596,6 +1597,25 @@ Partial Class Frm_Main
         Me.PanelEigenschaften1.Name = "PanelEigenschaften1"
         Me.PanelEigenschaften1.Size = New System.Drawing.Size(353, 975)
         Me.PanelEigenschaften1.TabIndex = 1
+        '
+        'GBSplinePfad
+        '
+        Me.GBSplinePfad.Controls.Add(Me.SplinePfad_MinMax)
+        Me.GBSplinePfad.Location = New System.Drawing.Point(4, 927)
+        Me.GBSplinePfad.Name = "GBSplinePfad"
+        Me.GBSplinePfad.Size = New System.Drawing.Size(327, 124)
+        Me.GBSplinePfad.TabIndex = 37
+        Me.GBSplinePfad.TabStop = False
+        Me.GBSplinePfad.Text = "Spline Pfad"
+        '
+        'SplinePfad_MinMax
+        '
+        Me.SplinePfad_MinMax.Location = New System.Drawing.Point(303, 0)
+        Me.SplinePfad_MinMax.Name = "SplinePfad_MinMax"
+        Me.SplinePfad_MinMax.Size = New System.Drawing.Size(26, 19)
+        Me.SplinePfad_MinMax.TabIndex = 37
+        Me.SplinePfad_MinMax.Text = "-"
+        Me.SplinePfad_MinMax.UseVisualStyleBackColor = True
         '
         'GBSpot
         '
@@ -4071,7 +4091,7 @@ Partial Class Frm_Main
         Me.PanelTexture.Controls.Add(Me.BTTexNew)
         Me.PanelTexture.Controls.Add(Me.DDAlleTexturen)
         Me.PanelTexture.Controls.Add(Me.PBTexture)
-        Me.PanelTexture.Controls.Add(Me.PanelTextureFill)
+        Me.PanelTexture.Controls.Add(Me.BTPanelTextureFill)
         Me.PanelTexture.Controls.Add(Me.LBPanelTexture)
         Me.PanelTexture.Controls.Add(Me.BTPanelTextureClose)
         Me.PanelTexture.Controls.Add(Me.MSTexturen)
@@ -4140,19 +4160,19 @@ Partial Class Frm_Main
         Me.PBTexture.TabIndex = 5
         Me.PBTexture.TabStop = False
         '
-        'PanelTextureFill
+        'BTPanelTextureFill
         '
-        Me.PanelTextureFill.FlatAppearance.BorderSize = 0
-        Me.PanelTextureFill.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.MenuHighlight
-        Me.PanelTextureFill.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.PanelTextureFill.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PanelTextureFill.ForeColor = System.Drawing.SystemColors.HighlightText
-        Me.PanelTextureFill.Location = New System.Drawing.Point(351, 3)
-        Me.PanelTextureFill.Name = "PanelTextureFill"
-        Me.PanelTextureFill.Size = New System.Drawing.Size(19, 19)
-        Me.PanelTextureFill.TabIndex = 4
-        Me.PanelTextureFill.Text = "□"
-        Me.PanelTextureFill.UseVisualStyleBackColor = True
+        Me.BTPanelTextureFill.FlatAppearance.BorderSize = 0
+        Me.BTPanelTextureFill.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.BTPanelTextureFill.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BTPanelTextureFill.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BTPanelTextureFill.ForeColor = System.Drawing.SystemColors.HighlightText
+        Me.BTPanelTextureFill.Location = New System.Drawing.Point(351, 3)
+        Me.BTPanelTextureFill.Name = "BTPanelTextureFill"
+        Me.BTPanelTextureFill.Size = New System.Drawing.Size(19, 19)
+        Me.BTPanelTextureFill.TabIndex = 4
+        Me.BTPanelTextureFill.Text = "□"
+        Me.BTPanelTextureFill.UseVisualStyleBackColor = True
         '
         'LBPanelTexture
         '
@@ -4640,25 +4660,6 @@ Partial Class Frm_Main
         '
         Me.TReloadTextures.Interval = 2000
         '
-        'GBSplinePfad
-        '
-        Me.GBSplinePfad.Controls.Add(Me.SplinePfad_MinMax)
-        Me.GBSplinePfad.Location = New System.Drawing.Point(4, 927)
-        Me.GBSplinePfad.Name = "GBSplinePfad"
-        Me.GBSplinePfad.Size = New System.Drawing.Size(327, 124)
-        Me.GBSplinePfad.TabIndex = 37
-        Me.GBSplinePfad.TabStop = False
-        Me.GBSplinePfad.Text = "Spline Pfad"
-        '
-        'SplinePfad_MinMax
-        '
-        Me.SplinePfad_MinMax.Location = New System.Drawing.Point(303, 0)
-        Me.SplinePfad_MinMax.Name = "SplinePfad_MinMax"
-        Me.SplinePfad_MinMax.Size = New System.Drawing.Size(26, 19)
-        Me.SplinePfad_MinMax.TabIndex = 37
-        Me.SplinePfad_MinMax.Text = "-"
-        Me.SplinePfad_MinMax.UseVisualStyleBackColor = True
-        '
         'Spot_PSRichtung
         '
         Me.Spot_PSRichtung.BackColor = System.Drawing.Color.Transparent
@@ -4876,6 +4877,7 @@ Partial Class Frm_Main
         Me.PanelEigenschaften.ResumeLayout(False)
         Me.PanelEigenschaften.PerformLayout()
         Me.PanelEigenschaften1.ResumeLayout(False)
+        Me.GBSplinePfad.ResumeLayout(False)
         Me.GBSpot.ResumeLayout(False)
         Me.GBSpot.PerformLayout()
         Me.GBPlatz.ResumeLayout(False)
@@ -4939,7 +4941,6 @@ Partial Class Frm_Main
         Me.CMSLichter.ResumeLayout(False)
         Me.TCObjektePPfade.ResumeLayout(False)
         Me.CMSPfade.ResumeLayout(False)
-        Me.GBSplinePfad.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -4973,7 +4974,7 @@ Partial Class Frm_Main
     Friend WithEvents PanelTexture As Panel
     Friend WithEvents BTPanelTextureClose As Button
     Friend WithEvents LBPanelTexture As Label
-    Friend WithEvents PanelTextureFill As Button
+    Friend WithEvents BTPanelTextureFill As Button
     Friend WithEvents PBTexture As PictureBox
     Friend WithEvents BTTexNew As Button
     Friend WithEvents DDAlleTexturen As ComboBox

@@ -6,117 +6,116 @@ Public Class Frm_Einst
     Public ReadOnly stdPasswd As String = "gerw46#"
 
     Private Sub OBUebernehmen_Click(sender As Object, e As EventArgs) Handles OBUebernehmen.Click
-        With My.Settings
-            'Page "Allgemein"
-            .SaveIntervalActive = CBTimerActive.Checked
-            .SaveIntervalAuto = CBTimerAuto.Checked
-            .SaveInterval = Convert.ToUInt16(TBSaveTimerInterval.Text)
-            .BackupAnlegen = CBBackup.Checked
-            .LogDebug = CBLogDebug.Checked
-            .AutoConvertO3D = CBautoO3d.Checked
-            .CreatorID = Convert.ToInt32(TBCreatorID.Text)
-            .NickName = TBNickname.Text
-            Frm_Main.TimerReset()
+        'Page "Allgemein"
+        Settings.SaveIntervalActive = CBTimerActive.Checked
+        Settings.SaveIntervalAuto = CBTimerAuto.Checked
+        Settings.SaveInterval = Convert.ToUInt16(TBSaveTimerInterval.Text)
+        Settings.BackupAnlegen = CBBackup.Checked
+        Settings.LogDebug = CBLogDebug.Checked
+        Settings.o3dAutoConvert = CBautoO3d.Checked
+        Settings.CreatorID = Convert.ToInt32(TBCreatorID.Text)
+        Settings.NickName = TBNickname.Text
+        Frm_Main.TimerReset()
 
-            'Page "OMSI"
-            .OmsiPfad = TBOmsiPfad.Text
-            .RepToolPfad = TBRepTool.Text
+        'Page "OMSI"
+        Settings.OmsiPfad = TBOmsiPfad.Text
+        Settings.RepToolPfad = TBRepTool.Text
 
-            'Page "Darstellung"
-            .BackColor3D = TBColor3D.BackColor
-            Dim x As Integer = TBColor3D.BackColor.R
-            x += TBColor3D.BackColor.G
-            x += TBColor3D.BackColor.B
-            If x > 380 Then
-                .LineColor3D = Color.Black
-            Else
-                .LineColor3D = Color.White
-            End If
+        'Page "Darstellung"
+        Settings.BackColor3D = TBColor3D.BackColor
+        Dim x As Integer = TBColor3D.BackColor.R
+        x += TBColor3D.BackColor.G
+        x += TBColor3D.BackColor.B
+        If x > 380 Then
+            Settings.LineColor3D = Color.Black
+        Else
+            Settings.LineColor3D = Color.White
+        End If
 
-            .TexAutoReload = CBTexAutoReload.Checked
-            If CBTexAutoReload.Checked Then
-                Frm_Main.TReloadTextures.Start()
-            Else
-                Frm_Main.TReloadTextures.Stop()
-            End If
-            .ShowAllParts = CBShowAllParts.Checked
+        Settings.TexAutoReload = CBTexAutoReload.Checked
+        If CBTexAutoReload.Checked Then
+            Frm_Main.TReloadTextures.Start()
+        Else
+            Frm_Main.TReloadTextures.Stop()
+        End If
+        Settings.ShowAllParts = CBShowAllParts.Checked
 
-            .CamDriverColor = TBColorDriverCam.BackColor
-            .CamPaxColor = TBColorPaxCam.BackColor
-            .CamReflexColor = TBColorReflexCam.BackColor
-            .PaxColor = TBColorPassengers.BackColor
-            .DriverColor = TBColorDriver.BackColor
-            .AchsenColor = TBColorAchsen.BackColor
-            .SelectionColor = TBColorSelectedObj.BackColor
+        Settings.CamDriverColor = TBColorDriverCam.BackColor
+        Settings.CamPaxColor = TBColorPaxCam.BackColor
+        Settings.CamReflexColor = TBColorReflexCam.BackColor
+        Settings.PaxColor = TBColorPassengers.BackColor
+        Settings.DriverColor = TBColorDriver.BackColor
+        Settings.AchsenColor = TBColorAchsen.BackColor
+        Settings.SelectionColor = TBColorSelectedObj.BackColor
+        Settings.EditorColor = TBColorFenster.BackColor
 
-            .fpsLimit = Convert.ToInt32(TBMaxFPS.Text)
+        Settings.fpsLimit = Convert.ToInt32(TBMaxFPS.Text)
 
-            '3D-Formate
-            .o3dRemoveSpec = CBO3dRemSpec.Checked
+        '3D-Formate
+        Settings.o3dRemoveSpec = CBO3dRemSpec.Checked
 
-            .XScale = TBXScale.Text
-            .XUpAxis = Convert.ToByte(DDXUp.SelectedIndex)
+        Settings.XScale = Convert.ToSingle(TBXScale.Text)
+        Settings.XUpAxis = Convert.ToByte(DDXUp.SelectedIndex)
 
-            .X3dScale = TBX3dScale.Text
-            .X3dUpAxis = Convert.ToByte(DDX3dUp.SelectedIndex)
+        Settings.X3dScale = Convert.ToSingle(TBX3dScale.Text)
+        Settings.X3dUpAxis = Convert.ToByte(DDX3dUp.SelectedIndex)
 
 
-            .Save()
-            .Reload()
-        End With
+        Settings.Save()
 
         Frm_Main.GlMain.Invalidate()
         Me.Close()
     End Sub
 
     Private Sub Frm_Einst_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Settings.Load()
         Me.Location = New Point(Convert.ToInt16(Frm_Main.Width / 2 - Me.Width / 2), Convert.ToInt16(Frm_Main.Height / 2 - Me.Height / 2))
-        With My.Settings
-            'Page "Allgemein"
-            CBTimerActive.Checked = .SaveIntervalActive
-            CBTimerAuto.Checked = .SaveIntervalAuto
-            TBSaveTimerInterval.Text = Convert.ToString(.SaveInterval)
-            CBBackup.Checked = .BackupAnlegen
-            CBLogDebug.Checked = .LogDebug
-            CBautoO3d.Checked = .AutoConvertO3D
-            TBCreatorID.Text = Convert.ToString(.CreatorID)
-            TBNickname.Text = .NickName
+        'Page "Allgemein"
+        CBTimerActive.Checked = Settings.SaveIntervalActive
+        CBTimerAuto.Checked = Settings.SaveIntervalAuto
+        TBSaveTimerInterval.Text = Convert.ToString(Settings.SaveInterval)
+        CBBackup.Checked = Settings.BackupAnlegen
+        CBLogDebug.Checked = Settings.LogDebug
+        CBautoO3d.Checked = Settings.o3dAutoConvert
+        TBCreatorID.Text = Convert.ToString(Settings.CreatorID)
+        TBNickname.Text = Settings.NickName
 
-            'Page "OMSI"
-            TBOmsiPfad.Text = .OmsiPfad
-            TBRepTool.Text = .RepToolPfad
+        'Page "OMSI"
+        TBOmsiPfad.Text = Settings.OmsiPfad
+        TBRepTool.Text = Settings.RepToolPfad
 
-            'Page "Darstellung"
-            TBColor3D.BackColor = .BackColor3D
-            CBTexAutoReload.Checked = .TexAutoReload
-            CBShowAllParts.Checked = .ShowAllParts
-            TBColorDriverCam.BackColor = .CamDriverColor
-            TBColorPaxCam.BackColor = .CamPaxColor
-            TBColorReflexCam.BackColor = .CamReflexColor
-            TBColorDriver.BackColor = .DriverColor
-            TBColorPassengers.BackColor = .PaxColor
-            TBColorAchsen.BackColor = .AchsenColor
-            TBColorSelectedObj.BackColor = .SelectionColor
-            TBMaxFPS.Text = Convert.ToString(.fpsLimit)
+        'Page "Darstellung"
+        TBColor3D.BackColor = Settings.BackColor3D
+        CBTexAutoReload.Checked = Settings.TexAutoReload
+        CBShowAllParts.Checked = Settings.ShowAllParts
+        TBColorDriverCam.BackColor = Settings.CamDriverColor
+        TBColorPaxCam.BackColor = Settings.CamPaxColor
+        TBColorReflexCam.BackColor = Settings.CamReflexColor
+        TBColorDriver.BackColor = Settings.DriverColor
+        TBColorPassengers.BackColor = Settings.PaxColor
+        TBColorAchsen.BackColor = Settings.AchsenColor
+        TBColorSelectedObj.BackColor = Settings.SelectionColor
+        TBColorFenster.BackColor = Settings.EditorColor
+        TBMaxFPS.Text = Convert.ToString(Settings.fpsLimit)
 
-            'Page 3D-Formate
-            CBO3dRemSpec.Checked = .o3dRemoveSpec
+        'Page 3D-Formate
+        CBO3dRemSpec.Checked = Settings.o3dRemoveSpec
 
-            TBXScale.Text = .XScale
-            DDXUp.SelectedIndex = .XUpAxis
+        TBXScale.Text = Settings.XScale.ToString
+        DDXUp.SelectedIndex = Settings.XUpAxis
 
-            TBX3dScale.Text = .X3dScale
-            DDX3dUp.SelectedIndex = .X3dUpAxis
+        TBX3dScale.Text = Settings.X3dScale.ToString
+        DDX3dUp.SelectedIndex = Settings.X3dUpAxis
 
 
-            'Page Online
-            TBMail.Text = .eMail
-            If .eMail <> "" Then
-                BTAbmelden.Enabled = True
-            Else
-                BTAnmelden.Enabled = True
-            End If
-        End With
+        'Page Online
+        TBMail.Text = Settings.EMail
+        If Settings.EMail <> "" Then
+            BTAbmelden.Enabled = True
+        Else
+            BTAnmelden.Enabled = True
+        End If
+
     End Sub
 
     Private Sub BTPfadSuchen_Click(sender As Object, e As EventArgs) Handles BTPfadSuchen.Click
@@ -221,7 +220,7 @@ Public Class Frm_Einst
 
     Private Sub BTAnmelden_Click(sender As Object, e As EventArgs) Handles BTAnmelden.Click
         If checkLogin(TBMail.Text, TBPassword.Text) Then
-            My.Settings.eMail = TBMail.Text
+            Settings.eMail = TBMail.Text
             Log.Add("Im Online-Bereich angemeldet.")
             MsgBox("Anmeldung erfolgreich! Anwendung bitte neu starten.")
             BTAnmelden.Enabled = False
@@ -234,7 +233,7 @@ Public Class Frm_Einst
     End Sub
 
     Private Sub BTAbmelden_Click(sender As Object, e As EventArgs) Handles BTAbmelden.Click
-        My.Settings.eMail = ""
+        Settings.eMail = ""
         Log.Add("Im Online-Bereich abgemeldet.")
         BTAnmelden.Enabled = True
         BTAbmelden.Enabled = False
@@ -253,34 +252,31 @@ Public Class Frm_Einst
     End Function
 
     Private Sub BTResetObj_Click(sender As Object, e As EventArgs) Handles BTResetObj.Click
-        With My.Settings
-            .PObjekteV = True
-            .PObjekteH = 350
-            .PObjekteW = 300
-            .PObjekteX = 10
-            .PObjekteY = 10
-        End With
+        Settings.PObjekteV = True
+        Settings.PObjekteL = New Point(10, 10)
+        Settings.PObjekteS = New Point(300, 350)
         Frm_Main.loadPositions()
     End Sub
 
     Private Sub BTResetTex_Click(sender As Object, e As EventArgs) Handles BTResetTex.Click
-        With My.Settings
-            .PTextureV = True
-            .PTextureH = 337
-            .PTextureW = 392
-            .PTextureX = 10
-            .PTextureY = 10
-        End With
+        Settings.PTextureV = True
+        Settings.PTextureL = New Point(10, 10)
+        Settings.PTextureS = New Point(392, 337)
         Frm_Main.loadPositions()
     End Sub
 
     Private Sub BTResetEig_Click(sender As Object, e As EventArgs) Handles BTResetEig.Click
-        With My.Settings
-            .PEigenschaftenV = True
-            .PEigenschaftenH = 600
-            .PEigenschaftenX = 10
-            .PEigenschaftenY = 10
-        End With
+        Settings.PEigenschaftenV = True
+        Settings.PEigenschaftenL = New Point(10, 10)
+        Settings.PEigenschaftenS = New Point(360, 630)
+        Frm_Main.loadPositions()
+    End Sub
+
+    Private Sub BTResetTimeline_Click(sender As Object, e As EventArgs) Handles BTResetTimeline.Click
+        Settings.PTimelineV = True
+        Settings.PTimelineL = New Point(10, 10)
+        Settings.PTimelineS = New Point(814, 124)
+        Settings.PTimelineSelTab = 0
         Frm_Main.loadPositions()
     End Sub
 
@@ -295,46 +291,8 @@ Public Class Frm_Einst
         End If
     End Sub
 
-    Private Sub BTEinstExp_Click(sender As Object, e As EventArgs) Handles BTEinstExp.Click
-        Dim fd As New SaveFileDialog
-        With fd
-            .Filter = "Textdatei (*.txt)|*.txt"
-            .FileName = "MyOCT-Settings.txt"
-        End With
-
-        If fd.ShowDialog = DialogResult.OK Then
-            Dim fw As New FileWriter(New Filename(fd.FileName))
-            With My.Settings
-                For Each item As Configuration.SettingsProperty In My.Settings.Properties
-                    If Not .PropertyValues(item.Name).PropertyValue.ToString = "" Then
-                        fw.Add(item.Name & "=" & .PropertyValues(item.Name).PropertyValue.ToString)
-                    End If
-                Next
-            End With
-            fw.Write()
-        End If
-    End Sub
-
-    Private Sub BTEinstImport_Click(sender As Object, e As EventArgs) Handles BTEinstImport.Click
-        'Dim fd As New OpenFileDialog
-        'With fd
-        '    .Filter = "Textdatei (*.txt)|*.txt"
-        'End With
-
-        'If fd.ShowDialog = DialogResult.OK And fd.FileName <> "" Then
-        '    Dim allLines As String() = Split(My.Computer.FileSystem.ReadAllText(fd.FileName), vbCrLf)
-        '    For linect As Integer = 1 To allLines.Count - 1
-        '        If InStr(allLines(linect), "=") > 0 Then
-        '            My.Settings(Split(allLines(linect), "=")(0)) = allLines(linect).Substring(InStr(allLines(linect), "="))
-        '            'MsgBox(allLines(linect).Substring(InStr(allLines(linect), "=")))
-        '        End If
-        '    Next
-        'End If
-        MsgBox("Import derzeit nicht möglich!")
-    End Sub
-
     Private Sub BTEinstReset_Click(sender As Object, e As EventArgs) Handles BTEinstReset.Click
-        My.Settings.Reset()
+        Settings.Reset()
     End Sub
 
     Private Sub TBContentID_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBCreatorID.KeyPress
@@ -345,5 +303,17 @@ Public Class Frm_Einst
 
     Private Sub TBMaxFPS_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBMaxFPS.KeyPress
         e.Handled = Helper.NumbersOnly(e, TBMaxFPS, , 0, 1000)
+    End Sub
+
+    Private Sub TBEditorFarbe_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TBColorFenster.KeyPress
+        e.Handled = True
+    End Sub
+
+    Private Sub TBEditorFarbe_Click(sender As Object, e As EventArgs) Handles TBColorFenster.Click
+        CDColorFenster.Color = TBColorFenster.BackColor
+        If CDColorFenster.ShowDialog = DialogResult.OK Then
+            TBColorFenster.BackColor = CDColorFenster.Color
+            Frm_Main.loadPositions()
+        End If
     End Sub
 End Class

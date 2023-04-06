@@ -365,14 +365,12 @@ Public Class Proj_Bus
             End If
 
             If beschreibung.Count > 0 Then
-                .Add("[description]")
-                .AddRange(beschreibung)
+                .AddTag("description", beschreibung)
                 .Add("[end]", True)
             End If
 
             If number_path <> "" Then
-                .Add("[number]")
-                .Add(number_path, True)
+                .AddTag("number", number_path, True)
             End If
 
             If reg_free Then
@@ -386,8 +384,7 @@ Public Class Proj_Bus
             End If
 
             If reg_list <> "" Then
-                .Add("[registration_list]")
-                .Add(reg_list, True)
+                .AddTag("registration_list", reg_list, True)
             End If
 
             If baujahr > 0 Then
@@ -397,47 +394,39 @@ Public Class Proj_Bus
             End If
 
             If Not sound_file Is Nothing Then
-                .Add("[sound]")
-                .Add(sound_file.name, True)
+                .AddTag("sound", sound_file.name, True)
             End If
 
             If Not sound_ai_file Is Nothing Then
-                .Add("[sound_ai]")
-                .Add(sound_ai_file.name, True)
+                .AddTag("sound_ai", sound_ai_file.name, True)
             End If
 
             If Not model Is Nothing Then
-                .Add("[model]")
                 If Not model.filename Is Nothing Then
-                    .Add(model.filename.name, True)
+                    .AddTag("model", model.filename.name, True)
                 End If
-
             End If
 
             If Not paths Is Nothing Then
-                .Add("[paths]")
-                .Add(paths.filename.name, True)
+                .AddTag("paths", paths.filename.name, True)
             End If
 
             If Not cabin Is Nothing Then
-                .Add("[passengercabin]")
-                .Add(cabin.filename.name, True)
+                .AddTag("passengercabin", cabin.filename.name, True)
             End If
 
             If Not aiVehicleType = AI_TYPE.NOT_SELECTED Then
-                .Add("[ai_veh_type]")
-                .Add(aiVehicleType, True)
+                .AddTag("ai_veh_type", aiVehicleType, True)
             End If
 
-            .teilüberschrift("Scripts")
+            .Teilüberschrift("Scripts")
 
             If scriptshare Then
                 .Add("[scriptshare]", True)
             End If
 
             If varlists.Count > 0 Then
-                .Add("[varnamelist]")
-                .Add(varlists.Count)
+                .AddTag("varnamelist", varlists.Count)
                 For Each file In varlists
                     .Add(file)
                 Next
@@ -445,8 +434,7 @@ Public Class Proj_Bus
             End If
 
             If stringvarlists.Count > 0 Then
-                .Add("[stringvarnamelist]")
-                .Add(stringvarlists.Count)
+                .AddTag("stringvarnamelist", stringvarlists.Count)
                 For Each file In stringvarlists
                     .Add(file)
                 Next
@@ -454,8 +442,7 @@ Public Class Proj_Bus
             End If
 
             If scripts.Count > 0 Then
-                .Add("[script]")
-                .Add(scripts.Count)
+                .AddTag("script", scripts.Count)
                 For Each file In scripts
                     .Add(file)
                 Next
@@ -463,8 +450,7 @@ Public Class Proj_Bus
             End If
 
             If constfiles.Count > 0 Then
-                .Add("[constfile]")
-                .Add(constfiles.Count)
+                .AddTag("constfile", constfiles.Count)
                 For Each file In constfiles
                     .Add(file)
                 Next
@@ -562,8 +548,7 @@ Public Class Proj_Bus
 
             .teilüberschrift("Physikalische und geometrische Grunddaten")
 
-            .Add("[mass]")
-            .Add(masse, True)
+            .AddTag("mass", masse, True)
 
             .Add("[momentofintertia]")
             .Add(fromSingle(trägheit.X) & vbCrLf & fromSingle(trägheit.Y) & vbCrLf & fromSingle(trägheit.Z), True)
@@ -579,20 +564,11 @@ Public Class Proj_Bus
                 .Add(fromSingle(cog.X) & vbCrLf & fromSingle(cog.Y) & vbCrLf & fromSingle(cog.Z), True)
             End If
 
-            .Add("[schwerpunkt]")
-            .Add(schwerpunkt, True)
-
-            .Add("[rollwiderstand]")
-            .Add(rollwiederstand, True)
-
-            .Add("[rot_pnt_long]")
-            .Add(drehpunkt, True)
-
-            .Add("[inv_min_turnradius]")
-            .Add(lenkradius, True)
-
-            .Add("[ai_deltaheight]")
-            .Add(aiheight, True)
+            .AddTag("schwerpunkt", schwerpunkt, True)
+            .AddTag("rollwiderstand", rollwiederstand, True)
+            .AddTag("rot_pnt_long", drehpunkt, True)
+            .AddTag("inv_min_turnradius", lenkradius, True)
+            .AddTag("ai_deltaheight", aiheight, True)
 
             .teilüberschrift("Achsen")
 

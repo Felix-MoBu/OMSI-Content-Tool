@@ -42,7 +42,7 @@ Public Class Frm_Hof
         With fd
             .Title = "Hof-Datei Auswählen..."
             .Filter = "Hof-Datei (*.hof)|*.hof"
-            .InitialDirectory = My.Settings.OpenPath
+            .InitialDirectory = Settings.OpenPath
             .Multiselect = True
             If .ShowDialog() Then
                 For Each FileName In .FileNames

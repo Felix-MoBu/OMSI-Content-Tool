@@ -15,7 +15,7 @@ Module Log
             Case TYPE_ERROR
                 typeS = "Error!"
             Case TYPE_DEBUG
-                If Not My.Settings.LogDebug Then
+                If Not Settings.LogDebug Then
                     Exit Sub
                 End If
                 typeS = "DEBUG"

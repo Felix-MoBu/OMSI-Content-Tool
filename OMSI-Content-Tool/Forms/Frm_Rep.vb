@@ -610,8 +610,8 @@ Public Class Frm_Rep
     End Sub
 
     Private Sub BTRepTool_Click(sender As Object, e As EventArgs) Handles BTRepTool.Click
-        If System.IO.File.Exists(My.Settings.RepToolPfad) Then
-            Process.Start(My.Settings.RepToolPfad)
+        If System.IO.File.Exists(Settings.RepToolPfad) Then
+            Process.Start(Settings.RepToolPfad)
         Else
             MsgBox("Bitte wähle zunächst in den Einstellungen den Pfad zum Repaint-Tool aus!")
         End If

@@ -106,11 +106,11 @@ Class Frm_Main
         AlleObjekte.Clear()
         loadPositions()
 
-        If My.Settings.eMail = Frm_Einst.stdMail Then
+        If Settings.EMail = Frm_Einst.stdMail Then
             TestToolStripMenuItem.Visible = True
         End If
 
-        timerMin = My.Settings.SaveInterval
+        timerMin = Settings.SaveInterval
         timerSec = 0
         timerBool = False
         TSave.Start()
@@ -123,7 +123,7 @@ Class Frm_Main
 
         redrawLetzte()
 
-        If My.Settings.TexAutoReload Then TReloadTextures.Start()
+        If Settings.TexAutoReload Then TReloadTextures.Start()
 
         If CreateObject("WScript.Shell").Exec("git --version").StdOut.ReadAll.ToString.Split(" ")(0) = "git" Then
             GitToolStripMenuItem.Visible = True
@@ -203,7 +203,7 @@ Class Frm_Main
                 .Filter = "OMSI-CFG (*.cfg)|*.cfg|Mesh-Eigenschaften (*.txt)|*.txt"
 
                 If .ShowDialog = DialogResult.OK Then
-                    My.Settings.ExpPfad = .FileName
+                    Settings.ExportPfad = .FileName
                     Dim fw As New FileWriter(New Filename(.FileName))
                     fw.AddRange(mesh.getpropertys())
                     fw.Write()
@@ -237,13 +237,13 @@ Class Frm_Main
                                 .Filter = "OMSI-3D (*.o3d)|*.o3d"
                             Else
                                 .Filter = "OMSI-3D (*.o3d)|*.o3d|DirectX (*.x)|*.x|Extensible 3D (*.x3d)|*.x3d"
-                                .FilterIndex = My.Settings.lastExportFormat
+                                .FilterIndex = Settings.LastExportFormat
                             End If
 
 
                             If .ShowDialog = DialogResult.OK Then
-                                My.Settings.ExpPfad = .FileName
-                                My.Settings.lastExportFormat = .FilterIndex
+                                Settings.ExportPfad = .FileName
+                                Settings.LastExportFormat = .FilterIndex
                                 Exporter.write(objekt, New Filename(.FileName))
                             Else
                                 SSLBStatus.Text = "Export abgebrochen"
@@ -272,12 +272,12 @@ Class Frm_Main
                       "Mesh-Eigenschaften (*.txt)|*.txt|" &
                       "Map-Kachel (*.rdy)|*.rdy|" &
                       "Hof-Datei (*.hof)|*.hof"
-            .FilterIndex = My.Settings.lastImportFormat
+            .FilterIndex = Settings.LastImportFormat
             .Multiselect = True
             If getProj.filename.path <> "" Then
                 .InitialDirectory = getProj.filename.path & "\Model\"
             Else
-                .InitialDirectory = My.Settings.ImportPath
+                .InitialDirectory = Settings.ImportPfad
             End If
 
             .ShowDialog()
@@ -296,7 +296,7 @@ Class Frm_Main
                         End If
                     End If
 
-                        If newFilename.extension.ToLower = "o3d" Or newFilename.extension.ToLower = "x" Or newFilename.extension.ToLower = "x3d" Or newFilename.extension.ToLower = "rdy" Then
+                    If newFilename.extension.ToLower = "o3d" Or newFilename.extension.ToLower = "x" Or newFilename.extension.ToLower = "x3d" Or newFilename.extension.ToLower = "rdy" Then
                         If getProj.model Is Nothing Then
                             getProj.model = New OMSI_Model
                         End If
@@ -370,8 +370,8 @@ Class Frm_Main
                 Next
                 GlMain.Invalidate()
 
-                My.Settings.ImportPath = getFilePath(.FileName)
-                My.Settings.lastImportFormat = .FilterIndex
+                Settings.ImportPfad = getFilePath(.FileName)
+                Settings.LastImportFormat = .FilterIndex
 
                 TCObjektePMeshes.Text = "Meshes (" & AlleObjekte.Count & ")"
             End If
@@ -397,7 +397,7 @@ Class Frm_Main
 
             'Wenn automatisch eine o3d angelegt werden soll
             If convert Then
-                If Not newMesh.filename.extension = "o3d" And My.Settings.AutoConvertO3D Then
+                If Not newMesh.filename.extension = "o3d" And Settings.o3dAutoConvert Then
                     newMesh.filename.extension = "o3d"
                     Exporter.write(newObjekt, newMesh.filename)
                 End If
@@ -588,7 +588,7 @@ Class Frm_Main
         addProjectlist(getProj.filename.ToString)
 
 
-        If My.Settings.SaveIntervalActive Then
+        If Settings.SaveIntervalActive Then
             TimerReset()
             TSave.Start()
         End If
@@ -618,14 +618,14 @@ Class Frm_Main
         timerBool = Not timerBool
         GlMain.Invalidate()
 
-        If My.Settings.SaveIntervalActive Then
+        If Settings.SaveIntervalActive Then
             If timerSec > 0 Then
                 timerSec -= 1
             Else
                 If timerMin > 0 Then
                     timerMin -= 1
                 Else
-                    If My.Settings.SaveIntervalAuto Then
+                    If Settings.SaveIntervalAuto Then
                         save()
                     Else
                         TBTimer.ForeColor = Color.Red
@@ -646,7 +646,7 @@ Class Frm_Main
     End Sub
 
     Public Sub TimerReset()
-        timerMin = My.Settings.SaveInterval
+        timerMin = Settings.SaveInterval
         timerSec = 0
     End Sub
 
@@ -795,7 +795,7 @@ Class Frm_Main
         With fd
             .Title = "Öffnen"
             .Filter = "Unterstützte Formate (*.bus, *.ovh, *.sco, *.sli)|*.bus; *.ovh; *.sco; *.sli|Bus (*.bus)|*.bus|Fahrzeug (*.ovh)|*.ovh|Scenerieobjekt (*.sco)|*.sco|Spline (*.sli)|*.sli"
-            .InitialDirectory = My.Settings.OpenPath
+            .InitialDirectory = Settings.OpenPath
             If .ShowDialog() = DialogResult.OK Then
                 If .FileName <> "" Then
                     ProjÖffnen(.FileName)
@@ -810,23 +810,19 @@ Class Frm_Main
         Else
             Dim result = MsgBox("Die Datei existiert nicht! Soll sie von der Liste entfernt werden?", MsgBoxStyle.YesNo)
             If result = vbYes Then
-                Dim tempList As String = ""
-                For i = 0 To My.Settings.Letzte.Split(";").Count - 1
-                    If Not My.Settings.Letzte.Split(";")(i) = sender.text Then
-                        tempList &= ";" & Split(My.Settings.Letzte, ";")(i)
-                    End If
-                    If i = 5 Then Exit For
-                Next
-                My.Settings.Letzte = tempList
+                If Settings.LetzteProjekte.Contains(sender.Text) Then
+                    Settings.LetzteProjekte.Remove(sender.Text)
+                End If
                 redrawLetzte()
+                End If
             End If
-        End If
     End Sub
 
     Private Sub redrawLetzte()
         With LetzteToolStripMenuItem
             .DropDownItems.Clear()
-            For Each item In Split(My.Settings.Letzte, ";")
+            For i = Settings.LetzteProjekte.Count - 1 To 0 Step -1
+                Dim item As String = Settings.LetzteProjekte(i)
                 If item <> "" Then
                     Dim newitem As New ToolStripMenuItem()
                     AddHandler newitem.Click, AddressOf öffneLetzte
@@ -876,18 +872,18 @@ Class Frm_Main
             Case "bus"
                 clearProjects()
                 Projekt_Bus = New Proj_Bus(filename)
-                My.Settings.OpenPath = getFilePath(filename)
+                Settings.OpenPath = getFilePath(filename)
                 LoadProjectBus(Projekt_Bus)
                 RepaintToolStripMenuItem.Enabled = True
             Case "sco"
                 clearProjects()
                 Projekt_Sco = New Proj_Sco(filename)
-                My.Settings.OpenPath = getFilePath(filename)
+                Settings.OpenPath = getFilePath(filename)
                 LoadProjectSco(Projekt_Sco)
             Case "sli"
                 clearProjects()
                 Projekt_Sli = New Proj_Sli(filename)
-                My.Settings.OpenPath = getFilePath(filename)
+                Settings.OpenPath = getFilePath(filename)
                 LoadProjectSli()
             Case Else
                 MsgBox("Projektdatei nicht unterstützt!")
@@ -907,18 +903,14 @@ Class Frm_Main
     End Sub
 
     Public Sub addProjectlist(filename As String)
-        If My.Settings.Letzte = filename Then Exit Sub
+        If Settings.LetzteProjekte.Count > 0 Then
+            If Settings.LetzteProjekte(Settings.LetzteProjekte.Count - 1) = filename Then Exit Sub
+        End If
 
-        Dim tempList As String = filename
+        If Settings.LetzteProjekte.Count > 5 Then Settings.LetzteProjekte.RemoveAt(0)
+        Settings.LetzteProjekte.Add(filename)
 
-        For i = 0 To Split(My.Settings.Letzte, ";").Count - 1
-            If Not Split(My.Settings.Letzte, ";")(i) = filename Then
-                tempList &= ";" & Split(My.Settings.Letzte, ";")(i)
-            End If
-            If i = 5 Then Exit For
-        Next
-        My.Settings.Letzte = tempList
-        My.Settings.Save()
+        Settings.Save()
         redrawLetzte()
     End Sub
 
@@ -1499,8 +1491,8 @@ Class Frm_Main
         If Not getProj() Is Projekt_Emt Then
             If Not getProj.filename Is Nothing Then ProjÖffnen(getProj.filename.ToString)
         Else
-            If My.Settings.Letzte.Split(";").Count > 0 Then
-                ProjÖffnen(My.Settings.Letzte.Split(";")(0))
+            If Settings.LetzteProjekte.Count > 0 Then
+                ProjÖffnen(Settings.LetzteProjekte.Last)
             End If
         End If
     End Sub
@@ -1644,8 +1636,8 @@ Class Frm_Main
 
     Private Sub PfadeInOriginalbreiteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PfadeInOriginalbreiteToolStripMenuItem.Click
         sender.checked = Not sender.checked
-        My.Settings.PfadeOrigBreite = sender.checked
-        My.Settings.Save()
+        Settings.PfadeOrigBreite = sender.checked
+        Settings.Save()
     End Sub
 
     Private Sub LogfileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogfileToolStripMenuItem.Click
@@ -1866,103 +1858,95 @@ Class Frm_Main
     '###########
 
     Private Sub savePositions()
-        With My.Settings
-            .PObjekteX = PanelObjekte.Left
-            .PObjekteY = PanelObjekte.Top
-            .PObjekteW = PanelObjekte.Width
-            .PObjekteH = PanelObjekte.Height
-            .PObjekteV = PanelObjekte.Visible
 
-            .PTextureX = PanelTexture.Left
-            .PTextureY = PanelTexture.Top
-            .PTextureW = PanelTexture.Width
-            .PTextureH = PanelTexture.Height
-            .PTextureV = PanelTexture.Visible
+        Settings.PObjekteL = PanelObjekte.Location
+        Settings.PObjekteS = PanelObjekte.Size
+        Settings.PObjekteV = PanelObjekte.Visible
 
-            .PEigenschaftenX = PanelEigenschaften.Left
-            .PEigenschaftenY = PanelEigenschaften.Top
-            .PEigenschaftenH = PanelEigenschaften.Height
-            .PEigenschaftenV = PanelEigenschaften.Visible
+        Settings.PTextureL = PanelTexture.Location
+        Settings.PTextureS = PanelTexture.Size
+        Settings.PTextureV = PanelTexture.Visible
 
-            .PTimelineX = PanelTimeline.Left
-            .PTimelineY = PanelTimeline.Top
-            .PTimelineV = PanelTimeline.Visible
-            .PTimelineSelTab = TCTimeline.SelectedIndex
+        Settings.PEigenschaftenL = PanelEigenschaften.Location
+        Settings.PEigenschaftenS = PanelEigenschaften.Size
+        Settings.PEigenschaftenV = PanelEigenschaften.Visible
 
-            .WireframeV = WireframeToolStripMenuItem.Checked
-            .GitterV = GitterToolStripMenuItem.Checked
-            .ShowAlpha = AlphaAnzeigenToolStripMenuItem.Checked
-            ObjekteToolStripMenuItem.Checked = PanelObjekte.Visible
-            TextureToolStripMenuItem.Checked = PanelTexture.Visible
-            TimelineLogFensterToolStripMenuItem.Checked = PanelTimeline.Visible
-            EigenschaftenFensterToolStripMenuItem.Checked = PanelEigenschaften.Visible
+        Settings.PTimelineL = PanelTimeline.Location
+        Settings.PTimelineS = PanelTimeline.Size
+        Settings.PTimelineV = PanelTimeline.Visible
+        Settings.PTimelineSelTab = TCTimeline.SelectedIndex
 
-            .Save()
-        End With
+        Settings.WireframeV = WireframeToolStripMenuItem.Checked
+        Settings.GitterV = GitterToolStripMenuItem.Checked
+        Settings.ShowAlpha = AlphaAnzeigenToolStripMenuItem.Checked
+        ObjekteToolStripMenuItem.Checked = PanelObjekte.Visible
+        TextureToolStripMenuItem.Checked = PanelTexture.Visible
+        TimelineLogFensterToolStripMenuItem.Checked = PanelTimeline.Visible
+        EigenschaftenFensterToolStripMenuItem.Checked = PanelEigenschaften.Visible
+
+        Settings.Save()
     End Sub
 
     Public Sub loadPositions()
+        Settings.Load()
         checkForStdPos()
 
-        With My.Settings
-            PanelObjekte.Left = .PObjekteX
-            PanelObjekte.Top = .PObjekteY
-            PanelObjekte.Width = .PObjekteW
-            PanelObjekte.Height = .PObjekteH
-            BTObjekteResize.Left = .PObjekteW - 5
-            BTObjekteResize.Top = .PObjekteH - 5
-            PanelObjekte.Visible = .PObjekteV
+        PanelObjekte.Location = Settings.PObjekteL
+        PanelObjekte.Size = Settings.PObjekteS
+        BTObjekteResize.Left = Settings.PObjekteS.X - 5
+        BTObjekteResize.Top = Settings.PObjekteS.Y - 5
+        PanelObjekte.Visible = Settings.PObjekteV
+        PanelObjekte.BackColor = Settings.EditorColor
 
-            PanelTexture.Left = .PTextureX
-            PanelTexture.Top = .PTextureY
-            PanelTexture.Width = .PTextureW
-            PanelTexture.Height = .PTextureH
-            PanelTexture.Visible = .PTextureV
+        PanelTexture.Location = Settings.PTextureL
+        PanelTexture.Size = Settings.PTextureS
+        PanelTexture.Visible = Settings.PTextureV
+        PanelTexture.BackColor = Settings.EditorColor
+        BTPanelTextureFill.BackColor = Settings.EditorColor
 
-            PanelEigenschaften.Left = .PEigenschaftenX
-            PanelEigenschaften.Top = .PEigenschaftenY
-            PanelEigenschaften.Height = .PEigenschaftenH
-            PanelEigenschaften.Visible = .PEigenschaftenV
-            BTEigenschafteResize.Top = .PEigenschaftenH - 3
-            PanelEigenschaften1.Height = .PEigenschaftenH - 28
+        PanelEigenschaften.Location = Settings.PEigenschaftenL
+        PanelEigenschaften.Size = Settings.PEigenschaftenS
+        PanelEigenschaften.Visible = Settings.PEigenschaftenV
+        BTEigenschafteResize.Top = Settings.PEigenschaftenS.Y - 3
+        PanelEigenschaften1.Height = Settings.PEigenschaftenS.Y - 28
+        PanelEigenschaften.BackColor = Settings.EditorColor
 
-            WireframeToolStripMenuItem.Checked = .WireframeV
-            GitterToolStripMenuItem.Checked = .GitterV
-            AlphaAnzeigenToolStripMenuItem.Checked = .ShowAlpha
-            ObjekteToolStripMenuItem.Checked = PanelObjekte.Visible
-            TextureToolStripMenuItem.Checked = PanelTexture.Visible
-            TimelineLogFensterToolStripMenuItem.Checked = PanelTimeline.Visible
-            EigenschaftenFensterToolStripMenuItem.Checked = PanelEigenschaften.Visible
+        WireframeToolStripMenuItem.Checked = Settings.WireframeV
+        GitterToolStripMenuItem.Checked = Settings.GitterV
+        AlphaAnzeigenToolStripMenuItem.Checked = Settings.ShowAlpha
+        ObjekteToolStripMenuItem.Checked = PanelObjekte.Visible
+        TextureToolStripMenuItem.Checked = PanelTexture.Visible
+        TimelineLogFensterToolStripMenuItem.Checked = PanelTimeline.Visible
+        EigenschaftenFensterToolStripMenuItem.Checked = PanelEigenschaften.Visible
 
-            PfadeInOriginalbreiteToolStripMenuItem.Checked = .PfadeOrigBreite
+        PfadeInOriginalbreiteToolStripMenuItem.Checked = Settings.PfadeOrigBreite
 
-            PanelTimeline.Left = .PTimelineX
-            PanelTimeline.Top = .PTimelineY
-            PanelTimeline.Visible = .PTimelineV
-            TCTimeline.SelectedIndex = .PTimelineSelTab
+        PanelTimeline.Location = Settings.PTimelineL
+        PanelTimeline.Size = Settings.PTimelineS
+        PanelTimeline.Visible = Settings.PTimelineV
+        TCTimeline.SelectedIndex = Settings.PTimelineSelTab
+        PanelTimeline.BackColor = Settings.EditorColor
 
-            checkPanelPosition(PanelEigenschaften)
-            checkPanelPosition(PanelTexture)
-            checkPanelPosition(PanelObjekte)
-            checkPanelPosition(PanelTimeline)
-        End With
+        checkPanelPosition(PanelEigenschaften)
+        checkPanelPosition(PanelTexture)
+        checkPanelPosition(PanelObjekte)
+        checkPanelPosition(PanelTimeline)
+
     End Sub
 
     Private Sub checkForStdPos()
-        With My.Settings
-            If .PEigenschaftenV Then
-                If .PEigenschaftenX = 410 Then
-                    .PEigenschaftenX = Width - PanelEigenschaften.Width - 3
-                End If
+        If Settings.PEigenschaftenV Then
+            If Settings.PEigenschaftenL.X = 410 Then
+                Settings.PEigenschaftenL.X = Width - PanelEigenschaften.Width - 3
             End If
+        End If
 
-            If .PTextureV Then
-                If .PTextureY = 338 Then
-                    .PTextureY = Height - PanelTexture.Height - 3
-                End If
+        If Settings.PTextureV Then
+            If Settings.PTextureL.Y = 338 Then
+                Settings.PTextureL.Y = Height - PanelTexture.Height - 3
             End If
-            .Save()
-        End With
+        End If
+        Settings.Save()
     End Sub
 
 
@@ -3169,7 +3153,7 @@ Class Frm_Main
 
     'Panel Texture ##########
 
-    Private Sub PanelTextureFill_Click(sender As Object, e As EventArgs) Handles PanelTextureFill.Click
+    Private Sub PanelTextureFill_Click(sender As Object, e As EventArgs) Handles BTPanelTextureFill.Click
         With Frm_Texture
             If PBTexture.Tag <> "" Then
                 .ImageTag = PBTexture.Tag
@@ -3892,13 +3876,13 @@ Class Frm_Main
 
     Private Sub GlMain_KeyDown(sender As Object, e As KeyEventArgs) Handles GlMain.KeyDown, LBMeshes.KeyDown
         If e.KeyCode = Keys.NumPad5 Then
-            If My.Settings.OrtoScale = 3 Then
-                My.Settings.OrtoScale = 4
+            If Settings.OrtoScale = 3 Then
+                Settings.OrtoScale = 4
             Else
-                My.Settings.OrtoScale = 3
+                Settings.OrtoScale = 3
             End If
-            My.Settings.Save()
-            My.Settings.Reload()
+            Settings.Save()
+            Settings.Load()
             GlMain.Invalidate()
         End If
 
@@ -4019,7 +4003,7 @@ Class Frm_Main
 
 
     Private Sub GlMain_Load(sender As Object, e As EventArgs) Handles GlMain.Load
-        GL.ClearColor(My.Settings.BackColor3D)
+        GL.ClearColor(Settings.BackColor3D)
         GL.Enable(EnableCap.DepthTest) 'Enable correct Z Drawings
         GL.DepthFunc(DepthFunction.Less) 'Enable correct Z Drawings
 
@@ -4042,7 +4026,7 @@ Class Frm_Main
 
         'FPS Limiter
         If Not mirrorRender Then
-            If DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - last_draw < 1000 / My.Settings.fpsLimit Then Exit Sub
+            If DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - last_draw < 1000 / Settings.fpsLimit Then Exit Sub
             last_draw = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         End If
 
@@ -4058,7 +4042,7 @@ Class Frm_Main
         GL.LoadMatrix(perspective)
         GL.MatrixMode(MatrixMode.Modelview) 'Load Camera
         GL.LoadIdentity()
-        GL.ClearColor(My.Settings.BackColor3D)
+        GL.ClearColor(Settings.BackColor3D)
         GL.LoadMatrix(lookat)
         GL.Viewport(0, 0, GlMain.Width, GlMain.Height) 'Size of window
 
@@ -4139,16 +4123,16 @@ Class Frm_Main
 
 
 
-        If My.Settings.GitterV Then
+        If Settings.GitterV Then
             GL.BindTexture(TextureTarget.Texture2D, 0)
             GL.Begin(PrimitiveType.Lines)
-            GL.Color3(My.Settings.LineColor3D)
+            GL.Color3(Settings.LineColor3D)
 
             For i As Integer = -10 To 10
-                If i = 0 Then GL.Color3(Color.Green) Else GL.Color3(My.Settings.LineColor3D)
+                If i = 0 Then GL.Color3(Color.Green) Else GL.Color3(Settings.LineColor3D)
                 GL.Vertex3(i, 0, -10)
                 GL.Vertex3(i, 0, 10)
-                If i = 0 Then GL.Color3(Color.Red) Else GL.Color3(My.Settings.LineColor3D)
+                If i = 0 Then GL.Color3(Color.Red) Else GL.Color3(Settings.LineColor3D)
                 GL.Vertex3(-10, 0, i)
                 GL.Vertex3(10, 0, i)
             Next i
@@ -4214,7 +4198,7 @@ Class Frm_Main
 
                         If Not Projekt_Sco.cabin Is Nothing Then
                             For Each seat In Projekt_Sco.cabin.passPos
-                                GL.Color3(My.Settings.PaxColor)
+                                GL.Color3(Settings.PaxColor)
 
                                 GL.VertexPointer(3, VertexPointerType.Double, 0, seat.vertices)
                                 GL.DrawElements(PrimitiveType.Triangles, seat.edges.Count, DrawElementsType.UnsignedInt, seat.edges)
@@ -4244,7 +4228,7 @@ Class Frm_Main
                             Dim i As Integer = 0
                             For Each path In Projekt_Sco.ki_paths
                                 If LBPfade.SelectedIndex = i Then
-                                    GL.Color3(My.Settings.SelectionColor)
+                                    GL.Color3(Settings.SelectionColor)
                                 End If
                                 With path
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
@@ -4272,9 +4256,9 @@ Class Frm_Main
                                 For i As Integer = 0 To getSelectedMesh.animations.Count - 1
                                     With getSelectedMesh.animations(i)
                                         If i = Anim_DDList.SelectedIndex Then
-                                            GL.Color3(My.Settings.SelectionColor)
+                                            GL.Color3(Settings.SelectionColor)
                                         Else
-                                            GL.Color3(My.Settings.AchsenColor)
+                                            GL.Color3(Settings.AchsenColor)
                                         End If
                                         GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                         GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
@@ -4287,8 +4271,8 @@ Class Frm_Main
                             GL.VertexPointer(3, VertexPointerType.Double, 0, {0, 0, 0})
                             GL.TexCoordPointer(2, TexCoordPointerType.Double, 0, {0, 0})
                             For index As Integer = 0 To Projekt_Bus.driver_cam_list.Count - 1
-                                GL.Color3(My.Settings.CamDriverColor)
-                                If TVHelper.SelectedNode.FullPath.Contains("Fahrerkameras\") And index = TVHelper.SelectedNode.Index Then GL.Color3(My.Settings.SelectionColor)
+                                GL.Color3(Settings.CamDriverColor)
+                                If TVHelper.SelectedNode.FullPath.Contains("Fahrerkameras\") And index = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
                                 With Projekt_Bus.driver_cam_list(index)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                     GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
@@ -4297,8 +4281,8 @@ Class Frm_Main
 
 
                             For i As Integer = 0 To Projekt_Bus.pax_cam_list.Count - 1
-                                GL.Color3(My.Settings.CamPaxColor)
-                                If TVHelper.SelectedNode.FullPath.Contains("Fahrgastkameras\") And i = TVHelper.SelectedNode.Index Then GL.Color3(My.Settings.SelectionColor)
+                                GL.Color3(Settings.CamPaxColor)
+                                If TVHelper.SelectedNode.FullPath.Contains("Fahrgastkameras\") And i = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
                                 With Projekt_Bus.pax_cam_list(i)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                     GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
@@ -4306,8 +4290,8 @@ Class Frm_Main
                             Next
 
                             If Projekt_Bus.couple_back Then
-                                GL.Color3(My.Settings.AchsenColor)
-                                If TVHelper.SelectedNode.FullPath.Contains("Kupplungspunkte\") Then GL.Color3(My.Settings.SelectionColor)
+                                GL.Color3(Settings.AchsenColor)
+                                If TVHelper.SelectedNode.FullPath.Contains("Kupplungspunkte\") Then GL.Color3(Settings.SelectionColor)
                                 If Not Projekt_Bus.couple_back_sphere Is Nothing Then
                                     With Projekt_Bus.couple_back_sphere
                                         GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
@@ -4318,8 +4302,8 @@ Class Frm_Main
 
 
                             For i As Integer = 0 To Projekt_Bus.achsen.Count - 1
-                                GL.Color3(My.Settings.AchsenColor)
-                                If InStr(TVHelper.SelectedNode.FullPath, "Achsen\") And i = TVHelper.SelectedNode.Index Then GL.Color3(My.Settings.SelectionColor)
+                                GL.Color3(Settings.AchsenColor)
+                                If InStr(TVHelper.SelectedNode.FullPath, "Achsen\") And i = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
                                 With Projekt_Bus.achsen(i)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                     GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
@@ -4328,8 +4312,8 @@ Class Frm_Main
 
 
                             For i As Integer = 0 To Projekt_Bus.spiegel.Count - 1
-                                GL.Color3(My.Settings.CamReflexColor)
-                                If TVHelper.SelectedNode.FullPath.Contains("Spiegel\") And i = TVHelper.SelectedNode.Index Then GL.Color3(My.Settings.SelectionColor)
+                                GL.Color3(Settings.CamReflexColor)
+                                If TVHelper.SelectedNode.FullPath.Contains("Spiegel\") And i = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
                                 With Projekt_Bus.spiegel(i)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                     GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
@@ -4430,10 +4414,10 @@ Class Frm_Main
             GL.LineWidth(1)
             For i As Integer = 0 To cabin.passPos.Count - 1
                 With cabin.passPos(i)
-                    GL.Color3(My.Settings.PaxColor)
+                    GL.Color3(Settings.PaxColor)
                     If InStr(TVHelper.SelectedNode.FullPath, TVHelper.Nodes(7).Text & "\") Then
                         If TVHelper.SelectedNode.Index = i Then
-                            GL.Color3(My.Settings.SelectionColor)
+                            GL.Color3(Settings.SelectionColor)
                         End If
                     End If
                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
@@ -4445,7 +4429,7 @@ Class Frm_Main
 
             If Not cabin.driverPos Is Nothing Then
                 With cabin.driverPos
-                    GL.Color3(My.Settings.DriverColor)
+                    GL.Color3(Settings.DriverColor)
                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                     GL.DrawElements(PrimitiveType.Triangles, .edges.Count, DrawElementsType.UnsignedInt, .edges)
                     GL.Color3(Color.Black)
@@ -4470,7 +4454,7 @@ Class Frm_Main
 
                     For i = 0 To .dots.Count - 1
                         If i = LBPfade.SelectedIndex Then
-                            GL.Color3(My.Settings.SelectionColor)
+                            GL.Color3(Settings.SelectionColor)
                         ElseIf InStr(GBPfade.Tag, ";" & i & ";") Then
                             GL.Color3(Color.Violet)
                         Else
@@ -4501,7 +4485,7 @@ Class Frm_Main
             If .visible And Not .tempHidden Then
                 For i = 0 To .subObjekte.Count - 1
                     'GL.Color3(Color.White)
-                    If My.Settings.ShowAlpha Then
+                    If Settings.ShowAlpha Then
                         GL.Color4(1, 1, 1, .texturen(i).alpha)
                     Else
                         GL.Color3(Color.White)
@@ -4527,20 +4511,20 @@ Class Frm_Main
                 If Not getSelectedMeshes() Is Nothing Then
                     For Each mesh In getSelectedMeshes()
                         If mesh.ObjIds.Contains(objekt.id) Then
-                            GL.Color3(My.Settings.SelectionColor)
+                            GL.Color3(Settings.SelectionColor)
                             GL.LineWidth(2)
                             GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
                             GL.LineWidth(1)
                         Else
-                            If My.Settings.WireframeV Then
-                                GL.Color3(My.Settings.LineColor3D)
+                            If Settings.WireframeV Then
+                                GL.Color3(Settings.LineColor3D)
                                 GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
                             End If
                         End If
                     Next
                 Else
-                    If My.Settings.WireframeV Then
-                        GL.Color3(My.Settings.LineColor3D)
+                    If Settings.WireframeV Then
+                        GL.Color3(Settings.LineColor3D)
                         GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
                     End If
                 End If
@@ -4686,7 +4670,7 @@ Class Frm_Main
         Dim newline As String
         Dim alleBef As New List(Of String)
         Dim alleFiles As New List(Of String)
-        For Each folder In My.Computer.FileSystem.GetDirectories(My.Settings.OmsiPfad & "\Sceneryobjects")
+        For Each folder In My.Computer.FileSystem.GetDirectories(Settings.OmsiPfad & "\Sceneryobjects")
             For Each file In My.Computer.FileSystem.GetFiles(folder)
                 If file.Contains(".sco") Then
                     For Each line In Split(My.Computer.FileSystem.ReadAllText(file), vbCrLf)
@@ -4704,7 +4688,7 @@ Class Frm_Main
         For i = 0 To alleBef.Count - 1
             alleBef(i) &= alleFiles(i) & ";"
         Next
-        My.Computer.FileSystem.WriteAllText(My.Settings.OmsiPfad & "\alleBef.csv", Join(alleBef.ToArray, vbCrLf), False)
+        My.Computer.FileSystem.WriteAllText(Settings.OmsiPfad & "\alleBef.csv", Join(alleBef.ToArray, vbCrLf), False)
     End Sub
 
     Private Sub BBox_PSSize_Changed(sender As Object, e As EventArgs) Handles BBox_PSSize.Changed

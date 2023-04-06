@@ -1,5 +1,7 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Option Strict On
+'by Felix Modellbusse ;) (MoBu) 2019
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Public Class FileWriter
     Private filename As New Filename
@@ -33,6 +35,39 @@ Public Class FileWriter
         If newLine Then Nl()
     End Sub
 
+    Public Sub AddTag(tag As String, val As String, Optional newLine As Boolean = False)
+        If tag <> "" Then
+            Add("[" & tag & "]")
+            Add(val, newLine)
+        End If
+    End Sub
+
+    Public Sub AddTag(tag As String, vals As List(Of String), Optional newLine As Boolean = False)
+        If tag <> "" Then
+            Add("[" & tag & "]")
+            For Each item In vals
+                Add(item)
+            Next
+            If newLine Then Nl()
+        End If
+    End Sub
+
+    Public Sub AddTag(tag As String, val As Double, Optional newLine As Boolean = False)
+        If tag <> "" Then
+            Add("[" & tag & "]")
+            Add(val, newLine)
+        End If
+    End Sub
+
+    Public Sub AddTag(tag As String, val As Color, Optional newLine As Boolean = False)
+        If tag <> "" Then
+            Add("[" & tag & "]")
+            Add(val.R)
+            Add(val.G)
+            Add(val.B, newLine)
+        End If
+    End Sub
+
     Public Sub Add(val As Integer, Optional newLine As Boolean = False) 'WICHTIG damit keine Punkte in den Zahlenwerten sind
         lines.Add(Convert.ToString(val))
         If newLine Then Nl()
@@ -53,7 +88,7 @@ Public Class FileWriter
         lines.Add(vbNullString)
     End Sub
 
-    Public Sub teilüberschrift(text As String)
+    Public Sub Teilüberschrift(text As String)
         'Überschrift mit Trenner und Leerzeile
         lines.Add(vbTab & "////////////////////////////////////////////////////////")
         lines.Add(vbTab & vbTab & text)
@@ -64,7 +99,7 @@ Public Class FileWriter
     Public Function Write(Optional addToFile As Boolean = False) As Integer
 
         'Backup anlegen
-        If My.Settings.BackupAnlegen Then
+        If Settings.BackupAnlegen Then
             If System.IO.File.Exists(filename) Then
                 My.Computer.FileSystem.CopyFile(filename, filename & "_bak")
             End If
