@@ -21,7 +21,7 @@ Public Class Frm_Eig_Mesh
 
                         addEmptProp()
                         For i As Integer = 0 To .Texturen.Count - 1
-                            addProp("Texture_" & i, .Texturen(i).filename.name)
+                            addProp("Texture_" & i, .texturen(i).filename.name & " (" & .texturen(i).matName & ")")
                         Next
                     End With
                 End If
