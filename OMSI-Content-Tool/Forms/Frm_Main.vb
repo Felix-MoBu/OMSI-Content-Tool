@@ -104,6 +104,7 @@ Class Frm_Main
         lodVal = 1
 
         AlleObjekte.Clear()
+        Settings.Load()
         loadPositions()
 
         If Settings.EMail = Frm_Einst.stdMail Then
@@ -903,6 +904,7 @@ Class Frm_Main
     End Sub
 
     Public Sub addProjectlist(filename As String)
+        If filename = "" Then Exit Sub
         If Settings.LetzteProjekte.Count > 0 Then
             If Settings.LetzteProjekte(Settings.LetzteProjekte.Count - 1) = filename Then Exit Sub
         End If
@@ -1888,7 +1890,6 @@ Class Frm_Main
     End Sub
 
     Public Sub loadPositions()
-        Settings.Load()
         checkForStdPos()
 
         PanelObjekte.Location = Settings.PObjekteL
@@ -3807,6 +3808,10 @@ Class Frm_Main
     Private Sub BTPanelTimelineClose_Click(sender As Object, e As EventArgs) Handles BTPanelTimelineClose.Click
         PanelTimeline.Visible = Not PanelTimeline.Visible
         savePositions()
+    End Sub
+
+    Private Sub PanelTimeline_Resize(sender As Object, e As EventArgs) Handles PanelTimeline.Resize
+        BTPanelTimelineClose.Left = PanelTimeline.Width - 22
     End Sub
 
 

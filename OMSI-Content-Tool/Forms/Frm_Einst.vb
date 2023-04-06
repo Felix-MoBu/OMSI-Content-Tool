@@ -64,6 +64,7 @@ Public Class Frm_Einst
         Settings.Save()
 
         Frm_Main.GlMain.Invalidate()
+        Frm_Main.loadPositions()
         Me.Close()
     End Sub
 
@@ -253,28 +254,28 @@ Public Class Frm_Einst
 
     Private Sub BTResetObj_Click(sender As Object, e As EventArgs) Handles BTResetObj.Click
         Settings.PObjekteV = True
-        Settings.PObjekteL = New Point(10, 10)
+        Settings.PObjekteL = New Point(5, 5)
         Settings.PObjekteS = New Point(300, 350)
         Frm_Main.loadPositions()
     End Sub
 
     Private Sub BTResetTex_Click(sender As Object, e As EventArgs) Handles BTResetTex.Click
         Settings.PTextureV = True
-        Settings.PTextureL = New Point(10, 10)
+        Settings.PTextureL = New Point(5, 5)
         Settings.PTextureS = New Point(392, 337)
         Frm_Main.loadPositions()
     End Sub
 
     Private Sub BTResetEig_Click(sender As Object, e As EventArgs) Handles BTResetEig.Click
         Settings.PEigenschaftenV = True
-        Settings.PEigenschaftenL = New Point(10, 10)
+        Settings.PEigenschaftenL = New Point(5, 5)
         Settings.PEigenschaftenS = New Point(360, 630)
         Frm_Main.loadPositions()
     End Sub
 
     Private Sub BTResetTimeline_Click(sender As Object, e As EventArgs) Handles BTResetTimeline.Click
         Settings.PTimelineV = True
-        Settings.PTimelineL = New Point(10, 10)
+        Settings.PTimelineL = New Point(5, 5)
         Settings.PTimelineS = New Point(814, 124)
         Settings.PTimelineSelTab = 0
         Frm_Main.loadPositions()
@@ -313,7 +314,6 @@ Public Class Frm_Einst
         CDColorFenster.Color = TBColorFenster.BackColor
         If CDColorFenster.ShowDialog = DialogResult.OK Then
             TBColorFenster.BackColor = CDColorFenster.Color
-            Frm_Main.loadPositions()
         End If
     End Sub
 End Class

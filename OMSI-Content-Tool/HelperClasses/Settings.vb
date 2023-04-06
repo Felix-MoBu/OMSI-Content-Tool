@@ -97,7 +97,7 @@ Module Settings
                             LastImportFormat = allLines(linect + 1)
                         Case "[LetzteProjekte]"
                             LetzteProjekte.Clear()
-                            For i = linect + 2 To linect + 2 + allLines(linect + 1)
+                            For i = linect + 2 To linect + 1 + Convert.ToInt32(allLines(linect + 1))
                                 LetzteProjekte.Add(allLines(i))
                             Next
 
