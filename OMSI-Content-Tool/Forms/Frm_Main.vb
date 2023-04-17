@@ -1668,6 +1668,24 @@ Class Frm_Main
         Git.Sync()
     End Sub
 
+    Private Sub NeuesRepositoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NeuesRepositoryToolStripMenuItem.Click
+        If getProj.filename <> "" Then
+            Git.NewRepoAt(getProj.filename.Path)
+        Else
+            Log.Add("Es kann kein neues Repository erstellt werden. Bitte erst ein Projekt öffnen oder erstellen")
+        End If
+    End Sub
+
+    Private Sub UnGitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UnGitToolStripMenuItem.Click
+        If MsgBox("Dieses Projekt aus der Nachverfolgung mit Git entfernen?" & vbCrLf & "(alle Dateien und Änderungen bleiben erhalten)", vbYesNo) = vbYes Then
+            Git.delete()
+        End If
+    End Sub
+
+    Private Sub EinstellungenToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles OptionenToolStripMenuItem1.Click
+        Frm_Git.ShowDialog()
+    End Sub
+
     Private Sub ReadmetxtToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReadmetxtToolStripMenuItem.Click
         If Not getProj() Is Nothing Then
             Dim readmeFile As String = getProj.filename.path & "\readme.txt"
@@ -5307,20 +5325,6 @@ Class Frm_Main
                 TVHelper.Nodes(4).Nodes.Add("Innen Licht " & getProj.model.intLichter.Count - 1)
                 loadIntLichter()
             End If
-        End If
-    End Sub
-
-    Private Sub NeuesRepositoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NeuesRepositoryToolStripMenuItem.Click
-        If getProj.filename <> "" Then
-            Git.NewRepoAt(getProj.filename.Path)
-        Else
-            Log.Add("Es kann kein neues Repository erstellt werden. Bitte erst ein Projekt öffnen oder erstellen")
-        End If
-    End Sub
-
-    Private Sub UnGitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UnGitToolStripMenuItem.Click
-        If MsgBox("Dieses Projekt aus der Nachverfolgung mit Git entfernen?" & vbCrLf & "(alle Dateien und Änderungen bleiben erhalten)", vbYesNo) = vbYes Then
-            Git.delete()
         End If
     End Sub
 End Class

@@ -1,4 +1,6 @@
-﻿Public Module Git
+﻿Imports System.Diagnostics.Eventing.Reader
+
+Public Module Git
     Dim isRepo As Boolean
     Dim gitShell As Object = CreateObject("WScript.Shell")
     Dim gitPath As String
@@ -54,7 +56,7 @@
 
     Public Sub Push()
         If gitPath <> "" Then
-            Execute("git push origin " & getOrigin())
+            Execute("git push origin " & selectedBranch)
         End If
     End Sub
 
@@ -68,6 +70,40 @@
         tryFindRepoAt(gitPath)
     End Sub
 
+    Public Function getBranches(Optional remote As Boolean = False) As String()
+        Dim command As String = "git branch"
+        If remote Then command &= " -r"
+        Dim branchList As List(Of String) = Execute(command).Split(vbLf).ToList
+        For i = 0 To branchList.Count - 1
+            If branchList(i).Length < 2 Then
+                branchList.RemoveAt(i)
+            Else
+                branchList(i) = branchList(i).Substring(2)
+            End If
+        Next
+        Return branchList.ToArray
+    End Function
+
+    Public Property selectedBranch As String
+        Get
+            Dim branchList As List(Of String) = Execute("git branch").Split(vbLf).ToList
+            If branchList(0) <> "" Then
+                For i = 0 To branchList.Count - 1
+                    If branchList(i).Substring(0, 1) = "*" Then Return branchList(i).Substring(2)
+                Next
+            End If
+            Return ""
+        End Get
+        Set(value As String)
+            Dim branchList As String() = getBranches()
+            If branchList.Contains(value) Then
+                Execute("git checkout " & value)
+            Else
+                Execute("git checkout -b" & value)
+            End If
+        End Set
+    End Property
+
     Private Sub ChangeFolger(path As String)
         If path <> "" Then
             gitShell.CurrentDirectory = path
@@ -79,15 +115,10 @@
     End Function
 
     Public Function getPath() As String
-        Return Execute("git rev - parse - -show - toplevel")
+        Return Execute("git rev-parse --show-toplevel").Replace("/", "\").Trim
     End Function
 
-    Public Function getOrigin() As String
-        Dim result As String = Execute("git shwo --origin")
-        If InStr(result, "'") Then
-            Return result.Split("'")(1)
-        Else
-            Return ""
-        End If
+    Public Function getURL() As String
+        Return Execute("git config --get remote.origin.url").Trim
     End Function
 End Module

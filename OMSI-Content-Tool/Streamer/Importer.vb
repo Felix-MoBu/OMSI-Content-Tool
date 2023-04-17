@@ -919,18 +919,26 @@ Module Importer
 
             matlistTemp = newMatlist
 
+            'TEMP
+            Dim fw As FileWriter = New FileWriter(New Filename(filename & ".txt", filename.path), True)
+
+
             Dim arrTemp As New List(Of Integer)
             For i = 0 To .texturen.Count - 1
                 arrTemp.Clear()
+                fw.Add("SubObj: " & i)
                 For n = 0 To matlistTemp.Count - 1
                     If matlistTemp(n) = i Then
                         arrTemp.Add(facesTemp(n * 3))
                         arrTemp.Add(facesTemp(n * 3 + 1))
                         arrTemp.Add(facesTemp(n * 3 + 2))
+                        fw.Add(facesTemp(n * 3) & ";" & facesTemp(n * 3 + 1) & ";" & facesTemp(n * 3 + 2))
                     End If
                 Next
                 .subObjekte.Add(arrTemp.ToArray)
             Next
+
+            fw.Write()
 
             Dim tempstr As String = ""
             For Each item In newMatlist
