@@ -15,6 +15,10 @@ Public Class Frm_Einst
         Settings.o3dAutoConvert = CBautoO3d.Checked
         Settings.CreatorID = Convert.ToInt32(TBCreatorID.Text)
         Settings.NickName = TBNickname.Text
+
+        Settings.GitShowInMenue = CBGitInMenue.Checked
+        Settings.GitAutoCommit = CBGitAutoCommit.Checked
+
         Frm_Main.TimerReset()
 
         'Page "OMSI"
@@ -80,6 +84,8 @@ Public Class Frm_Einst
         CBautoO3d.Checked = Settings.o3dAutoConvert
         TBCreatorID.Text = Convert.ToString(Settings.CreatorID)
         TBNickname.Text = Settings.NickName
+        CBGitInMenue.Checked = Settings.GitShowInMenue
+        CBGitAutoCommit.Checked = Settings.GitAutoCommit
 
         'Page "OMSI"
         TBOmsiPfad.Text = Settings.OmsiPfad
@@ -315,5 +321,9 @@ Public Class Frm_Einst
         If CDColorFenster.ShowDialog = DialogResult.OK Then
             TBColorFenster.BackColor = CDColorFenster.Color
         End If
+    End Sub
+
+    Private Sub CBGitInMenue_CheckedChanged(sender As Object, e As EventArgs) Handles CBGitInMenue.CheckedChanged
+        Frm_Main.GitToolStripMenuItem.Visible = CBGitInMenue.Checked
     End Sub
 End Class

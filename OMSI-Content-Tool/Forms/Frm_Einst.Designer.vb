@@ -30,6 +30,8 @@ Partial Class Frm_Einst
         Me.BTAbbrechen = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.GroupBox10 = New System.Windows.Forms.GroupBox()
+        Me.CBGitInMenue = New System.Windows.Forms.CheckBox()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.TBNickname = New System.Windows.Forms.TextBox()
         Me.Label20 = New System.Windows.Forms.Label()
@@ -57,6 +59,8 @@ Partial Class Frm_Einst
         Me.Label21 = New System.Windows.Forms.Label()
         Me.TBMaxFPS = New System.Windows.Forms.TextBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.TBColorFenster = New System.Windows.Forms.TextBox()
+        Me.Label23 = New System.Windows.Forms.Label()
         Me.BTResetTimeline = New System.Windows.Forms.Button()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.BTResetEig = New System.Windows.Forms.Button()
@@ -107,11 +111,11 @@ Partial Class Frm_Einst
         Me.CDColorPassenger = New System.Windows.Forms.ColorDialog()
         Me.CDColorDriver = New System.Windows.Forms.ColorDialog()
         Me.CDColorAchsen = New System.Windows.Forms.ColorDialog()
-        Me.Label23 = New System.Windows.Forms.Label()
-        Me.TBColorFenster = New System.Windows.Forms.TextBox()
         Me.CDColorFenster = New System.Windows.Forms.ColorDialog()
+        Me.CBGitAutoCommit = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.GroupBox10.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -187,6 +191,7 @@ Partial Class Frm_Einst
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.GroupBox10)
         Me.TabPage1.Controls.Add(Me.GroupBox6)
         Me.TabPage1.Controls.Add(Me.BTEinstReset)
         Me.TabPage1.Controls.Add(Me.GroupBox5)
@@ -198,6 +203,27 @@ Partial Class Frm_Einst
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Allgemein"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'GroupBox10
+        '
+        Me.GroupBox10.Controls.Add(Me.CBGitAutoCommit)
+        Me.GroupBox10.Controls.Add(Me.CBGitInMenue)
+        Me.GroupBox10.Location = New System.Drawing.Point(214, 162)
+        Me.GroupBox10.Name = "GroupBox10"
+        Me.GroupBox10.Size = New System.Drawing.Size(199, 126)
+        Me.GroupBox10.TabIndex = 9
+        Me.GroupBox10.TabStop = False
+        Me.GroupBox10.Text = "Git"
+        '
+        'CBGitInMenue
+        '
+        Me.CBGitInMenue.AutoSize = True
+        Me.CBGitInMenue.Location = New System.Drawing.Point(6, 21)
+        Me.CBGitInMenue.Name = "CBGitInMenue"
+        Me.CBGitInMenue.Size = New System.Drawing.Size(152, 30)
+        Me.CBGitInMenue.TabIndex = 0
+        Me.CBGitInMenue.Text = "Git im Menüband anzeigen" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(wenn installiert)"
+        Me.CBGitInMenue.UseVisualStyleBackColor = True
         '
         'GroupBox6
         '
@@ -475,6 +501,23 @@ Partial Class Frm_Einst
         Me.GroupBox4.TabIndex = 7
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Fenster"
+        '
+        'TBColorFenster
+        '
+        Me.TBColorFenster.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TBColorFenster.Location = New System.Drawing.Point(332, 40)
+        Me.TBColorFenster.Name = "TBColorFenster"
+        Me.TBColorFenster.Size = New System.Drawing.Size(75, 20)
+        Me.TBColorFenster.TabIndex = 11
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(329, 16)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(75, 13)
+        Me.Label23.TabIndex = 5
+        Me.Label23.Text = "Fenster Farbe:"
         '
         'BTResetTimeline
         '
@@ -909,22 +952,15 @@ Partial Class Frm_Einst
         '
         Me.CDColor3D.Color = System.Drawing.Color.White
         '
-        'Label23
+        'CBGitAutoCommit
         '
-        Me.Label23.AutoSize = True
-        Me.Label23.Location = New System.Drawing.Point(329, 16)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(75, 13)
-        Me.Label23.TabIndex = 5
-        Me.Label23.Text = "Fenster Farbe:"
-        '
-        'TBColorFenster
-        '
-        Me.TBColorFenster.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TBColorFenster.Location = New System.Drawing.Point(332, 40)
-        Me.TBColorFenster.Name = "TBColorFenster"
-        Me.TBColorFenster.Size = New System.Drawing.Size(75, 20)
-        Me.TBColorFenster.TabIndex = 11
+        Me.CBGitAutoCommit.AutoSize = True
+        Me.CBGitAutoCommit.Location = New System.Drawing.Point(6, 47)
+        Me.CBGitAutoCommit.Name = "CBGitAutoCommit"
+        Me.CBGitAutoCommit.Size = New System.Drawing.Size(159, 17)
+        Me.CBGitAutoCommit.TabIndex = 1
+        Me.CBGitAutoCommit.Text = "Auto Commit beim speichern"
+        Me.CBGitAutoCommit.UseVisualStyleBackColor = True
         '
         'Frm_Einst
         '
@@ -941,6 +977,8 @@ Partial Class Frm_Einst
         Me.Text = "Einstellungen"
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
+        Me.GroupBox10.ResumeLayout(False)
+        Me.GroupBox10.PerformLayout()
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox6.PerformLayout()
         Me.GroupBox5.ResumeLayout(False)
@@ -1058,4 +1096,7 @@ Partial Class Frm_Einst
     Friend WithEvents TBColorFenster As TextBox
     Friend WithEvents Label23 As Label
     Friend WithEvents CDColorFenster As ColorDialog
+    Friend WithEvents GroupBox10 As GroupBox
+    Friend WithEvents CBGitInMenue As CheckBox
+    Friend WithEvents CBGitAutoCommit As CheckBox
 End Class

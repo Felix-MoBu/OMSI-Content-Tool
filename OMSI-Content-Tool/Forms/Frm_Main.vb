@@ -126,7 +126,7 @@ Class Frm_Main
 
         If Settings.TexAutoReload Then TReloadTextures.Start()
 
-        If CreateObject("WScript.Shell").Exec("git --version").StdOut.ReadAll.ToString.Split(" ")(0) = "git" Then
+        If Git.isInstalled And Settings.GitShowInMenue Then
             GitToolStripMenuItem.Visible = True
         End If
 
@@ -592,6 +592,10 @@ Class Frm_Main
         If Settings.SaveIntervalActive Then
             TimerReset()
             TSave.Start()
+        End If
+
+        If Git.isRepo And Settings.GitAutoCommit Then
+            Git.Commit(Now)
         End If
 
         SSLBStatus.Text = "Speichern abgeschlossen"
@@ -1653,7 +1657,8 @@ Class Frm_Main
     End Sub
 
     Private Sub CommitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CommitToolStripMenuItem.Click
-        Git.Commit()
+        Dim message As String = InputBox("Kommentar:")
+        If message <> "" Then Git.Commit(message)
     End Sub
 
     Private Sub PullToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PullToolStripMenuItem.Click

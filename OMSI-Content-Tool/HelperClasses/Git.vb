@@ -1,24 +1,35 @@
 ﻿Imports System.Diagnostics.Eventing.Reader
 
 Public Module Git
-    Dim isRepo As Boolean
+    Dim isRepoInt As Boolean
     Dim gitShell As Object = CreateObject("WScript.Shell")
     Dim gitPath As String
     Dim gitUrl As String
+
+    Public Function isInstalled() As Boolean
+        If Execute("git --version").Split(" ")(0) = "git" Then Return True
+        Return False
+    End Function
+
+    Public ReadOnly Property isRepo
+        Get
+            Return isRepoInt
+        End Get
+    End Property
 
     Public Function tryFindRepoAt(filepath As String) As Boolean
         If filepath <> "" Then
             ChangeFolger(filepath)
             If Execute("git status").Split(" ")(0) = "fatal:" Or Execute("git status") = "" Then
                 Frm_Main.UnGitToolStripMenuItem.Visible = False
-                isRepo = False
+                isRepoInt = False
                 Return False
             Else
                 gitPath = Execute("git rev-parse --show-toplevel").Replace("/", "\").Replace(vbLf, "")
                 gitUrl = Execute("git config --get remote.origin.url")
                 Log.Add("Repository gefunden (" & gitPath & ")")
                 Frm_Main.UnGitToolStripMenuItem.Visible = True
-                isRepo = True
+                isRepoInt = True
                 Return True
             End If
         Else
@@ -34,16 +45,13 @@ Public Module Git
     End Sub
 
     Public Sub Connect(Optional url As String = "")
-        If url = "" Then
-
-        Else
+        If url <> "" Then
             Execute("git clone " & url)
         End If
     End Sub
 
-    Public Sub Commit()
+    Public Sub Commit(message As String)
         If gitPath <> "" Then
-            Dim message As String = InputBox("Kommentar")
             Execute("git commit -m '" & message & "'")
         End If
     End Sub

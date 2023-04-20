@@ -143,7 +143,7 @@ Partial Class Frm_Git
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(513, 200)
+        Me.ClientSize = New System.Drawing.Size(513, 153)
         Me.Controls.Add(Me.BTNeu)
         Me.Controls.Add(Me.TBPfad)
         Me.Controls.Add(Me.Label4)

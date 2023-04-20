@@ -25,4 +25,12 @@
     Private Sub BTGitignore_Click(sender As Object, e As EventArgs) Handles BTGitignore.Click
         Shell("C:\WINDOWS\Notepad.exe " & Git.getPath() & "\.gitignore", 1)
     End Sub
+
+    Private Sub BTPull_Click(sender As Object, e As EventArgs) Handles BTPull.Click
+        Git.Pull()
+    End Sub
+
+    Private Sub BTPush_Click(sender As Object, e As EventArgs) Handles BTPush.Click
+        Git.Push()
+    End Sub
 End Class

@@ -15,6 +15,9 @@ Module Settings
     Public RepToolPfad As String = "C:\Programme\Steam\steamapps\common\OMSI 2\SDK\RepaintTool.exe"
     Public BackupAnlegen As Boolean = False
 
+    Public GitShowInMenue As Boolean = True
+    Public GitAutoCommit As Boolean = False
+
     Public WireframeV As Boolean = True
     Public GitterV As Boolean = True
     Public OrtoScale As Integer = 3
@@ -46,7 +49,6 @@ Module Settings
     Public LineColor3D As Color = Color.Black
     Public PaxColor As Color = Color.Pink
     Public SelectionColor As Color = Color.Orange
-
 
 
     Public fpsLimit As Integer = 120
@@ -109,6 +111,11 @@ Module Settings
                             RepToolPfad = allLines(linect + 1)
                         Case "[BackupAnlegen]"
                             BackupAnlegen = intToBool(allLines(linect + 1))
+
+                        Case "[GitShowInMenue]"
+                            GitShowInMenue = intToBool(allLines(linect + 1))
+                        Case "[GitAutoCommit]"
+                            GitAutoCommit = intToBool(allLines(linect + 1))
 
                         Case "[WireframeV]"
                             WireframeV = intToBool(allLines(linect + 1))
@@ -218,6 +225,9 @@ Module Settings
             .AddTag("RepToolPfad", RepToolPfad, True)
             .AddTag("BackupAnlegen", boolToInt(BackupAnlegen), True)
 
+            .AddTag("GitShowInMenue", boolToInt(GitShowInMenue), True)
+            .AddTag("GitAutoCommit", boolToInt(GitAutoCommit), True)
+
             .AddTag("WireframeV", boolToInt(WireframeV), True)
             .AddTag("GitterV", boolToInt(GitterV), True)
             .AddTag("OrtoScale", OrtoScale, True)
@@ -267,7 +277,6 @@ Module Settings
             .AddTag("LogDebug", boolToInt(LogDebug), True)
             .AddTag("ShowAlpha", boolToInt(ShowAlpha), True)
             .AddTag("PfadeOrigBreite", boolToInt(PfadeOrigBreite), True)
-
 
             .AddTag("o3dRemoveSpec", boolToInt(o3dRemoveSpec), True)
             .AddTag("o3dAutoConvert", boolToInt(o3dAutoConvert), True)
