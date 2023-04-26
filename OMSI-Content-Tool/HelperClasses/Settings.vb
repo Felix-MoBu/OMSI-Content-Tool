@@ -2,7 +2,7 @@
 Imports System.Text
 
 Module Settings
-    Public ReadOnly settingsFilename As String = "\Settings.cfg"
+    Public ReadOnly settingsFilename As String = "Settings.cfg"
 
     Public ImportPfad As String = "C:\"
     Public ExportPfad As String = "C:\"
@@ -17,6 +17,7 @@ Module Settings
 
     Public GitShowInMenue As Boolean = True
     Public GitAutoCommit As Boolean = False
+    Public LogGit As Boolean = False
 
     Public WireframeV As Boolean = True
     Public GitterV As Boolean = True
@@ -116,6 +117,8 @@ Module Settings
                             GitShowInMenue = intToBool(allLines(linect + 1))
                         Case "[GitAutoCommit]"
                             GitAutoCommit = intToBool(allLines(linect + 1))
+                        Case "[LogGit]"
+                            LogGit = intToBool(allLines(linect + 1))
 
                         Case "[WireframeV]"
                             WireframeV = intToBool(allLines(linect + 1))
@@ -206,7 +209,7 @@ Module Settings
                 End If
 
             Next
-            Log.Add("Einstellungen aus Datei geladen...")
+            Log.Add("Einstellungen aus Datei geladen...", TYPE_DEBUG)
         End If
     End Sub
 
@@ -227,6 +230,7 @@ Module Settings
 
             .AddTag("GitShowInMenue", boolToInt(GitShowInMenue), True)
             .AddTag("GitAutoCommit", boolToInt(GitAutoCommit), True)
+            .AddTag("LogGit", boolToInt(LogGit), True)
 
             .AddTag("WireframeV", boolToInt(WireframeV), True)
             .AddTag("GitterV", boolToInt(GitterV), True)
@@ -296,12 +300,22 @@ Module Settings
 
             Dim linesCount As Integer
             linesCount = newFile.Write()
-
+            Log.Add("Einstellungen in Datei gespeichert...", TYPE_DEBUG)
         End With
     End Sub
 
     Public Sub Reset()
-
+        Dim oldfilename As Filename = New Filename(settingsFilename, Application.StartupPath)
+        If System.IO.File.Exists(oldfilename) Then
+            If MsgBox("Sollen die aktuellen Einstellungen gesichert werden?", vbYesNo) = vbYes Then
+                System.IO.File.Copy(oldfilename, oldfilename.path & "\" & oldfilename.nameNoEnding & ".old")
+            End If
+            System.IO.File.Delete(oldfilename)
+            If MsgBox("Die Anwendung muss neu gestartet werden damit die Änderungen übernommen werden!" & vbCrLf & "Jetzt neu starten?", vbYesNo) = vbYes Then
+                Shell(Application.ExecutablePath)
+                Frm_Main.Close()
+            End If
+        End If
     End Sub
 
 End Module

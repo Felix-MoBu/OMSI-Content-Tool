@@ -47,6 +47,7 @@ Public Module Git
     Public Sub Connect(Optional url As String = "")
         If url <> "" Then
             Execute("git clone " & url)
+            Log.Add("git clon", TYPE_GIT)
         End If
     End Sub
 
@@ -119,6 +120,7 @@ Public Module Git
     End Sub
 
     Private Function Execute(command As String) As String
+        Log.Add(command, TYPE_GIT)
         Return gitShell.Exec(command).StdOut.ReadAll()
     End Function
 

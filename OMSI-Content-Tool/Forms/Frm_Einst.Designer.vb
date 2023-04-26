@@ -31,6 +31,7 @@ Partial Class Frm_Einst
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.GroupBox10 = New System.Windows.Forms.GroupBox()
+        Me.CBGitAutoCommit = New System.Windows.Forms.CheckBox()
         Me.CBGitInMenue = New System.Windows.Forms.CheckBox()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.TBNickname = New System.Windows.Forms.TextBox()
@@ -112,7 +113,7 @@ Partial Class Frm_Einst
         Me.CDColorDriver = New System.Windows.Forms.ColorDialog()
         Me.CDColorAchsen = New System.Windows.Forms.ColorDialog()
         Me.CDColorFenster = New System.Windows.Forms.ColorDialog()
-        Me.CBGitAutoCommit = New System.Windows.Forms.CheckBox()
+        Me.CBLogGit = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox10.SuspendLayout()
@@ -206,6 +207,7 @@ Partial Class Frm_Einst
         '
         'GroupBox10
         '
+        Me.GroupBox10.Controls.Add(Me.CBLogGit)
         Me.GroupBox10.Controls.Add(Me.CBGitAutoCommit)
         Me.GroupBox10.Controls.Add(Me.CBGitInMenue)
         Me.GroupBox10.Location = New System.Drawing.Point(214, 162)
@@ -214,6 +216,16 @@ Partial Class Frm_Einst
         Me.GroupBox10.TabIndex = 9
         Me.GroupBox10.TabStop = False
         Me.GroupBox10.Text = "Git"
+        '
+        'CBGitAutoCommit
+        '
+        Me.CBGitAutoCommit.AutoSize = True
+        Me.CBGitAutoCommit.Location = New System.Drawing.Point(6, 49)
+        Me.CBGitAutoCommit.Name = "CBGitAutoCommit"
+        Me.CBGitAutoCommit.Size = New System.Drawing.Size(159, 17)
+        Me.CBGitAutoCommit.TabIndex = 1
+        Me.CBGitAutoCommit.Text = "Auto Commit beim speichern"
+        Me.CBGitAutoCommit.UseVisualStyleBackColor = True
         '
         'CBGitInMenue
         '
@@ -952,15 +964,15 @@ Partial Class Frm_Einst
         '
         Me.CDColor3D.Color = System.Drawing.Color.White
         '
-        'CBGitAutoCommit
+        'CBLogGit
         '
-        Me.CBGitAutoCommit.AutoSize = True
-        Me.CBGitAutoCommit.Location = New System.Drawing.Point(6, 47)
-        Me.CBGitAutoCommit.Name = "CBGitAutoCommit"
-        Me.CBGitAutoCommit.Size = New System.Drawing.Size(159, 17)
-        Me.CBGitAutoCommit.TabIndex = 1
-        Me.CBGitAutoCommit.Text = "Auto Commit beim speichern"
-        Me.CBGitAutoCommit.UseVisualStyleBackColor = True
+        Me.CBLogGit.AutoSize = True
+        Me.CBLogGit.Location = New System.Drawing.Point(6, 70)
+        Me.CBLogGit.Name = "CBLogGit"
+        Me.CBLogGit.Size = New System.Drawing.Size(130, 17)
+        Me.CBLogGit.TabIndex = 2
+        Me.CBLogGit.Text = "Git in Logfile anzeigen"
+        Me.CBLogGit.UseVisualStyleBackColor = True
         '
         'Frm_Einst
         '
@@ -1099,4 +1111,5 @@ Partial Class Frm_Einst
     Friend WithEvents GroupBox10 As GroupBox
     Friend WithEvents CBGitInMenue As CheckBox
     Friend WithEvents CBGitAutoCommit As CheckBox
+    Friend WithEvents CBLogGit As CheckBox
 End Class

@@ -18,6 +18,7 @@ Public Class Frm_Einst
 
         Settings.GitShowInMenue = CBGitInMenue.Checked
         Settings.GitAutoCommit = CBGitAutoCommit.Checked
+        Settings.LogGit = CBLogGit.Checked
 
         Frm_Main.TimerReset()
 
@@ -90,6 +91,7 @@ Public Class Frm_Einst
         'Page "OMSI"
         TBOmsiPfad.Text = Settings.OmsiPfad
         TBRepTool.Text = Settings.RepToolPfad
+        CBLogGit.Checked = Settings.LogGit
 
         'Page "Darstellung"
         TBColor3D.BackColor = Settings.BackColor3D

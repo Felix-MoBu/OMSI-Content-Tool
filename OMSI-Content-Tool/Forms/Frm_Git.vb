@@ -1,9 +1,10 @@
 ﻿Public Class Frm_Git
+    Public isLoaded As Boolean = False
     Private Sub Frm_Git_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TBPfad.Text = Git.getPath
         TBUrl.Text = Git.getURL
         loadBranches()
-
+        isLoaded = True 
     End Sub
 
     Private Sub loadBranches()
@@ -13,7 +14,7 @@
     End Sub
 
     Private Sub LBBranches_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBBranches.SelectedIndexChanged
-        Git.selectedBranch = LBBranches.SelectedItem
+        If isLoaded Then Git.selectedBranch = LBBranches.SelectedItem
     End Sub
 
     Private Sub BTNeu_Click(sender As Object, e As EventArgs) Handles BTNeu.Click
