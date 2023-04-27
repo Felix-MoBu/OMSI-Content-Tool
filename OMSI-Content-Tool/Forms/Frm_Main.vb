@@ -41,7 +41,7 @@ Class Frm_Main
     Dim CamLocation As New Point3D
     Dim CamLocationOld As New Point3D
 
-    Public AlleObjekte As New List(Of Local3DObjekt)
+    Public AlleObjekte As New List(Of Mesh)
     Public AlleTexturen As New List(Of String)
     Public AlleVariablen As New List(Of String)
     Public AlleVarValues As New List(Of Double)
@@ -382,7 +382,7 @@ Class Frm_Main
     Public Function fileimport2(filename As Filename, Optional convert As Boolean = False) As OMSI_Mesh
         Dim newObjekt As Object = Importer.readFile(filename)
 
-        If TypeOf newObjekt Is Local3DObjekt Then
+        If TypeOf newObjekt Is Mesh Then
             Dim newMesh As New OMSI_Mesh
             newMesh.filename = filename
             newMesh.position = newObjekt.position
@@ -764,7 +764,7 @@ Class Frm_Main
 
     Public Sub clearProjects()
         resetTextures()
-        AlleObjekte = New List(Of Local3DObjekt)
+        AlleObjekte = New List(Of Mesh)
         LBMeshes.Items.Clear()
         Projekt_Bus = Nothing
         Projekt_Sco = Nothing
@@ -819,8 +819,8 @@ Class Frm_Main
                     Settings.LetzteProjekte.Remove(sender.Text)
                 End If
                 redrawLetzte()
-                End If
             End If
+        End If
     End Sub
 
     Private Sub redrawLetzte()
@@ -859,11 +859,13 @@ Class Frm_Main
         Projekt_Sco = Nothing
         Projekt_Sli = Nothing
         resetTextures()
-        AlleObjekte = New List(Of Local3DObjekt)
+        AlleObjekte = New List(Of Mesh)
         AlleTexturen = New List(Of String)
         AlleVariablen = New List(Of String)
         AlleVarValues = New List(Of Double)
         HofDateienToolStripMenuItem.Enabled = False     'Nur Busse haben Hof-Dateien
+        NächsterWagenToolStripMenuItem.Enabled = False  'Nur Busse haben Wagenteile
+        VorherigerWagenToolStripMenuItem.Enabled = False
         RepaintToolStripMenuItem.Enabled = False        'Splines haben keine Repaints
 
         Text = My.Application.Info.Title
@@ -984,7 +986,7 @@ Class Frm_Main
 
             Dim i As Integer = 0
             For Each subobjekt In Projekt_Sli.subobjekte
-                Dim newObjekt As New Local3DObjekt
+                Dim newObjekt As New Mesh
                 With newObjekt
                     .vertices = Projekt_Sli.vertices
                     .texCoords = Projekt_Sli.texCoords
@@ -4508,7 +4510,7 @@ Class Frm_Main
     Public origTexturen As New List(Of String)
     Public overWriteTextures As New List(Of LocalTexture)
 
-    Private Sub drawL3D(objekt As Local3DObjekt)
+    Private Sub drawL3D(objekt As Mesh)
         With objekt
             If .visible And Not .tempHidden Then
                 For i = 0 To .subObjekte.Count - 1

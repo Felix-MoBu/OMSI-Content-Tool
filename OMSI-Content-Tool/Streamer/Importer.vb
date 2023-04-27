@@ -41,7 +41,7 @@ Module Importer
         Return Nothing
     End Function
 
-    Private Sub importWarnung(msg As String, fehler As String, filename As String, grund As String)
+    Public Sub importWarnung(msg As String, fehler As String, filename As String, grund As String)
         If Not ignoreImportFail Then
             Dim result = MsgBox(msg & vbCrLf & "(Feher: " & fehler & ", Datei: " & filename & ") " & grund, vbAbortRetryIgnore)
             If result = vbIgnore Then ignoreImportFail = True
@@ -49,168 +49,7 @@ Module Importer
         End If
     End Sub
 
-    Private Function readX3D(filename As Filename) As Local3DObjekt
-        Dim document As New XmlDocument
-
-        Try
-            document.Load(filename)
-        Catch ex As Exception
-            Log.Add("Import fehlgeschlagen! (Fehler: I003, Datei: " & filename & ")", Log.TYPE_ERROR)
-            importWarnung("Import fehlgeschlagen!", "I003", filename, "falsches Dateiformat oder bschädigte Datei")
-            Frm_Main.SSLBStatus.Text = ""
-            Return Nothing
-        End Try
-
-        Dim temp3D As New Local3DObjekt
-        Dim tempArr() As String
-        Dim tempListI As New List(Of Integer)
-        Dim tempTex As New List(Of Double)
-        Dim tempTexCoord As New List(Of Double)
-        Dim tempVert As New List(Of Double)
-        Dim indexOffset As Integer = 0
-
-        Dim ersterKameraFehler As Boolean = True
-
-        For Each mainNodes As XmlElement In document.DocumentElement.ChildNodes
-            If mainNodes.Name = "Scene" Then
-                For Each transformNodes In mainNodes.ChildNodes
-                    If transformNodes.name = "Transform" Then
-                        tempArr = Split(Replace(transformNodes.getAttribute("translation"), ".", ","), " ")
-                        temp3D.center = New Point3D(tempArr(0), tempArr(2), tempArr(1))
-                        If Not transformNodes.firstchild.name = "Viewpoint" Then
-
-                            For Each groupmember In transformNodes.firstchild.firstchild.childnodes
-                                For Each shape In groupmember.childnodes
-                                    If shape.firstchild.name = "ImageTexture" Then
-                                        Dim texture As New LocalTexture
-                                        If shape.firstchild.getattribute("USE") = "" Then
-                                            texture.matName = shape.firstchild.attributes(0).value
-                                            texture.filename = New Filename(Split(shape.firstchild.attributes(1).value, """ """)(1))
-                                        Else
-                                            For Each texture2 In temp3D.texturen
-                                                If texture2.matName = shape.firstchild.attributes(0).value Then
-                                                    texture = texture2
-                                                End If
-                                            Next
-                                            If texture.filename.name = "" Then
-                                                Log.Add("Textureabhängigkeit konnte nicht geladen werden! (Datei: " & filename & ", Texture: " & shape.firstchild.getattribute("USE") & ")", Log.TYPE_ERROR)
-                                            End If
-                                        End If
-
-                                        temp3D.texturen.Add(texture)
-                                    End If
-
-                                    If shape.name = "IndexedFaceSet" Then
-
-                                        tempArr = Split(shape.getattribute("texCoordIndex"), " ")
-                                        If tempArr(3) = -1 Then
-                                            For i = 0 To tempArr.Count - 4 Step 4
-                                                If tempArr(i) <> "" Then tempTex.Add(Convert.ToInt32(Replace(tempArr(i), ".", ",")))
-                                                If tempArr(i + 1) <> "" Then tempTex.Add(Convert.ToInt32(Replace(tempArr(i + 1), ".", ",")))
-                                                If tempArr(i + 2) <> "" Then tempTex.Add(Convert.ToInt32(Replace(tempArr(i + 2), ".", ",")))
-                                            Next
-                                        Else
-                                            For i = 0 To tempArr.Count - 5 Step 5
-                                                If tempArr(i) <> "" Then tempTex.Add(Convert.ToInt32(Replace(tempArr(i), ".", ",")))
-                                                If tempArr(i + 1) <> "" Then tempTex.Add(Convert.ToInt32(Replace(tempArr(i + 1), ".", ",")))
-                                                If tempArr(i + 2) <> "" Then tempTex.Add(Convert.ToInt32(Replace(tempArr(i + 2), ".", ",")))
-                                                'If tempArr(i + 2) <> "" Then tempTex.Add(Convert.ToInt32(Replace(tempArr(i + 2), ".", ",")))
-                                                If tempArr(i + 3) <> "" Then tempTex.Add(Convert.ToInt32(Replace(tempArr(i + 3), ".", ",")))
-                                                'If tempArr(i) <> "" Then tempTex.Add(Convert.ToInt32(Replace(tempArr(i), ".", ",")))
-                                            Next
-                                        End If
-
-
-
-                                        tempArr = Split(shape.getattribute("coordIndex"), " ")
-                                        For i = 0 To tempArr.Count - 5 Step 5
-                                            If tempArr(i) <> "" Then tempListI.Add(Convert.ToInt32(tempArr(i)) + indexOffset)
-                                            If tempArr(i + 1) <> "" Then tempListI.Add(Convert.ToInt32(tempArr(i + 1)) + indexOffset)
-                                            If tempArr(i + 2) <> "" Then tempListI.Add(Convert.ToInt32(tempArr(i + 2)) + indexOffset)
-                                            If tempArr(i + 2) <> "" Then tempListI.Add(Convert.ToInt32(tempArr(i + 2)) + indexOffset)
-                                            If tempArr(i + 3) <> "" Then tempListI.Add(Convert.ToInt32(tempArr(i + 3)) + indexOffset)
-                                            If tempArr(i) <> "" Then tempListI.Add(Convert.ToInt32(tempArr(i)) + indexOffset)
-                                        Next
-                                        temp3D.subObjekte.Add(tempListI.ToArray)
-
-
-                                        Dim xyz As Integer = 0
-                                        For Each value In Split(Replace(shape.firstchild.getattribute("point"), ".", ","), " ")
-                                            Dim tmpz As Double
-                                            If value <> "" Then
-                                                Select Case xyz
-                                                    Case 0
-                                                        tempVert.Add(Convert.ToDouble(value) + temp3D.center.X)
-                                                    Case 1
-                                                        tmpz = Convert.ToDouble(value) + temp3D.center.Y
-                                                    Case 2
-                                                        tempVert.Add(Convert.ToDouble(value) + temp3D.center.Z)
-                                                        tempVert.Add(tmpz)
-                                                End Select
-
-                                            End If
-
-                                            xyz += 1
-                                            If xyz = 3 Then xyz = 0
-                                        Next
-                                        indexOffset = tempVert.Count
-
-                                        For Each ChildNode In shape.ChildNodes
-                                            If ChildNode.name = "TextureCoordinate" Then
-                                                For Each value In Split(Replace(ChildNode.getattribute("point"), ".", ","), " ")
-                                                    If value <> "" Then tempTexCoord.Add(value)
-                                                Next
-                                            End If
-                                        Next
-                                    End If
-                                Next
-                            Next
-                        Else
-                            If Frm_Main.getprojtype = Proj_Bus.TYPE Then
-                                Dim newCam As New OMSI_Camera
-                                With transformNodes
-                                    newCam.position = New Point3D(toSingle(.firstchild.getattribute("translation").split(" ")(0)), toSingle(.firstchild.getattribute("translation").split(" ")(0)), toSingle(.firstchild.getattribute("translation").split(" ")(0)))
-                                    newCam.position.move(New Point3D(toSingle(.firstchild.getattribute("position").split(" ")(0)), toSingle(.firstchild.getattribute("position").split(" ")(0)), toSingle(.firstchild.getattribute("position").split(" ")(0))))
-                                    newCam.rotX = toSingle(.firstchild.getattribute("orientation").split(" ")(0))
-                                    newCam.rotY = toSingle(.firstchild.getattribute("orientation").split(" ")(1))
-                                End With
-                                Frm_Main.getProj.model.dirver_cam_list.add()
-                            Else
-                                If ersterKameraFehler Then
-                                    MsgBox("Kameras können nur zu Bussen hinzugefügt / importiert werden!")
-                                    ersterKameraFehler = False
-                                End If
-                            End If
-                        End If
-                    End If
-                Next
-            End If
-        Next
-
-
-        'Hier weiter machen!
-        Dim tmpList As New List(Of Double)
-        For texCoordIndex As Integer = 0 To tempListI.Count - 1 Step 2
-            tmpList.Add(tempTexCoord(tempTex(tempListI(texCoordIndex)) * 2))
-            tmpList.Add(tempTexCoord(tempTex(tempListI(texCoordIndex)) * 2 + 1))
-        Next
-
-        temp3D.texCoords = tmpList.ToArray
-        temp3D.vertices = tempVert.ToArray
-
-
-        'Lines erzeugen
-        Dim linesTemp As New List(Of Integer)
-        For Each subObj In temp3D.subObjekte
-            linesTemp.AddRange(subObj)
-        Next
-        temp3D.lines = faceToLines(linesTemp).ToArray
-
-        Log.Add("Import erfolgreich! (Datei:" & filename.name & ", Format: X3D)")
-        Return temp3D
-    End Function
-
-    Private Function faceToLines(faces As List(Of Integer)) As List(Of Integer)
+    Public Function faceToLines(faces As List(Of Integer)) As List(Of Integer)
         faceToLines = New List(Of Integer)
         For i = 0 To faces.Count - 1 Step 3
             faceToLines.AddRange({faces(i), faces(i + 1)})
@@ -220,7 +59,7 @@ Module Importer
     End Function
 
     Dim ignoreImportFail As Boolean = False
-    Private Function readO3D(filename As Filename) As Local3DObjekt
+    Private Function readO3D(filename As Filename) As Mesh
 
         If checkIfExist(filename) Then
             Return Nothing
@@ -294,7 +133,7 @@ Module Importer
         End If
 
 
-        Dim temp3D As New Local3DObjekt
+        Dim temp3D As New Mesh
 
         Dim verticesTemp As New List(Of Double)
         Dim normalsTemp As New List(Of Double)
@@ -484,7 +323,7 @@ Module Importer
         Return temp3D
     End Function
 
-    Private Function readX(filename As Filename) As Local3DObjekt
+    Private Function readX(filename As Filename) As Mesh
 
         If checkIfExist(filename) Then
             Return Nothing
@@ -505,9 +344,9 @@ Module Importer
         End Select
     End Function
 
-    Private Function readX302(lines As String(), filename As Filename) As Local3DObjekt
+    Private Function readX302(lines As String(), filename As Filename) As Mesh
 
-        Dim temp3D As New Local3DObjekt
+        Dim temp3D As New Mesh
 
         Dim verticesTemp As New List(Of Double)
         Dim normalsTemp As New List(Of Double)
@@ -713,8 +552,8 @@ Module Importer
         Return temp3D
     End Function
 
-    Private Function readX303(lines As String(), filename As Filename) As Local3DObjekt
-        Dim temp3D As New Local3DObjekt
+    Private Function readX303(lines As String(), filename As Filename) As Mesh
+        Dim temp3D As New Mesh
 
         Dim verticesTemp As New List(Of Double)
         Dim normalsTemp1 As New List(Of Double)
@@ -988,8 +827,8 @@ Module Importer
         Return temp3D
     End Function
 
-    Public Function readSli(filename As Filename) As Local3DObjekt
-        Dim temp3D As New Local3DObjekt
+    Public Function readSli(filename As Filename) As Mesh
+        Dim temp3D As New Mesh
         Dim tempSLI As New Proj_Sli(filename)
         With temp3D
             .position = New Point3D()
@@ -1003,7 +842,7 @@ Module Importer
     End Function
 
 
-    Private Function checkLocal3DObject(objekt As Local3DObjekt) As Boolean
+    Private Function checkLocal3DObject(objekt As Mesh) As Boolean
         With objekt
             If .vertices.Count = 0 Then Return False
             If .subObjekte.Count = 0 Then Return False

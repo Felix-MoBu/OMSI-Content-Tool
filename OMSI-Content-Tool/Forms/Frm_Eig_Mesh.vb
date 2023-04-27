@@ -20,8 +20,10 @@ Public Class Frm_Eig_Mesh
                         addProp("Flächen", subObjekteCount / 3)
 
                         addEmptProp()
-                        For i As Integer = 0 To .Texturen.Count - 1
-                            addProp("Texture_" & i, .texturen(i).filename.name & " (" & .texturen(i).matName & ")")
+                        For i As Integer = 0 To .texturen.Count - 1
+                            Dim additional As String = ""
+                            If .texturen(i).matName <> "" Then additional = " (" & .texturen(i).matName & ")"
+                            addProp("Texture_" & i, .texturen(i).filename.name & additional)
                         Next
                     End With
                 End If
@@ -39,15 +41,23 @@ Public Class Frm_Eig_Mesh
         LBProps.Items.Add("")
     End Sub
 
-    Private Sub LBLabels_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBLabels.SelectedIndexChanged
-        LBProps.SelectedIndex = LBLabels.SelectedIndex
-    End Sub
-
     Private Sub KopierenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles KopierenToolStripMenuItem.Click
         Clipboard.SetText(LBProps.SelectedItem)
     End Sub
 
     Private Sub LBProps_MouseDown(sender As Object, e As MouseEventArgs) Handles LBProps.MouseDown
         LBLabels.SelectedIndex = LBProps.SelectedIndex
+    End Sub
+
+    Private Sub LBProps_MouseUp(sender As Object, e As MouseEventArgs) Handles LBProps.MouseUp
+        LBLabels.SelectedIndex = LBProps.SelectedIndex
+    End Sub
+
+    Private Sub LBLabels_MouseDown(sender As Object, e As MouseEventArgs) Handles LBLabels.MouseDown
+        LBProps.SelectedIndex = LBLabels.SelectedIndex
+    End Sub
+
+    Private Sub LBLabels_MouseUp(sender As Object, e As MouseEventArgs) Handles LBLabels.MouseUp
+        LBProps.SelectedIndex = LBLabels.SelectedIndex
     End Sub
 End Class

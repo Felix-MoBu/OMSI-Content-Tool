@@ -1,6 +1,6 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Module Exporter
-    Public Sub write(Objekt As Local3DObjekt, filename As Filename)
+    Public Sub write(Objekt As Mesh, filename As Filename)
         Select Case filename.extension
             Case "o3d"
                 writeO3D(Objekt, filename)
@@ -11,7 +11,7 @@ Module Exporter
         End Select
     End Sub
 
-    Private Sub writeX3D(Objekt As Local3DObjekt, filename As Filename)
+    Private Sub writeX3D(Objekt As Mesh, filename As Filename)
         MsgBox("X3D-Datei Gespeichert ;) #nicht   (" & filename & ")")
     End Sub
 
@@ -27,7 +27,7 @@ Module Exporter
         If x > 255 Then Return Nothing
     End Function
 
-    Private Sub writeO3D(Objekt As Local3DObjekt, filename As Filename)
+    Private Sub writeO3D(Objekt As Mesh, filename As Filename)
         Dim bytes As New List(Of Byte)
         With bytes
             .AddRange({&H84, &H19, &H1, &H17})
@@ -132,7 +132,7 @@ Module Exporter
         Frm_Main.SSLBStatus.Text = "Export erfogreich"
     End Sub
 
-    Private Sub writeX(Objekt As Local3DObjekt, filename As Filename)
+    Private Sub writeX(Objekt As Mesh, filename As Filename)
 
         Dim fw As New FileWriter(filename, True)
         With fw

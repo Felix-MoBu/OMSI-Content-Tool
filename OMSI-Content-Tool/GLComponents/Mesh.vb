@@ -1,5 +1,5 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
-Public Class Local3DObjekt
+Public Class Mesh
     Public id As Integer
     Public parentMesh As String
     Public o3dVersion As Integer = 1

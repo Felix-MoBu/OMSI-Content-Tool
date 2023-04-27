@@ -7,7 +7,7 @@ Public Class OMSI_Paths
     Public soundpacks As New List(Of List(Of String))
     Public vertices As Double()
     Public edges As Integer()
-    Public dots As New List(Of Local3DObjekt)
+    Public dots As New List(Of Mesh)
 
     Public arrows As New List(Of Arrow)
 
@@ -110,7 +110,7 @@ Public Class OMSI_Paths
         For ct As Integer = 0 To pathPoints.Count - 1   '-> in die Schleife oben integrieren!
             Dim tmpVerticesDots As New List(Of Double)
             Dim tmpEdgesDots As New List(Of Integer)
-            Dim newObj As New Local3DObjekt
+            Dim newObj As New Mesh
             tmpVerticesDots.AddRange(positionDot(pathPoints(ct)))
             For i = 1 To 8 Step 7
                 tmpEdgesDots.Add(0)

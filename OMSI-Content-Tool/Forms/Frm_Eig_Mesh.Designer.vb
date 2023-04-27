@@ -37,7 +37,7 @@ Partial Class Frm_Eig_Mesh
         Me.LBLabels.FormattingEnabled = True
         Me.LBLabels.Location = New System.Drawing.Point(12, 12)
         Me.LBLabels.Name = "LBLabels"
-        Me.LBLabels.Size = New System.Drawing.Size(147, 433)
+        Me.LBLabels.Size = New System.Drawing.Size(147, 459)
         Me.LBLabels.TabIndex = 0
         '
         'ContextMenuStrip1
@@ -59,14 +59,14 @@ Partial Class Frm_Eig_Mesh
         Me.LBProps.FormattingEnabled = True
         Me.LBProps.Location = New System.Drawing.Point(158, 12)
         Me.LBProps.Name = "LBProps"
-        Me.LBProps.Size = New System.Drawing.Size(165, 433)
+        Me.LBProps.Size = New System.Drawing.Size(165, 459)
         Me.LBProps.TabIndex = 1
         '
         'Frm_Eig_Mesh
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(332, 450)
+        Me.ClientSize = New System.Drawing.Size(332, 479)
         Me.Controls.Add(Me.LBProps)
         Me.Controls.Add(Me.LBLabels)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)

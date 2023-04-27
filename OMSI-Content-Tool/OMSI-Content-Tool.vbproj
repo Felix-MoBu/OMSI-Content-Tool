@@ -268,7 +268,7 @@
     <Compile Include="OMSI_Classes\OMSI_KIPath.vb" />
     <Compile Include="GLComponents\LocalSphere.vb" />
     <Compile Include="HelperClasses\Log.vb" />
-    <Compile Include="GLComponents\Local3DObjekt.vb" />
+    <Compile Include="GLComponents\Mesh.vb" />
     <Compile Include="HelperClasses\Modifier.vb" />
     <Compile Include="OMSI_Classes\OMSI_Attachment.vb" />
     <Compile Include="OMSI_Classes\OMSI_Body_osc.vb" />
@@ -388,6 +388,9 @@
     <Compile Include="Selectors\VarSelector.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Streamer\O3D_Importer.vb" />
+    <Compile Include="Streamer\X3D_Importer.vb" />
+    <Compile Include="Streamer\X_Importer.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\Frm_Git.resx">
