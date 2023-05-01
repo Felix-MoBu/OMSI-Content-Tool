@@ -27,5 +27,5 @@ Public Class Mesh
     Public texCoords As Double()
     Public subObjekte As New List(Of Integer())
 
-    Public texturen As New List(Of LocalTexture)
+    Public texturen As New List(Of Material)
 End Class

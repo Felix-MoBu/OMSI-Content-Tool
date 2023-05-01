@@ -80,8 +80,8 @@ Class Frm_Main
     Dim meshesDragStart As Integer = 0
     Dim vorherigesProj As Filename
 
-    Dim dotTexture As LocalTexture
-    Dim softDotTexture As LocalTexture
+    Dim dotTexture As Material
+    Dim softDotTexture As Material
 
     Private Structure viewModes
         Const ALLES As Byte = 0
@@ -468,7 +468,7 @@ Class Frm_Main
     End Sub
 
 
-    Public Sub loadTexture(ByRef texture As LocalTexture, Optional overWrite As Boolean = False)
+    Public Sub loadTexture(ByRef texture As Material, Optional overWrite As Boolean = False)
 
         If AlleTexturen.Contains(texture.filename.name) And Not overWrite Then
             texture.id = AlleTexturen.IndexOf(texture.filename.name) + 1
@@ -506,7 +506,7 @@ Class Frm_Main
         End If
     End Sub
 
-    Private Sub loadTextures(Texturen As List(Of LocalTexture), objPfad As String, Optional overWrite As Boolean = False)
+    Private Sub loadTextures(Texturen As List(Of Material), objPfad As String, Optional overWrite As Boolean = False)
         For Each texture In Texturen
             findTexture(texture, objPfad)
             loadTexture(texture, overWrite)
@@ -514,7 +514,7 @@ Class Frm_Main
     End Sub
 
 
-    Function loadImage(ByRef Texture As LocalTexture) As Imaging.BitmapData
+    Function loadImage(ByRef Texture As Material) As Imaging.BitmapData
         Dim bmp As Bitmap
         If Texture.filename.name = "keine" Then
             bmp = New Bitmap(My.Resources.weiss)
@@ -547,7 +547,7 @@ Class Frm_Main
         Return bmpdata
     End Function
 
-    Private Sub findTexture(texture As LocalTexture, objektpfad As String)
+    Private Sub findTexture(texture As Material, objektpfad As String)
         Dim ctsub As Integer
         Dim tmppath = Split(objektpfad, "\")
         objektpfad = ""
@@ -3293,8 +3293,8 @@ Class Frm_Main
         GlMain.Invalidate()
     End Sub
 
-    Dim lastReloadedTexture As New LocalTexture
-    Private Sub TextureCheckLastChange(ByRef texture As LocalTexture)
+    Dim lastReloadedTexture As New Material
+    Private Sub TextureCheckLastChange(ByRef texture As Material)
         If IO.File.Exists(texture.filename) Then
 
             'If lastReloadedTexture = texture Then Exit Sub
@@ -4508,7 +4508,7 @@ Class Frm_Main
 
 
     Public origTexturen As New List(Of String)
-    Public overWriteTextures As New List(Of LocalTexture)
+    Public overWriteTextures As New List(Of Material)
 
     Private Sub drawL3D(objekt As Mesh)
         With objekt
@@ -5333,6 +5333,10 @@ Class Frm_Main
                 loadIntLichter()
             End If
         End If
+    End Sub
+
+    Private Sub PunkteListeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PunkteListeToolStripMenuItem.Click
+        Frm_PointList.Show()
     End Sub
 End Class
 

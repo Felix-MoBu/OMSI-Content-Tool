@@ -297,7 +297,7 @@ Public Class Frm_Rep
                 Next
 
                 If LBRepaints.SelectedIndex > 0 Then
-                    Dim newLT As New LocalTexture
+                    Dim newLT As New Material
                     newLT.filename = New Filename(repaint.file, RepFolder)
                     Frm_Main.loadTexture(newLT)         '<- Hier vlt mit True die vorher geladene Texture überschreiben!
                     Frm_Main.origTexturen.Add(New Filename(Projekt_Bus.model.TexChangeTexs(i).file, Projekt_Bus.filename.path & "\Texture"))

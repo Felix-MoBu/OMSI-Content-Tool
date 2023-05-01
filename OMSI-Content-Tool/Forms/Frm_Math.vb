@@ -5,6 +5,10 @@ Public Class Frm_Math
     End Sub
 
     Private Sub BTDrehen_Click(sender As Object, e As EventArgs) Handles BTDrehen.Click
+        If TBWinkel.Text.Trim = "" Then
+            MsgBox("Bitte Drehwinkel angeben")
+            Exit Sub
+        End If
         Dim newPnt As New Point3D(PSA.Point)
         newPnt.rotate(TBWinkel.Text, CBAchse.SelectedIndex, PSB.Point)
         newPnt.X = Math.Round(newPnt.X, 4)

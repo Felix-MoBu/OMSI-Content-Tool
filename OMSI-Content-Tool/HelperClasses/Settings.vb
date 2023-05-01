@@ -61,6 +61,7 @@ Module Settings
     Public LogDebug As Boolean = False
     Public ShowAlpha As Boolean = True
     Public PfadeOrigBreite As Boolean = True
+    Public Point3DInternalClipboard As Integer = 0
 
     Public o3dRemoveSpec As Boolean = False
     Public o3dAutoConvert As Boolean = False
@@ -78,14 +79,13 @@ Module Settings
 
     Public Sub Load(Optional filename As String = "Settings.cfg")
 
-        If Not IO.File.Exists(filename) Then
+        Dim newfilename As Filename = New Filename(filename, Application.StartupPath)
+
+        If Not IO.File.Exists(newfilename) Then
             Save()
             Exit Sub
         Else
-
-            Dim newfilename As Filename = New Filename(settingsFilename, Application.StartupPath)
-
-            Dim allLines As String() = System.IO.File.ReadAllLines(filename, Encoding.GetEncoding(1252))
+            Dim allLines As String() = System.IO.File.ReadAllLines(newfilename, Encoding.GetEncoding(1252))
 
             For linect = 0 To allLines.Count - 1
                 If Trim(allLines(linect)) <> "" Then
@@ -187,6 +187,8 @@ Module Settings
                             ShowAlpha = intToBool(allLines(linect + 1))
                         Case "[PfadeOrigBreite]"
                             PfadeOrigBreite = intToBool(allLines(linect + 1))
+                        Case "[Point3DInternalClipboard]"
+                            Point3DInternalClipboard = allLines(linect + 1)
 
                         Case "[o3dRemoveSpec]"
                             o3dRemoveSpec = intToBool(allLines(linect + 1))
@@ -281,6 +283,7 @@ Module Settings
             .AddTag("LogDebug", boolToInt(LogDebug), True)
             .AddTag("ShowAlpha", boolToInt(ShowAlpha), True)
             .AddTag("PfadeOrigBreite", boolToInt(PfadeOrigBreite), True)
+            .AddTag("Point3DInternalClipboard", Point3DInternalClipboard, True)
 
             .AddTag("o3dRemoveSpec", boolToInt(o3dRemoveSpec), True)
             .AddTag("o3dAutoConvert", boolToInt(o3dAutoConvert), True)

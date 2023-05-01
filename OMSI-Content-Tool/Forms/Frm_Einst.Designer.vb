@@ -30,7 +30,11 @@ Partial Class Frm_Einst
         Me.BTAbbrechen = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.GroupBox11 = New System.Windows.Forms.GroupBox()
+        Me.DDInternalClipboard = New System.Windows.Forms.ComboBox()
+        Me.Label24 = New System.Windows.Forms.Label()
         Me.GroupBox10 = New System.Windows.Forms.GroupBox()
+        Me.CBLogGit = New System.Windows.Forms.CheckBox()
         Me.CBGitAutoCommit = New System.Windows.Forms.CheckBox()
         Me.CBGitInMenue = New System.Windows.Forms.CheckBox()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
@@ -113,9 +117,10 @@ Partial Class Frm_Einst
         Me.CDColorDriver = New System.Windows.Forms.ColorDialog()
         Me.CDColorAchsen = New System.Windows.Forms.ColorDialog()
         Me.CDColorFenster = New System.Windows.Forms.ColorDialog()
-        Me.CBLogGit = New System.Windows.Forms.CheckBox()
+        Me.Label25 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.GroupBox11.SuspendLayout()
         Me.GroupBox10.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
@@ -192,6 +197,7 @@ Partial Class Frm_Einst
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.GroupBox11)
         Me.TabPage1.Controls.Add(Me.GroupBox10)
         Me.TabPage1.Controls.Add(Me.GroupBox6)
         Me.TabPage1.Controls.Add(Me.BTEinstReset)
@@ -205,6 +211,37 @@ Partial Class Frm_Einst
         Me.TabPage1.Text = "Allgemein"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
+        'GroupBox11
+        '
+        Me.GroupBox11.Controls.Add(Me.Label25)
+        Me.GroupBox11.Controls.Add(Me.DDInternalClipboard)
+        Me.GroupBox11.Controls.Add(Me.Label24)
+        Me.GroupBox11.Location = New System.Drawing.Point(419, 162)
+        Me.GroupBox11.Name = "GroupBox11"
+        Me.GroupBox11.Size = New System.Drawing.Size(200, 126)
+        Me.GroupBox11.TabIndex = 10
+        Me.GroupBox11.TabStop = False
+        Me.GroupBox11.Text = "Zwischenspeicher"
+        '
+        'DDInternalClipboard
+        '
+        Me.DDInternalClipboard.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.DDInternalClipboard.FormattingEnabled = True
+        Me.DDInternalClipboard.Items.AddRange(New Object() {"Interner Speicher", "RAM (<tab>)", "RAM (<newLine>)", "RAM ("";"")"})
+        Me.DDInternalClipboard.Location = New System.Drawing.Point(70, 19)
+        Me.DDInternalClipboard.Name = "DDInternalClipboard"
+        Me.DDInternalClipboard.Size = New System.Drawing.Size(121, 21)
+        Me.DDInternalClipboard.TabIndex = 1
+        '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.Location = New System.Drawing.Point(6, 22)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(58, 13)
+        Me.Label24.TabIndex = 0
+        Me.Label24.Text = "3D-Punkte"
+        '
         'GroupBox10
         '
         Me.GroupBox10.Controls.Add(Me.CBLogGit)
@@ -216,6 +253,16 @@ Partial Class Frm_Einst
         Me.GroupBox10.TabIndex = 9
         Me.GroupBox10.TabStop = False
         Me.GroupBox10.Text = "Git"
+        '
+        'CBLogGit
+        '
+        Me.CBLogGit.AutoSize = True
+        Me.CBLogGit.Location = New System.Drawing.Point(6, 70)
+        Me.CBLogGit.Name = "CBLogGit"
+        Me.CBLogGit.Size = New System.Drawing.Size(130, 17)
+        Me.CBLogGit.TabIndex = 2
+        Me.CBLogGit.Text = "Git in Logfile anzeigen"
+        Me.CBLogGit.UseVisualStyleBackColor = True
         '
         'CBGitAutoCommit
         '
@@ -964,15 +1011,16 @@ Partial Class Frm_Einst
         '
         Me.CDColor3D.Color = System.Drawing.Color.White
         '
-        'CBLogGit
+        'Label25
         '
-        Me.CBLogGit.AutoSize = True
-        Me.CBLogGit.Location = New System.Drawing.Point(6, 70)
-        Me.CBLogGit.Name = "CBLogGit"
-        Me.CBLogGit.Size = New System.Drawing.Size(130, 17)
-        Me.CBLogGit.TabIndex = 2
-        Me.CBLogGit.Text = "Git in Logfile anzeigen"
-        Me.CBLogGit.UseVisualStyleBackColor = True
+        Me.Label25.AutoSize = True
+        Me.Label25.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label25.Location = New System.Drawing.Point(6, 48)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(178, 39)
+        Me.Label25.TabIndex = 2
+        Me.Label25.Text = "Wenn nicht ""interner Speicher"" aus-" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "gewählt, funktioniert das Einfügen" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "von alle" &
+    "n Formaten automatisch"
         '
         'Frm_Einst
         '
@@ -989,6 +1037,8 @@ Partial Class Frm_Einst
         Me.Text = "Einstellungen"
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
+        Me.GroupBox11.ResumeLayout(False)
+        Me.GroupBox11.PerformLayout()
         Me.GroupBox10.ResumeLayout(False)
         Me.GroupBox10.PerformLayout()
         Me.GroupBox6.ResumeLayout(False)
@@ -1112,4 +1162,8 @@ Partial Class Frm_Einst
     Friend WithEvents CBGitInMenue As CheckBox
     Friend WithEvents CBGitAutoCommit As CheckBox
     Friend WithEvents CBLogGit As CheckBox
+    Friend WithEvents GroupBox11 As GroupBox
+    Friend WithEvents DDInternalClipboard As ComboBox
+    Friend WithEvents Label24 As Label
+    Friend WithEvents Label25 As Label
 End Class

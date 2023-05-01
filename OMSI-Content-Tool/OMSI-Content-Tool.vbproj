@@ -120,6 +120,12 @@
     <Compile Include="Forms\Frm_Loading.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Frm_PointList.Designer.vb">
+      <DependentUpon>Frm_PointList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Frm_PointList.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="HelperClasses\ApplicationEvents.vb" />
     <Compile Include="GLComponents\Arrow.vb" />
     <Compile Include="Forms\Frm_Git.Designer.vb">
@@ -351,7 +357,7 @@
       <DependentUpon>Frm_Main.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GLComponents\LocalTexture.vb" />
+    <Compile Include="GLComponents\Material.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -388,9 +394,6 @@
     <Compile Include="Selectors\VarSelector.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Streamer\O3D_Importer.vb" />
-    <Compile Include="Streamer\X3D_Importer.vb" />
-    <Compile Include="Streamer\X_Importer.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\Frm_Git.resx">
@@ -398,6 +401,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Frm_Loading.resx">
       <DependentUpon>Frm_Loading.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Frm_PointList.resx">
+      <DependentUpon>Frm_PointList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Selectors\ColorSelector.resx">
       <DependentUpon>ColorSelector.vb</DependentUpon>

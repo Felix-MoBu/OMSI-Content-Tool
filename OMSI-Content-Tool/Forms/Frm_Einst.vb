@@ -20,6 +20,8 @@ Public Class Frm_Einst
         Settings.GitAutoCommit = CBGitAutoCommit.Checked
         Settings.LogGit = CBLogGit.Checked
 
+        Settings.Point3DInternalClipboard = DDInternalClipboard.SelectedIndex
+
         Frm_Main.TimerReset()
 
         'Page "OMSI"
@@ -87,6 +89,7 @@ Public Class Frm_Einst
         TBNickname.Text = Settings.NickName
         CBGitInMenue.Checked = Settings.GitShowInMenue
         CBGitAutoCommit.Checked = Settings.GitAutoCommit
+        DDInternalClipboard.SelectedIndex = Settings.Point3DInternalClipboard
 
         'Page "OMSI"
         TBOmsiPfad.Text = Settings.OmsiPfad

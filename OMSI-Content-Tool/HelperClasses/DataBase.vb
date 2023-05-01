@@ -16,7 +16,11 @@ Public Class DataBase
     Public todoList As New List(Of String)
     Public todoReadyList As New List(Of String)
 
+    Public storedPoints As List(Of Point3D) = New List(Of Point3D)
+    Public storedPointNames As List(Of String) = New List(Of String) 
+
     Public Const FILETYPE As String = "ocdb"
+    Dim POINTDELIMITERS As Char() = {";"}
 
     Public Sub New(name As Filename)
         filename = New Filename(name.path & "\" & name.nameNoEnding & "." & FILETYPE)
@@ -66,6 +70,14 @@ Public Class DataBase
                             todoReadyList.Add(allLines(i))
                         Next
                         linect += 2 + CInt(allLines(linect + 1))
+                    Case "[storedPoints]"
+                        For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1)) - 1
+                            Dim values As String() = allLines(i).Split(POINTDELIMITERS, 4)
+                            If values.Length > 3 Then
+                                storedPoints.Add(New Point3D(values(0), values(1), values(2)))
+                                storedPointNames.Add(values(3))
+                            End If
+                        Next
                 End Select
             End If
         Next
@@ -145,12 +157,22 @@ Public Class DataBase
                 End If
 
                 If todoReadyList.Count > 0 Then
-                    .Add("[todo_ready]")
-                    .Add(todoReadyList.Count)
+                    .AddTag("todo_ready", todoReadyList.Count)
                     For todoct As Integer = 0 To todoReadyList.Count - 1
                         .Add(todoReadyList(todoct))
                     Next
                     .Add(vbCrLf)
+                End If
+
+                If storedPoints.Count > 0 Then
+                    .AddTag("storedPoints", storedPoints.Count)
+                    For i = 0 To storedPoints.Count - 1
+                        Dim PointName As String = ""
+                        If storedPointNames.Count > i Then
+                            PointName = storedPointNames(i)
+                        End If
+                        .Add(storedPoints(i).asString(";") & ";" & PointName)
+                    Next
                 End If
             End With
 

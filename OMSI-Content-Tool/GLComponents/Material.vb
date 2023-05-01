@@ -1,5 +1,5 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
-Public Class LocalTexture
+Public Class Material
     Public filename As Filename
     Public matName As String
     Public id As Integer
@@ -30,7 +30,7 @@ Public Class LocalTexture
     Public alpha As Double = 1
     Public sli_alpha As Byte
 
-    Public Shared Operator =(ByVal obj1 As LocalTexture, ByVal obj2 As LocalTexture) As Boolean
+    Public Shared Operator =(ByVal obj1 As Material, ByVal obj2 As Material) As Boolean
         If obj1 Is Nothing Then Return False
         If obj2 Is Nothing Then Return False
         If obj1.filename <> obj2.filename Then Return False
@@ -38,7 +38,7 @@ Public Class LocalTexture
         Return True
     End Operator
 
-    Public Shared Operator <>(ByVal obj1 As LocalTexture, ByVal obj2 As LocalTexture) As Boolean
+    Public Shared Operator <>(ByVal obj1 As Material, ByVal obj2 As Material) As Boolean
         If obj1 Is Nothing Then Return True
         If obj2 Is Nothing Then Return True
         If obj1.filename <> obj2.filename Then Return True
