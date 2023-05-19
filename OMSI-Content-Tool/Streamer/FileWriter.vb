@@ -4,12 +4,13 @@ Option Strict On
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Public Class FileWriter
-    Private filename As New Filename
-    Private lines As New List(Of String)
+    Private filename As Filename
+    Private lines As List(Of String)
 
 
     Public Sub New(filename As Filename, Optional noheader As Boolean = False)
         Me.filename = filename
+        lines = New List(Of String)
         If Not noheader Then
             lines.Add("Diese Datei wurde mit dem " & My.Application.Info.Title & " erstellt/bearbeitet (zuletzt: " & FormatDateTime(Now) & ")")
             Nl()
@@ -43,6 +44,7 @@ Public Class FileWriter
     End Sub
 
     Public Sub AddTag(tag As String, vals As List(Of String), Optional newLine As Boolean = False)
+        If tag.Contains("[") Then Log.Add("FileWrite Tag mit [ hinzugefügt!")
         If tag <> "" Then
             Add("[" & tag & "]")
             For Each item In vals

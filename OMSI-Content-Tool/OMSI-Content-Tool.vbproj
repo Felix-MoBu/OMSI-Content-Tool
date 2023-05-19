@@ -134,6 +134,7 @@
     <Compile Include="Forms\Frm_Git.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="HelperClasses\CheckListPoint.vb" />
     <Compile Include="HelperClasses\Git.vb" />
     <Compile Include="HelperClasses\Settings.vb" />
     <Compile Include="OMSI_Classes\OMSI_BBox.vb" />

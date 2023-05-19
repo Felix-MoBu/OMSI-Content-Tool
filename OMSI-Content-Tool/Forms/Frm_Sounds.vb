@@ -13,7 +13,7 @@ Public Class Frm_Sounds
                 Next
 
             Else
-                MsgBox("Es wurde keine Path-Datei gefunden")
+                MsgBox("Es wurde keine Sound-Datei gefunden")
                 Me.Close()
             End If
         End If

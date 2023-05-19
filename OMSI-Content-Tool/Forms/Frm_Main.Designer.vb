@@ -23,6 +23,7 @@ Partial Class Frm_Main
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Main))
         Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Achsen")
         Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Boundingbox")
         Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Fahrerkameras")
@@ -41,7 +42,6 @@ Partial Class Frm_Main
         Dim TreeNode16 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Attachpoints")
         Dim TreeNode17 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Splinehelper")
         Dim TreeNode18 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Spots")
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Main))
         Dim Point3D1 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Dim RgbColor1 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
         Dim Point3D2 As O3D_Test.Point3D = New O3D_Test.Point3D()
@@ -115,9 +115,17 @@ Partial Class Frm_Main
         Me.ToolStripMenuItem9 = New System.Windows.Forms.ToolStripSeparator()
         Me.LogfileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NeuesRepositoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NeuesRepoKlonenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem8 = New System.Windows.Forms.ToolStripSeparator()
+        Me.CommitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PullToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PushToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SyncToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem19 = New System.Windows.Forms.ToolStripSeparator()
+        Me.UnGitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem20 = New System.Windows.Forms.ToolStripSeparator()
+        Me.OptionenToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ObjektToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EntfernenToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.VersteckenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -126,6 +134,7 @@ Partial Class Frm_Main
         Me.ReadmetxtToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RechnerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem17 = New System.Windows.Forms.ToolStripSeparator()
+        Me.PunkteListeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatistikToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem12 = New System.Windows.Forms.ToolStripSeparator()
         Me.ProjektordnerÖffnenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -215,9 +224,11 @@ Partial Class Frm_Main
         Me.Pfade_CBVerkauf = New System.Windows.Forms.CheckBox()
         Me.Pfade_CBVorWagen = New System.Windows.Forms.CheckBox()
         Me.Pfade_CBNextWagen = New System.Windows.Forms.CheckBox()
+        Me.Pfade_PBOrange = New System.Windows.Forms.PictureBox()
         Me.Pfade_BTHinzu = New System.Windows.Forms.Button()
         Me.Label69 = New System.Windows.Forms.Label()
         Me.Pfade_PVerb0 = New System.Windows.Forms.Panel()
+        Me.Pfade_PBLila = New System.Windows.Forms.PictureBox()
         Me.Pfade_BTRem_0 = New System.Windows.Forms.Button()
         Me.Pfade_DDStepsound_0 = New System.Windows.Forms.ComboBox()
         Me.Pfade_TBStehh_0 = New System.Windows.Forms.TextBox()
@@ -443,6 +454,7 @@ Partial Class Frm_Main
         Me.BTTexLoad = New System.Windows.Forms.Button()
         Me.BTTexNew = New System.Windows.Forms.Button()
         Me.DDAlleTexturen = New System.Windows.Forms.ComboBox()
+        Me.PBTexture = New System.Windows.Forms.PictureBox()
         Me.BTPanelTextureFill = New System.Windows.Forms.Button()
         Me.LBPanelTexture = New System.Windows.Forms.Label()
         Me.BTPanelTextureClose = New System.Windows.Forms.Button()
@@ -500,17 +512,6 @@ Partial Class Frm_Main
         Me.FDÖffnen = New System.Windows.Forms.OpenFileDialog()
         Me.TSave = New System.Windows.Forms.Timer(Me.components)
         Me.TReloadTextures = New System.Windows.Forms.Timer(Me.components)
-        Me.Pfade_PBOrange = New System.Windows.Forms.PictureBox()
-        Me.Pfade_PBLila = New System.Windows.Forms.PictureBox()
-        Me.PBTexture = New System.Windows.Forms.PictureBox()
-        Me.NeuesRepositoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NeuesRepoKlonenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CommitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PullToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PushToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SyncToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.UnGitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.OptionenToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Spot_PSRichtung = New O3D_Test.PointSelector()
         Me.Spot_CSFarbe = New O3D_Test.ColorSelector()
         Me.VarSelector1 = New O3D_Test.VarSelector()
@@ -527,7 +528,6 @@ Partial Class Frm_Main
         Me.Anim_PSRichtung = New O3D_Test.PointSelector()
         Me.Anim_PSRotPnt = New O3D_Test.PointSelector()
         Me.Anim_VSVar = New O3D_Test.VarSelector()
-        Me.PunkteListeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SS1.SuspendLayout()
         Me.MS1.SuspendLayout()
         Me.PanelMain.SuspendLayout()
@@ -543,7 +543,9 @@ Partial Class Frm_Main
         Me.GBPlatz.SuspendLayout()
         Me.GBRauch.SuspendLayout()
         Me.GBPfade.SuspendLayout()
+        CType(Me.Pfade_PBOrange, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Pfade_PVerb0.SuspendLayout()
+        CType(Me.Pfade_PBLila, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GBKupplPnt.SuspendLayout()
         Me.GBKamera.SuspendLayout()
         Me.GBBbox.SuspendLayout()
@@ -564,6 +566,7 @@ Partial Class Frm_Main
         Me.Panel1.SuspendLayout()
         Me.Anim_PRBArt.SuspendLayout()
         Me.PanelTexture.SuspendLayout()
+        CType(Me.PBTexture, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MSTexturen.SuspendLayout()
         Me.PanelObjekte.SuspendLayout()
         Me.TCObjekte.SuspendLayout()
@@ -575,9 +578,6 @@ Partial Class Frm_Main
         Me.CMSLichter.SuspendLayout()
         Me.TCObjektePPfade.SuspendLayout()
         Me.CMSPfade.SuspendLayout()
-        CType(Me.Pfade_PBOrange, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Pfade_PBLila, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PBTexture, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SS1
@@ -989,20 +989,77 @@ Partial Class Frm_Main
         Me.GitToolStripMenuItem.Text = "Git"
         Me.GitToolStripMenuItem.Visible = False
         '
+        'NeuesRepositoryToolStripMenuItem
+        '
+        Me.NeuesRepositoryToolStripMenuItem.Image = CType(resources.GetObject("NeuesRepositoryToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.NeuesRepositoryToolStripMenuItem.Name = "NeuesRepositoryToolStripMenuItem"
+        Me.NeuesRepositoryToolStripMenuItem.Size = New System.Drawing.Size(169, 22)
+        Me.NeuesRepositoryToolStripMenuItem.Text = "Neues Repository"
+        '
+        'NeuesRepoKlonenToolStripMenuItem
+        '
+        Me.NeuesRepoKlonenToolStripMenuItem.Image = CType(resources.GetObject("NeuesRepoKlonenToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.NeuesRepoKlonenToolStripMenuItem.Name = "NeuesRepoKlonenToolStripMenuItem"
+        Me.NeuesRepoKlonenToolStripMenuItem.Size = New System.Drawing.Size(169, 22)
+        Me.NeuesRepoKlonenToolStripMenuItem.Text = "Repository klonen"
+        '
         'ToolStripMenuItem8
         '
         Me.ToolStripMenuItem8.Name = "ToolStripMenuItem8"
         Me.ToolStripMenuItem8.Size = New System.Drawing.Size(166, 6)
+        '
+        'CommitToolStripMenuItem
+        '
+        Me.CommitToolStripMenuItem.Image = CType(resources.GetObject("CommitToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.CommitToolStripMenuItem.Name = "CommitToolStripMenuItem"
+        Me.CommitToolStripMenuItem.Size = New System.Drawing.Size(169, 22)
+        Me.CommitToolStripMenuItem.Text = "Commit"
+        '
+        'PullToolStripMenuItem
+        '
+        Me.PullToolStripMenuItem.Image = CType(resources.GetObject("PullToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.PullToolStripMenuItem.Name = "PullToolStripMenuItem"
+        Me.PullToolStripMenuItem.Size = New System.Drawing.Size(169, 22)
+        Me.PullToolStripMenuItem.Text = "Pull"
+        '
+        'PushToolStripMenuItem
+        '
+        Me.PushToolStripMenuItem.Image = CType(resources.GetObject("PushToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.PushToolStripMenuItem.Name = "PushToolStripMenuItem"
+        Me.PushToolStripMenuItem.Size = New System.Drawing.Size(169, 22)
+        Me.PushToolStripMenuItem.Text = "Push"
+        '
+        'SyncToolStripMenuItem
+        '
+        Me.SyncToolStripMenuItem.Image = CType(resources.GetObject("SyncToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.SyncToolStripMenuItem.Name = "SyncToolStripMenuItem"
+        Me.SyncToolStripMenuItem.Size = New System.Drawing.Size(169, 22)
+        Me.SyncToolStripMenuItem.Text = "Sync"
         '
         'ToolStripMenuItem19
         '
         Me.ToolStripMenuItem19.Name = "ToolStripMenuItem19"
         Me.ToolStripMenuItem19.Size = New System.Drawing.Size(166, 6)
         '
+        'UnGitToolStripMenuItem
+        '
+        Me.UnGitToolStripMenuItem.Image = CType(resources.GetObject("UnGitToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.UnGitToolStripMenuItem.Name = "UnGitToolStripMenuItem"
+        Me.UnGitToolStripMenuItem.Size = New System.Drawing.Size(169, 22)
+        Me.UnGitToolStripMenuItem.Text = "UnGit"
+        Me.UnGitToolStripMenuItem.Visible = False
+        '
         'ToolStripMenuItem20
         '
         Me.ToolStripMenuItem20.Name = "ToolStripMenuItem20"
         Me.ToolStripMenuItem20.Size = New System.Drawing.Size(166, 6)
+        '
+        'OptionenToolStripMenuItem1
+        '
+        Me.OptionenToolStripMenuItem1.Image = CType(resources.GetObject("OptionenToolStripMenuItem1.Image"), System.Drawing.Image)
+        Me.OptionenToolStripMenuItem1.Name = "OptionenToolStripMenuItem1"
+        Me.OptionenToolStripMenuItem1.Size = New System.Drawing.Size(169, 22)
+        Me.OptionenToolStripMenuItem1.Text = "Optionen"
         '
         'ObjektToolStripMenuItem
         '
@@ -1055,6 +1112,12 @@ Partial Class Frm_Main
         '
         Me.ToolStripMenuItem17.Name = "ToolStripMenuItem17"
         Me.ToolStripMenuItem17.Size = New System.Drawing.Size(225, 6)
+        '
+        'PunkteListeToolStripMenuItem
+        '
+        Me.PunkteListeToolStripMenuItem.Name = "PunkteListeToolStripMenuItem"
+        Me.PunkteListeToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
+        Me.PunkteListeToolStripMenuItem.Text = "Punkte Liste"
         '
         'StatistikToolStripMenuItem
         '
@@ -1821,6 +1884,15 @@ Partial Class Frm_Main
         Me.Pfade_CBNextWagen.Text = "Vbdg. nächster Wagen"
         Me.Pfade_CBNextWagen.UseVisualStyleBackColor = True
         '
+        'Pfade_PBOrange
+        '
+        Me.Pfade_PBOrange.BackColor = System.Drawing.Color.Orange
+        Me.Pfade_PBOrange.Location = New System.Drawing.Point(51, 19)
+        Me.Pfade_PBOrange.Name = "Pfade_PBOrange"
+        Me.Pfade_PBOrange.Size = New System.Drawing.Size(20, 20)
+        Me.Pfade_PBOrange.TabIndex = 49
+        Me.Pfade_PBOrange.TabStop = False
+        '
         'Pfade_BTHinzu
         '
         Me.Pfade_BTHinzu.Location = New System.Drawing.Point(256, 162)
@@ -1856,6 +1928,15 @@ Partial Class Frm_Main
         Me.Pfade_PVerb0.Name = "Pfade_PVerb0"
         Me.Pfade_PVerb0.Size = New System.Drawing.Size(327, 61)
         Me.Pfade_PVerb0.TabIndex = 47
+        '
+        'Pfade_PBLila
+        '
+        Me.Pfade_PBLila.BackColor = System.Drawing.Color.Violet
+        Me.Pfade_PBLila.Location = New System.Drawing.Point(50, 6)
+        Me.Pfade_PBLila.Name = "Pfade_PBLila"
+        Me.Pfade_PBLila.Size = New System.Drawing.Size(20, 21)
+        Me.Pfade_PBLila.TabIndex = 50
+        Me.Pfade_PBLila.TabStop = False
         '
         'Pfade_BTRem_0
         '
@@ -4088,6 +4169,18 @@ Partial Class Frm_Main
         Me.DDAlleTexturen.Size = New System.Drawing.Size(384, 21)
         Me.DDAlleTexturen.TabIndex = 6
         '
+        'PBTexture
+        '
+        Me.PBTexture.BackColor = System.Drawing.Color.Transparent
+        Me.PBTexture.BackgroundImage = Global.O3D_Test.My.Resources.Resources.Image_Background
+        Me.PBTexture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PBTexture.Location = New System.Drawing.Point(5, 22)
+        Me.PBTexture.Name = "PBTexture"
+        Me.PBTexture.Size = New System.Drawing.Size(384, 270)
+        Me.PBTexture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PBTexture.TabIndex = 5
+        Me.PBTexture.TabStop = False
+        '
         'BTPanelTextureFill
         '
         Me.BTPanelTextureFill.FlatAppearance.BorderSize = 0
@@ -4588,93 +4681,6 @@ Partial Class Frm_Main
         '
         Me.TReloadTextures.Interval = 2000
         '
-        'Pfade_PBOrange
-        '
-        Me.Pfade_PBOrange.BackColor = System.Drawing.Color.Orange
-        Me.Pfade_PBOrange.Location = New System.Drawing.Point(51, 19)
-        Me.Pfade_PBOrange.Name = "Pfade_PBOrange"
-        Me.Pfade_PBOrange.Size = New System.Drawing.Size(20, 20)
-        Me.Pfade_PBOrange.TabIndex = 49
-        Me.Pfade_PBOrange.TabStop = False
-        '
-        'Pfade_PBLila
-        '
-        Me.Pfade_PBLila.BackColor = System.Drawing.Color.Violet
-        Me.Pfade_PBLila.Location = New System.Drawing.Point(50, 6)
-        Me.Pfade_PBLila.Name = "Pfade_PBLila"
-        Me.Pfade_PBLila.Size = New System.Drawing.Size(20, 21)
-        Me.Pfade_PBLila.TabIndex = 50
-        Me.Pfade_PBLila.TabStop = False
-        '
-        'PBTexture
-        '
-        Me.PBTexture.BackColor = System.Drawing.Color.Transparent
-        Me.PBTexture.BackgroundImage = Global.O3D_Test.My.Resources.Resources.Image_Background
-        Me.PBTexture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PBTexture.Location = New System.Drawing.Point(5, 22)
-        Me.PBTexture.Name = "PBTexture"
-        Me.PBTexture.Size = New System.Drawing.Size(384, 270)
-        Me.PBTexture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PBTexture.TabIndex = 5
-        Me.PBTexture.TabStop = False
-        '
-        'NeuesRepositoryToolStripMenuItem
-        '
-        Me.NeuesRepositoryToolStripMenuItem.Image = CType(resources.GetObject("NeuesRepositoryToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.NeuesRepositoryToolStripMenuItem.Name = "NeuesRepositoryToolStripMenuItem"
-        Me.NeuesRepositoryToolStripMenuItem.Size = New System.Drawing.Size(169, 22)
-        Me.NeuesRepositoryToolStripMenuItem.Text = "Neues Repository"
-        '
-        'NeuesRepoKlonenToolStripMenuItem
-        '
-        Me.NeuesRepoKlonenToolStripMenuItem.Image = CType(resources.GetObject("NeuesRepoKlonenToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.NeuesRepoKlonenToolStripMenuItem.Name = "NeuesRepoKlonenToolStripMenuItem"
-        Me.NeuesRepoKlonenToolStripMenuItem.Size = New System.Drawing.Size(169, 22)
-        Me.NeuesRepoKlonenToolStripMenuItem.Text = "Repository klonen"
-        '
-        'CommitToolStripMenuItem
-        '
-        Me.CommitToolStripMenuItem.Image = CType(resources.GetObject("CommitToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.CommitToolStripMenuItem.Name = "CommitToolStripMenuItem"
-        Me.CommitToolStripMenuItem.Size = New System.Drawing.Size(169, 22)
-        Me.CommitToolStripMenuItem.Text = "Commit"
-        '
-        'PullToolStripMenuItem
-        '
-        Me.PullToolStripMenuItem.Image = CType(resources.GetObject("PullToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.PullToolStripMenuItem.Name = "PullToolStripMenuItem"
-        Me.PullToolStripMenuItem.Size = New System.Drawing.Size(169, 22)
-        Me.PullToolStripMenuItem.Text = "Pull"
-        '
-        'PushToolStripMenuItem
-        '
-        Me.PushToolStripMenuItem.Image = CType(resources.GetObject("PushToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.PushToolStripMenuItem.Name = "PushToolStripMenuItem"
-        Me.PushToolStripMenuItem.Size = New System.Drawing.Size(169, 22)
-        Me.PushToolStripMenuItem.Text = "Push"
-        '
-        'SyncToolStripMenuItem
-        '
-        Me.SyncToolStripMenuItem.Image = CType(resources.GetObject("SyncToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.SyncToolStripMenuItem.Name = "SyncToolStripMenuItem"
-        Me.SyncToolStripMenuItem.Size = New System.Drawing.Size(169, 22)
-        Me.SyncToolStripMenuItem.Text = "Sync"
-        '
-        'UnGitToolStripMenuItem
-        '
-        Me.UnGitToolStripMenuItem.Image = CType(resources.GetObject("UnGitToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.UnGitToolStripMenuItem.Name = "UnGitToolStripMenuItem"
-        Me.UnGitToolStripMenuItem.Size = New System.Drawing.Size(169, 22)
-        Me.UnGitToolStripMenuItem.Text = "UnGit"
-        Me.UnGitToolStripMenuItem.Visible = False
-        '
-        'OptionenToolStripMenuItem1
-        '
-        Me.OptionenToolStripMenuItem1.Image = CType(resources.GetObject("OptionenToolStripMenuItem1.Image"), System.Drawing.Image)
-        Me.OptionenToolStripMenuItem1.Name = "OptionenToolStripMenuItem1"
-        Me.OptionenToolStripMenuItem1.Size = New System.Drawing.Size(169, 22)
-        Me.OptionenToolStripMenuItem1.Text = "Optionen"
-        '
         'Spot_PSRichtung
         '
         Me.Spot_PSRichtung.BackColor = System.Drawing.Color.Transparent
@@ -4864,14 +4870,9 @@ Partial Class Frm_Main
         Me.Anim_VSVar.TabIndex = 32
         Me.Anim_VSVar.Variable = ""
         '
-        'PunkteListeToolStripMenuItem
-        '
-        Me.PunkteListeToolStripMenuItem.Name = "PunkteListeToolStripMenuItem"
-        Me.PunkteListeToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-        Me.PunkteListeToolStripMenuItem.Text = "Punkte Liste"
-        '
         'Frm_Main
         '
+        Me.AllowDrop = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1264, 1061)
@@ -4907,8 +4908,10 @@ Partial Class Frm_Main
         Me.GBRauch.PerformLayout()
         Me.GBPfade.ResumeLayout(False)
         Me.GBPfade.PerformLayout()
+        CType(Me.Pfade_PBOrange, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Pfade_PVerb0.ResumeLayout(False)
         Me.Pfade_PVerb0.PerformLayout()
+        CType(Me.Pfade_PBLila, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GBKupplPnt.ResumeLayout(False)
         Me.GBKupplPnt.PerformLayout()
         Me.GBKamera.ResumeLayout(False)
@@ -4947,6 +4950,7 @@ Partial Class Frm_Main
         Me.Anim_PRBArt.PerformLayout()
         Me.PanelTexture.ResumeLayout(False)
         Me.PanelTexture.PerformLayout()
+        CType(Me.PBTexture, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MSTexturen.ResumeLayout(False)
         Me.MSTexturen.PerformLayout()
         Me.PanelObjekte.ResumeLayout(False)
@@ -4959,9 +4963,6 @@ Partial Class Frm_Main
         Me.CMSLichter.ResumeLayout(False)
         Me.TCObjektePPfade.ResumeLayout(False)
         Me.CMSPfade.ResumeLayout(False)
-        CType(Me.Pfade_PBOrange, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Pfade_PBLila, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PBTexture, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

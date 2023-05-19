@@ -63,7 +63,7 @@ Partial Class Frm_ToDo
         Me.Controls.Add(Me.GBFertig)
         Me.Controls.Add(Me.GBOffen)
         Me.Name = "Frm_ToDo"
-        Me.Text = "Frm_ToDo"
+        Me.Text = "ToDo-Liste"
         Me.ResumeLayout(False)
 
     End Sub

@@ -13,11 +13,10 @@ Public Class DataBase
     Public AlleVariablen As New List(Of String)
     Public AlleVarValues As New List(Of Double)
     Public lastVars As New List(Of String)
-    Public todoList As New List(Of String)
-    Public todoReadyList As New List(Of String)
+    Public todoList As New List(Of CheckListPoint)
 
-    Public storedPoints As List(Of Point3D) = New List(Of Point3D)
-    Public storedPointNames As List(Of String) = New List(Of String) 
+    Public storedPoints As New List(Of Point3D)
+    Public storedPointNames As New List(Of String)
 
     Public Const FILETYPE As String = "ocdb"
     Dim POINTDELIMITERS As Char() = {";"}
@@ -62,12 +61,9 @@ Public Class DataBase
                         linect += 2 + CInt(allLines(linect + 1))
                     Case "[todo]"
                         For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1)) - 1
-                            todoList.Add(allLines(i))
-                        Next
-                        linect += 2 + CInt(allLines(linect + 1))
-                    Case "[todo_ready]"
-                        For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1)) - 1
-                            todoReadyList.Add(allLines(i))
+                            If allLines(i).Contains(POINTDELIMITERS) Then
+                                todoList.Add(New CheckListPoint(allLines(i)))
+                            End If
                         Next
                         linect += 2 + CInt(allLines(linect + 1))
                     Case "[storedPoints]"
@@ -148,21 +144,13 @@ Public Class DataBase
                 End If
 
                 If todoList.Count > 0 Then
-                    .Add("[todo]")
-                    .Add(todoList.Count)
+                    .AddTag("todo", todoList.Count)
                     For todoct As Integer = 0 To todoList.Count - 1
-                        .Add(todoList(todoct))
+                        .Add(todoList(todoct).toLine)
                     Next
                     .Add(vbCrLf)
                 End If
 
-                If todoReadyList.Count > 0 Then
-                    .AddTag("todo_ready", todoReadyList.Count)
-                    For todoct As Integer = 0 To todoReadyList.Count - 1
-                        .Add(todoReadyList(todoct))
-                    Next
-                    .Add(vbCrLf)
-                End If
 
                 If storedPoints.Count > 0 Then
                     .AddTag("storedPoints", storedPoints.Count)

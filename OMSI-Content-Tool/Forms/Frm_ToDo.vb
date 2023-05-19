@@ -14,6 +14,8 @@
                 .Top = 12 + (25 * ct)
                 .Left = 7
                 .Name = "cb_" & ct
+                .Checked = ProjDataBase.todoList(ct).Checked
+                AddHandler .Click, AddressOf cbClick
             End With
             GBOffen.Controls.Add(cb)
 
@@ -23,7 +25,7 @@
                 .Top = 16 + (25 * ct)
                 .Left = 25
                 .Name = "lb_" & ct
-                .Text = ProjDataBase.todoList(ct)
+                .Text = ProjDataBase.todoList(ct).Text
                 AddHandler .Click, AddressOf lbClick
             End With
             GBOffen.Controls.Add(lb)
@@ -43,6 +45,10 @@
         End With
         GBOffen.Controls.Add(tb)
         tb.Select()
+    End Sub
+
+    Private Sub cbClick(sender As Object, e As EventArgs)
+        ProjDataBase.todoList(sender.Name.Split("_")(1)).Checked = sender.checked
     End Sub
 
     Private Sub tbKeyDown(sender As Object, e As KeyEventArgs)

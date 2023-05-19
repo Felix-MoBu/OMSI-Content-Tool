@@ -26,6 +26,7 @@ Partial Class Frm_PointList
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_PointList))
         Me.TB0 = New System.Windows.Forms.TextBox()
         Me.PS0 = New O3D_Test.PointSelector()
+        Me.BTSpeichern = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'TB0
@@ -34,6 +35,7 @@ Partial Class Frm_PointList
         Me.TB0.Name = "TB0"
         Me.TB0.Size = New System.Drawing.Size(166, 20)
         Me.TB0.TabIndex = 0
+        Me.TB0.Tag = "0"
         '
         'PS0
         '
@@ -45,15 +47,26 @@ Partial Class Frm_PointList
         Me.PS0.Point = Point3D1
         Me.PS0.Size = New System.Drawing.Size(161, 20)
         Me.PS0.TabIndex = 1
+        Me.PS0.Tag = "0"
         Me.PS0.X = 0R
         Me.PS0.Y = 0R
         Me.PS0.Z = 0R
+        '
+        'BTSpeichern
+        '
+        Me.BTSpeichern.Location = New System.Drawing.Point(270, 502)
+        Me.BTSpeichern.Name = "BTSpeichern"
+        Me.BTSpeichern.Size = New System.Drawing.Size(75, 23)
+        Me.BTSpeichern.TabIndex = 2
+        Me.BTSpeichern.Text = "Speichern"
+        Me.BTSpeichern.UseVisualStyleBackColor = True
         '
         'Frm_PointList
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(352, 450)
+        Me.ClientSize = New System.Drawing.Size(352, 531)
+        Me.Controls.Add(Me.BTSpeichern)
         Me.Controls.Add(Me.PS0)
         Me.Controls.Add(Me.TB0)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -66,4 +79,5 @@ Partial Class Frm_PointList
 
     Friend WithEvents TB0 As TextBox
     Friend WithEvents PS0 As PointSelector
+    Friend WithEvents BTSpeichern As Button
 End Class
