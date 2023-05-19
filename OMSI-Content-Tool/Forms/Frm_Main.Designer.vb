@@ -512,6 +512,9 @@ Partial Class Frm_Main
         Me.FDÖffnen = New System.Windows.Forms.OpenFileDialog()
         Me.TSave = New System.Windows.Forms.Timer(Me.components)
         Me.TReloadTextures = New System.Windows.Forms.Timer(Me.components)
+        Me.TCProjekte = New System.Windows.Forms.TabControl()
+        Me.TCMainTP0 = New System.Windows.Forms.TabPage()
+        Me.TCMainTPPlus = New System.Windows.Forms.TabPage()
         Me.Spot_PSRichtung = New O3D_Test.PointSelector()
         Me.Spot_CSFarbe = New O3D_Test.ColorSelector()
         Me.VarSelector1 = New O3D_Test.VarSelector()
@@ -578,6 +581,7 @@ Partial Class Frm_Main
         Me.CMSLichter.SuspendLayout()
         Me.TCObjektePPfade.SuspendLayout()
         Me.CMSPfade.SuspendLayout()
+        Me.TCProjekte.SuspendLayout()
         Me.SuspendLayout()
         '
         'SS1
@@ -1435,6 +1439,7 @@ Partial Class Frm_Main
         Me.PanelMain.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PanelMain.Location = New System.Drawing.Point(0, 24)
         Me.PanelMain.Name = "PanelMain"
+        Me.PanelMain.Padding = New System.Windows.Forms.Padding(0, 22, 0, 0)
         Me.PanelMain.Size = New System.Drawing.Size(1264, 1015)
         Me.PanelMain.TabIndex = 12
         '
@@ -4116,7 +4121,7 @@ Partial Class Frm_Main
         Me.PanelTexture.Controls.Add(Me.LBPanelTexture)
         Me.PanelTexture.Controls.Add(Me.BTPanelTextureClose)
         Me.PanelTexture.Controls.Add(Me.MSTexturen)
-        Me.PanelTexture.Location = New System.Drawing.Point(294, 3)
+        Me.PanelTexture.Location = New System.Drawing.Point(294, 27)
         Me.PanelTexture.Name = "PanelTexture"
         Me.PanelTexture.Size = New System.Drawing.Size(392, 338)
         Me.PanelTexture.TabIndex = 1
@@ -4276,7 +4281,7 @@ Partial Class Frm_Main
         Me.PanelObjekte.Controls.Add(Me.BTPanelObjekteClose)
         Me.PanelObjekte.Controls.Add(Me.TCObjekte)
         Me.PanelObjekte.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.PanelObjekte.Location = New System.Drawing.Point(12, 3)
+        Me.PanelObjekte.Location = New System.Drawing.Point(11, 28)
         Me.PanelObjekte.Name = "PanelObjekte"
         Me.PanelObjekte.Size = New System.Drawing.Size(277, 337)
         Me.PanelObjekte.TabIndex = 0
@@ -4666,10 +4671,10 @@ Partial Class Frm_Main
         Me.GlMain.BackColor = System.Drawing.Color.Black
         Me.GlMain.Cursor = System.Windows.Forms.Cursors.Cross
         Me.GlMain.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GlMain.Location = New System.Drawing.Point(0, 0)
+        Me.GlMain.Location = New System.Drawing.Point(0, 22)
         Me.GlMain.Margin = New System.Windows.Forms.Padding(4)
         Me.GlMain.Name = "GlMain"
-        Me.GlMain.Size = New System.Drawing.Size(1264, 1015)
+        Me.GlMain.Size = New System.Drawing.Size(1264, 993)
         Me.GlMain.TabIndex = 0
         Me.GlMain.VSync = False
         '
@@ -4680,6 +4685,37 @@ Partial Class Frm_Main
         'TReloadTextures
         '
         Me.TReloadTextures.Interval = 2000
+        '
+        'TCProjekte
+        '
+        Me.TCProjekte.Controls.Add(Me.TCMainTP0)
+        Me.TCProjekte.Controls.Add(Me.TCMainTPPlus)
+        Me.TCProjekte.Dock = System.Windows.Forms.DockStyle.Top
+        Me.TCProjekte.Location = New System.Drawing.Point(0, 24)
+        Me.TCProjekte.Name = "TCProjekte"
+        Me.TCProjekte.SelectedIndex = 0
+        Me.TCProjekte.Size = New System.Drawing.Size(1264, 22)
+        Me.TCProjekte.TabIndex = 13
+        '
+        'TCMainTP0
+        '
+        Me.TCMainTP0.Location = New System.Drawing.Point(4, 22)
+        Me.TCMainTP0.Name = "TCMainTP0"
+        Me.TCMainTP0.Padding = New System.Windows.Forms.Padding(3)
+        Me.TCMainTP0.Size = New System.Drawing.Size(1256, 0)
+        Me.TCMainTP0.TabIndex = 0
+        Me.TCMainTP0.Text = "Neues Projekt"
+        Me.TCMainTP0.UseVisualStyleBackColor = True
+        '
+        'TCMainTPPlus
+        '
+        Me.TCMainTPPlus.Location = New System.Drawing.Point(4, 22)
+        Me.TCMainTPPlus.Name = "TCMainTPPlus"
+        Me.TCMainTPPlus.Padding = New System.Windows.Forms.Padding(3)
+        Me.TCMainTPPlus.Size = New System.Drawing.Size(1256, 0)
+        Me.TCMainTPPlus.TabIndex = 1
+        Me.TCMainTPPlus.Text = "   +"
+        Me.TCMainTPPlus.UseVisualStyleBackColor = True
         '
         'Spot_PSRichtung
         '
@@ -4876,6 +4912,7 @@ Partial Class Frm_Main
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1264, 1061)
+        Me.Controls.Add(Me.TCProjekte)
         Me.Controls.Add(Me.PanelMain)
         Me.Controls.Add(Me.SS1)
         Me.Controls.Add(Me.MS1)
@@ -4963,6 +5000,7 @@ Partial Class Frm_Main
         Me.CMSLichter.ResumeLayout(False)
         Me.TCObjektePPfade.ResumeLayout(False)
         Me.CMSPfade.ResumeLayout(False)
+        Me.TCProjekte.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -5442,4 +5480,7 @@ Partial Class Frm_Main
     Friend WithEvents ToolStripMenuItem20 As ToolStripSeparator
     Friend WithEvents OptionenToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents PunkteListeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TCProjekte As TabControl
+    Friend WithEvents TCMainTP0 As TabPage
+    Friend WithEvents TCMainTPPlus As TabPage
 End Class

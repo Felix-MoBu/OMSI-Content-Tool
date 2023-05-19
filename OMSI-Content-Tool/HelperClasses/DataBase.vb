@@ -19,7 +19,7 @@ Public Class DataBase
     Public storedPointNames As New List(Of String)
 
     Public Const FILETYPE As String = "ocdb"
-    Dim POINTDELIMITERS As Char() = {";"}
+    Dim LISTSEPARATOR As Char() = {";"}
 
     Public Sub New(name As Filename)
         filename = New Filename(name.path & "\" & name.nameNoEnding & "." & FILETYPE)
@@ -61,14 +61,12 @@ Public Class DataBase
                         linect += 2 + CInt(allLines(linect + 1))
                     Case "[todo]"
                         For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1)) - 1
-                            If allLines(i).Contains(POINTDELIMITERS) Then
-                                todoList.Add(New CheckListPoint(allLines(i)))
-                            End If
+                            todoList.Add(New CheckListPoint(allLines(i)))
                         Next
                         linect += 2 + CInt(allLines(linect + 1))
                     Case "[storedPoints]"
                         For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1)) - 1
-                            Dim values As String() = allLines(i).Split(POINTDELIMITERS, 4)
+                            Dim values As String() = allLines(i).Split(LISTSEPARATOR, 4)
                             If values.Length > 3 Then
                                 storedPoints.Add(New Point3D(values(0), values(1), values(2)))
                                 storedPointNames.Add(values(3))

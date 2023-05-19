@@ -905,6 +905,7 @@ Class Frm_Main
 
         If Not Importer.stopImport Then
             Text = filename & " - " & My.Application.Info.Title
+            TCProjekte.SelectedTab.Text = getProj.filename.name
         End If
         Importer.stopImport = False
     End Sub
@@ -1978,7 +1979,7 @@ Class Frm_Main
 
     Private Sub checkPanelPosition(e As Panel)
         If e.Visible = False Then Exit Sub
-        If e.Top < 5 Then e.Top = 5
+        If e.Top < 27 Then e.Top = 27
         If e.Left < 5 Then e.Left = 5
         If e.Top + e.Height > PanelMain.Height Then e.Top = PanelMain.Height - e.Height - 5
         If e.Left + e.Width > PanelMain.Width Then e.Left = PanelMain.Width - e.Width - 5
@@ -5337,6 +5338,13 @@ Class Frm_Main
 
     Private Sub PunkteListeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PunkteListeToolStripMenuItem.Click
         Frm_PointList.Show()
+    End Sub
+
+    Private Sub TCProjekte_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TCProjekte.SelectedIndexChanged
+        If TCProjekte.SelectedIndex = TCProjekte.TabCount - 1 Then
+            TCProjekte.SelectedIndex = TCProjekte.TabCount - 2
+            MsgBox("Das Laden von mehrern Projekten wird aktuell noch nicht unterstützt!")
+        End If
     End Sub
 End Class
 

@@ -2,6 +2,8 @@
     Private int_Text As String
     Private int_Checked As Boolean = False
 
+    Dim LISTSEPARATOR As Char() = {";"}
+
     Public Property Text As String
         Get
             Return int_Text
@@ -25,9 +27,10 @@
     End Sub
 
     Public Sub New(line As String)
-        If line.Contains(";") Then
-            int_Checked = intToBool(line.Split(";")(0))
-            int_Text = line.Split(";")(1)
+        Dim list As String() = line.Split(LISTSEPARATOR, 2)
+        If line.Count = 2 Then
+            int_Checked = intToBool(list(0))
+            int_Text = list(1)
         Else
             int_Text = line
         End If
