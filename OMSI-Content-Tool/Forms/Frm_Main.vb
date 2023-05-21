@@ -46,11 +46,12 @@ Class Frm_Main
     Public AlleVariablen As New List(Of String)
     Public AlleVarValues As New List(Of Double)
 
-    Private Projekt_Emt As New Proj_Emt
-    Private Projekt_Bus As Proj_Bus
-    Private Projekt_Ovh As Proj_Ovh
-    Private Projekt_Sco As Proj_Sco
-    Private Projekt_Sli As Proj_Sli
+    'Private Projekt_Emt As New Proj_Emt
+    'Private Projekt_Bus As Proj_Bus
+    'Private Projekt_Ovh As Proj_Ovh
+    'Private Projekt_Sco As Proj_Sco
+    'Private Projekt_Sli As Proj_Sli
+    Private OpenProjects As New List(Of OCTProjekt)
 
     Public selectedMeshes As List(Of OMSI_Mesh)
     Public selectedMesh As OMSI_Mesh
@@ -94,6 +95,8 @@ Class Frm_Main
     Private Sub Frm_Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Log.Clear()
         Log.Add("Editor gestartet!")
+
+        OpenProjects.Add(New OCTProjekt)
 
         movePanelObjekte = False
         movePanelTexture = False
@@ -331,7 +334,7 @@ Class Frm_Main
                                             getProj.model.add(New OMSI_Model(newFilename))
                                     End Select
                                 Else
-                                    Projekt_Emt.filename = newFilename
+                                    getProj.filename = newFilename
                                     getProj.model = New OMSI_Model(newFilename)
                                 End If
                                 loadModelPrefs(getProj.model)
@@ -433,7 +436,7 @@ Class Frm_Main
 
 
     Private Sub calcMirrors(mirrorID As Integer)
-        If getProj() Is Projekt_Bus Then
+        If getprojtype() = Proj_Bus.TYPE Then
             Dim texID As Integer = -1
             For i As Integer = 0 To AlleTexturen.Count - 1
                 If AlleTexturen(i).ToLower = "reflexion" & mirrorID & ".bmp" Then
@@ -708,8 +711,8 @@ Class Frm_Main
 
     Public Sub RecalcAlpha(var As String, val As Double)
         If getProj.model Is Nothing Then Exit Sub
-        If getProj() Is Projekt_Bus Then
-            For Each mesh In Projekt_Bus.model.meshes
+        If getprojtype() = Proj_Bus.TYPE Then
+            For Each mesh In getProj.model.meshes
                 For Each objekt In AlleObjekte
                     If mesh.ObjIds.Contains(objekt.id) Then
                         For Each material In mesh.materials
@@ -727,8 +730,8 @@ Class Frm_Main
         End If
 
         'Unnötig, aber geht nicht besser, dauert sonst zu lange!
-        If getProj() Is Projekt_Sco Then
-            For Each mesh In Projekt_Sco.model.meshes
+        If getprojtype() = Proj_Sco.TYPE Then
+            For Each mesh In getProj.model.meshes
                 For Each objekt In AlleObjekte
                     If mesh.ObjIds.Contains(objekt.id) Then
                         For Each material In mesh.materials
@@ -747,46 +750,38 @@ Class Frm_Main
     End Sub
 
     Public Function getProj() As Object
-        If Not Projekt_Bus Is Nothing Then Return Projekt_Bus
-        If Not Projekt_Sco Is Nothing Then Return Projekt_Sco
-        If Not Projekt_Ovh Is Nothing Then Return Projekt_Ovh
-        If Not Projekt_Sli Is Nothing Then Return Projekt_Sli
-        Return Projekt_Emt
+        Return OpenProjects(TCProjekte.SelectedIndex).getProj()
     End Function
 
-    Public Function getprojtype() As Byte
-        If Not Projekt_Bus Is Nothing Then Return Proj_Bus.TYPE
-        If Not Projekt_Sco Is Nothing Then Return Proj_Sco.TYPE
-        If Not Projekt_Ovh Is Nothing Then Return Proj_Ovh.TYPE
-        If Not Projekt_Sli Is Nothing Then Return Proj_Sli.TYPE
-        Return Proj_Emt.TYPE
+    Public Function getProjType() As Byte
+        If OpenProjects.Count > 0 Then
+            Return OpenProjects(TCProjekte.SelectedIndex).getProjType()
+        Else
+            Return 0
+        End If
     End Function
 
-    Public Sub clearProjects()
+    Public Sub clearProject()
         resetTextures()
         AlleObjekte = New List(Of Mesh)
         LBMeshes.Items.Clear()
-        Projekt_Bus = Nothing
-        Projekt_Sco = Nothing
-        Projekt_Ovh = Nothing
-        Projekt_Sli = Nothing
-        Projekt_Emt = New Proj_Emt
+        OpenProjects(TCProjekte.SelectedIndex).reset()
     End Sub
 
     Public Sub ProjNew(proj As Object)
-        Select Case proj.type
-            Case Proj_Bus.TYPE
-                Projekt_Bus = proj
-            Case Proj_Sco.TYPE
-                Projekt_Sco = proj
-            Case Proj_Ovh.TYPE
-                Projekt_Ovh = proj
-            Case Proj_Sli.TYPE
-                Projekt_Sli = proj
-            Case Proj_Emt.TYPE
-                Projekt_Emt = proj
-        End Select
-
+        'Select Case proj.type
+        '    Case Proj_Bus.TYPE
+        '        Projekt_Bus = proj
+        '    Case Proj_Sco.TYPE
+        '        Projekt_Sco = proj
+        '    Case Proj_Ovh.TYPE
+        '        Projekt_Ovh = proj
+        '    Case Proj_Sli.TYPE
+        '        Projekt_Sli = proj
+        '    Case Proj_Emt.TYPE
+        '        Projekt_Emt = proj
+        'End Select
+        Log.Add("Derzeit nicht verfügbar!", Log.TYPE_DEBUG, True)
     End Sub
 
 
@@ -854,10 +849,7 @@ Class Frm_Main
     End Sub
 
     Private Sub resetProj()
-        Projekt_Bus = Nothing
-        Projekt_Ovh = Nothing
-        Projekt_Sco = Nothing
-        Projekt_Sli = Nothing
+        OpenProjects(TCProjekte.SelectedIndex).reset()
         resetTextures()
         AlleObjekte = New List(Of Mesh)
         AlleTexturen = New List(Of String)
@@ -872,24 +864,25 @@ Class Frm_Main
     End Sub
 
     Private Sub ProjÖffnen(filename As String)
-
+        Dim newProj As Object
         resetProj()
 
         Select Case LCase(filename.Substring(filename.Length - 3))
             Case "bus"
-                clearProjects()
-                Projekt_Bus = New Proj_Bus(filename)
+                clearProject()
+                newProj = New Proj_Bus(filename)
+                OpenProjects(TCProjekte.SelectedIndex) = New OCTProjekt(newProj)
                 Settings.OpenPath = getFilePath(filename)
-                LoadProjectBus(Projekt_Bus)
+                LoadProjectBus(newProj)
                 RepaintToolStripMenuItem.Enabled = True
             Case "sco"
-                clearProjects()
-                Projekt_Sco = New Proj_Sco(filename)
+                clearProject()
+                OpenProjects(TCProjekte.SelectedIndex) = New OCTProjekt(New Proj_Sco(filename))
                 Settings.OpenPath = getFilePath(filename)
-                LoadProjectSco(Projekt_Sco)
+                LoadProjectSco()
             Case "sli"
-                clearProjects()
-                Projekt_Sli = New Proj_Sli(filename)
+                clearProject()
+                OpenProjects(TCProjekte.SelectedIndex) = New OCTProjekt(New Proj_Sli(filename))
                 Settings.OpenPath = getFilePath(filename)
                 LoadProjectSli()
             Case Else
@@ -923,8 +916,8 @@ Class Frm_Main
         redrawLetzte()
     End Sub
 
-    Private Sub LoadProjectSco(Proj_Sco_temp As Proj_Sco)
-        With Proj_Sco_temp
+    Private Sub LoadProjectSco()
+        With getProj()
 
             SplinehelperToolStripMenuItem.Enabled = True
 
@@ -980,28 +973,28 @@ Class Frm_Main
 
 
     Private Sub LoadProjectSli()
-        With Projekt_Sli
+        With getProj()
             For Each texture In .textures
                 Mat_CBTex.Items.Add(texture.filename)
             Next
 
             Dim i As Integer = 0
-            For Each subobjekt In Projekt_Sli.subobjekte
+            For Each subobjekt In .subobjekte
                 Dim newObjekt As New Mesh
                 With newObjekt
-                    .vertices = Projekt_Sli.vertices
-                    .texCoords = Projekt_Sli.texCoords
-                    .lines = Projekt_Sli.lines
+                    .vertices = getProj.vertices
+                    .texCoords = getProj.texCoords
+                    .lines = getProj.lines
                     .subObjekte.Add(subobjekt)
                     .id = AlleObjekte.Count
-                    .texturen.Add(Projekt_Sli.textures(i))
+                    .texturen.Add(getProj.textures(i))
 
-                    loadTextures(.texturen, Projekt_Sli.filename.path)
+                    loadTextures(.texturen, getProj.filename.path)
 
                     AlleObjekte.Add(newObjekt)
                     'mesh.ObjIds.Add(newObjekt.id)
 
-                    LBMeshes.Items.Add(Projekt_Sli.filename.name & "_" & i)
+                    LBMeshes.Items.Add(getProj.filename.name & "_" & i)
                     LBMeshes.SetItemChecked(LBMeshes.Items.Count - 1, True)
                 End With
                 i += 1
@@ -1451,10 +1444,10 @@ Class Frm_Main
     End Sub
 
     Private Sub SoundToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SoundToolStripMenuItem.Click
-        If getProj() Is Projekt_Bus Or getProj() Is Projekt_Ovh Then
+        If getProjType() = Proj_Bus.TYPE Or getProjType() = Proj_Ovh.TYPE Then
             Frm_Sounds.Show()
         Else
-            If getProj() Is Projekt_Emt Then
+            If getProjType() = Proj_Emt.TYPE Then
                 MsgNoProj()
             Else
                 MsgBox("Für diesen Projekttyp stehen keine Eigenschaften zur Verfügung!")
@@ -1497,7 +1490,7 @@ Class Frm_Main
     End Sub
 
     Private Sub NeuLadenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NeuLadenToolStripMenuItem.Click
-        If Not getProj() Is Projekt_Emt Then
+        If Not getProjType() = Proj_Emt.TYPE Then
             If Not getProj.filename Is Nothing Then ProjÖffnen(getProj.filename.ToString)
         Else
             If Settings.LetzteProjekte.Count > 0 Then
@@ -1708,7 +1701,7 @@ Class Frm_Main
     End Sub
 
     Private Sub ToDoListToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToDoListToolStripMenuItem.Click
-        If Projekt_Bus.ProjDataBase Is Nothing Then
+        If getProj.ProjDataBase Is Nothing Then
             getProj.ProjDataBase = New DataBase(getProj.filename)
         End If
         Frm_ToDo.Show()
@@ -1752,7 +1745,7 @@ Class Frm_Main
     End Sub
 
     Private Sub ScriptToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ScriptToolStripMenuItem.Click
-        If getProj() Is Projekt_Bus Or getProj() Is Projekt_Sco Or getProj() Is Projekt_Ovh Then
+        If getProjType() = Proj_Bus.TYPE Or getProjType() = Proj_Sco.TYPE Or getProjType() = Proj_Ovh.TYPE Then
             If Not getProj.varlists Is Nothing Then VarlistsToolStripMenuItem.Text = "Varlists (" & getProj.varlists.Count & ")"
             If Not getProj.stringvarlists Is Nothing Then StringvarlistToolStripMenuItem.Text = "Stringvarlists (" & getProj.stringvarlists.Count & ")"
             If Not getProj.scripts Is Nothing Then ScriptsToolStripMenuItem.Text = "Scripts (" & getProj.scripts.Count & ")"
@@ -1772,10 +1765,10 @@ Class Frm_Main
         If getprojtype() = Proj_Bus.TYPE Then
 
             Dim cabincount As Integer = 0
-            If Projekt_Bus.cabin Is Nothing Then
-                Projekt_Bus.cabin = New OMSI_Cabin
+            If getProj.cabin Is Nothing Then
+                getProj.cabin = New OMSI_Cabin
             Else
-                cabincount = Projekt_Bus.cabin.passPos.Count
+                cabincount = getProj.cabin.passPos.Count
 
             End If
         End If
@@ -2204,11 +2197,11 @@ Class Frm_Main
     '####  Spiegel  ###
 
     Private Function getSelectedSpiegel() As OMSI_ReflexCamera
-        If Not Projekt_Bus Is Nothing Then
+        If getProjType() = Proj_Bus.TYPE Then
             If TVHelper.SelectedNode.FullPath.Contains("\") Then
                 If TVHelper.SelectedNode.FullPath.Split("\")(0) = TVHelper.Nodes(6).Text Then
                     If TVHelper.SelectedNode.Index > -1 Then
-                        Return Projekt_Bus.spiegel(TVHelper.SelectedNode.Index)
+                        Return getProj.spiegel(TVHelper.SelectedNode.Index)
                     End If
                 End If
             End If
@@ -2318,7 +2311,7 @@ Class Frm_Main
     '###  Kupplungspunkte  ###
 
     Private Sub FrontToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FrontToolStripMenuItem.Click
-        If getProj() Is Projekt_Bus Then
+        If getprojtype() = Proj_Bus.TYPE Then
             If Not getProj.couple_front Then
                 getProj.couple_front = True
                 getProj.couple_front_char = New Point3D(0, 0, 0)
@@ -2331,7 +2324,7 @@ Class Frm_Main
     End Sub
 
     Private Sub HerckToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HeckToolStripMenuItem.Click
-        If getProj() Is Projekt_Bus Then
+        If getprojtype() = Proj_Bus.TYPE Then
             If Not getProj.couple_back Then
                 getProj.couple_back = True
                 getProj.couple_back_file = New Filename
@@ -2363,22 +2356,22 @@ Class Frm_Main
     '###  Kameras  ###
 
     Private Sub FahrerkameraToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FahrerkameraToolStripMenuItem.Click
-        If getProj() Is Projekt_Bus Or getProj() Is Projekt_Ovh Then
+        If getProjType() = Proj_Bus.TYPE Or getProjType() = Proj_Ovh.TYPE Then
             Dim newCam As New OMSI_Camera
             newCam.position = New Point3D()
-            Projekt_Bus.driver_cam_list.Add(newCam)
-            TVHelper.Nodes(2).Nodes(0).Nodes.Add("Kamera_" & Projekt_Bus.pax_cam_list.Count)
+            getProj.driver_cam_list.Add(newCam)
+            TVHelper.Nodes(2).Nodes(0).Nodes.Add("Kamera_" & getProj.pax_cam_list.Count)
         Else
             MsgBox("Dieser Projekttyp unterstützt keine Kameras!")
         End If
     End Sub
 
     Private Sub FahrgastkameraToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FahrgastkameraToolStripMenuItem.Click
-        If getProj() Is Projekt_Bus Or getProj() Is Projekt_Ovh Then
+        If getProjType() = Proj_Bus.TYPE Or getProjType() = Proj_Ovh.TYPE Then
             Dim newCam As New OMSI_Camera
             newCam.position = New Point3D()
-            Projekt_Bus.pax_cam_list.Add(newCam)
-            TVHelper.Nodes(2).Nodes(1).Nodes.Add("Kamera_" & Projekt_Bus.pax_cam_list.Count)
+            getProj.pax_cam_list.Add(newCam)
+            TVHelper.Nodes(2).Nodes(1).Nodes.Add("Kamera_" & getProj.pax_cam_list.Count)
         Else
             MsgBox("Dieser Projekttyp unterstützt keine Kameras!")
         End If
@@ -2425,14 +2418,14 @@ Class Frm_Main
     End Sub
 
     Private Sub Kamera_CBVerkauf_Click(sender As Object, e As EventArgs) Handles Kamera_CBVerkauf.Click
-        For index = 0 To Projekt_Bus.driver_cam_list.Count - 1
+        For index = 0 To getProj.driver_cam_list.Count - 1
             getProj().driver_cam_list(index).selling = False
             If index = TVHelper.SelectedNode.Index Then getProj.driver_cam_list(index).selling = Kamera_CBVerkauf.Checked
         Next
     End Sub
 
     Private Sub Kamera_CBFahrplan_Click(sender As Object, e As EventArgs) Handles Kamera_CBFahrplan.Click
-        For index = 0 To Projekt_Bus.driver_cam_list.Count - 1
+        For index = 0 To getProj.driver_cam_list.Count - 1
             getProj().driver_cam_list(index).schedule = False
             If index = TVHelper.SelectedNode.Index Then getProj.driver_cam_list(index).schedule = Kamera_CBFahrplan.Checked
         Next
@@ -2534,12 +2527,12 @@ Class Frm_Main
         If TVHelper.SelectedNode.ToolTipText = "" Then
             TBName.Text = TVHelper.SelectedNode.Text
         End If
-        If getProj() Is Projekt_Emt Then Exit Sub
+        If getProjType() = Proj_Emt.TYPE Then Exit Sub
 
         Dim index As Integer = TVHelper.SelectedNode.Index
 
         If TVHelper.SelectedNode.Text = TVHelper.Nodes(1).Text Then     'Boundingbox Then
-            If Not getProj() Is Projekt_Emt Then
+            If Not getProjType() = Proj_Emt.TYPE Then
                 showSettings({GBBbox})
                 If Not getProj.bbox Is Nothing Then
                     PSPos.Point = getProj.bbox.pos
@@ -2613,9 +2606,9 @@ Class Frm_Main
                         ElseIf TVHelper.SelectedNode.Text = "Heck" Then
                             Kuppl_LBFront.Visible = False
                             Kuppl_LBHeck.Visible = True
-                            PSPos.Point = Projekt_Bus.couple_back_point
-                            If Not getProj.couple_back_file Is Nothing Then Kuppl_DDNextVehicle.SelectedItem = getProj.couple_back_file.name
-                            Kuppl_DDRichtung.SelectedIndex = boolToInt(getProj.couple_back_dir)
+                            PSPos.Point = .couple_back_point
+                            If Not .couple_back_file Is Nothing Then Kuppl_DDNextVehicle.SelectedItem = .couple_back_file.name
+                            Kuppl_DDRichtung.SelectedIndex = boolToInt(.couple_back_dir)
                             NächsterWagenToolStripMenuItem.Enabled = True
                         End If
                     End With
@@ -2647,7 +2640,7 @@ Class Frm_Main
                     End With
                 Case TVHelper.Nodes(11).Text    'Spots
                     showSettings({GBSpot})
-                    With Projekt_Bus.model.spots(index) 'getProj.model.spots(index)
+                    With getProj.model.spots(index) 'getProj.model.spots(index)
                         PSPos.Point = .position
                         Spot_PSRichtung.Point = .richtung
                         Spot_CSFarbe.SelectedColor = .color
@@ -2668,7 +2661,7 @@ Class Frm_Main
         If TVHelper.SelectedNode.FullPath.Contains("\") Then
             Select Case TVHelper.SelectedNode.FullPath.Split("\")(0)
                 Case TVHelper.Nodes(0).Text     'Achsen
-                    Projekt_Bus.achsen.RemoveAt(index)
+                    getProj.achsen.RemoveAt(index)
 
                 Case TVHelper.Nodes(2).Text     'Kameras
                     If TVHelper.SelectedNode.FullPath.Split("\")(1) = TVHelper.Nodes(2).Nodes(0).Text Then
@@ -2679,12 +2672,12 @@ Class Frm_Main
 
                 Case TVHelper.Nodes(3).Text     'Kupplungspunkte
                     If index = 0 Then
-                        Projekt_Bus.couple_front = False
-                        Projekt_Bus.couple_front_sound = False
+                        getProj.couple_front = False
+                        getProj.couple_front_sound = False
                         VorherigerWagenToolStripMenuItem.Enabled = False
                     Else
-                        Projekt_Bus.couple_back = False
-                        Projekt_Bus.couple_back_file.name = ""
+                        getProj.couple_back = False
+                        getProj.couple_back_file.name = ""
                         NächsterWagenToolStripMenuItem.Enabled = False
                     End If
 
@@ -2718,7 +2711,7 @@ Class Frm_Main
                 Case TVHelper.Nodes(1).Text     'Boundingbox
                     BBox_PSSize.Point = New Point3D()
                     PSPos.Point = New Point3D
-                    Projekt_Bus.bbox = Nothing
+                    getProj.bbox = Nothing
             End Select
         End If
     End Sub
@@ -2951,15 +2944,15 @@ Class Frm_Main
             Dim index As Integer = LBMeshes.SelectedIndex
             With mesh
 
-                Spline_TBStartX.Text = Projekt_Sli.profiles(index).profilePnts(0).X
-                Spline_TBStartZ.Text = Projekt_Sli.profiles(index).profilePnts(0).Y
+                Spline_TBStartX.Text = getProj.profiles(index).profilePnts(0).X
+                Spline_TBStartZ.Text = getProj.profiles(index).profilePnts(0).Y
 
-                Spline_TBEndX.Text = Projekt_Sli.profiles(index).profilePnts(1).X
-                Spline_TBEndZ.Text = Projekt_Sli.profiles(index).profilePnts(1).Y
+                Spline_TBEndX.Text = getProj.profiles(index).profilePnts(1).X
+                Spline_TBEndZ.Text = getProj.profiles(index).profilePnts(1).Y
 
                 'U ist X auf der Texture und V ist Texture pro Meter (0,16 macht 1,6 Mal die Texture für 10m Spline)
 
-                DDAlleTexturen.SelectedItem = Projekt_Sli.textures(Projekt_Sli.profiles(index).texIndex).filename.name
+                DDAlleTexturen.SelectedItem = getProj.textures(getProj.profiles(index).texIndex).filename.name
 
                 'hier weiter!
             End With
@@ -3361,7 +3354,7 @@ Class Frm_Main
 
         If LBMeshes.SelectedIndex >= 0 Then
             selectedMeshes = New List(Of OMSI_Mesh)
-            If getProj() Is Projekt_Bus Or getProj() Is Projekt_Emt Or getProj() Is Projekt_Sco Then
+            If getProjType() = Proj_Bus.TYPE Or getProjType() = Proj_Emt.TYPE Or getProjType() = Proj_Sco.TYPE Then
                 If Not getProj().model Is Nothing Then
                     For Each mesh In getProj.model.meshes
                         If LBMeshes.SelectedItems.Contains(mesh.filename.name) Then
@@ -3376,7 +3369,7 @@ Class Frm_Main
                 End If
             End If
 
-            If getProj() Is Projekt_Sli Then
+            If getProjType() = Proj_Sli.TYPE Then
                 Dim newMesh As New OMSI_Mesh
                 With newMesh
                     .filename = New Filename(LBMeshes.SelectedItem, getProj.filename.path)
@@ -3645,9 +3638,9 @@ Class Frm_Main
 
                         Case TVHelper.Nodes(3).Text     'Kupplung
                             If TVHelper.SelectedNode.FullPath.Split("\")(1) = "Front" Then
-                                Projekt_Bus.couple_front_point = PSPos.Point
+                                getProj.couple_front_point = PSPos.Point
                             ElseIf TVHelper.SelectedNode.FullPath.Split("\")(1) = "Heck" Then
-                                Projekt_Bus.couple_back_point = PSPos.Point
+                                getProj.couple_back_point = PSPos.Point
                             End If
 
                         Case TVHelper.Nodes(6).Text     'Spiegel
@@ -3955,19 +3948,19 @@ Class Frm_Main
             Case Keys.Right
                 If viewPoint = 1 Then
                     selectedDriverCam += 1
-                    If selectedDriverCam > Projekt_Bus.driver_cam_list.Count - 1 Then selectedDriverCam = 0
+                    If selectedDriverCam > getProj.driver_cam_list.Count - 1 Then selectedDriverCam = 0
                 ElseIf viewPoint = 2 Then
                     selectedPassCam += 1
-                    If selectedPassCam > Projekt_Bus.pax_cam_list.Count - 1 Then selectedPassCam = 0
+                    If selectedPassCam > getProj.pax_cam_list.Count - 1 Then selectedPassCam = 0
                 End If
                 GlMain.Invalidate()
             Case Keys.Left
                 If viewPoint = 1 Then
                     selectedDriverCam -= 1
-                    If selectedDriverCam < 0 Then selectedDriverCam = Projekt_Bus.driver_cam_list.Count - 1
+                    If selectedDriverCam < 0 Then selectedDriverCam = getProj.driver_cam_list.Count - 1
                 ElseIf viewPoint = 2 Then
                     selectedPassCam -= 1
-                    If selectedPassCam < 0 Then selectedPassCam = Projekt_Bus.pax_cam_list.Count - 1
+                    If selectedPassCam < 0 Then selectedPassCam = getProj.pax_cam_list.Count - 1
                 End If
                 GlMain.Invalidate()
             Case Else
@@ -4079,14 +4072,14 @@ Class Frm_Main
 
 
         'Offset der Kamera zum Mittelpunkt der Szene
-        If getProj() Is Projekt_Bus And viewPoint < 3 Then
+        If getprojtype() = Proj_Bus.TYPE And viewPoint < 3 Then
             lookat = Matrix4.LookAt(Convert.ToSingle(0.0000001), Convert.ToSingle(0.000001), 0, 0, 0, 0, 0, 1, 0) 'Setup camera
             GL.LoadMatrix(lookat)
             If viewPoint = 1 Then
-                With Projekt_Bus.driver_cam_list(selectedDriverCam)
+                With getProj.driver_cam_list(selectedDriverCam)
                     'Spiegelberechnung nur in der Fahreransicht
                     If mirrorRender Then
-                        With Projekt_Bus.spiegel(1) 'mirrorID
+                        With getProj.spiegel(1) 'mirrorID
                             GL.Translate(New Vector3(- .position.X, - .position.Y, - .position.Z))
                             'GL.Translate(New Vector3(-1, 0, 0))
                             'GL.Rotate(-(.rotX - 90), 0, 1, 0)
@@ -4099,10 +4092,10 @@ Class Frm_Main
 
                         End With
                     Else
-                        For i As Integer = 0 To Projekt_Bus.spiegel.Count - 1
+                        For i As Integer = 0 To getProj.spiegel.Count - 1
                             GlMain_Paint(GlMain, Nothing, True, i)
 
-                            With Projekt_Bus.spiegel(1) 'i
+                            With getProj.spiegel(1) 'i
 
                                 GL.Rotate(-90, 0, 1, 0) '-90
                                 GL.Rotate(-(.rotY + 90), 0, 0, 1) '45
@@ -4119,16 +4112,16 @@ Class Frm_Main
                         GL.Rotate(.rotY + 90, 0, 0, 1)
                         GL.Rotate(.rotX - 90, 0, 1, 0)
 
-                        GL.Translate(New Vector3(.position.toVector3))
+                        GL.Translate(New Vector3(getProj.position.X, getProj.position.Y, getProj.position.Z))
                     End If
 
 
                 End With
             ElseIf viewPoint = 2 Then
-                With Projekt_Bus.pax_cam_list(selectedPassCam)
+                With getProj.pax_cam_list(selectedPassCam)
                     GL.Rotate(.rotY + 90, 0, 0, 1)
                     GL.Rotate(.rotX - 90, 0, 1, 0)
-                    GL.Translate(New Vector3(.position.toVector3))
+                    GL.Translate(New Vector3(getProj.position.X, getProj.position.Y, getProj.position.Z))
                 End With
             End If
         Else
@@ -4143,8 +4136,8 @@ Class Frm_Main
             GL.Rotate(mausPos2D.X * 0.2, 0, 1, 0)
             Select Case viewPoint
                 Case 3
-                    If getProj() Is Projekt_Bus Then
-                        GL.Translate(New Vector3(Projekt_Bus.cam_outeside.toVector3))
+                    If getprojtype() = Proj_Bus.TYPE Then
+                        GL.Translate(New Vector3(getProj.cam_outeside.X, getProj.cam_outeside.Y, getProj.cam_outeside.Z))
                     End If
                 Case 4
                     GL.Translate(New Vector3(CamLocation.X, CamLocation.Z, CamLocation.Y))
@@ -4187,12 +4180,12 @@ Class Frm_Main
             Select Case TCObjekte.SelectedIndex
                 Case 0
                 Case 1
-                    drawCabin(Projekt_Emt.cabin)
+                    drawCabin(getProj.cabin)
                 Case 2
-                    If Not Projekt_Emt.model Is Nothing Then
+                    If getProjType() = Proj_Emt.TYPE Then
                         GL.BindTexture(TextureTarget.Texture2D, 0)
                         Dim i As Integer = 0
-                        For Each licht In Projekt_Emt.model.lichter
+                        For Each licht In getProj.model.lichter
                             With licht
                                 GL.Color3(.color.R, .color.G, .color.B)
                                 If i = LBLichter.SelectedIndex Then
@@ -4208,7 +4201,7 @@ Class Frm_Main
                         Next
                     End If
                 Case 3
-                    drawPaths(Projekt_Emt.paths)
+                    drawPaths(getProj.paths)
             End Select
 
 
@@ -4217,59 +4210,61 @@ Class Frm_Main
             ' Sceneryobjekte
             '################
         ElseIf getprojtype() = Proj_Sco.TYPE Then
-            If Projekt_Sco.isloaded Then
-                GL.LineWidth(3)
-                GL.BindTexture(TextureTarget.Texture2D, 0)
-                GL.DepthFunc(DepthFunction.Always)              'Alles wird in den Vordergrund gezeichnet
-                GL.LineWidth(1)
+            If getProj.isloaded Then
+                With getProj()
+                    GL.LineWidth(3)
+                    GL.BindTexture(TextureTarget.Texture2D, 0)
+                    GL.DepthFunc(DepthFunction.Always)              'Alles wird in den Vordergrund gezeichnet
+                    GL.LineWidth(1)
 
-                Select Case TCObjekte.SelectedIndex
-                    Case 0
-                    Case 1
+                    Select Case TCObjekte.SelectedIndex
+                        Case 0
+                        Case 1
 
-                        If Not Projekt_Sco.cabin Is Nothing Then
-                            For Each seat In Projekt_Sco.cabin.passPos
-                                GL.Color3(Settings.PaxColor)
+                            If Not .cabin Is Nothing Then
+                                For Each seat In .cabin.passPos
+                                    GL.Color3(Settings.PaxColor)
 
-                                GL.VertexPointer(3, VertexPointerType.Double, 0, seat.vertices)
-                                GL.DrawElements(PrimitiveType.Triangles, seat.edges.Count, DrawElementsType.UnsignedInt, seat.edges)
-                                GL.Color3(Color.Black)
-                                GL.DrawElements(PrimitiveType.Lines, seat.lines.Count, DrawElementsType.UnsignedInt, seat.lines)
-                            Next
-                        End If
-                    Case 2
-                        GL.BindTexture(TextureTarget.Texture2D, 0)
-                        Dim i As Integer = 0
-                        For Each licht In Projekt_Sco.model.lichter
-                            With licht
-                                GL.Color3(.color.R, .color.G, .color.B)
-                                If i = LBLichter.SelectedIndex Then
-                                    If timerBool Then
-                                        GL.Color3(Color.Black)
-                                    End If
-                                End If
-
-                                GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                GL.DrawElements(PrimitiveType.Triangles, .edges.Count, DrawElementsType.UnsignedInt, .edges)
-                            End With
-                            i += 1
-                        Next
-                    Case 3
-                        If Not Projekt_Sco.ki_paths Is Nothing Then
+                                    GL.VertexPointer(3, VertexPointerType.Double, 0, seat.vertices)
+                                    GL.DrawElements(PrimitiveType.Triangles, seat.edges.Count, DrawElementsType.UnsignedInt, seat.edges)
+                                    GL.Color3(Color.Black)
+                                    GL.DrawElements(PrimitiveType.Lines, seat.lines.Count, DrawElementsType.UnsignedInt, seat.lines)
+                                Next
+                            End If
+                        Case 2
+                            GL.BindTexture(TextureTarget.Texture2D, 0)
                             Dim i As Integer = 0
-                            For Each path In Projekt_Sco.ki_paths
-                                If LBPfade.SelectedIndex = i Then
-                                    GL.Color3(Settings.SelectionColor)
-                                End If
-                                With path
+                            For Each licht In .model.lichter
+                                With licht
+                                    GL.Color3(.color.R, .color.G, .color.B)
+                                    If i = LBLichter.SelectedIndex Then
+                                        If timerBool Then
+                                            GL.Color3(Color.Black)
+                                        End If
+                                    End If
+
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                    GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                    GL.DrawElements(PrimitiveType.Triangles, .edges.Count, DrawElementsType.UnsignedInt, .edges)
                                 End With
-                                GL.Color3(Color.Black)
                                 i += 1
                             Next
-                        End If
-                End Select
+                        Case 3
+                            If Not .ki_paths Is Nothing Then
+                                Dim i As Integer = 0
+                                For Each path In .ki_paths
+                                    If LBPfade.SelectedIndex = i Then
+                                        GL.Color3(Settings.SelectionColor)
+                                    End If
+                                    With path
+                                        GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
+                                        GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                    End With
+                                    GL.Color3(Color.Black)
+                                    i += 1
+                                Next
+                            End If
+                    End Select
+                End With
             End If
 
             '################
@@ -4282,7 +4277,7 @@ Class Frm_Main
             With getProj()
                 Select Case TCObjekte.SelectedIndex
                     Case 0
-                        If Not getProj.model Is Nothing Then
+                        If Not .model Is Nothing Then
                             If Not getSelectedMesh() Is Nothing Then
                                 For i As Integer = 0 To getSelectedMesh.animations.Count - 1
                                     With getSelectedMesh.animations(i)
@@ -4298,33 +4293,33 @@ Class Frm_Main
                             End If
                         End If
                     Case 1
-                        If Not getProj.model Is Nothing Then
+                        If Not .model Is Nothing Then
                             GL.VertexPointer(3, VertexPointerType.Double, 0, {0, 0, 0})
                             GL.TexCoordPointer(2, TexCoordPointerType.Double, 0, {0, 0})
-                            For index As Integer = 0 To Projekt_Bus.driver_cam_list.Count - 1
+                            For index As Integer = 0 To .driver_cam_list.Count - 1
                                 GL.Color3(Settings.CamDriverColor)
                                 If TVHelper.SelectedNode.FullPath.Contains("Fahrerkameras\") And index = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
-                                With Projekt_Bus.driver_cam_list(index)
+                                With .driver_cam_list(index)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                     GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
                                 End With
                             Next
 
 
-                            For i As Integer = 0 To Projekt_Bus.pax_cam_list.Count - 1
+                            For i As Integer = 0 To .pax_cam_list.Count - 1
                                 GL.Color3(Settings.CamPaxColor)
                                 If TVHelper.SelectedNode.FullPath.Contains("Fahrgastkameras\") And i = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
-                                With Projekt_Bus.pax_cam_list(i)
+                                With .pax_cam_list(i)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                     GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
                                 End With
                             Next
 
-                            If Projekt_Bus.couple_back Then
+                            If .couple_back Then
                                 GL.Color3(Settings.AchsenColor)
                                 If TVHelper.SelectedNode.FullPath.Contains("Kupplungspunkte\") Then GL.Color3(Settings.SelectionColor)
-                                If Not Projekt_Bus.couple_back_sphere Is Nothing Then
-                                    With Projekt_Bus.couple_back_sphere
+                                If Not .couple_back_sphere Is Nothing Then
+                                    With .couple_back_sphere
                                         GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                         GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
                                     End With
@@ -4332,28 +4327,28 @@ Class Frm_Main
                             End If
 
 
-                            For i As Integer = 0 To Projekt_Bus.achsen.Count - 1
+                            For i As Integer = 0 To .achsen.Count - 1
                                 GL.Color3(Settings.AchsenColor)
                                 If InStr(TVHelper.SelectedNode.FullPath, "Achsen\") And i = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
-                                With Projekt_Bus.achsen(i)
+                                With .achsen(i)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                     GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
                                 End With
                             Next
 
 
-                            For i As Integer = 0 To Projekt_Bus.spiegel.Count - 1
+                            For i As Integer = 0 To .spiegel.Count - 1
                                 GL.Color3(Settings.CamReflexColor)
                                 If TVHelper.SelectedNode.FullPath.Contains("Spiegel\") And i = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
-                                With Projekt_Bus.spiegel(i)
+                                With .spiegel(i)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                     GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
                                 End With
                             Next
 
 
-                            If Not Projekt_Bus.bbox Is Nothing Then
-                                With Projekt_Bus.bbox
+                            If Not .bbox Is Nothing Then
+                                With .bbox
                                     GL.Color3(Color.Black)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                     GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
@@ -4361,10 +4356,10 @@ Class Frm_Main
                             End If
 
                             GL.DepthFunc(DepthFunction.Less)    'Im Vordergrund Zeichnen abschalten
-                            If Not Projekt_Bus.model.spots Is Nothing Then
+                            If Not .model.spots Is Nothing Then
                                 If InStr(TVHelper.SelectedNode.FullPath, TVHelper.Nodes(11).Text & "\") Then
-                                    If TVHelper.SelectedNode.Index < Projekt_Bus.model.spots.Count Then
-                                        With Projekt_Bus.model.spots(TVHelper.SelectedNode.Index)
+                                    If TVHelper.SelectedNode.Index < .model.spots.Count Then
+                                        With .model.spots(TVHelper.SelectedNode.Index)
                                             GL.Color3(.color.R, .color.G, .color.B)
                                             GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                             GL.DrawElements(PrimitiveType.Triangles, .edges.Count, DrawElementsType.UnsignedInt, .edges)
@@ -4378,15 +4373,15 @@ Class Frm_Main
                         GL.DepthFunc(DepthFunction.Less)    'Im Vordergrund Zeichnen abschalten
 
                         If getprojtype() = Proj_Bus.TYPE Then
-                            drawCabin(Projekt_Bus.cabin)
+                            drawCabin(.cabin)
                         ElseIf getprojtype() = Proj_Ovh.TYPE Then
-                            drawCabin(Projekt_Ovh.cabin)
+                            drawCabin(.cabin)
                         End If
 
                     Case 2
                         GL.BindTexture(TextureTarget.Texture2D, 0)
                         Dim i As Integer = 0
-                        For Each licht In Projekt_Bus.model.lichter
+                        For Each licht In .model.lichter
                             With licht
                                 GL.Color3(.color.R, .color.G, .color.B)
                                 If i = LBLichter.SelectedIndex Then
@@ -4402,9 +4397,9 @@ Class Frm_Main
                         Next
                     Case 3
                         If getprojtype() = Proj_Bus.TYPE Then
-                            drawPaths(Projekt_Bus.paths)
+                            drawPaths(.paths)
                         ElseIf getprojtype() = Proj_Ovh.TYPE Then
-                            drawPaths(Projekt_Ovh.paths)
+                            drawPaths(.paths)
                         End If
                 End Select
             End With
@@ -4615,10 +4610,10 @@ Class Frm_Main
     End Function
 
     Private Sub TextToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TextToolStripMenuItem.Click
-        If getProj() Is Projekt_Bus Or getProj() Is Projekt_Sco Or getProj() Is Projekt_Ovh Then
+        If getProjType() = Proj_Bus.TYPE Or getProjType() = Proj_Sco.TYPE Or getProjType() = Proj_Ovh.TYPE Then
             Frm_TextTex.Show()
         Else
-            If getProj() Is Projekt_Sli Then
+            If getProjType() = Proj_Sli.TYPE Then
                 MsgBox("Splines könne keine Text-Texturen haben.")
             Else
                 MsgNoProj()
@@ -4723,7 +4718,7 @@ Class Frm_Main
     End Sub
 
     Private Sub BBox_PSSize_Changed(sender As Object, e As EventArgs) Handles BBox_PSSize.Changed
-        If getProj() Is Projekt_Bus Or getProj() Is Projekt_Sco Then
+        If getprojtype() = Proj_Bus.TYPE Or getprojtype() = Proj_Sco.TYPE Then
             If getProj.bbox Is Nothing Then
                 getProj.bbox = New OMSI_BBox()
             End If
@@ -4732,9 +4727,9 @@ Class Frm_Main
     End Sub
 
     Private Sub BBoxBTBerechnen_Click(sender As Object, e As EventArgs) Handles BBoxBTBerechnen.Click
-        If getProj() Is Projekt_Bus Or getProj() Is Projekt_Sco Then
+        If getprojtype() = Proj_Bus.TYPE Or getprojtype() = Proj_Sco.TYPE Then
             If getProj.bbox Is Nothing Then getProj.bbox = New OMSI_BBox
-            With Projekt_Bus.bbox
+            With getProj.bbox
                 Dim min As New Point3D
                 Dim max As New Point3D
                 For Each objekt In AlleObjekte
@@ -5086,7 +5081,7 @@ Class Frm_Main
 
 
     Private Sub Pfade_CBEinstieg_Click(sender As Object, e As EventArgs) Handles Pfade_CBEinstieg.Click
-        If getProj() Is Projekt_Bus Then
+        If getprojtype() = Proj_Bus.TYPE Then
             With getProj.cabin
                 If Pfade_CBEinstieg.Checked Then
                     Dim newDoor As New OMSI_Door(LBPfade.SelectedIndex, OMSI_Door.IS_ENTRY)
@@ -5114,7 +5109,7 @@ Class Frm_Main
     End Sub
 
     Private Sub Pfade_CBAusstieg_Click(sender As Object, e As EventArgs) Handles Pfade_CBAusstieg.Click
-        If getProj() Is Projekt_Bus Then
+        If getprojtype() = Proj_Bus.TYPE Then
             With getProj.cabin
                 If Pfade_CBAusstieg.Checked Then
                     Dim newDoor As New OMSI_Door(LBPfade.SelectedIndex, OMSI_Door.IS_EXIT)
@@ -5140,7 +5135,7 @@ Class Frm_Main
     End Sub
 
     Private Sub Pfade_CBVerkauf_Click(sender As Object, e As EventArgs) Handles Pfade_CBVerkauf.Click
-        If getProj() Is Projekt_Bus Then
+        If getprojtype() = Proj_Bus.TYPE Then
             For i = 0 To getProj.cabin.doors.Count - 1
                 If getProj.cabin.doors(i).pathindex = LBPfade.SelectedIndex Then
                     getProj.cabin.doors(i).noticketsale = Not Pfade_CBVerkauf.Checked
@@ -5151,19 +5146,21 @@ Class Frm_Main
     End Sub
 
     Private Sub Pfade_CBTaster_Click(sender As Object, e As EventArgs) Handles Pfade_CBTaster.Click
-        If getProj() Is Projekt_Bus Then
-            For i = 0 To getProj.cabin.doors.Count - 1
-                If getProj.cabin.doors(i).pathindex = LBPfade.SelectedIndex Then
-                    Projekt_Bus.cabin.doors(i).withButton = Pfade_CBTaster.Checked
-                    Exit Sub
-                End If
-            Next
+        If getProjType() = Proj_Bus.TYPE Then
+            With getProj()
+                For i = 0 To .cabin.doors.Count - 1
+                    If .cabin.doors(i).pathindex = LBPfade.SelectedIndex Then
+                        .cabin.doors(i).withButton = Pfade_CBTaster.Checked
+                        Exit Sub
+                    End If
+                Next
+            End With
         End If
     End Sub
 
 
     Private Sub Pfade_CBNextWagen_Click(sender As Object, e As EventArgs) Handles Pfade_CBNextWagen.Click
-        If getProj() Is Projekt_Bus Then
+        If getprojtype() = Proj_Bus.TYPE Then
             If Pfade_CBNextWagen.Checked Then
                 getProj.cabin.linkToNextVeh = LBPfade.SelectedIndex
                 Pfade_CBVorWagen.Checked = False
@@ -5175,7 +5172,7 @@ Class Frm_Main
     End Sub
 
     Private Sub Pfade_CBVorWagen_Click(sender As Object, e As EventArgs) Handles Pfade_CBVorWagen.Click
-        If getProj() Is Projekt_Bus Then
+        If getprojtype() = Proj_Bus.TYPE Then
             If Pfade_CBVorWagen.Checked Then
                 getProj.cabin.linkToPrevVeh = LBPfade.SelectedIndex
                 Pfade_CBNextWagen.Checked = False

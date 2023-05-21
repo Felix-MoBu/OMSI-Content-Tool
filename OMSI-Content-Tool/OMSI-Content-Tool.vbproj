@@ -126,6 +126,7 @@
     <Compile Include="Forms\Frm_PointList.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="HelperClasses\OCTProjekt.vb" />
     <Compile Include="HelperClasses\ApplicationEvents.vb" />
     <Compile Include="GLComponents\Arrow.vb" />
     <Compile Include="Forms\Frm_Git.Designer.vb">
