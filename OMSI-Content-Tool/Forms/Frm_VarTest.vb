@@ -15,15 +15,13 @@ Public Class Frm_VarTest
         For Each control In Me.Controls
             If control.name.Contains("VS_") Then
                 If control.name.split("_")(1) = sender.name.split("_")(1) Then
-                    For i = 0 To Frm_Main.AlleVariablen.Count - 1
-                        If control.variable = Frm_Main.AlleVariablen(i) Then
-                            Frm_Main.AlleVarValues(i) = sender.text
-                            Frm_Main.RecalcVis(control.variable, sender.text)
-                            Frm_Main.RecalcAlpha(control.variable, sender.text)
-                            Frm_Main.GlMain.Invalidate()
-                            Exit Sub
-                        End If
-                    Next
+                    If Frm_Main.getOCTProj.alleVarValues.Keys.Contains(sender.text) Then
+                        Frm_Main.getOCTProj.alleVarValues(control.variable) = sender.text
+                        Frm_Main.RecalcVis(control.variable, sender.text)
+                        Frm_Main.RecalcAlpha(control.variable, sender.text)
+                        Frm_Main.GlMain.Invalidate()
+                        Exit Sub
+                    End If
                 End If
             End If
         Next

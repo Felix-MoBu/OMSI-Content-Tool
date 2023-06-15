@@ -14,19 +14,19 @@ Public Class Frm_Vars
     Private Sub LoadFromFolder(Optional search As String = "")
         LBAlleVars.Items.Clear()
         If search <> "" Then
-            For Each var In Frm_Main.AlleVariablen
+            For Each var In Frm_Main.getOCTProj.alleVarValues.Keys
                 If LCase(var).Contains(LCase(search)) Then
                     LBAlleVars.Items.Add(var)
                 End If
             Next
         Else
-            LBAlleVars.Items.AddRange(Frm_Main.AlleVariablen.ToArray)
+            LBAlleVars.Items.AddRange(Frm_Main.getOCTProj.alleVarValues.Keys.ToArray)
         End If
     End Sub
 
     Private Sub Frm_Vars_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LBAlleVars.Items.Clear()
-        LBAlleVars.Items.AddRange(Frm_Main.AlleVariablen.ToArray)
+        LBAlleVars.Items.AddRange(Frm_Main.getOCTProj.alleVarValues.Keys.ToArray)
     End Sub
 
     Private Sub LBAlleVars_Click(sender As Object, e As EventArgs) Handles LBAlleVars.Click

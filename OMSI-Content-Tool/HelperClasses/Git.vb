@@ -18,6 +18,7 @@ Public Module Git
     End Property
 
     Public Function tryFindRepoAt(filepath As String) As Boolean
+        If Not isInstalled() Then Return False
         If filepath <> "" Then
             ChangeFolger(filepath)
             If Execute("git status").Split(" ")(0) = "fatal:" Or Execute("git status") = "" Then

@@ -2,7 +2,7 @@
     Dim ProjDataBase As DataBase
     Private Sub Frm_ToDo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Location = New Point(Frm_Main.Width / 2 - Me.Width / 2, Frm_Main.Height / 2 - Me.Height / 2)
-        ProjDataBase = Frm_Main.getProj.ProjDataBase
+        ProjDataBase = Frm_Main.actProj.ProjDataBase
         loadList()
     End Sub
 
@@ -74,7 +74,7 @@
     End Sub
 
     Private Sub BTClose_Click(sender As Object, e As EventArgs) Handles BTClose.Click
-        Frm_Main.getProj.ProjDataBase = ProjDataBase
+        Frm_Main.actProj.ProjDataBase = ProjDataBase
         Me.Close()
     End Sub
 End Class

@@ -19,11 +19,11 @@ Public Class OMSI_Paths
     Public oneways As New List(Of Integer)
 
     Public Sub New()
-        Dim newName As String = "paths_" & Frm_Main.getProj.Filename.nameNoEnding & ".cfg"
+        Dim newName As String = "paths_" & Frm_Main.actProj.Filename.nameNoEnding & ".cfg"
         Do
             newName = InputBox("Es muss zunächst eine Datei für Pfade angelegt werden. Wie soll die Datei heißen?", "Neue Pfade-Datei anlegen...", newName)
         Loop Until newName <> ""
-        filename = New Filename(newName, Frm_Main.getProj.filename.path & "\Model")
+        filename = New Filename(newName, Frm_Main.actProj.filename.path & "\Model")
         Log.Add("Pfade-Datei hinzugefügt (Datei: " & newName & ")")
     End Sub
 

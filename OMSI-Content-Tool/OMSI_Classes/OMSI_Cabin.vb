@@ -22,11 +22,11 @@ Public Class OMSI_Cabin
     Public passPos As New List(Of OMSI_Seat)
 
     Public Sub New()
-        Dim newName As String = "cabin_" & Frm_Main.getProj.Filename.nameNoEnding & ".cfg"
+        Dim newName As String = "cabin_" & Frm_Main.actProj.Filename.nameNoEnding & ".cfg"
         Do
             newName = InputBox("Es muss zunächst eine Datei für Sitz-/ Stehplätze angelegt werden. Wie soll die Datei heißen?", "Neue Datei anlegen...", newName)
         Loop Until newName <> ""
-        filename = New Filename(newName, Frm_Main.getProj.filename.path & "\Model")
+        filename = New Filename(newName, Frm_Main.actProj.filename.path & "\Model")
         Log.Add("Cabin-Datei hinzugefügt (Datei: " & newName & ")")
     End Sub
 

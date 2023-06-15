@@ -24,7 +24,7 @@ Public Class Frm_Rep
     End Sub
 
     Private Sub einlesen()
-        Projekt_Bus = Frm_Main.getProj()
+        Projekt_Bus = Frm_Main.actProj
         TexChangeFolder = Projekt_Bus.filename.path & "\" & Projekt_Bus.model.TexChangeFolder
         'Standardlack
         anstrichAlt = Projekt_Bus.anstrich
@@ -385,16 +385,10 @@ Public Class Frm_Rep
                     End If
 
                     'Frm_Main.resetVis()
-                    'If Not rep_var.val = 0 Then
                     Frm_Main.RecalcVis(rep_var.var, rep_var.val)
-                    ' End If
 
-                    For varind = 0 To Frm_Main.AlleVariablen.Count - 1
-                        If Frm_Main.AlleVariablen(varind) = rep_var.name Then
-                            Frm_Main.AlleVarValues(varind) = rep_var.val
-                            Exit For
-                        End If
-                    Next
+                    Frm_Main.getOCTProj.alleVarValues(rep_var.name) = rep_var.val
+
                     ctVar += 1
                 End If
             Next

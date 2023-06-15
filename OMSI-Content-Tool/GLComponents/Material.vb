@@ -27,7 +27,7 @@ Public Class Material
     Public Y2 As Double
     Public Z2 As Double
 
-    Public alpha As Double = 1
+    Public alpha As Single = 1
     Public sli_alpha As Byte
 
     Public Shared Operator =(ByVal obj1 As Material, ByVal obj2 As Material) As Boolean

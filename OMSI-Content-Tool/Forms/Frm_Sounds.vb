@@ -7,8 +7,8 @@ Public Class Frm_Sounds
         LBDateien.Items.Clear()
 
         If Frm_Main.getprojtype = Proj_Bus.TYPE Then
-            If Not Frm_Main.getProj.paths Is Nothing Then
-                For i As Integer = 0 To Frm_Main.getProj.paths.soundpacks.count - 1
+            If Not Frm_Main.actProj.paths Is Nothing Then
+                For i As Integer = 0 To Frm_Main.actProj.paths.soundpacks.count - 1
                     LBGruppen.Items.Add(i)
                 Next
 
@@ -22,7 +22,7 @@ Public Class Frm_Sounds
     Private Sub LBGruppen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBGruppen.SelectedIndexChanged
         If LBGruppen.SelectedIndex > -1 Then
             LBDateien.Items.Clear()
-            LBDateien.Items.AddRange(Frm_Main.getProj.paths.soundpacks(LBGruppen.SelectedIndex).toarray)
+            LBDateien.Items.AddRange(Frm_Main.actProj.paths.soundpacks(LBGruppen.SelectedIndex).toarray)
         End If
     End Sub
 End Class

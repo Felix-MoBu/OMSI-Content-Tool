@@ -8,7 +8,7 @@ Public Class Frm_Eig_Mesh
             addProp("Geändert", IO.File.GetLastWriteTime(actMesh.filename))
             addProp("O3D-Version", actMesh.o3dVersion)
             addProp("Protected", actMesh.isProtected.ToString)
-            For Each objekt In Frm_Main.AlleObjekte
+            For Each objekt In Frm_Main.getOCTProj.alleMeshes
                 If actMesh.ObjIds.Contains(objekt.id) Then
                     With objekt
                         addProp("Eckpunkte", .vertices.Count / 3)

@@ -174,7 +174,7 @@ Module Importer
                                     newCam.rotX = toSingle(.firstchild.getattribute("orientation").split(" ")(0))
                                     newCam.rotY = toSingle(.firstchild.getattribute("orientation").split(" ")(1))
                                 End With
-                                Frm_Main.getProj.model.dirver_cam_list.add()
+                                Frm_Main.actProj.model.dirver_cam_list.add()
                             Else
                                 If ersterKameraFehler Then
                                     MsgBox("Kameras können nur zu Bussen hinzugefügt / importiert werden!")
