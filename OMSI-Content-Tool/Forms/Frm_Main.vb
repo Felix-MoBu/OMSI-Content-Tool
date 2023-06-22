@@ -41,16 +41,6 @@ Class Frm_Main
     Dim CamLocation As New Point3D
     Dim CamLocationOld As New Point3D
 
-    'Public getOCTProj.alleMeshes As New List(Of Mesh)
-    'Public AlleTexturen As New List(Of String)
-    'Public AlleVariablen As New List(Of String)
-    'Public AlleVarValues As New List(Of Double)
-
-    'Private Projekt_Emt As New Proj_Emt
-    'Private Projekt_Bus As Proj_Bus
-    'Private Projekt_Ovh As Proj_Ovh
-    'Private Projekt_Sco As Proj_Sco
-    'Private Projekt_Sli As Proj_Sli
     Public OpenProjects As New List(Of OCTProjekt)
     Public actProj As Object
 
@@ -976,10 +966,10 @@ Class Frm_Main
                     Frm_Rep.showInitialRepaint(.selectedRepaint)
                 End If
 
-                For i As Integer = 0 To .AlleVariablen.Count - 1
-                    If getOCTProj.alleVarValues.ContainsKey(.AlleVariablen(i)) Then
-                        'AlleVarValues(AlleVariablen.IndexOf(.AlleVariablen(i))) = .AlleVarValues(i)
-                        Frm_VarTest.addVar(.AlleVariablen(i), .AlleVarValues(i))
+                For Each item As KeyValuePair(Of String, Single) In .alleVarValues
+                    If getOCTProj.alleVarValues.ContainsKey(item.Key) Then
+                        getOCTProj.alleVarValues(item.Key) = item.Value
+                        Frm_VarTest.addVar(item.Key, item.Value)
                     End If
                 Next
 
@@ -1210,7 +1200,7 @@ Class Frm_Main
         CB.SelectedIndex = tmpIndex
     End Sub
 
-    Private Sub showModel(ByRef meshes As List(Of OMSI_Mesh))
+    Private Sub showModel(meshes As List(Of OMSI_Mesh))
         getOCTProj.alleMeshes.Clear()
         LBMeshes.Items.Clear()
         Parent_CBParent.Items.Clear()
@@ -2788,6 +2778,7 @@ Class Frm_Main
                 End If
 
         End Select
+        getOCTProj.TCObjkteSelected = TCObjekte.SelectedIndex
         GlMain.Invalidate()
     End Sub
 
@@ -2930,14 +2921,16 @@ Class Frm_Main
     End Function
 
     Private Sub LBMeshes_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBMeshes.SelectedIndexChanged
-        selectedMeshesChanged = True
-        If Not getSelectedMesh() Is Nothing Then
+        Dim selectedMesh As OMSI_Mesh = getSelectedMesh()
+        Dim selectedMeshesChanged As Boolean = True
+        If Not selectedMesh Is Nothing Then
             If Not getProjType() = Proj_Sli.TYPE Then
                 saveMeshProbs(lastSelectedMesh)
-                showMeshProps(getSelectedMesh)
+                showMeshProps(selectedMesh)
+                getOCTProj.LBMeshesSelected = LBMeshes.SelectedIndex
             Else
                 'saveSliPartProps(lastSelectedMesh)
-                showSliPartProps(getSelectedMesh)
+                showSliPartProps(selectedMesh)
             End If
 
         End If
@@ -2966,7 +2959,7 @@ Class Frm_Main
     End Sub
 
     Private Sub showMeshProps(mesh As OMSI_Mesh)
-        If Not mesh Is Nothing Then
+        If mesh IsNot Nothing Then
             With mesh
                 'Allgemein
                 TBName.Text = .filename.name
@@ -2987,10 +2980,12 @@ Class Frm_Main
 
                 'Materialien
                 Mat_CBTex.Items.Clear()
-                For Each id In getSelectedObjektId()
-                    For Each texture In getOCTProj.alleMeshes(id).texturen
-                        Mat_CBTex.Items.Add(texture.filename.name)
-                    Next
+                For Each id In getSelectedObjektIds()
+                    If getOCTProj.alleMeshes.Count > id Then
+                        For Each texture In getOCTProj.alleMeshes(id).texturen
+                            Mat_CBTex.Items.Add(texture.filename.name)
+                        Next
+                    End If
                 Next
                 'Weitere Mat eig werden mit dem verändern der Texture geladen
 
@@ -3388,7 +3383,7 @@ Class Frm_Main
         Return Nothing
     End Function
 
-    Private Function getSelectedObjektId() As List(Of Int16)
+    Private Function getSelectedObjektIds() As List(Of Int16)
         If LBMeshes.SelectedIndex >= 0 Then
             If Not getProjType() = Proj_Sli.TYPE Then
                 If Not actProj.model Is Nothing Then
@@ -4202,7 +4197,7 @@ Class Frm_Main
                                 End If
 
                                 GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                GL.DrawElements(PrimitiveType.TriangleFan, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                GL.DrawElements(PrimitiveType.TriangleFan, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                             End With
                             i += 1
                         Next
@@ -4233,7 +4228,7 @@ Class Frm_Main
                                     GL.Color3(Settings.PaxColor)
 
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, seat.vertices)
-                                    GL.DrawElements(PrimitiveType.Triangles, seat.edges.Count, DrawElementsType.UnsignedInt, seat.edges)
+                                    GL.DrawElements(PrimitiveType.Triangles, seat.edges.GetUpperBound(0), DrawElementsType.UnsignedInt, seat.edges)
                                     GL.Color3(Color.Black)
                                     GL.DrawElements(PrimitiveType.Lines, seat.lines.Count, DrawElementsType.UnsignedInt, seat.lines)
                                 Next
@@ -4251,7 +4246,7 @@ Class Frm_Main
                                     End If
 
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                    GL.DrawElements(PrimitiveType.Triangles, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                    GL.DrawElements(PrimitiveType.Triangles, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                                 End With
                                 i += 1
                             Next
@@ -4264,7 +4259,7 @@ Class Frm_Main
                                     End If
                                     With path
                                         GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                        GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                        GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                                     End With
                                     GL.Color3(Color.Black)
                                     i += 1
@@ -4294,7 +4289,7 @@ Class Frm_Main
                                             GL.Color3(Settings.AchsenColor)
                                         End If
                                         GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                        GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                        GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                                     End With
                                 Next
                             End If
@@ -4308,7 +4303,7 @@ Class Frm_Main
                                 If TVHelper.SelectedNode.FullPath.Contains("Fahrerkameras\") And index = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
                                 With .driver_cam_list(index)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                    GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                    GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                                 End With
                             Next
 
@@ -4318,7 +4313,7 @@ Class Frm_Main
                                 If TVHelper.SelectedNode.FullPath.Contains("Fahrgastkameras\") And i = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
                                 With .pax_cam_list(i)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                    GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                    GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                                 End With
                             Next
 
@@ -4328,7 +4323,7 @@ Class Frm_Main
                                 If Not .couple_back_sphere Is Nothing Then
                                     With .couple_back_sphere
                                         GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                        GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                        GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                                     End With
                                 End If
                             End If
@@ -4339,7 +4334,7 @@ Class Frm_Main
                                 If InStr(TVHelper.SelectedNode.FullPath, "Achsen\") And i = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
                                 With .achsen(i)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                    GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                    GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                                 End With
                             Next
 
@@ -4349,7 +4344,7 @@ Class Frm_Main
                                 If TVHelper.SelectedNode.FullPath.Contains("Spiegel\") And i = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
                                 With .spiegel(i)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                    GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                    GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                                 End With
                             Next
 
@@ -4358,7 +4353,7 @@ Class Frm_Main
                                 With .bbox
                                     GL.Color3(Color.Black)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                    GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                    GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                                 End With
                             End If
 
@@ -4369,7 +4364,7 @@ Class Frm_Main
                                         With .model.spots(TVHelper.SelectedNode.Index)
                                             GL.Color3(.color.R, .color.G, .color.B)
                                             GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                            GL.DrawElements(PrimitiveType.Triangles, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                            GL.DrawElements(PrimitiveType.Triangles, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                                             GL.Color3(Color.Black)
                                             GL.DrawElements(PrimitiveType.LineLoop, .lines.Count, DrawElementsType.UnsignedInt, .lines)
                                         End With
@@ -4398,7 +4393,7 @@ Class Frm_Main
                                 End If
 
                                 GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                GL.DrawElements(PrimitiveType.TriangleFan, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                                GL.DrawElements(PrimitiveType.TriangleFan, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                             End With
                             i += 1
                         Next
@@ -4454,7 +4449,7 @@ Class Frm_Main
                         End If
                     End If
                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                    GL.DrawElements(PrimitiveType.Triangles, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                    GL.DrawElements(PrimitiveType.Triangles, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                     GL.Color3(Color.Black)
                     GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
                 End With
@@ -4464,7 +4459,7 @@ Class Frm_Main
                 With cabin.driverPos
                     GL.Color3(Settings.DriverColor)
                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                    GL.DrawElements(PrimitiveType.Triangles, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                    GL.DrawElements(PrimitiveType.Triangles, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                     GL.Color3(Color.Black)
                     GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
                 End With
@@ -4479,7 +4474,7 @@ Class Frm_Main
 
                     GL.Color3(Color.Pink)
                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                    GL.DrawElements(PrimitiveType.Lines, .edges.Count, DrawElementsType.UnsignedInt, .edges)
+                    GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
 
                     GL.Color3(Color.Black)
                     GL.PointSize(20)
@@ -4502,7 +4497,7 @@ Class Frm_Main
                     For Each arrow In .arrows
                         GL.Color3(Color.Pink)
                         GL.VertexPointer(3, VertexPointerType.Double, 0, arrow.vertices)
-                        GL.DrawElements(PrimitiveType.Triangles, arrow.edges.Count, DrawElementsType.UnsignedInt, arrow.edges)
+                        GL.DrawElements(PrimitiveType.Triangles, arrow.edges.GetUpperBound(0), DrawElementsType.UnsignedInt, arrow.edges)
                     Next
                 End If
             End With
@@ -5350,8 +5345,58 @@ Class Frm_Main
             TCProjekte.SelectedIndex = TCProjekte.TabCount - 2
             addOCTProj(New OCTProjekt)
         End If
-        actProj = OpenProjects(TCObjekte.SelectedIndex).actProj
+        getOCTProj.TVHelper = TVHelper
+        getOCTProj.TVHelperSelected = TVHelper.SelectedNode
+        getOCTProj.LBLichter = LBLichter.Items
+        getOCTProj.LBLichterSelected = LBLichter.SelectedIndex
+        getOCTProj.LBPfade = LBPfade.Items
+        getOCTProj.LBPfadeSelected = LBPfade.SelectedIndex
+
+        'projekt wird hier gewechselt
+        actProj = OpenProjects(TCProjekte.SelectedIndex).actProj
+        showSelectetProject()
         GlMain.Invalidate()
+    End Sub
+
+    Private Sub showSelectetProject()
+        With getOCTProj()
+            LBMeshes.Items.Clear()
+            LBLichter.Items.Clear()
+            LBPfade.Items.Clear()
+
+            If Not getProjType() = Proj_Sli.TYPE Then
+                If actProj.model IsNot Nothing Then
+                    For Each mesh In actProj.model.meshes
+                        LBMeshes.Items.Add(mesh.filename.name)
+                        LBMeshes.SetItemChecked(LBMeshes.Items.Count - 1, True)
+                    Next
+                    LBMeshes.SelectedIndex = .LBMeshesSelected
+                End If
+            Else
+                Dim i As Integer = 0
+                For Each subobjekt In actProj.subobjekte
+                    LBMeshes.Items.Add(actProj.filename.name & "_" & i)
+                    LBMeshes.SetItemChecked(LBMeshes.Items.Count - 1, True)
+                    i += 1
+                Next
+            End If
+            TCObjekte.SelectedIndex = .TCObjkteSelected
+            TCObjektePMeshes.Text = "Meshes (" & LBMeshes.Items.Count & ")"
+            TVHelper = .TVHelper
+            TVHelper.SelectedNode = .TVHelperSelected
+            LBLichter.Items.AddRange(.LBLichter)
+            LBLichter.SelectedIndex = .LBLichterSelected
+            LBPfade.Items.AddRange(.LBPfade)
+            LBPfade.SelectedIndex = .LBPfadeSelected
+        End With
+    End Sub
+
+    Private Sub Mesh_TBSichtbarkeitVal_TextChanged(sender As Object, e As EventArgs) Handles Mesh_TBSichtbarkeitVal.TextChanged
+        If Mesh_VSSichtbarkeit.Variable <> "" Then
+            If IsNumeric(Convert.ToDouble(Mesh_TBSichtbarkeitVal.Text)) Then
+                RecalcVis(Mesh_VSSichtbarkeit.Variable, Convert.ToDouble(Mesh_TBSichtbarkeitVal.Text))
+            End If
+        End If
     End Sub
 End Class
 

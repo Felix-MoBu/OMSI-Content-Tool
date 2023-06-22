@@ -10,8 +10,7 @@ Public Class DataBase
     Public creatorID As Integer
 
     Public selectedRepaint As OMSI_Repaint
-    Public AlleVariablen As New List(Of String)
-    Public AlleVarValues As New List(Of Double)
+    Public alleVarValues As New Dictionary(Of String, Single)
     Public lastVars As New List(Of String)
     Public todoList As New List(Of CheckListPoint)
 
@@ -51,8 +50,7 @@ Public Class DataBase
                         selectedRepaint.name = allLines(linect + 2)
                         linect += 2
                     Case "[setvar]"
-                        AlleVariablen.Add(allLines(linect + 1))
-                        AlleVarValues.Add(toSingle(allLines(linect + 2)))
+                        addVarValues(allLines(linect + 1), toSingle(allLines(linect + 2)))
                         linect += 2
                     Case "[lastvars]"
                         For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1)) - 1
@@ -83,11 +81,9 @@ Public Class DataBase
 
         selectedRepaint = Frm_Main.selectedRepaint
 
-        AlleVariablen = New List(Of String)
-        AlleVarValues = New List(Of Double)
+        alleVarValues = New Dictionary(Of String, Single)
         For Each item In Frm_VarTest.getUsedVars
-            AlleVariablen.Add(item.var)
-            AlleVarValues.Add(item.val)
+            addVarValues(item.var, item.val)
         Next
 
 
@@ -126,10 +122,10 @@ Public Class DataBase
                     .Add(selectedRepaint.name, True)
                 End If
 
-                For varct As Integer = 0 To AlleVariablen.Count - 1
+                For varct As Integer = 0 To alleVarValues.Count - 1
                     .Add("[setvar]")
-                    .Add(AlleVariablen(varct))
-                    .Add(AlleVarValues(varct), True)
+                    .Add(alleVarValues.Keys(varct))
+                    .Add(alleVarValues(varct), True)
                 Next
 
                 If lastVars.Count > 0 Then
@@ -175,6 +171,14 @@ Public Class DataBase
                     Log.Add("Keine Projektdatenbank erstellt da keine Werte zum Speichern vorhanden sind.")
                 End If
             End If
+        End If
+    End Sub
+
+    Public Sub addVarValues(var As String, value As Integer)
+        If Not alleVarValues.ContainsKey(var) Then
+            alleVarValues.Add(var, value)
+        Else
+            Log.Add("Versuch die selbe Variable erneut hinzuzufügen. Variable: " & var, Log.TYPE_WARNUNG)
         End If
     End Sub
 End Class

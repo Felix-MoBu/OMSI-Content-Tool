@@ -15,7 +15,7 @@ Public Class Frm_VarTest
         For Each control In Me.Controls
             If control.name.Contains("VS_") Then
                 If control.name.split("_")(1) = sender.name.split("_")(1) Then
-                    If Frm_Main.getOCTProj.alleVarValues.Keys.Contains(sender.text) Then
+                    If Frm_Main.getOCTProj.alleVarValues.ContainsKey(control.variable) Then
                         Frm_Main.getOCTProj.alleVarValues(control.variable) = sender.text
                         Frm_Main.RecalcVis(control.variable, sender.text)
                         Frm_Main.RecalcAlpha(control.variable, sender.text)

@@ -11,6 +11,15 @@
     Public alleTexturen As New List(Of String)
     Public alleVarValues As New Dictionary(Of String, Single)
 
+    Public LBMeshesSelected As Integer = 0
+    Public TCObjkteSelected As Integer = 0
+    Public TVHelper As TreeView
+    Public TVHelperSelected As TreeNode
+    Public LBLichter As ListBox.ObjectCollection
+    Public LBLichterSelected As Integer = 0
+    Public LBPfade As ListBox.ObjectCollection
+    Public LBPfadeSelected As Integer = 0
+
     Public Sub New()
         Projekt_Emt = New Proj_Emt
     End Sub
@@ -66,14 +75,14 @@
     Public Sub addVarValues(var As String, value As Integer)
         If Not alleVarValues.ContainsKey(var) Then
             alleVarValues.Add(var, value)
+        Else
+            Log.Add("Versuch die selbe Variable erneut hinzuzufügen. Variable: " & var, Log.TYPE_WARNUNG)
         End If
     End Sub
 
     Public Sub addVarValues(listOfVars As List(Of String), value As Integer)
         For Each var In listOfVars
-            If Not alleVarValues.ContainsKey(var) Then
-                alleVarValues.Add(var, value)
-            End If
+            addVarValues(var, value)
         Next
     End Sub
 
