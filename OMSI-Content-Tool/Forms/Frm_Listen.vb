@@ -145,7 +145,7 @@ Public Class Frm_Listen
 
     Private Sub BTÜbernehmen_Click(sender As Object, e As EventArgs) Handles BTÜbernehmen.Click
         SaveChanges()
-        Frm_Main.VariablenAusOrdnerLaden(Frm_Main.getProj.varlists, Frm_Main.getProj.filename)
+        Frm_Main.VariablenAusOrdnerLaden(Frm_Main.actProj.varlists, Frm_Main.actProj.filename)
         Me.Close()
     End Sub
 

@@ -24,7 +24,7 @@ Public Class Frm_Rep
     End Sub
 
     Private Sub einlesen()
-        Projekt_Bus = Frm_Main.getProj()
+        Projekt_Bus = Frm_Main.actProj
         TexChangeFolder = Projekt_Bus.filename.path & "\" & Projekt_Bus.model.TexChangeFolder
         'Standardlack
         anstrichAlt = Projekt_Bus.anstrich
@@ -297,7 +297,7 @@ Public Class Frm_Rep
                 Next
 
                 If LBRepaints.SelectedIndex > 0 Then
-                    Dim newLT As New LocalTexture
+                    Dim newLT As New Material
                     newLT.filename = New Filename(repaint.file, RepFolder)
                     Frm_Main.loadTexture(newLT)         '<- Hier vlt mit True die vorher geladene Texture überschreiben!
                     Frm_Main.origTexturen.Add(New Filename(Projekt_Bus.model.TexChangeTexs(i).file, Projekt_Bus.filename.path & "\Texture"))
@@ -385,16 +385,10 @@ Public Class Frm_Rep
                     End If
 
                     'Frm_Main.resetVis()
-                    'If Not rep_var.val = 0 Then
                     Frm_Main.RecalcVis(rep_var.var, rep_var.val)
-                    ' End If
 
-                    For varind = 0 To Frm_Main.AlleVariablen.Count - 1
-                        If Frm_Main.AlleVariablen(varind) = rep_var.name Then
-                            Frm_Main.AlleVarValues(varind) = rep_var.val
-                            Exit For
-                        End If
-                    Next
+                    Frm_Main.getOCTProj.alleVarValues(rep_var.name) = rep_var.val
+
                     ctVar += 1
                 End If
             Next
@@ -610,8 +604,8 @@ Public Class Frm_Rep
     End Sub
 
     Private Sub BTRepTool_Click(sender As Object, e As EventArgs) Handles BTRepTool.Click
-        If System.IO.File.Exists(My.Settings.RepToolPfad) Then
-            Process.Start(My.Settings.RepToolPfad)
+        If System.IO.File.Exists(Settings.RepToolPfad) Then
+            Process.Start(Settings.RepToolPfad)
         Else
             MsgBox("Bitte wähle zunächst in den Einstellungen den Pfad zum Repaint-Tool aus!")
         End If

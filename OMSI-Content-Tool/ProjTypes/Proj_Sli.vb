@@ -22,7 +22,7 @@ Public Class Proj_Sli
     Public onlyeditor As Boolean
 
     Public heightProfile As New List(Of Sli_ProfilePnt)
-    Public textures As New List(Of LocalTexture)
+    Public textures As New List(Of Material)
     Public patchwork_chains As New List(Of Sli_PatchworkChain)
 
     Public profiles As New List(Of Sli_Profile)
@@ -45,7 +45,7 @@ Public Class Proj_Sli
                 Exit Sub
             End If
 
-            Dim texturesTemp As New List(Of LocalTexture)
+            Dim texturesTemp As New List(Of Material)
 
             For linect = 0 To allLines.Count - 1
                 Select Case allLines(linect)
@@ -66,7 +66,7 @@ Public Class Proj_Sli
                         End With
                         heightProfile.Add(newProfilePnt)
                     Case "[texture]"
-                        Dim newTex As New LocalTexture
+                        Dim newTex As New Material
                         With newTex
                             .filename = New Filename(allLines(linect + 1), filename.path & "\Texture")
                             .matName = Split(allLines(linect + 1), ".")(0)

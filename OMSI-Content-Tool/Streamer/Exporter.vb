@@ -1,6 +1,8 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Module Exporter
-    Public Sub write(Objekt As Local3DObjekt, filename As Filename)
+    Public ReadOnly KNOWN_FILE_TYPES As String() = {"o3d", "x", "x3d"} ', "sli", "txt", "rdy"}
+
+    Public Sub write(Objekt As Mesh, filename As Filename)
         Select Case filename.extension
             Case "o3d"
                 writeO3D(Objekt, filename)
@@ -11,8 +13,8 @@ Module Exporter
         End Select
     End Sub
 
-    Private Sub writeX3D(Objekt As Local3DObjekt, filename As Filename)
-        MsgBox("X3D-Datei Gespeichert ;) #nicht   (" & filename & ")")
+    Private Sub writeX3D(Objekt As Mesh, filename As Filename)
+        MsgBox("X3D-Datei nicht Gespeichert: Der Dateityp wird noch nicht unterstützt!  (" & filename & ")")
     End Sub
 
     Private Function intToHex(val As Integer) As List(Of Byte)
@@ -27,7 +29,7 @@ Module Exporter
         If x > 255 Then Return Nothing
     End Function
 
-    Private Sub writeO3D(Objekt As Local3DObjekt, filename As Filename)
+    Private Sub writeO3D(Objekt As Mesh, filename As Filename)
         Dim bytes As New List(Of Byte)
         With bytes
             .AddRange({&H84, &H19, &H1, &H17})
@@ -81,7 +83,7 @@ Module Exporter
                 .AddRange(ToHex(texture.diffuse.G / 255))
                 .AddRange(ToHex(texture.diffuse.B / 255))
                 .AddRange(ToHex(texture.diffuseAlpha))
-                If Not My.Settings.o3dRemoveSpec Then
+                If Not Settings.o3dRemoveSpec Then
                     .AddRange(ToHex(texture.specular.R / 255))
                     .AddRange(ToHex(texture.specular.G / 255))
                     .AddRange(ToHex(texture.specular.B / 255))
@@ -132,7 +134,7 @@ Module Exporter
         Frm_Main.SSLBStatus.Text = "Export erfogreich"
     End Sub
 
-    Private Sub writeX(Objekt As Local3DObjekt, filename As Filename)
+    Private Sub writeX(Objekt As Mesh, filename As Filename)
 
         Dim fw As New FileWriter(filename, True)
         With fw

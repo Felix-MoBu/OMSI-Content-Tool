@@ -10,13 +10,15 @@ Public Class DataBase
     Public creatorID As Integer
 
     Public selectedRepaint As OMSI_Repaint
-    Public AlleVariablen As New List(Of String)
-    Public AlleVarValues As New List(Of Double)
+    Public alleVarValues As New Dictionary(Of String, Single)
     Public lastVars As New List(Of String)
-    Public todoList As New List(Of String)
-    Public todoReadyList As New List(Of String)
+    Public todoList As New List(Of CheckListPoint)
+
+    Public storedPoints As New List(Of Point3D)
+    Public storedPointNames As New List(Of String)
 
     Public Const FILETYPE As String = "ocdb"
+    Dim LISTSEPARATOR As Char() = {";"}
 
     Public Sub New(name As Filename)
         filename = New Filename(name.path & "\" & name.nameNoEnding & "." & FILETYPE)
@@ -48,8 +50,7 @@ Public Class DataBase
                         selectedRepaint.name = allLines(linect + 2)
                         linect += 2
                     Case "[setvar]"
-                        AlleVariablen.Add(allLines(linect + 1))
-                        AlleVarValues.Add(toSingle(allLines(linect + 2)))
+                        addVarValues(allLines(linect + 1), toSingle(allLines(linect + 2)))
                         linect += 2
                     Case "[lastvars]"
                         For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1)) - 1
@@ -58,14 +59,17 @@ Public Class DataBase
                         linect += 2 + CInt(allLines(linect + 1))
                     Case "[todo]"
                         For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1)) - 1
-                            todoList.Add(allLines(i))
+                            todoList.Add(New CheckListPoint(allLines(i)))
                         Next
                         linect += 2 + CInt(allLines(linect + 1))
-                    Case "[todo_ready]"
+                    Case "[storedPoints]"
                         For i = linect + 2 To linect + 2 + CInt(allLines(linect + 1)) - 1
-                            todoReadyList.Add(allLines(i))
+                            Dim values As String() = allLines(i).Split(LISTSEPARATOR, 4)
+                            If values.Length > 3 Then
+                                storedPoints.Add(New Point3D(values(0), values(1), values(2)))
+                                storedPointNames.Add(values(3))
+                            End If
                         Next
-                        linect += 2 + CInt(allLines(linect + 1))
                 End Select
             End If
         Next
@@ -77,11 +81,9 @@ Public Class DataBase
 
         selectedRepaint = Frm_Main.selectedRepaint
 
-        AlleVariablen = New List(Of String)
-        AlleVarValues = New List(Of Double)
+        alleVarValues = New Dictionary(Of String, Single)
         For Each item In Frm_VarTest.getUsedVars
-            AlleVariablen.Add(item.var)
-            AlleVarValues.Add(item.val)
+            addVarValues(item.var, item.val)
         Next
 
 
@@ -120,10 +122,10 @@ Public Class DataBase
                     .Add(selectedRepaint.name, True)
                 End If
 
-                For varct As Integer = 0 To AlleVariablen.Count - 1
+                For varct As Integer = 0 To alleVarValues.Count - 1
                     .Add("[setvar]")
-                    .Add(AlleVariablen(varct))
-                    .Add(AlleVarValues(varct), True)
+                    .Add(alleVarValues.Keys(varct))
+                    .Add(alleVarValues(varct), True)
                 Next
 
                 If lastVars.Count > 0 Then
@@ -136,21 +138,23 @@ Public Class DataBase
                 End If
 
                 If todoList.Count > 0 Then
-                    .Add("[todo]")
-                    .Add(todoList.Count)
+                    .AddTag("todo", todoList.Count)
                     For todoct As Integer = 0 To todoList.Count - 1
-                        .Add(todoList(todoct))
+                        .Add(todoList(todoct).toLine)
                     Next
                     .Add(vbCrLf)
                 End If
 
-                If todoReadyList.Count > 0 Then
-                    .Add("[todo_ready]")
-                    .Add(todoReadyList.Count)
-                    For todoct As Integer = 0 To todoReadyList.Count - 1
-                        .Add(todoReadyList(todoct))
+
+                If storedPoints.Count > 0 Then
+                    .AddTag("storedPoints", storedPoints.Count)
+                    For i = 0 To storedPoints.Count - 1
+                        Dim PointName As String = ""
+                        If storedPointNames.Count > i Then
+                            PointName = storedPointNames(i)
+                        End If
+                        .Add(storedPoints(i).asString(";") & ";" & PointName)
                     Next
-                    .Add(vbCrLf)
                 End If
             End With
 
@@ -167,6 +171,14 @@ Public Class DataBase
                     Log.Add("Keine Projektdatenbank erstellt da keine Werte zum Speichern vorhanden sind.")
                 End If
             End If
+        End If
+    End Sub
+
+    Public Sub addVarValues(var As String, value As Integer)
+        If Not alleVarValues.ContainsKey(var) Then
+            alleVarValues.Add(var, value)
+        Else
+            Log.Add("Versuch die selbe Variable erneut hinzuzufügen. Variable: " & var, Log.TYPE_WARNUNG)
         End If
     End Sub
 End Class

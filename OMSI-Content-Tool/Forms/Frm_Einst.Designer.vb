@@ -30,6 +30,14 @@ Partial Class Frm_Einst
         Me.BTAbbrechen = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.GroupBox11 = New System.Windows.Forms.GroupBox()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.DDInternalClipboard = New System.Windows.Forms.ComboBox()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.GroupBox10 = New System.Windows.Forms.GroupBox()
+        Me.CBLogGit = New System.Windows.Forms.CheckBox()
+        Me.CBGitAutoCommit = New System.Windows.Forms.CheckBox()
+        Me.CBGitInMenue = New System.Windows.Forms.CheckBox()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.TBNickname = New System.Windows.Forms.TextBox()
         Me.Label20 = New System.Windows.Forms.Label()
@@ -57,6 +65,9 @@ Partial Class Frm_Einst
         Me.Label21 = New System.Windows.Forms.Label()
         Me.TBMaxFPS = New System.Windows.Forms.TextBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.TBColorFenster = New System.Windows.Forms.TextBox()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.BTResetTimeline = New System.Windows.Forms.Button()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.BTResetEig = New System.Windows.Forms.Button()
         Me.BTResetTex = New System.Windows.Forms.Button()
@@ -106,10 +117,11 @@ Partial Class Frm_Einst
         Me.CDColorPassenger = New System.Windows.Forms.ColorDialog()
         Me.CDColorDriver = New System.Windows.Forms.ColorDialog()
         Me.CDColorAchsen = New System.Windows.Forms.ColorDialog()
-        Me.BTEinstExp = New System.Windows.Forms.Button()
-        Me.BTEinstImport = New System.Windows.Forms.Button()
+        Me.CDColorFenster = New System.Windows.Forms.ColorDialog()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.GroupBox11.SuspendLayout()
+        Me.GroupBox10.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -185,6 +197,8 @@ Partial Class Frm_Einst
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.GroupBox11)
+        Me.TabPage1.Controls.Add(Me.GroupBox10)
         Me.TabPage1.Controls.Add(Me.GroupBox6)
         Me.TabPage1.Controls.Add(Me.BTEinstReset)
         Me.TabPage1.Controls.Add(Me.GroupBox5)
@@ -196,6 +210,90 @@ Partial Class Frm_Einst
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Allgemein"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'GroupBox11
+        '
+        Me.GroupBox11.Controls.Add(Me.Label25)
+        Me.GroupBox11.Controls.Add(Me.DDInternalClipboard)
+        Me.GroupBox11.Controls.Add(Me.Label24)
+        Me.GroupBox11.Location = New System.Drawing.Point(419, 162)
+        Me.GroupBox11.Name = "GroupBox11"
+        Me.GroupBox11.Size = New System.Drawing.Size(200, 126)
+        Me.GroupBox11.TabIndex = 10
+        Me.GroupBox11.TabStop = False
+        Me.GroupBox11.Text = "Zwischenspeicher"
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label25.Location = New System.Drawing.Point(6, 48)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(178, 39)
+        Me.Label25.TabIndex = 2
+        Me.Label25.Text = "Wenn nicht ""interner Speicher"" aus-" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "gewählt, funktioniert das Einfügen" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "von alle" &
+    "n Formaten automatisch"
+        '
+        'DDInternalClipboard
+        '
+        Me.DDInternalClipboard.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.DDInternalClipboard.FormattingEnabled = True
+        Me.DDInternalClipboard.Items.AddRange(New Object() {"Interner Speicher", "RAM (<tab>)", "RAM (<newLine>)", "RAM ("";"")"})
+        Me.DDInternalClipboard.Location = New System.Drawing.Point(70, 19)
+        Me.DDInternalClipboard.Name = "DDInternalClipboard"
+        Me.DDInternalClipboard.Size = New System.Drawing.Size(121, 21)
+        Me.DDInternalClipboard.TabIndex = 1
+        '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.Location = New System.Drawing.Point(6, 22)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(58, 13)
+        Me.Label24.TabIndex = 0
+        Me.Label24.Text = "3D-Punkte"
+        '
+        'GroupBox10
+        '
+        Me.GroupBox10.Controls.Add(Me.CBLogGit)
+        Me.GroupBox10.Controls.Add(Me.CBGitAutoCommit)
+        Me.GroupBox10.Controls.Add(Me.CBGitInMenue)
+        Me.GroupBox10.Location = New System.Drawing.Point(214, 162)
+        Me.GroupBox10.Name = "GroupBox10"
+        Me.GroupBox10.Size = New System.Drawing.Size(199, 126)
+        Me.GroupBox10.TabIndex = 9
+        Me.GroupBox10.TabStop = False
+        Me.GroupBox10.Text = "Git"
+        '
+        'CBLogGit
+        '
+        Me.CBLogGit.AutoSize = True
+        Me.CBLogGit.Location = New System.Drawing.Point(6, 70)
+        Me.CBLogGit.Name = "CBLogGit"
+        Me.CBLogGit.Size = New System.Drawing.Size(130, 17)
+        Me.CBLogGit.TabIndex = 2
+        Me.CBLogGit.Text = "Git in Logfile anzeigen"
+        Me.CBLogGit.UseVisualStyleBackColor = True
+        '
+        'CBGitAutoCommit
+        '
+        Me.CBGitAutoCommit.AutoSize = True
+        Me.CBGitAutoCommit.Location = New System.Drawing.Point(6, 49)
+        Me.CBGitAutoCommit.Name = "CBGitAutoCommit"
+        Me.CBGitAutoCommit.Size = New System.Drawing.Size(159, 17)
+        Me.CBGitAutoCommit.TabIndex = 1
+        Me.CBGitAutoCommit.Text = "Auto Commit beim speichern"
+        Me.CBGitAutoCommit.UseVisualStyleBackColor = True
+        '
+        'CBGitInMenue
+        '
+        Me.CBGitInMenue.AutoSize = True
+        Me.CBGitInMenue.Location = New System.Drawing.Point(6, 21)
+        Me.CBGitInMenue.Name = "CBGitInMenue"
+        Me.CBGitInMenue.Size = New System.Drawing.Size(152, 30)
+        Me.CBGitInMenue.TabIndex = 0
+        Me.CBGitInMenue.Text = "Git im Menüband anzeigen" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(wenn installiert)"
+        Me.CBGitInMenue.UseVisualStyleBackColor = True
         '
         'GroupBox6
         '
@@ -453,6 +551,7 @@ Partial Class Frm_Einst
         '
         'TBMaxFPS
         '
+        Me.TBMaxFPS.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBMaxFPS.Location = New System.Drawing.Point(139, 19)
         Me.TBMaxFPS.Name = "TBMaxFPS"
         Me.TBMaxFPS.Size = New System.Drawing.Size(100, 20)
@@ -460,16 +559,46 @@ Partial Class Frm_Einst
         '
         'GroupBox4
         '
+        Me.GroupBox4.Controls.Add(Me.TBColorFenster)
+        Me.GroupBox4.Controls.Add(Me.Label23)
+        Me.GroupBox4.Controls.Add(Me.BTResetTimeline)
         Me.GroupBox4.Controls.Add(Me.Label10)
         Me.GroupBox4.Controls.Add(Me.BTResetEig)
         Me.GroupBox4.Controls.Add(Me.BTResetTex)
         Me.GroupBox4.Controls.Add(Me.BTResetObj)
         Me.GroupBox4.Location = New System.Drawing.Point(8, 165)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(251, 80)
+        Me.GroupBox4.Size = New System.Drawing.Size(426, 80)
         Me.GroupBox4.TabIndex = 7
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Fenster"
+        '
+        'TBColorFenster
+        '
+        Me.TBColorFenster.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.TBColorFenster.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TBColorFenster.Location = New System.Drawing.Point(332, 40)
+        Me.TBColorFenster.Name = "TBColorFenster"
+        Me.TBColorFenster.Size = New System.Drawing.Size(75, 20)
+        Me.TBColorFenster.TabIndex = 11
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(329, 16)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(75, 13)
+        Me.Label23.TabIndex = 5
+        Me.Label23.Text = "Fenster Farbe:"
+        '
+        'BTResetTimeline
+        '
+        Me.BTResetTimeline.Location = New System.Drawing.Point(251, 40)
+        Me.BTResetTimeline.Name = "BTResetTimeline"
+        Me.BTResetTimeline.Size = New System.Drawing.Size(75, 23)
+        Me.BTResetTimeline.TabIndex = 4
+        Me.BTResetTimeline.Text = "Timeline"
+        Me.BTResetTimeline.UseVisualStyleBackColor = True
         '
         'Label10
         '
@@ -509,6 +638,7 @@ Partial Class Frm_Einst
         '
         'TBColor3D
         '
+        Me.TBColor3D.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColor3D.Location = New System.Drawing.Point(147, 6)
         Me.TBColor3D.Name = "TBColor3D"
         Me.TBColor3D.Size = New System.Drawing.Size(100, 20)
@@ -559,6 +689,7 @@ Partial Class Frm_Einst
         '
         'TBColorSelectedObj
         '
+        Me.TBColorSelectedObj.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColorSelectedObj.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBColorSelectedObj.Location = New System.Drawing.Point(139, 97)
         Me.TBColorSelectedObj.Name = "TBColorSelectedObj"
@@ -577,6 +708,7 @@ Partial Class Frm_Einst
         '
         'TBColorAchsen
         '
+        Me.TBColorAchsen.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColorAchsen.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBColorAchsen.Location = New System.Drawing.Point(317, 71)
         Me.TBColorAchsen.Name = "TBColorAchsen"
@@ -585,6 +717,7 @@ Partial Class Frm_Einst
         '
         'TBColorPassengers
         '
+        Me.TBColorPassengers.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColorPassengers.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBColorPassengers.Location = New System.Drawing.Point(317, 19)
         Me.TBColorPassengers.Name = "TBColorPassengers"
@@ -613,6 +746,7 @@ Partial Class Frm_Einst
         '
         'TBColorDriver
         '
+        Me.TBColorDriver.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColorDriver.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBColorDriver.Location = New System.Drawing.Point(317, 45)
         Me.TBColorDriver.Name = "TBColorDriver"
@@ -621,6 +755,7 @@ Partial Class Frm_Einst
         '
         'TBColorReflexCam
         '
+        Me.TBColorReflexCam.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColorReflexCam.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBColorReflexCam.Location = New System.Drawing.Point(139, 71)
         Me.TBColorReflexCam.Name = "TBColorReflexCam"
@@ -629,6 +764,7 @@ Partial Class Frm_Einst
         '
         'TBColorPaxCam
         '
+        Me.TBColorPaxCam.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColorPaxCam.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBColorPaxCam.Location = New System.Drawing.Point(139, 45)
         Me.TBColorPaxCam.Name = "TBColorPaxCam"
@@ -667,6 +803,7 @@ Partial Class Frm_Einst
         '
         'TBColorDriverCam
         '
+        Me.TBColorDriverCam.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColorDriverCam.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBColorDriverCam.Location = New System.Drawing.Point(139, 19)
         Me.TBColorDriverCam.Name = "TBColorDriverCam"
@@ -895,31 +1032,11 @@ Partial Class Frm_Einst
         '
         Me.CDColor3D.Color = System.Drawing.Color.White
         '
-        'BTEinstExp
-        '
-        Me.BTEinstExp.Location = New System.Drawing.Point(4, 352)
-        Me.BTEinstExp.Name = "BTEinstExp"
-        Me.BTEinstExp.Size = New System.Drawing.Size(75, 23)
-        Me.BTEinstExp.TabIndex = 1
-        Me.BTEinstExp.Text = "Einst. Export"
-        Me.BTEinstExp.UseVisualStyleBackColor = True
-        '
-        'BTEinstImport
-        '
-        Me.BTEinstImport.Location = New System.Drawing.Point(85, 352)
-        Me.BTEinstImport.Name = "BTEinstImport"
-        Me.BTEinstImport.Size = New System.Drawing.Size(75, 23)
-        Me.BTEinstImport.TabIndex = 6
-        Me.BTEinstImport.Text = "Einst. Import"
-        Me.BTEinstImport.UseVisualStyleBackColor = True
-        '
         'Frm_Einst
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(654, 383)
-        Me.Controls.Add(Me.BTEinstImport)
-        Me.Controls.Add(Me.BTEinstExp)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.BTAbbrechen)
         Me.Controls.Add(Me.OBUebernehmen)
@@ -930,6 +1047,10 @@ Partial Class Frm_Einst
         Me.Text = "Einstellungen"
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
+        Me.GroupBox11.ResumeLayout(False)
+        Me.GroupBox11.PerformLayout()
+        Me.GroupBox10.ResumeLayout(False)
+        Me.GroupBox10.PerformLayout()
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox6.PerformLayout()
         Me.GroupBox5.ResumeLayout(False)
@@ -1017,8 +1138,6 @@ Partial Class Frm_Einst
     Friend WithEvents CBLogDebug As CheckBox
     Friend WithEvents GroupBox5 As GroupBox
     Friend WithEvents CBautoO3d As CheckBox
-    Friend WithEvents BTEinstExp As Button
-    Friend WithEvents BTEinstImport As Button
     Friend WithEvents BTEinstReset As Button
     Friend WithEvents GroupBox6 As GroupBox
     Friend WithEvents TBCreatorID As TextBox
@@ -1045,4 +1164,16 @@ Partial Class Frm_Einst
     Friend WithEvents TBColorSelectedObj As TextBox
     Friend WithEvents CBTexAutoReload As CheckBox
     Friend WithEvents CBShowAllParts As CheckBox
+    Friend WithEvents BTResetTimeline As Button
+    Friend WithEvents TBColorFenster As TextBox
+    Friend WithEvents Label23 As Label
+    Friend WithEvents CDColorFenster As ColorDialog
+    Friend WithEvents GroupBox10 As GroupBox
+    Friend WithEvents CBGitInMenue As CheckBox
+    Friend WithEvents CBGitAutoCommit As CheckBox
+    Friend WithEvents CBLogGit As CheckBox
+    Friend WithEvents GroupBox11 As GroupBox
+    Friend WithEvents DDInternalClipboard As ComboBox
+    Friend WithEvents Label24 As Label
+    Friend WithEvents Label25 As Label
 End Class

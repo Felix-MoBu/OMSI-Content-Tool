@@ -815,7 +815,7 @@ Public Class OMSI_Model
             For Each mesh In meshes
                 .Add(mesh.filename)
                 For Each ObjID In mesh.ObjIds
-                    For Each texture In Frm_Main.AlleObjekte(ObjID).texturen
+                    For Each texture In Frm_Main.getOCTProj.alleMeshes(ObjID).texturen
                         If Not tmpTexList.Contains(texture.filename) Then tmpTexList.Add(texture.filename)
                     Next
                 Next

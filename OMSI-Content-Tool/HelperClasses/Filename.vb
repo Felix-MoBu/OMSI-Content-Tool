@@ -45,8 +45,10 @@ Public Class Filename
     End Property
 
 
-    Public Sub New()
-        Log.Add("Leeren Dateinamen hinzugefügt!", Log.TYPE_DEBUG)
+    Public Sub New(Optional logging As Boolean = True)
+        If logging Then
+            Log.Add("Leeren Dateinamen hinzugefügt!", Log.TYPE_DEBUG)
+        End If
         Me.name = ""
         Me.path = ""
     End Sub

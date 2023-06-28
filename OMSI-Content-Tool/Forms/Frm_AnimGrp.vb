@@ -11,7 +11,7 @@ Public Class Frm_AnimGrp
         TBName.Text = ""
         DDMaster.Text = ""
 
-        For Each mesh In Frm_Main.getProj.model.meshes
+        For Each mesh In Frm_Main.actProj.model.meshes
             If Not mesh.meshident Is Nothing Then
                 If mesh.meshident <> "" And Not LBGruppennamen.Items.Contains(mesh.meshident) Then
                     LBGruppennamen.Items.Add(mesh.meshident)
@@ -20,7 +20,7 @@ Public Class Frm_AnimGrp
         Next
 
         'Gruppen ohne Master
-        For Each mesh In Frm_Main.getProj.model.meshes
+        For Each mesh In Frm_Main.actProj.model.meshes
             If Not mesh.animparent Is Nothing Then
                 If mesh.animparent <> "" And Not LBGruppennamen.Items.Contains(mesh.animparent) Then
                     LBGruppennamen.Items.Add(mesh.animparent)
@@ -56,7 +56,7 @@ Public Class Frm_AnimGrp
     Private Sub LBGruppennamen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBGruppennamen.SelectedIndexChanged
         If Not automatic Then       'Sonst werden die Masters verändert!
             LBMeshes.Items.Clear()
-            For Each mesh In Frm_Main.getProj.model.meshes
+            For Each mesh In Frm_Main.actProj.model.meshes
                 If mesh.animparent = LBGruppennamen.SelectedItem Then
                     LBMeshes.Items.Add(mesh.filename.name)
                 End If
@@ -72,7 +72,7 @@ Public Class Frm_AnimGrp
     Private Sub BTÄndern_Click(sender As Object, e As EventArgs) Handles BTÄndern.Click
         If Not TBName.Text.Contains(" ") Then
             If Not LBGruppennamen.Items.Contains(TBName.Text) Then
-                For Each mesh In Frm_Main.getProj.model.meshes
+                For Each mesh In Frm_Main.actProj.model.meshes
                     If mesh.animparent = LBGruppennamen.SelectedItem Then
                         mesh.animparent = TBName.Text
                     End If
@@ -101,7 +101,7 @@ Public Class Frm_AnimGrp
     End Sub
 
     Private Sub DDMaster_SelectedIndexChanged(sender As Object, e As EventArgs) Handles DDMaster.SelectedIndexChanged
-        For Each mesh In Frm_Main.getProj.model.meshes
+        For Each mesh In Frm_Main.actProj.model.meshes
             If mesh.meshident = LBGruppennamen.SelectedItem Then
                 mesh.meshident = ""
             End If

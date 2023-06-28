@@ -7,7 +7,7 @@ Public Class OMSI_Paths
     Public soundpacks As New List(Of List(Of String))
     Public vertices As Double()
     Public edges As Integer()
-    Public dots As New List(Of Local3DObjekt)
+    Public dots As New List(Of Mesh)
 
     Public arrows As New List(Of Arrow)
 
@@ -19,11 +19,11 @@ Public Class OMSI_Paths
     Public oneways As New List(Of Integer)
 
     Public Sub New()
-        Dim newName As String = "paths_" & Frm_Main.getProj.Filename.nameNoEnding & ".cfg"
+        Dim newName As String = "paths_" & Frm_Main.actProj.Filename.nameNoEnding & ".cfg"
         Do
             newName = InputBox("Es muss zunächst eine Datei für Pfade angelegt werden. Wie soll die Datei heißen?", "Neue Pfade-Datei anlegen...", newName)
         Loop Until newName <> ""
-        filename = New Filename(newName, Frm_Main.getProj.filename.path & "\Model")
+        filename = New Filename(newName, Frm_Main.actProj.filename.path & "\Model")
         Log.Add("Pfade-Datei hinzugefügt (Datei: " & newName & ")")
     End Sub
 
@@ -110,7 +110,7 @@ Public Class OMSI_Paths
         For ct As Integer = 0 To pathPoints.Count - 1   '-> in die Schleife oben integrieren!
             Dim tmpVerticesDots As New List(Of Double)
             Dim tmpEdgesDots As New List(Of Integer)
-            Dim newObj As New Local3DObjekt
+            Dim newObj As New Mesh
             tmpVerticesDots.AddRange(positionDot(pathPoints(ct)))
             For i = 1 To 8 Step 7
                 tmpEdgesDots.Add(0)

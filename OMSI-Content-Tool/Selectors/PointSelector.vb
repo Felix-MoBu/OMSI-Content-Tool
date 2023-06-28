@@ -1,5 +1,4 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
-Option Strict On
 
 Public Class PointSelector
     Dim intPoint As New Point3D
@@ -93,18 +92,41 @@ Public Class PointSelector
         CBBPoint.Left = (tmpWidth + 5) * 3
     End Sub
 
+    Dim scipScroll As Boolean = False
     Private Sub CBBPoint_Scroll(sender As Object, e As ScrollEventArgs) Handles CBBPoint.Scroll
-        If e.OldValue > e.NewValue Then
-            TBX.Text = Convert.ToString(Frm_Main.Clipboard3D.X)
-            TBY.Text = Convert.ToString(Frm_Main.Clipboard3D.Y)
-            TBZ.Text = Convert.ToString(Frm_Main.Clipboard3D.Z)
-        Else
-            Frm_Main.Clipboard3D = intPoint
+        If Not scipScroll Then          'Einfügen
+            If e.OldValue > e.NewValue Then
+                If Settings.Point3DInternalClipboard = 0 Then
+                    TBX.Text = Convert.ToString(Frm_Main.Clipboard3D.X)
+                    TBY.Text = Convert.ToString(Frm_Main.Clipboard3D.Y)
+                    TBZ.Text = Convert.ToString(Frm_Main.Clipboard3D.Z)
+                Else
+                    Dim clipboardText As String = My.Computer.Clipboard.GetText()
+                    Dim clipboardSeparators As String() = {vbTab, vbCr, vbLf, vbCrLf, vbNewLine, ";"}
+                    For Each separator In clipboardSeparators
+                        Dim values As String() = My.Computer.Clipboard.GetText().Split(separator)
+                        If values.Length > 2 Then
+                            TBX.Text = values(0).Trim
+                            TBY.Text = values(1).Trim
+                            TBZ.Text = values(2).Trim
+                            Exit For
+                        End If
+                    Next
+                End If
+            Else                        'Kopieren
+                If Settings.Point3DInternalClipboard = 0 Then
+                    Frm_Main.Clipboard3D = intPoint
+                Else
+                    Dim separators As String() = {vbTab, vbNewLine, ";"}
+                    My.Computer.Clipboard.SetText(Point.asString(separators(Settings.Point3DInternalClipboard - 1)))
+                End If
 
-            'Dim newEventarg As KeyPressEventArgs
-            'newEventarg.KeyChar = ChrW(Keys.Enter)
-            'RaiseEvent KeyPress(Me, newEventarg)
+                'Dim newEventarg As KeyPressEventArgs
+                'newEventarg.KeyChar = ChrW(Keys.Enter)
+                'RaiseEvent KeyPress(Me, newEventarg)
+            End If
         End If
+        scipScroll = Not scipScroll
         e.NewValue = 50
     End Sub
 

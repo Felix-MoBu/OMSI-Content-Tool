@@ -124,6 +124,8 @@ Partial Class Frm_Main
         Me.SyncToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem19 = New System.Windows.Forms.ToolStripSeparator()
         Me.UnGitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem20 = New System.Windows.Forms.ToolStripSeparator()
+        Me.OptionenToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ObjektToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EntfernenToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.VersteckenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -132,6 +134,7 @@ Partial Class Frm_Main
         Me.ReadmetxtToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RechnerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem17 = New System.Windows.Forms.ToolStripSeparator()
+        Me.PunkteListeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatistikToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem12 = New System.Windows.Forms.ToolStripSeparator()
         Me.ProjektordnerÖffnenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -195,6 +198,8 @@ Partial Class Frm_Main
         Me.BTEigenschafteResize = New System.Windows.Forms.Button()
         Me.BTPanelEingenschaftenClose = New System.Windows.Forms.Button()
         Me.PanelEigenschaften1 = New System.Windows.Forms.Panel()
+        Me.GBSplinePfad = New System.Windows.Forms.GroupBox()
+        Me.SplinePfad_MinMax = New System.Windows.Forms.Button()
         Me.GBSpot = New System.Windows.Forms.GroupBox()
         Me.Label84 = New System.Windows.Forms.Label()
         Me.Label82 = New System.Windows.Forms.Label()
@@ -450,7 +455,7 @@ Partial Class Frm_Main
         Me.BTTexNew = New System.Windows.Forms.Button()
         Me.DDAlleTexturen = New System.Windows.Forms.ComboBox()
         Me.PBTexture = New System.Windows.Forms.PictureBox()
-        Me.PanelTextureFill = New System.Windows.Forms.Button()
+        Me.BTPanelTextureFill = New System.Windows.Forms.Button()
         Me.LBPanelTexture = New System.Windows.Forms.Label()
         Me.BTPanelTextureClose = New System.Windows.Forms.Button()
         Me.MSTexturen = New System.Windows.Forms.MenuStrip()
@@ -507,8 +512,9 @@ Partial Class Frm_Main
         Me.FDÖffnen = New System.Windows.Forms.OpenFileDialog()
         Me.TSave = New System.Windows.Forms.Timer(Me.components)
         Me.TReloadTextures = New System.Windows.Forms.Timer(Me.components)
-        Me.GBSplinePfad = New System.Windows.Forms.GroupBox()
-        Me.SplinePfad_MinMax = New System.Windows.Forms.Button()
+        Me.TCProjekte = New System.Windows.Forms.TabControl()
+        Me.TCMainTP0 = New System.Windows.Forms.TabPage()
+        Me.TCMainTPPlus = New System.Windows.Forms.TabPage()
         Me.Spot_PSRichtung = New O3D_Test.PointSelector()
         Me.Spot_CSFarbe = New O3D_Test.ColorSelector()
         Me.VarSelector1 = New O3D_Test.VarSelector()
@@ -535,6 +541,7 @@ Partial Class Frm_Main
         Me.TabPage2.SuspendLayout()
         Me.PanelEigenschaften.SuspendLayout()
         Me.PanelEigenschaften1.SuspendLayout()
+        Me.GBSplinePfad.SuspendLayout()
         Me.GBSpot.SuspendLayout()
         Me.GBPlatz.SuspendLayout()
         Me.GBRauch.SuspendLayout()
@@ -574,7 +581,7 @@ Partial Class Frm_Main
         Me.CMSLichter.SuspendLayout()
         Me.TCObjektePPfade.SuspendLayout()
         Me.CMSPfade.SuspendLayout()
-        Me.GBSplinePfad.SuspendLayout()
+        Me.TCProjekte.SuspendLayout()
         Me.SuspendLayout()
         '
         'SS1
@@ -980,7 +987,7 @@ Partial Class Frm_Main
         '
         'GitToolStripMenuItem
         '
-        Me.GitToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NeuesRepositoryToolStripMenuItem, Me.NeuesRepoKlonenToolStripMenuItem, Me.ToolStripMenuItem8, Me.CommitToolStripMenuItem, Me.PullToolStripMenuItem, Me.PushToolStripMenuItem, Me.SyncToolStripMenuItem, Me.ToolStripMenuItem19, Me.UnGitToolStripMenuItem})
+        Me.GitToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NeuesRepositoryToolStripMenuItem, Me.NeuesRepoKlonenToolStripMenuItem, Me.ToolStripMenuItem8, Me.CommitToolStripMenuItem, Me.PullToolStripMenuItem, Me.PushToolStripMenuItem, Me.SyncToolStripMenuItem, Me.ToolStripMenuItem19, Me.UnGitToolStripMenuItem, Me.ToolStripMenuItem20, Me.OptionenToolStripMenuItem1})
         Me.GitToolStripMenuItem.Name = "GitToolStripMenuItem"
         Me.GitToolStripMenuItem.Size = New System.Drawing.Size(34, 20)
         Me.GitToolStripMenuItem.Text = "Git"
@@ -1046,6 +1053,18 @@ Partial Class Frm_Main
         Me.UnGitToolStripMenuItem.Text = "UnGit"
         Me.UnGitToolStripMenuItem.Visible = False
         '
+        'ToolStripMenuItem20
+        '
+        Me.ToolStripMenuItem20.Name = "ToolStripMenuItem20"
+        Me.ToolStripMenuItem20.Size = New System.Drawing.Size(166, 6)
+        '
+        'OptionenToolStripMenuItem1
+        '
+        Me.OptionenToolStripMenuItem1.Image = CType(resources.GetObject("OptionenToolStripMenuItem1.Image"), System.Drawing.Image)
+        Me.OptionenToolStripMenuItem1.Name = "OptionenToolStripMenuItem1"
+        Me.OptionenToolStripMenuItem1.Size = New System.Drawing.Size(169, 22)
+        Me.OptionenToolStripMenuItem1.Text = "Optionen"
+        '
         'ObjektToolStripMenuItem
         '
         Me.ObjektToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EntfernenToolStripMenuItem2, Me.VersteckenToolStripMenuItem})
@@ -1070,7 +1089,7 @@ Partial Class Frm_Main
         '
         'DevelopmentToolStripMenuItem
         '
-        Me.DevelopmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToDoListToolStripMenuItem, Me.ReadmetxtToolStripMenuItem, Me.RechnerToolStripMenuItem, Me.ToolStripMenuItem17, Me.StatistikToolStripMenuItem, Me.ToolStripMenuItem12, Me.ProjektordnerÖffnenToolStripMenuItem})
+        Me.DevelopmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToDoListToolStripMenuItem, Me.ReadmetxtToolStripMenuItem, Me.RechnerToolStripMenuItem, Me.ToolStripMenuItem17, Me.PunkteListeToolStripMenuItem, Me.StatistikToolStripMenuItem, Me.ToolStripMenuItem12, Me.ProjektordnerÖffnenToolStripMenuItem})
         Me.DevelopmentToolStripMenuItem.Name = "DevelopmentToolStripMenuItem"
         Me.DevelopmentToolStripMenuItem.Size = New System.Drawing.Size(90, 20)
         Me.DevelopmentToolStripMenuItem.Text = "Development"
@@ -1097,6 +1116,12 @@ Partial Class Frm_Main
         '
         Me.ToolStripMenuItem17.Name = "ToolStripMenuItem17"
         Me.ToolStripMenuItem17.Size = New System.Drawing.Size(225, 6)
+        '
+        'PunkteListeToolStripMenuItem
+        '
+        Me.PunkteListeToolStripMenuItem.Name = "PunkteListeToolStripMenuItem"
+        Me.PunkteListeToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
+        Me.PunkteListeToolStripMenuItem.Text = "Punkte Liste"
         '
         'StatistikToolStripMenuItem
         '
@@ -1414,6 +1439,7 @@ Partial Class Frm_Main
         Me.PanelMain.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PanelMain.Location = New System.Drawing.Point(0, 24)
         Me.PanelMain.Name = "PanelMain"
+        Me.PanelMain.Padding = New System.Windows.Forms.Padding(0, 22, 0, 0)
         Me.PanelMain.Size = New System.Drawing.Size(1264, 1015)
         Me.PanelMain.TabIndex = 12
         '
@@ -1427,6 +1453,7 @@ Partial Class Frm_Main
         Me.PanelTimeline.Padding = New System.Windows.Forms.Padding(3)
         Me.PanelTimeline.Size = New System.Drawing.Size(820, 130)
         Me.PanelTimeline.TabIndex = 3
+        Me.PanelTimeline.Visible = False
         '
         'BTPanelTimelineClose
         '
@@ -1435,7 +1462,7 @@ Partial Class Frm_Main
         Me.BTPanelTimelineClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red
         Me.BTPanelTimelineClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BTPanelTimelineClose.ForeColor = System.Drawing.SystemColors.HighlightText
-        Me.BTPanelTimelineClose.Location = New System.Drawing.Point(799, 0)
+        Me.BTPanelTimelineClose.Location = New System.Drawing.Point(799, 2)
         Me.BTPanelTimelineClose.Name = "BTPanelTimelineClose"
         Me.BTPanelTimelineClose.Padding = New System.Windows.Forms.Padding(2, 0, 0, 0)
         Me.BTPanelTimelineClose.Size = New System.Drawing.Size(19, 19)
@@ -1536,7 +1563,7 @@ Partial Class Frm_Main
         Me.PanelEigenschaften.Controls.Add(Me.BTPanelEingenschaftenClose)
         Me.PanelEigenschaften.Controls.Add(Me.PanelEigenschaften1)
         Me.PanelEigenschaften.Controls.Add(Me.LBEingenschaften)
-        Me.PanelEigenschaften.Location = New System.Drawing.Point(901, 3)
+        Me.PanelEigenschaften.Location = New System.Drawing.Point(901, 27)
         Me.PanelEigenschaften.Name = "PanelEigenschaften"
         Me.PanelEigenschaften.Size = New System.Drawing.Size(360, 1009)
         Me.PanelEigenschaften.TabIndex = 2
@@ -1560,7 +1587,7 @@ Partial Class Frm_Main
         Me.BTPanelEingenschaftenClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red
         Me.BTPanelEingenschaftenClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BTPanelEingenschaftenClose.ForeColor = System.Drawing.SystemColors.HighlightText
-        Me.BTPanelEingenschaftenClose.Location = New System.Drawing.Point(335, 3)
+        Me.BTPanelEingenschaftenClose.Location = New System.Drawing.Point(337, 3)
         Me.BTPanelEingenschaftenClose.Name = "BTPanelEingenschaftenClose"
         Me.BTPanelEingenschaftenClose.Padding = New System.Windows.Forms.Padding(2, 0, 0, 0)
         Me.BTPanelEingenschaftenClose.Size = New System.Drawing.Size(19, 19)
@@ -1596,6 +1623,25 @@ Partial Class Frm_Main
         Me.PanelEigenschaften1.Name = "PanelEigenschaften1"
         Me.PanelEigenschaften1.Size = New System.Drawing.Size(353, 975)
         Me.PanelEigenschaften1.TabIndex = 1
+        '
+        'GBSplinePfad
+        '
+        Me.GBSplinePfad.Controls.Add(Me.SplinePfad_MinMax)
+        Me.GBSplinePfad.Location = New System.Drawing.Point(4, 927)
+        Me.GBSplinePfad.Name = "GBSplinePfad"
+        Me.GBSplinePfad.Size = New System.Drawing.Size(327, 124)
+        Me.GBSplinePfad.TabIndex = 37
+        Me.GBSplinePfad.TabStop = False
+        Me.GBSplinePfad.Text = "Spline Pfad"
+        '
+        'SplinePfad_MinMax
+        '
+        Me.SplinePfad_MinMax.Location = New System.Drawing.Point(303, 0)
+        Me.SplinePfad_MinMax.Name = "SplinePfad_MinMax"
+        Me.SplinePfad_MinMax.Size = New System.Drawing.Size(26, 19)
+        Me.SplinePfad_MinMax.TabIndex = 37
+        Me.SplinePfad_MinMax.Text = "-"
+        Me.SplinePfad_MinMax.UseVisualStyleBackColor = True
         '
         'GBSpot
         '
@@ -4071,11 +4117,11 @@ Partial Class Frm_Main
         Me.PanelTexture.Controls.Add(Me.BTTexNew)
         Me.PanelTexture.Controls.Add(Me.DDAlleTexturen)
         Me.PanelTexture.Controls.Add(Me.PBTexture)
-        Me.PanelTexture.Controls.Add(Me.PanelTextureFill)
+        Me.PanelTexture.Controls.Add(Me.BTPanelTextureFill)
         Me.PanelTexture.Controls.Add(Me.LBPanelTexture)
         Me.PanelTexture.Controls.Add(Me.BTPanelTextureClose)
         Me.PanelTexture.Controls.Add(Me.MSTexturen)
-        Me.PanelTexture.Location = New System.Drawing.Point(294, 3)
+        Me.PanelTexture.Location = New System.Drawing.Point(294, 27)
         Me.PanelTexture.Name = "PanelTexture"
         Me.PanelTexture.Size = New System.Drawing.Size(392, 338)
         Me.PanelTexture.TabIndex = 1
@@ -4140,19 +4186,19 @@ Partial Class Frm_Main
         Me.PBTexture.TabIndex = 5
         Me.PBTexture.TabStop = False
         '
-        'PanelTextureFill
+        'BTPanelTextureFill
         '
-        Me.PanelTextureFill.FlatAppearance.BorderSize = 0
-        Me.PanelTextureFill.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.MenuHighlight
-        Me.PanelTextureFill.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.PanelTextureFill.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PanelTextureFill.ForeColor = System.Drawing.SystemColors.HighlightText
-        Me.PanelTextureFill.Location = New System.Drawing.Point(351, 3)
-        Me.PanelTextureFill.Name = "PanelTextureFill"
-        Me.PanelTextureFill.Size = New System.Drawing.Size(19, 19)
-        Me.PanelTextureFill.TabIndex = 4
-        Me.PanelTextureFill.Text = "□"
-        Me.PanelTextureFill.UseVisualStyleBackColor = True
+        Me.BTPanelTextureFill.FlatAppearance.BorderSize = 0
+        Me.BTPanelTextureFill.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.BTPanelTextureFill.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BTPanelTextureFill.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BTPanelTextureFill.ForeColor = System.Drawing.SystemColors.HighlightText
+        Me.BTPanelTextureFill.Location = New System.Drawing.Point(350, 3)
+        Me.BTPanelTextureFill.Name = "BTPanelTextureFill"
+        Me.BTPanelTextureFill.Size = New System.Drawing.Size(19, 19)
+        Me.BTPanelTextureFill.TabIndex = 4
+        Me.BTPanelTextureFill.Text = "□"
+        Me.BTPanelTextureFill.UseVisualStyleBackColor = True
         '
         'LBPanelTexture
         '
@@ -4172,7 +4218,7 @@ Partial Class Frm_Main
         Me.BTPanelTextureClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red
         Me.BTPanelTextureClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BTPanelTextureClose.ForeColor = System.Drawing.SystemColors.HighlightText
-        Me.BTPanelTextureClose.Location = New System.Drawing.Point(371, 3)
+        Me.BTPanelTextureClose.Location = New System.Drawing.Point(370, 3)
         Me.BTPanelTextureClose.Name = "BTPanelTextureClose"
         Me.BTPanelTextureClose.Padding = New System.Windows.Forms.Padding(2, 0, 0, 0)
         Me.BTPanelTextureClose.Size = New System.Drawing.Size(19, 19)
@@ -4235,7 +4281,7 @@ Partial Class Frm_Main
         Me.PanelObjekte.Controls.Add(Me.BTPanelObjekteClose)
         Me.PanelObjekte.Controls.Add(Me.TCObjekte)
         Me.PanelObjekte.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.PanelObjekte.Location = New System.Drawing.Point(12, 3)
+        Me.PanelObjekte.Location = New System.Drawing.Point(11, 28)
         Me.PanelObjekte.Name = "PanelObjekte"
         Me.PanelObjekte.Size = New System.Drawing.Size(277, 337)
         Me.PanelObjekte.TabIndex = 0
@@ -4625,10 +4671,10 @@ Partial Class Frm_Main
         Me.GlMain.BackColor = System.Drawing.Color.Black
         Me.GlMain.Cursor = System.Windows.Forms.Cursors.Cross
         Me.GlMain.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GlMain.Location = New System.Drawing.Point(0, 0)
+        Me.GlMain.Location = New System.Drawing.Point(0, 22)
         Me.GlMain.Margin = New System.Windows.Forms.Padding(4)
         Me.GlMain.Name = "GlMain"
-        Me.GlMain.Size = New System.Drawing.Size(1264, 1015)
+        Me.GlMain.Size = New System.Drawing.Size(1264, 993)
         Me.GlMain.TabIndex = 0
         Me.GlMain.VSync = False
         '
@@ -4640,24 +4686,36 @@ Partial Class Frm_Main
         '
         Me.TReloadTextures.Interval = 2000
         '
-        'GBSplinePfad
+        'TCProjekte
         '
-        Me.GBSplinePfad.Controls.Add(Me.SplinePfad_MinMax)
-        Me.GBSplinePfad.Location = New System.Drawing.Point(4, 927)
-        Me.GBSplinePfad.Name = "GBSplinePfad"
-        Me.GBSplinePfad.Size = New System.Drawing.Size(327, 124)
-        Me.GBSplinePfad.TabIndex = 37
-        Me.GBSplinePfad.TabStop = False
-        Me.GBSplinePfad.Text = "Spline Pfad"
+        Me.TCProjekte.Controls.Add(Me.TCMainTP0)
+        Me.TCProjekte.Controls.Add(Me.TCMainTPPlus)
+        Me.TCProjekte.Dock = System.Windows.Forms.DockStyle.Top
+        Me.TCProjekte.Location = New System.Drawing.Point(0, 24)
+        Me.TCProjekte.Name = "TCProjekte"
+        Me.TCProjekte.SelectedIndex = 0
+        Me.TCProjekte.Size = New System.Drawing.Size(1264, 22)
+        Me.TCProjekte.TabIndex = 13
         '
-        'SplinePfad_MinMax
+        'TCMainTP0
         '
-        Me.SplinePfad_MinMax.Location = New System.Drawing.Point(303, 0)
-        Me.SplinePfad_MinMax.Name = "SplinePfad_MinMax"
-        Me.SplinePfad_MinMax.Size = New System.Drawing.Size(26, 19)
-        Me.SplinePfad_MinMax.TabIndex = 37
-        Me.SplinePfad_MinMax.Text = "-"
-        Me.SplinePfad_MinMax.UseVisualStyleBackColor = True
+        Me.TCMainTP0.Location = New System.Drawing.Point(4, 22)
+        Me.TCMainTP0.Name = "TCMainTP0"
+        Me.TCMainTP0.Padding = New System.Windows.Forms.Padding(3)
+        Me.TCMainTP0.Size = New System.Drawing.Size(1256, 0)
+        Me.TCMainTP0.TabIndex = 0
+        Me.TCMainTP0.Text = "Neues Projekt"
+        Me.TCMainTP0.UseVisualStyleBackColor = True
+        '
+        'TCMainTPPlus
+        '
+        Me.TCMainTPPlus.Location = New System.Drawing.Point(4, 22)
+        Me.TCMainTPPlus.Name = "TCMainTPPlus"
+        Me.TCMainTPPlus.Padding = New System.Windows.Forms.Padding(3)
+        Me.TCMainTPPlus.Size = New System.Drawing.Size(1256, 0)
+        Me.TCMainTPPlus.TabIndex = 1
+        Me.TCMainTPPlus.Text = "   +"
+        Me.TCMainTPPlus.UseVisualStyleBackColor = True
         '
         'Spot_PSRichtung
         '
@@ -4850,9 +4908,11 @@ Partial Class Frm_Main
         '
         'Frm_Main
         '
+        Me.AllowDrop = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1264, 1061)
+        Me.Controls.Add(Me.TCProjekte)
         Me.Controls.Add(Me.PanelMain)
         Me.Controls.Add(Me.SS1)
         Me.Controls.Add(Me.MS1)
@@ -4876,6 +4936,7 @@ Partial Class Frm_Main
         Me.PanelEigenschaften.ResumeLayout(False)
         Me.PanelEigenschaften.PerformLayout()
         Me.PanelEigenschaften1.ResumeLayout(False)
+        Me.GBSplinePfad.ResumeLayout(False)
         Me.GBSpot.ResumeLayout(False)
         Me.GBSpot.PerformLayout()
         Me.GBPlatz.ResumeLayout(False)
@@ -4939,7 +5000,7 @@ Partial Class Frm_Main
         Me.CMSLichter.ResumeLayout(False)
         Me.TCObjektePPfade.ResumeLayout(False)
         Me.CMSPfade.ResumeLayout(False)
-        Me.GBSplinePfad.ResumeLayout(False)
+        Me.TCProjekte.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -4973,7 +5034,7 @@ Partial Class Frm_Main
     Friend WithEvents PanelTexture As Panel
     Friend WithEvents BTPanelTextureClose As Button
     Friend WithEvents LBPanelTexture As Label
-    Friend WithEvents PanelTextureFill As Button
+    Friend WithEvents BTPanelTextureFill As Button
     Friend WithEvents PBTexture As PictureBox
     Friend WithEvents BTTexNew As Button
     Friend WithEvents DDAlleTexturen As ComboBox
@@ -5416,4 +5477,10 @@ Partial Class Frm_Main
     Friend WithEvents UnGitToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents GBSplinePfad As GroupBox
     Friend WithEvents SplinePfad_MinMax As Button
+    Friend WithEvents ToolStripMenuItem20 As ToolStripSeparator
+    Friend WithEvents OptionenToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents PunkteListeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TCProjekte As TabControl
+    Friend WithEvents TCMainTP0 As TabPage
+    Friend WithEvents TCMainTPPlus As TabPage
 End Class

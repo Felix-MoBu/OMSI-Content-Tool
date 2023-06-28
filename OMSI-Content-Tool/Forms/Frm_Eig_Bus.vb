@@ -14,7 +14,7 @@ Public Class Frm_Eig_Bus
         DDSprache.Items.Add("Andere")
         DDSprache.SelectedIndex = 0
 
-        Dim languagePfad As String = My.Settings.OmsiPfad & "\Languages"
+        Dim languagePfad As String = Settings.OmsiPfad & "\Languages"
         If IO.Directory.Exists(languagePfad) Then
             Dim files() As String = IO.Directory.GetFiles(languagePfad)
             For Each file As String In files

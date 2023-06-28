@@ -1,6 +1,6 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Module Modifier
-    Public Sub flipZ(Objekt As Local3DObjekt)
+    Public Sub flipZ(Objekt As Mesh)
         With Objekt
             For i = 0 To .vertices.Count - 1 Step 3
                 .vertices(i + 1) = - .vertices(i + 1)
@@ -9,7 +9,7 @@ Module Modifier
         leftRightHanded(Objekt)
     End Sub
 
-    Public Sub leftRightHanded(Objekt As Local3DObjekt)
+    Public Sub leftRightHanded(Objekt As Mesh)
         Dim F1alt As Integer
         Dim F3alt As Integer
         For Each subObjekt In Objekt.subObjekte

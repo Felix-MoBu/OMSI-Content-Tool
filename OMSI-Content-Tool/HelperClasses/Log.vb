@@ -6,6 +6,7 @@ Module Log
     Public Const TYPE_WARNUNG As Byte = 1
     Public Const TYPE_ERROR As Byte = 2
     Public Const TYPE_DEBUG As Byte = 3
+    Public Const TYPE_GIT As Byte = 4
 
     Public Sub Add(addText As String, Optional type As Byte = 0, Optional popup As Boolean = False)
         Dim typeS As String
@@ -15,10 +16,11 @@ Module Log
             Case TYPE_ERROR
                 typeS = "Error!"
             Case TYPE_DEBUG
-                If Not My.Settings.LogDebug Then
-                    Exit Sub
-                End If
+                If Not Settings.LogDebug Then Exit Sub
                 typeS = "DEBUG"
+            Case TYPE_GIT
+                If Not Settings.LogGit Then Exit Sub
+                typeS = "GIT"
             Case Else
                 typeS = "Info"
         End Select

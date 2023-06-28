@@ -3,7 +3,7 @@ Public Class Frm_Save
     Private Sub Frm_Save_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Location = New Point(Frm_Main.Width / 2 - Me.Width / 2, Frm_Main.Height / 2 - Me.Height / 2)
 
-        Select Case Frm_Main.getProjType
+        Select Case Frm_Main.getprojtype()
             Case Proj_Bus.TYPE
                 LBProjDatei.Text = "Bus-Datei"
             Case Proj_Emt.TYPE
@@ -17,7 +17,7 @@ Public Class Frm_Save
                 LBProjDatei.Text = "Sli-Datei"
         End Select
 
-        Dim fullName As String = Frm_Main.getProj.filename.ToString
+        Dim fullName As String = Frm_Main.actProj.filename.ToString
         TBProj.Text = fullName
         TBModel.Text = fullName
     End Sub
@@ -26,8 +26,8 @@ Public Class Frm_Save
         Dim fd As New SaveFileDialog
         With fd
             .Title = "Projekt-Datei speichern unter..."
-            .InitialDirectory = Frm_Main.getProj.filename.path
-            .FileName = Frm_Main.getProj.filename.name
+            .InitialDirectory = Frm_Main.actProj.filename.path
+            .FileName = Frm_Main.actProj.filename.name
             .Filter = "OMSI-Bus (*.bus)|*.bus"
 
             If .ShowDialog = DialogResult.OK Then
@@ -40,8 +40,8 @@ Public Class Frm_Save
         Dim fd As New SaveFileDialog
         With fd
             .Title = "Model-Datei speichern unter..."
-            .InitialDirectory = Frm_Main.getProj.model.filename.path
-            .FileName = Frm_Main.getProj.model.filename.name
+            .InitialDirectory = Frm_Main.actProj.model.filename.path
+            .FileName = Frm_Main.actProj.model.filename.name
             .Filter = "OMSI-Model (*.cfg)|*.cfg"
 
             If .ShowDialog = DialogResult.OK Then
@@ -60,10 +60,10 @@ Public Class Frm_Save
 
     Private Sub BTSpeichern_Click(sender As Object, e As EventArgs) Handles BTSpeichern.Click
 
-        Frm_Main.getProj.filename = New Filename(TBProj.Text)
-        Frm_Main.getProj.model.filename = New Filename(TBModel.Text.Substring(Frm_Main.getProj.filename.path.length + 1), Frm_Main.getProj.filename.path)
+        Frm_Main.actProj.filename = New Filename(TBProj.Text)
+        Frm_Main.actProj.model.filename = New Filename(TBModel.Text.Substring(Frm_Main.actProj.filename.path.length + 1), Frm_Main.actProj.filename.path)
 
-        Frm_Main.getProj.SaveFile()
+        Frm_Main.actProj.SaveFile()
 
         Frm_Main.SpeichernToolStripMenuItem.Enabled = True
         Me.Close()

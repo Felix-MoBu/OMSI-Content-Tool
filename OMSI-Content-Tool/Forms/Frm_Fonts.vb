@@ -7,7 +7,7 @@ Public Class Frm_Fonts
 
     Private Sub Frm_Fonts_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Location = New Point(Frm_Main.Width / 2 - Me.Width / 2, Frm_Main.Height / 2 - Me.Height / 2)
-        Dim fontPath As String = My.Settings.OmsiPfad & "\Fonts"
+        Dim fontPath As String = Settings.OmsiPfad & "\Fonts"
 
         If Not System.IO.Directory.Exists(fontPath) Then
             Log.Add("Der Ordner 'Fonts' im OMSI-Verzeichnis wurde nicht gefunden. Einige Optionen sind dadurch nicht vollstädnig!", , True)
@@ -31,7 +31,7 @@ Public Class Frm_Fonts
                         .alpha = New Filename(lines(ctline + 3).Replace(vbLf, ""), fontPath)
                         .height = lines(ctline + 4).Replace(vbLf, "")
 
-                        For Each textTexture In Frm_Main.getProj.model.TextTexturen
+                        For Each textTexture In Frm_Main.actProj.model.TextTexturen
                             If textTexture.font = .name Then .isUsed = True
                         Next
 
@@ -61,7 +61,7 @@ Public Class Frm_Fonts
             Next
         Next
 
-        For Each Ufont In Frm_Main.getProj.model.TextTexturen
+        For Each Ufont In Frm_Main.actProj.model.TextTexturen
             Dim found As Boolean = False
             For Each OFont In alleFonts
                 If OFont.name = Ufont.font Then

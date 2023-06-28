@@ -2,7 +2,7 @@
 Public Class Proj_Emt
     Public Const TYPE = 0
 
-    Public filename As New Filename
+    Public filename As New Filename(False)
     Public isloaded As Boolean
     Public changed As Boolean = True '#####  Wieder raus nehmen!  ######
 

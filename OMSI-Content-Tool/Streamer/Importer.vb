@@ -49,7 +49,7 @@ Module Importer
         End If
     End Sub
 
-    Private Function readX3D(filename As Filename) As Local3DObjekt
+    Private Function readX3D(filename As Filename) As Mesh
         Dim document As New XmlDocument
 
         Try
@@ -57,11 +57,11 @@ Module Importer
         Catch ex As Exception
             Log.Add("Import fehlgeschlagen! (Fehler: I003, Datei: " & filename & ")", Log.TYPE_ERROR)
             importWarnung("Import fehlgeschlagen!", "I003", filename, "falsches Dateiformat oder bschädigte Datei")
-            Frm_Main.SSLBStatus.Text = ""
+            Frm_Main.SSLBStatus.Text = "Import fehlgeschlagen!"
             Return Nothing
         End Try
 
-        Dim temp3D As New Local3DObjekt
+        Dim temp3D As New Mesh
         Dim tempArr() As String
         Dim tempListI As New List(Of Integer)
         Dim tempTex As New List(Of Double)
@@ -82,7 +82,7 @@ Module Importer
                             For Each groupmember In transformNodes.firstchild.firstchild.childnodes
                                 For Each shape In groupmember.childnodes
                                     If shape.firstchild.name = "ImageTexture" Then
-                                        Dim texture As New LocalTexture
+                                        Dim texture As New Material
                                         If shape.firstchild.getattribute("USE") = "" Then
                                             texture.matName = shape.firstchild.attributes(0).value
                                             texture.filename = New Filename(Split(shape.firstchild.attributes(1).value, """ """)(1))
@@ -166,7 +166,7 @@ Module Importer
                                 Next
                             Next
                         Else
-                            If Frm_Main.getProjType = Proj_Bus.TYPE Then
+                            If Frm_Main.getprojtype = Proj_Bus.TYPE Then
                                 Dim newCam As New OMSI_Camera
                                 With transformNodes
                                     newCam.position = New Point3D(toSingle(.firstchild.getattribute("translation").split(" ")(0)), toSingle(.firstchild.getattribute("translation").split(" ")(0)), toSingle(.firstchild.getattribute("translation").split(" ")(0)))
@@ -174,7 +174,7 @@ Module Importer
                                     newCam.rotX = toSingle(.firstchild.getattribute("orientation").split(" ")(0))
                                     newCam.rotY = toSingle(.firstchild.getattribute("orientation").split(" ")(1))
                                 End With
-                                Frm_Main.getProj.model.dirver_cam_list.add()
+                                Frm_Main.actProj.model.dirver_cam_list.add()
                             Else
                                 If ersterKameraFehler Then
                                     MsgBox("Kameras können nur zu Bussen hinzugefügt / importiert werden!")
@@ -220,7 +220,7 @@ Module Importer
     End Function
 
     Dim ignoreImportFail As Boolean = False
-    Private Function readO3D(filename As Filename) As Local3DObjekt
+    Private Function readO3D(filename As Filename) As Mesh
 
         If checkIfExist(filename) Then
             Return Nothing
@@ -294,7 +294,7 @@ Module Importer
         End If
 
 
-        Dim temp3D As New Local3DObjekt
+        Dim temp3D As New Mesh
 
         Dim verticesTemp As New List(Of Double)
         Dim normalsTemp As New List(Of Double)
@@ -402,7 +402,7 @@ Module Importer
 
         For i = 1 To ctTexture
             Dim startTexture As Integer = startCtTexturen + lenTexturenamen + (i - 1) * 45
-            Dim newTexture As New LocalTexture
+            Dim newTexture As New Material
 
             With newTexture
                 .diffuse.R = 255 * BitConverter.ToSingle(bytes, startTexture)
@@ -435,22 +435,24 @@ Module Importer
         'Center
         Dim startCenter As Integer = startCtTexturen + lenTexturenamen + ctTexture * 45 + 1
         With temp3D
-            .A1.X = Math.Round(BitConverter.ToSingle(bytes, startCenter), 6)
-            .A1.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 4), 6)
-            .A1.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 8), 6)
-            .A2 = Math.Round(BitConverter.ToSingle(bytes, startCenter + 12), 6)
-            .B1.X = Math.Round(BitConverter.ToSingle(bytes, startCenter + 16), 6)
-            .B1.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 20), 6)
-            .B1.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 24), 6)
-            .B2 = Math.Round(BitConverter.ToSingle(bytes, startCenter + 28), 6)
-            .origin.X = Math.Round(BitConverter.ToSingle(bytes, startCenter + 32), 6)
-            .origin.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 36), 6)
-            .origin.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 40), 6)
-            .origin_scale = Math.Round(BitConverter.ToSingle(bytes, startCenter + 44), 6)
-            .center.X = Math.Round(BitConverter.ToSingle(bytes, startCenter + 48), 6)
-            .center.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 52), 6)
-            .center.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 56), 6)
-            .scale = Math.Round(BitConverter.ToSingle(bytes, startCenter + 60), 6)
+            If bytes.Count >= startCenter + 60 Then
+                .A1.X = Math.Round(BitConverter.ToSingle(bytes, startCenter), 6)
+                .A1.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 4), 6)
+                .A1.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 8), 6)
+                .A2 = Math.Round(BitConverter.ToSingle(bytes, startCenter + 12), 6)
+                .B1.X = Math.Round(BitConverter.ToSingle(bytes, startCenter + 16), 6)
+                .B1.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 20), 6)
+                .B1.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 24), 6)
+                .B2 = Math.Round(BitConverter.ToSingle(bytes, startCenter + 28), 6)
+                .origin.X = Math.Round(BitConverter.ToSingle(bytes, startCenter + 32), 6)
+                .origin.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 36), 6)
+                .origin.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 40), 6)
+                .origin_scale = Math.Round(BitConverter.ToSingle(bytes, startCenter + 44), 6)
+                .center.X = Math.Round(BitConverter.ToSingle(bytes, startCenter + 48), 6)
+                .center.Z = Math.Round(BitConverter.ToSingle(bytes, startCenter + 52), 6)
+                .center.Y = Math.Round(BitConverter.ToSingle(bytes, startCenter + 56), 6)
+                .scale = Math.Round(BitConverter.ToSingle(bytes, startCenter + 60), 6)
+            End If
 
             'Werte an Objekt übergeben
             .vertices = verticesTemp.ToArray
@@ -484,7 +486,7 @@ Module Importer
         Return temp3D
     End Function
 
-    Private Function readX(filename As Filename) As Local3DObjekt
+    Private Function readX(filename As Filename) As Mesh
 
         If checkIfExist(filename) Then
             Return Nothing
@@ -505,9 +507,9 @@ Module Importer
         End Select
     End Function
 
-    Private Function readX302(lines As String(), filename As Filename) As Local3DObjekt
+    Private Function readX302(lines As String(), filename As Filename) As Mesh
 
-        Dim temp3D As New Local3DObjekt
+        Dim temp3D As New Mesh
 
         Dim verticesTemp As New List(Of Double)
         Dim normalsTemp As New List(Of Double)
@@ -584,7 +586,7 @@ Module Importer
                         Next
 
                     Next
-                    ctMeshAlt = ctMesh
+                    ctMeshAlt += ctMesh
                     ctLine += ctFaces
 
                 Case "MeshTextureCoords"
@@ -631,7 +633,7 @@ Module Importer
                     'Texture-Bereich
                     If InStr(lines(ctLine + 5), "TextureFilename {") Then
 
-                        Dim newTexture As New LocalTexture
+                        Dim newTexture As New Material
                         With newTexture
                             .filename = New Filename(Replace(lines(ctLine + 6).Substring(0, lines(ctLine + 6).Length - 1), """", ""))
                             .matName = Split(lines(materialLines(materialLines.Count - 1)), " ")(1)
@@ -713,8 +715,8 @@ Module Importer
         Return temp3D
     End Function
 
-    Private Function readX303(lines As String(), filename As Filename) As Local3DObjekt
-        Dim temp3D As New Local3DObjekt
+    Private Function readX303(lines As String(), filename As Filename) As Mesh
+        Dim temp3D As New Mesh
 
         Dim verticesTemp As New List(Of Double)
         Dim normalsTemp1 As New List(Of Double)
@@ -764,6 +766,7 @@ Module Importer
                     ctLine += 4
                 Case "Mesh"
                     'Mesh-Bereich
+                    addFaces.Clear()
                     ctMesh = Replace(lines(ctLine + 1), ";", "")
                     For i = ctLine + 2 To ctLine + 2 + ctMesh - 1
                         Dim newPoint = New Point3D(Replace(Split(Trim(lines(i)), ";")(0), ".", ","), Replace(Split(Trim(lines(i)), ";")(1), ".", ","), Replace(Split(Trim(lines(i)), ";")(2), ".", ","))
@@ -795,7 +798,7 @@ Module Importer
                             addFaces.Add(i - ctLine - 1)
                         End If
                     Next
-                    ctMeshAlt = ctMesh
+                    ctMeshAlt += ctMesh
                     ctLine += ctFaces
 
                 Case "MeshTextureCoords"
@@ -832,16 +835,15 @@ Module Importer
                         ctMatlist = Replace(lines(ctLine + 2), ";", "")
                         For i = ctLine + 3 To ctLine + 3 + ctMatlist - 1
                             matlistTemp.Add(Replace(Trim(lines(i)), ";", "") + ctMatlistAlt)
-                            If addFaces.Contains(i - ctLine - 3) Then   'Wenn 4 Edges zu diesem Face gehörten
-                                For Each item In addFaces
-                                    If item = i - ctLine - 3 Then
-                                        matlistTemp.Add(Replace(Trim(lines(i)), ";", "") + ctMatlistAlt)
-                                    End If
-                                Next
-                            End If
+                            For Each item In addFaces
+                                If item = i - ctLine - 3 Then 'Wenn 4 Edges zu diesem Face gehörten
+                                    matlistTemp.Add(Replace(Trim(lines(i)), ";", "") + ctMatlistAlt)
+                                End If
+                            Next
                         Next
-
+                        ctLine += ctMatlist
                     End If
+
 
 
                     'Material-Bereich
@@ -851,7 +853,7 @@ Module Importer
                         'Texture-Bereich
                         If InStr(lines(ctLine + 5), "TextureFilename {") Then
 
-                            Dim newTexture As New LocalTexture
+                            Dim newTexture As New Material
                             With newTexture
                                 .diffuse.R = toSingle(Split(lines(ctLine + 1), ";")(0)) * 255
                                 .diffuse.G = toSingle(Split(lines(ctLine + 1), ";")(1)) * 255
@@ -869,7 +871,7 @@ Module Importer
                                 .emissive.B = toSingle(Split(lines(ctLine + 4), ";")(2)) * 255
 
                                 .filename = New Filename(Split(lines(ctLine + 5), """")(1))
-                                .matName = Split(lines(materialLines(materialLines.Count - 1)), " ")(1)
+                                .matName = lines(ctLine).Trim.Substring(9).Replace(" {", "")
 
                                 textureNames.Add(.filename.name)
                             End With
@@ -918,6 +920,7 @@ Module Importer
             Next
 
             matlistTemp = newMatlist
+
 
             Dim arrTemp As New List(Of Integer)
             For i = 0 To .texturen.Count - 1
@@ -980,8 +983,8 @@ Module Importer
         Return temp3D
     End Function
 
-    Public Function readSli(filename As Filename) As Local3DObjekt
-        Dim temp3D As New Local3DObjekt
+    Public Function readSli(filename As Filename) As Mesh
+        Dim temp3D As New Mesh
         Dim tempSLI As New Proj_Sli(filename)
         With temp3D
             .position = New Point3D()
@@ -995,7 +998,7 @@ Module Importer
     End Function
 
 
-    Private Function checkLocal3DObject(objekt As Local3DObjekt) As Boolean
+    Private Function checkLocal3DObject(objekt As Mesh) As Boolean
         With objekt
             If .vertices.Count = 0 Then Return False
             If .subObjekte.Count = 0 Then Return False

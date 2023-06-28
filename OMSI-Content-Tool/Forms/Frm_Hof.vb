@@ -5,15 +5,15 @@ Public Class Frm_Hof
     Private Sub Frm_Hof_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Location = New Point(Frm_Main.Width / 2 - Me.Width / 2, Frm_Main.Height / 2 - Me.Height / 2)
 
-        If Not Frm_Main.getProj.filename Is Nothing Then
-            If Not Frm_Main.getProj.filename.path = "" Then
+        If Not Frm_Main.actProj.filename Is Nothing Then
+            If Not Frm_Main.actProj.filename.path = "" Then
                 einlesen()
             End If
         End If
     End Sub
 
     Private Sub einlesen()
-        files = IO.Directory.GetFiles(Frm_Main.getProj.filename.path, "*.hof", IO.SearchOption.TopDirectoryOnly)
+        files = IO.Directory.GetFiles(Frm_Main.actProj.filename.path, "*.hof", IO.SearchOption.TopDirectoryOnly)
 
         LBHofdateien.Items.Clear()
         For Each file In files
@@ -42,7 +42,7 @@ Public Class Frm_Hof
         With fd
             .Title = "Hof-Datei Auswählen..."
             .Filter = "Hof-Datei (*.hof)|*.hof"
-            .InitialDirectory = My.Settings.OpenPath
+            .InitialDirectory = Settings.OpenPath
             .Multiselect = True
             If .ShowDialog() Then
                 For Each FileName In .FileNames
@@ -55,7 +55,7 @@ Public Class Frm_Hof
     End Sub
 
     Public Sub copyNewHof(oldFile As String)
-        Dim newFile = New Filename(oldFile.Split("\").Last, Frm_Main.getProj.filename.path)
+        Dim newFile = New Filename(oldFile.Split("\").Last, Frm_Main.actProj.filename.path)
         If Not System.IO.File.Exists(newFile) Then
             System.IO.File.Copy(oldFile, newFile)
             Log.Add("Hofdatei importiert! (Datei: " & newFile.name & ")")

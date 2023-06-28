@@ -153,10 +153,10 @@ Public Class Frm_Neu
     End Sub
 
     Private Function modelFromEmpty()
-        If Not Frm_Main.getProj.model Is Nothing Then
+        If Not Frm_Main.actProj.model Is Nothing Then
             Dim erg As Byte = MsgBox("Aktuelles Modell übernehmen?", vbYesNo)
             If erg = vbYes Then
-                Return Frm_Main.getProj.model
+                Return Frm_Main.actProj.model
             End If
         End If
         Return Nothing

@@ -2,7 +2,7 @@
     Dim ProjDataBase As DataBase
     Private Sub Frm_ToDo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Location = New Point(Frm_Main.Width / 2 - Me.Width / 2, Frm_Main.Height / 2 - Me.Height / 2)
-        ProjDataBase = Frm_Main.getProj.ProjDataBase
+        ProjDataBase = Frm_Main.actProj.ProjDataBase
         loadList()
     End Sub
 
@@ -14,6 +14,8 @@
                 .Top = 12 + (25 * ct)
                 .Left = 7
                 .Name = "cb_" & ct
+                .Checked = ProjDataBase.todoList(ct).Checked
+                AddHandler .Click, AddressOf cbClick
             End With
             GBOffen.Controls.Add(cb)
 
@@ -23,7 +25,7 @@
                 .Top = 16 + (25 * ct)
                 .Left = 25
                 .Name = "lb_" & ct
-                .Text = ProjDataBase.todoList(ct)
+                .Text = ProjDataBase.todoList(ct).Text
                 AddHandler .Click, AddressOf lbClick
             End With
             GBOffen.Controls.Add(lb)
@@ -43,6 +45,10 @@
         End With
         GBOffen.Controls.Add(tb)
         tb.Select()
+    End Sub
+
+    Private Sub cbClick(sender As Object, e As EventArgs)
+        ProjDataBase.todoList(sender.Name.Split("_")(1)).Checked = sender.checked
     End Sub
 
     Private Sub tbKeyDown(sender As Object, e As KeyEventArgs)
@@ -68,7 +74,7 @@
     End Sub
 
     Private Sub BTClose_Click(sender As Object, e As EventArgs) Handles BTClose.Click
-        Frm_Main.getProj.ProjDataBase = ProjDataBase
+        Frm_Main.actProj.ProjDataBase = ProjDataBase
         Me.Close()
     End Sub
 End Class

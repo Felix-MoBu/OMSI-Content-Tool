@@ -1,5 +1,5 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
-Public Class Local3DObjekt
+Public Class Mesh
     Public id As Integer
     Public parentMesh As String
     Public o3dVersion As Integer = 1
@@ -27,5 +27,5 @@ Public Class Local3DObjekt
     Public texCoords As Double()
     Public subObjekte As New List(Of Integer())
 
-    Public texturen As New List(Of LocalTexture)
+    Public texturen As New List(Of Material)
 End Class

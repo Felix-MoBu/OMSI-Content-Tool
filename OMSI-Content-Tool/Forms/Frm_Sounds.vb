@@ -6,14 +6,14 @@ Public Class Frm_Sounds
         LBGruppen.Items.Clear()
         LBDateien.Items.Clear()
 
-        If Frm_Main.getProjType = Proj_Bus.TYPE Then
-            If Not Frm_Main.getProj.paths Is Nothing Then
-                For i As Integer = 0 To Frm_Main.getProj.paths.soundpacks.count - 1
+        If Frm_Main.getprojtype = Proj_Bus.TYPE Then
+            If Not Frm_Main.actProj.paths Is Nothing Then
+                For i As Integer = 0 To Frm_Main.actProj.paths.soundpacks.count - 1
                     LBGruppen.Items.Add(i)
                 Next
 
             Else
-                MsgBox("Es wurde keine Path-Datei gefunden")
+                MsgBox("Es wurde keine Sound-Datei gefunden")
                 Me.Close()
             End If
         End If
@@ -22,7 +22,7 @@ Public Class Frm_Sounds
     Private Sub LBGruppen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBGruppen.SelectedIndexChanged
         If LBGruppen.SelectedIndex > -1 Then
             LBDateien.Items.Clear()
-            LBDateien.Items.AddRange(Frm_Main.getProj.paths.soundpacks(LBGruppen.SelectedIndex).toarray)
+            LBDateien.Items.AddRange(Frm_Main.actProj.paths.soundpacks(LBGruppen.SelectedIndex).toarray)
         End If
     End Sub
 End Class

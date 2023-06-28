@@ -1,6 +1,7 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 'Option Strict On
 Imports System.ComponentModel
+Imports System.Xml
 
 Public Class Frm_Texture
     Dim texCoords_int As Double()
@@ -57,9 +58,19 @@ Public Class Frm_Texture
 
         If texCoords_int Is Nothing Or subObjekt_int Is Nothing Then Exit Sub
 
+
         Dim myPen As Pen
         myPen = New Pen(Brushes.Orange, 1)
 
+        'Dim newLayer As New Bitmap(PBMain.Width, PBMain.Height)
+        ''newLayer.MakeTransparent()
+
+        'Dim g As Graphics = Graphics.FromImage(PBMain.Image)
+        'g.DrawImage(newLayer, 0, 0, newLayer.Width, newLayer.Height)
+        'g.DrawLine(myPen, New Point(100, 100), New Point(200, 200))
+        'g.Dispose()
+
+        'PBMain.Image = newLayer
 
         Dim formatMp As Double = Math.Min(sender.Width / PBMain.Image.Width, sender.Height / PBMain.Image.Height)
         Dim mp As New Point(formatMp * PBMain.Image.Width, formatMp * PBMain.Image.Height)
