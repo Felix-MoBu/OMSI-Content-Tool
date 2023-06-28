@@ -1931,6 +1931,15 @@ Class Frm_Main
     Public Sub loadPositions()
         checkForStdPos()
 
+        Dim CaptionColor As Color = Color.White
+        Dim colorMidVal As Double = Settings.EditorColor.R
+        colorMidVal += Settings.EditorColor.G
+        colorMidVal += Settings.EditorColor.B
+        colorMidVal = colorMidVal / 3
+        If colorMidVal > 128 Then
+            CaptionColor = Color.Black
+        End If
+
         PanelObjekte.Location = Settings.PObjekteL
         PanelObjekte.Size = Settings.PObjekteS
         BTObjekteResize.Left = Settings.PObjekteS.X - 5
@@ -1942,6 +1951,7 @@ Class Frm_Main
         PanelTexture.Size = Settings.PTextureS
         PanelTexture.Visible = Settings.PTextureV
         PanelTexture.BackColor = Settings.EditorColor
+        LBPanelTexture.ForeColor = CaptionColor
         BTPanelTextureFill.BackColor = Settings.EditorColor
 
         PanelEigenschaften.Location = Settings.PEigenschaftenL
@@ -1950,6 +1960,7 @@ Class Frm_Main
         BTEigenschafteResize.Top = Settings.PEigenschaftenS.Y - 3
         PanelEigenschaften1.Height = Settings.PEigenschaftenS.Y - 28
         PanelEigenschaften.BackColor = Settings.EditorColor
+        LBEingenschaften.ForeColor = CaptionColor
 
         WireframeToolStripMenuItem.Checked = Settings.WireframeV
         GitterToolStripMenuItem.Checked = Settings.GitterV

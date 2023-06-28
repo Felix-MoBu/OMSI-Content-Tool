@@ -31,6 +31,7 @@ Partial Class Frm_Einst
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.GroupBox11 = New System.Windows.Forms.GroupBox()
+        Me.Label25 = New System.Windows.Forms.Label()
         Me.DDInternalClipboard = New System.Windows.Forms.ComboBox()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.GroupBox10 = New System.Windows.Forms.GroupBox()
@@ -117,7 +118,6 @@ Partial Class Frm_Einst
         Me.CDColorDriver = New System.Windows.Forms.ColorDialog()
         Me.CDColorAchsen = New System.Windows.Forms.ColorDialog()
         Me.CDColorFenster = New System.Windows.Forms.ColorDialog()
-        Me.Label25 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox11.SuspendLayout()
@@ -222,6 +222,17 @@ Partial Class Frm_Einst
         Me.GroupBox11.TabIndex = 10
         Me.GroupBox11.TabStop = False
         Me.GroupBox11.Text = "Zwischenspeicher"
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label25.Location = New System.Drawing.Point(6, 48)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(178, 39)
+        Me.Label25.TabIndex = 2
+        Me.Label25.Text = "Wenn nicht ""interner Speicher"" aus-" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "gewählt, funktioniert das Einfügen" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "von alle" &
+    "n Formaten automatisch"
         '
         'DDInternalClipboard
         '
@@ -540,6 +551,7 @@ Partial Class Frm_Einst
         '
         'TBMaxFPS
         '
+        Me.TBMaxFPS.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBMaxFPS.Location = New System.Drawing.Point(139, 19)
         Me.TBMaxFPS.Name = "TBMaxFPS"
         Me.TBMaxFPS.Size = New System.Drawing.Size(100, 20)
@@ -563,6 +575,7 @@ Partial Class Frm_Einst
         '
         'TBColorFenster
         '
+        Me.TBColorFenster.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColorFenster.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBColorFenster.Location = New System.Drawing.Point(332, 40)
         Me.TBColorFenster.Name = "TBColorFenster"
@@ -625,6 +638,7 @@ Partial Class Frm_Einst
         '
         'TBColor3D
         '
+        Me.TBColor3D.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColor3D.Location = New System.Drawing.Point(147, 6)
         Me.TBColor3D.Name = "TBColor3D"
         Me.TBColor3D.Size = New System.Drawing.Size(100, 20)
@@ -675,6 +689,7 @@ Partial Class Frm_Einst
         '
         'TBColorSelectedObj
         '
+        Me.TBColorSelectedObj.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColorSelectedObj.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBColorSelectedObj.Location = New System.Drawing.Point(139, 97)
         Me.TBColorSelectedObj.Name = "TBColorSelectedObj"
@@ -693,6 +708,7 @@ Partial Class Frm_Einst
         '
         'TBColorAchsen
         '
+        Me.TBColorAchsen.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColorAchsen.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBColorAchsen.Location = New System.Drawing.Point(317, 71)
         Me.TBColorAchsen.Name = "TBColorAchsen"
@@ -701,6 +717,7 @@ Partial Class Frm_Einst
         '
         'TBColorPassengers
         '
+        Me.TBColorPassengers.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColorPassengers.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBColorPassengers.Location = New System.Drawing.Point(317, 19)
         Me.TBColorPassengers.Name = "TBColorPassengers"
@@ -729,6 +746,7 @@ Partial Class Frm_Einst
         '
         'TBColorDriver
         '
+        Me.TBColorDriver.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColorDriver.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBColorDriver.Location = New System.Drawing.Point(317, 45)
         Me.TBColorDriver.Name = "TBColorDriver"
@@ -737,6 +755,7 @@ Partial Class Frm_Einst
         '
         'TBColorReflexCam
         '
+        Me.TBColorReflexCam.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColorReflexCam.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBColorReflexCam.Location = New System.Drawing.Point(139, 71)
         Me.TBColorReflexCam.Name = "TBColorReflexCam"
@@ -745,6 +764,7 @@ Partial Class Frm_Einst
         '
         'TBColorPaxCam
         '
+        Me.TBColorPaxCam.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColorPaxCam.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBColorPaxCam.Location = New System.Drawing.Point(139, 45)
         Me.TBColorPaxCam.Name = "TBColorPaxCam"
@@ -783,6 +803,7 @@ Partial Class Frm_Einst
         '
         'TBColorDriverCam
         '
+        Me.TBColorDriverCam.Cursor = System.Windows.Forms.Cursors.Hand
         Me.TBColorDriverCam.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBColorDriverCam.Location = New System.Drawing.Point(139, 19)
         Me.TBColorDriverCam.Name = "TBColorDriverCam"
@@ -1010,17 +1031,6 @@ Partial Class Frm_Einst
         'CDColor3D
         '
         Me.CDColor3D.Color = System.Drawing.Color.White
-        '
-        'Label25
-        '
-        Me.Label25.AutoSize = True
-        Me.Label25.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Label25.Location = New System.Drawing.Point(6, 48)
-        Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(178, 39)
-        Me.Label25.TabIndex = 2
-        Me.Label25.Text = "Wenn nicht ""interner Speicher"" aus-" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "gewählt, funktioniert das Einfügen" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "von alle" &
-    "n Formaten automatisch"
         '
         'Frm_Einst
         '
