@@ -123,40 +123,53 @@ Class Frm_Main
             GitToolStripMenuItem.Visible = True
         End If
 
-        'Datei laden die übergeben wurde
-        Try
-            If My.Application.CommandLineArgs.Count > 0 Then
-                Dim newFile As New Filename(My.Application.CommandLineArgs(0))
-                If projectExtensions.Contains(newFile.extension) Then
-                    ProjÖffnen(newFile)
-                ElseIf Importer.KNOWN_FILE_TYPES.Contains(newFile.extension) Then
-                    Dim newMesh As New OMSI_Mesh
-                    newMesh = fileimport2(newFile)
 
-                    If Not newMesh Is Nothing Then
-                        actProj.model.meshes.add(newMesh)
-                        LBMeshes.Items.Add(newMesh.filename.name)
-                        LBMeshes.SetItemChecked(LBMeshes.Items.Count - 1, True)
-                        Parent_CBParent.Items.Add(newMesh.filename.name)
-
-                        If newFile.extension.ToLower <> "o3d" Then
-                            newMesh.isProtected = False
+        If My.Application.CommandLineArgs.Count > 0 Then
+            Dim newFile As New Filename(My.Application.CommandLineArgs(0))
+            If projectExtensions.Contains(newFile.extension) Then
+                If My.Application.CommandLineArgs.Count > 1 Then
+                    If My.Application.CommandLineArgs(1) = "newTab" Then
+                        TCProjekte.TabPages.Add("   +   ")
+                        addOCTProj(New OCTProjekt)
+                        TCProjekte.SelectTab(TCProjekte.TabCount - 2)
+                    End If
+                End If
+                ProjÖffnen(newFile)
+            ElseIf Importer.KNOWN_FILE_TYPES.Contains(newFile.extension) Then
+                Dim newMesh As New OMSI_Mesh
+                newMesh = fileimport2(newFile)
+                If Not newMesh Is Nothing Then
+                    If My.Application.CommandLineArgs.Count > 2 Then
+                        If My.Application.CommandLineArgs(1) = "convert" Then
+                            If Exporter.KNOWN_FILE_TYPES.Contains(LCase(My.Application.CommandLineArgs(2))) Then
+                                fileExport2(newMesh, My.Application.CommandLineArgs(2))
+                                Me.Close()
+                            End If
                         End If
                     End If
-                ElseIf newFile.extension = DataBase.FILETYPE Then
-                    For Each extension In projectExtensions()
-                        If IO.File.Exists(newFile.path & "\" & newFile.nameNoEnding & "." & extension) Then
-                            ProjÖffnen(newFile.path & "\" & newFile.nameNoEnding & "." & extension)
-                            Exit For
-                        End If
-                    Next
-                Else
-                    MsgBox("Datei " & newFile & " wird nicht unterstützt!")
-                End If
 
+                    actProj.model.meshes.add(newMesh)
+                    LBMeshes.Items.Add(newMesh.filename.name)
+                    LBMeshes.SetItemChecked(LBMeshes.Items.Count - 1, True)
+                    Parent_CBParent.Items.Add(newMesh.filename.name)
+
+
+                    If newFile.extension.ToLower <> "o3d" Then
+                        newMesh.isProtected = False
+                    End If
+                End If
+            ElseIf newFile.extension = DataBase.FILETYPE Then
+                For Each extension In projectExtensions()
+                    If IO.File.Exists(newFile.path & "\" & newFile.nameNoEnding & "." & extension) Then
+                        ProjÖffnen(newFile.path & "\" & newFile.nameNoEnding & "." & extension)
+                        Exit For
+                    End If
+                Next
+            Else
+                MsgBox("Datei " & newFile & " wird nicht unterstützt!")
             End If
-        Catch ex As Exception
-        End Try
+
+        End If
     End Sub
 
 
@@ -259,6 +272,17 @@ Class Frm_Main
                     End If
                 End If
             Next
+        Next
+    End Sub
+
+    Private Sub fileExport2(mesh As OMSI_Mesh, Optional newExtension As String = "")
+        For Each objekt In getOCTProj.alleMeshes
+            If mesh.ObjIds.Contains(objekt.id) Then
+                If newExtension <> "" Then
+                    mesh.filename.extension = newExtension
+                End If
+                Exporter.write(objekt, mesh.filename)
+            End If
         Next
     End Sub
 
@@ -4030,8 +4054,8 @@ Class Frm_Main
 
     Private Sub GlMain_Load(sender As Object, e As EventArgs) Handles GlMain.Load
         GL.ClearColor(Settings.BackColor3D)
-        GL.Enable(EnableCap.DepthTest) 'Enable correct Z Drawings
-        GL.DepthFunc(DepthFunction.Less) 'Enable correct Z Drawings
+        'GL.Enable(EnableCap.DepthTest) 'Enable correct Z Drawings
+        'GL.DepthFunc(DepthFunction.Less) 'Enable correct Z Drawings
 
         GL.Enable(EnableCap.Texture2D)
         GL.Enable(EnableCap.Blend)

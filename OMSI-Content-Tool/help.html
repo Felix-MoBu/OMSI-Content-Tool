@@ -3,6 +3,15 @@
 body {
 	font-family: Arial;
 }
+code {
+	background-color: lightgray;
+}
+key:before {
+	content: "[ ";
+}
+key:after {
+	content: " ]";
+}
 </style>
 	<title>Hilfe</title>
 </head>
@@ -11,35 +20,62 @@ body {
 	<p>Willkommen in der lokalen Hilfe zum OMSI-Content-Tool.</p>
 	<h2>Tastenkürzel</h2>
 	<ul>
-		<li>A - Alle Objekte markieren / demarkieren</li>
+		<li><key>A</key> - Alle Objekte markieren / demarkieren</li>
 	</ul><ul>
-		<li>Strg + D - Projektordner öffnen</li>
-		<li>Strg + E - Objekt Exportieren</li>
-		<li>Strg + F - Suchen</li>
-		<li>Strg + H - Objekt ein-/ ausblenden</li>
-		<li>Strg + I - Objekt Importieren</li>
-		<li>Strg + L - Logfile anzeigen</li>
-		<li>Strg + N - Neues Projekt erstellen</li>
-		<li>Strg + O - Projekt öffnen</li>
-		<li>Strg + P - Projekt packen</li>
-		<li>Strg + R - Projekt neu laden</li>
-		<li>Strg + S - Speichern</li>
+		<li><key>Strg + D</key> - Projektordner öffnen</li>
+		<li><key>Strg + E</key> - Objekt Exportieren</li>
+		<li><key>Strg + F</key> - Suchen</li>
+		<li><key>Strg + H</key> - Objekt ein-/ ausblenden</li>
+		<li><key>Strg + I</key> - Objekt Importieren</li>
+		<li><key>Strg + L</key> - Logfile anzeigen</li>
+		<li><key>Strg + N</key> - Neues Projekt erstellen</li>
+		<li><key>Strg + O</key> - Projekt öffnen</li>
+		<li><key>Strg + P</key> - Projekt packen</li>
+		<li><key>Strg + R</key> - Projekt neu laden</li>
+		<li><key>Strg + S</key> - Speichern</li>
 	</ul><ul>
-		<li>Strg + Shift + E - Projekteigenschaften</li>
-		<li>Strg + Shift + T - Text-Texturen Übersicht</li>
-		<li>Strg + Links - Zum vorherigen Wagenteil wechseln</li>
-		<li>Strg + Rechts - Zum nächsten Wagenteil wechseln</li>
+		<li><key>Strg + Shift + E</key> - Projekteigenschaften</li>
+		<li><key>Strg + Shift + T</key> - Text-Texturen Übersicht</li>
+		<li><key>Strg + Links</key> - Zum vorherigen Wagenteil wechseln</li>
+		<li><key>Strg + Rechts</key> - Zum nächsten Wagenteil wechseln</li>
 	</ul><ul>
-		<li>Entf - markiertes Objekt entfernen (die Datei wird nicht gelöscht)</li>
+		<li><key>Entf</key> - markiertes Objekt aus dem Projekt entfernen (die Datei wird nicht gelöscht)</li>
 	</ul><ul>
-		<li>F1 - Fahreransicht</li>
-		<li>F2 - Fahrgastansicht</li>
-		<li>F3 - Verfolgerkamera</li>
-		<li>F4 - Freie Kamera (Standard)</li>
+		<li><key>F1</key> - Fahreransicht</li>
+		<li><key>F2</key> - Fahrgastansicht</li>
+		<li><key>F3</key> - Verfolgerkamera</li>
+		<li><key>F4</key> - Freie Kamera (Standard)</li>
 		<li></li>
-		<li>F5 - LOD-Filter</li>
-		<li>F6 - Objekte Fenster ein-/ ausblenden</li>
-		<li>F7 - Texturen Fenster ein-/ ausblenden</li>
-		<li>F8 - Eigenschaften Fenster ein-/ ausblenden</li>
+		<li><key>F5</key> - LOD-Filter</li>
+		<li><key>F6</key> - Objekte Fenster ein-/ ausblenden</li>
+		<li><key>F7</key> - Texturen Fenster ein-/ ausblenden</li>
+		<li><key>F8</key> - Eigenschaften Fenster ein-/ ausblenden</li>
 	</ul>
+	<br />
+	<h2>Consolenbefehle</h2>
+	<p>Übersicht: <code>omsi-content-tool.exe path [newTab] / [convert] (o3d, x, x3d, ...)</code></p>
+	<table style="padding-left:20">
+		<tbody>
+			<tr>
+				<td width="200"><li><code>omsi-content-tool.exe</code></li></td>
+				<td>Startet das Tool im normalen Modus</td>
+			</tr>
+			<tr>
+				<td><li><code>path</code></li></td>
+				<td>Hier kann ein Pfad zu einer Projekt- oder 3D-Datei angegeben werden die direkt geöffnet werden soll</td>
+			</tr>
+			<tr>
+				<td><li><code>[newTab]</code></li></td>
+				<td>Öffnet das angegebene Projekt in einem neuen Tab. Kann nicht mit <code>[convert] ...</code> kombiniert werden. Angabe <code>pfad</code> erforderlich.</td>
+			</tr>
+			<tr>
+				<td><li><code>[convert] (format)</code></li></td>
+				<td>Konvertiert die angegebene O3D-Datei, Rückmeldung ausschließlich auf der Konsole. Kann nicht mit <code>[newTab]</code> kombiniert werden. Angabe <code>pfad</code> erforderlich.</td>
+			</tr>
+		</tbody>
+	</table>
+	<p>
+		Beispiel 1: <code>omsi-content-tool.exe "MAN_Lions_Coach_L.bus" newTab</code><br />
+		Beispiel 2: <code>omsi-content-tool.exe "model\body.x" convert o3d</code>
+	</p>
 </body>

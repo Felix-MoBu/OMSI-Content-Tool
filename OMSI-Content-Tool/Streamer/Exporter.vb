@@ -1,5 +1,7 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Module Exporter
+    Public ReadOnly KNOWN_FILE_TYPES As String() = {"o3d", "x", "x3d"} ', "sli", "txt", "rdy"}
+
     Public Sub write(Objekt As Mesh, filename As Filename)
         Select Case filename.extension
             Case "o3d"
@@ -12,7 +14,7 @@ Module Exporter
     End Sub
 
     Private Sub writeX3D(Objekt As Mesh, filename As Filename)
-        MsgBox("X3D-Datei Gespeichert ;) #nicht   (" & filename & ")")
+        MsgBox("X3D-Datei nicht Gespeichert: Der Dateityp wird noch nicht unterstützt!  (" & filename & ")")
     End Sub
 
     Private Function intToHex(val As Integer) As List(Of Byte)
