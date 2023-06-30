@@ -6,7 +6,7 @@ Public Class Proj_Emt
     Public isloaded As Boolean
     Public changed As Boolean = True '#####  Wieder raus nehmen!  ######
 
-    Public model As OMSI_Model
+    Public model As New OMSI_Model
     Public paths As OMSI_Paths
     Public cabin As OMSI_Cabin
 

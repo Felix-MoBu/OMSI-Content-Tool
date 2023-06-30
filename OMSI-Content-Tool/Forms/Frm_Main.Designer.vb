@@ -42,17 +42,17 @@ Partial Class Frm_Main
         Dim TreeNode16 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Attachpoints")
         Dim TreeNode17 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Splinehelper")
         Dim TreeNode18 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Spots")
-        Dim Point3D1 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim RgbColor1 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
-        Dim Point3D2 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D3 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D4 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D5 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D6 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D7 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim RgbColor2 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
-        Dim Point3D8 As O3D_Test.Point3D = New O3D_Test.Point3D()
-        Dim Point3D9 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D19 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim RgbColor5 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
+        Dim Point3D20 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D21 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D22 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D23 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D24 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D25 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim RgbColor6 As O3D_Test.RGBColor = New O3D_Test.RGBColor()
+        Dim Point3D26 As O3D_Test.Point3D = New O3D_Test.Point3D()
+        Dim Point3D27 As O3D_Test.Point3D = New O3D_Test.Point3D()
         Me.SS1 = New System.Windows.Forms.StatusStrip()
         Me.PBMain = New System.Windows.Forms.ToolStripProgressBar()
         Me.SSLBStatus = New System.Windows.Forms.ToolStripStatusLabel()
@@ -78,6 +78,7 @@ Partial Class Frm_Main
         Me.ToolStripMenuItem6 = New System.Windows.Forms.ToolStripSeparator()
         Me.EinstellungenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ProjektSchließenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BeendenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BearbeitenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SuchenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -91,7 +92,6 @@ Partial Class Frm_Main
         Me.AnsichtToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WireframeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GitterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AlphaAnzeigenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripSeparator()
         Me.FensterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ObjekteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -180,9 +180,6 @@ Partial Class Frm_Main
         Me.WebseiteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LokaleHilfeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.WagenteilToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NächsterWagenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.VorherigerWagenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PanelMain = New System.Windows.Forms.Panel()
         Me.PanelTimeline = New System.Windows.Forms.Panel()
         Me.BTPanelTimelineClose = New System.Windows.Forms.Button()
@@ -193,7 +190,6 @@ Partial Class Frm_Main
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.TBScriptLog = New System.Windows.Forms.TextBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.TBLogfile = New System.Windows.Forms.TextBox()
         Me.PanelEigenschaften = New System.Windows.Forms.Panel()
         Me.BTEigenschafteResize = New System.Windows.Forms.Button()
         Me.BTPanelEingenschaftenClose = New System.Windows.Forms.Button()
@@ -531,6 +527,7 @@ Partial Class Frm_Main
         Me.Anim_PSRichtung = New O3D_Test.PointSelector()
         Me.Anim_PSRotPnt = New O3D_Test.PointSelector()
         Me.Anim_VSVar = New O3D_Test.VarSelector()
+        Me.TBLogfile = New System.Windows.Forms.RichTextBox()
         Me.SS1.SuspendLayout()
         Me.MS1.SuspendLayout()
         Me.PanelMain.SuspendLayout()
@@ -616,7 +613,7 @@ Partial Class Frm_Main
         'MS1
         '
         Me.MS1.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.MS1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DateiToolStripMenuItem, Me.BearbeitenToolStripMenuItem, Me.AnsichtToolStripMenuItem, Me.GitToolStripMenuItem, Me.ObjektToolStripMenuItem, Me.DevelopmentToolStripMenuItem, Me.ErstellenToolStripMenuItem, Me.ModifikationToolStripMenuItem, Me.SoundToolStripMenuItem, Me.ScriptToolStripMenuItem, Me.ImportierenToolStripMenuItem, Me.ExportiernToolStripMenuItem, Me.HilfeToolStripMenuItem, Me.TestToolStripMenuItem, Me.WagenteilToolStripMenuItem})
+        Me.MS1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DateiToolStripMenuItem, Me.BearbeitenToolStripMenuItem, Me.AnsichtToolStripMenuItem, Me.GitToolStripMenuItem, Me.ObjektToolStripMenuItem, Me.DevelopmentToolStripMenuItem, Me.ErstellenToolStripMenuItem, Me.ModifikationToolStripMenuItem, Me.SoundToolStripMenuItem, Me.ScriptToolStripMenuItem, Me.ImportierenToolStripMenuItem, Me.ExportiernToolStripMenuItem, Me.HilfeToolStripMenuItem, Me.TestToolStripMenuItem})
         Me.MS1.Location = New System.Drawing.Point(0, 0)
         Me.MS1.Name = "MS1"
         Me.MS1.Size = New System.Drawing.Size(1264, 24)
@@ -625,7 +622,7 @@ Partial Class Frm_Main
         '
         'DateiToolStripMenuItem
         '
-        Me.DateiToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NeuToolStripMenuItem, Me.ToolStripMenuItem1, Me.ÖffnenToolStripMenuItem, Me.LetzteToolStripMenuItem, Me.NeuLadenToolStripMenuItem, Me.SpeichernToolStripMenuItem, Me.SpeichernUnterToolStripMenuItem, Me.PackenToolStripMenuItem, Me.ToolStripMenuItem6, Me.EinstellungenToolStripMenuItem, Me.ToolStripMenuItem2, Me.BeendenToolStripMenuItem})
+        Me.DateiToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NeuToolStripMenuItem, Me.ToolStripMenuItem1, Me.ÖffnenToolStripMenuItem, Me.LetzteToolStripMenuItem, Me.NeuLadenToolStripMenuItem, Me.SpeichernToolStripMenuItem, Me.SpeichernUnterToolStripMenuItem, Me.PackenToolStripMenuItem, Me.ToolStripMenuItem6, Me.EinstellungenToolStripMenuItem, Me.ToolStripMenuItem2, Me.ProjektSchließenToolStripMenuItem, Me.BeendenToolStripMenuItem})
         Me.DateiToolStripMenuItem.Name = "DateiToolStripMenuItem"
         Me.DateiToolStripMenuItem.Size = New System.Drawing.Size(46, 20)
         Me.DateiToolStripMenuItem.Text = "Datei"
@@ -750,9 +747,17 @@ Partial Class Frm_Main
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
         Me.ToolStripMenuItem2.Size = New System.Drawing.Size(168, 6)
         '
+        'ProjektSchließenToolStripMenuItem
+        '
+        Me.ProjektSchließenToolStripMenuItem.Name = "ProjektSchließenToolStripMenuItem"
+        Me.ProjektSchließenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Q), System.Windows.Forms.Keys)
+        Me.ProjektSchließenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.ProjektSchließenToolStripMenuItem.Text = "Schließen"
+        '
         'BeendenToolStripMenuItem
         '
         Me.BeendenToolStripMenuItem.Name = "BeendenToolStripMenuItem"
+        Me.BeendenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.F4), System.Windows.Forms.Keys)
         Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.BeendenToolStripMenuItem.Text = "Beenden"
         '
@@ -819,7 +824,7 @@ Partial Class Frm_Main
         '
         'AnsichtToolStripMenuItem
         '
-        Me.AnsichtToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WireframeToolStripMenuItem, Me.GitterToolStripMenuItem, Me.AlphaAnzeigenToolStripMenuItem, Me.ToolStripMenuItem5, Me.FensterToolStripMenuItem, Me.DarstellungToolStripMenuItem, Me.PerspektiveToolStripMenuItem, Me.ToolStripMenuItem7, Me.LODObjektToolStripMenuItem, Me.ToolStripMenuItem14, Me.PfadeInOriginalbreiteToolStripMenuItem, Me.ToolStripMenuItem9, Me.LogfileToolStripMenuItem})
+        Me.AnsichtToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WireframeToolStripMenuItem, Me.GitterToolStripMenuItem, Me.ToolStripMenuItem5, Me.FensterToolStripMenuItem, Me.DarstellungToolStripMenuItem, Me.PerspektiveToolStripMenuItem, Me.ToolStripMenuItem7, Me.LODObjektToolStripMenuItem, Me.ToolStripMenuItem14, Me.PfadeInOriginalbreiteToolStripMenuItem, Me.ToolStripMenuItem9, Me.LogfileToolStripMenuItem})
         Me.AnsichtToolStripMenuItem.Name = "AnsichtToolStripMenuItem"
         Me.AnsichtToolStripMenuItem.Size = New System.Drawing.Size(59, 20)
         Me.AnsichtToolStripMenuItem.Text = "Ansicht"
@@ -835,13 +840,6 @@ Partial Class Frm_Main
         Me.GitterToolStripMenuItem.Name = "GitterToolStripMenuItem"
         Me.GitterToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
         Me.GitterToolStripMenuItem.Text = "Gitter"
-        '
-        'AlphaAnzeigenToolStripMenuItem
-        '
-        Me.AlphaAnzeigenToolStripMenuItem.Name = "AlphaAnzeigenToolStripMenuItem"
-        Me.AlphaAnzeigenToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
-        Me.AlphaAnzeigenToolStripMenuItem.Text = "Alpha anzeigen"
-        Me.AlphaAnzeigenToolStripMenuItem.Visible = False
         '
         'ToolStripMenuItem5
         '
@@ -1404,31 +1402,6 @@ Partial Class Frm_Main
         Me.TestToolStripMenuItem.Text = "Test"
         Me.TestToolStripMenuItem.Visible = False
         '
-        'WagenteilToolStripMenuItem
-        '
-        Me.WagenteilToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.WagenteilToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NächsterWagenToolStripMenuItem, Me.VorherigerWagenToolStripMenuItem})
-        Me.WagenteilToolStripMenuItem.Name = "WagenteilToolStripMenuItem"
-        Me.WagenteilToolStripMenuItem.Size = New System.Drawing.Size(72, 20)
-        Me.WagenteilToolStripMenuItem.Text = "Wagenteil"
-        Me.WagenteilToolStripMenuItem.Visible = False
-        '
-        'NächsterWagenToolStripMenuItem
-        '
-        Me.NächsterWagenToolStripMenuItem.Enabled = False
-        Me.NächsterWagenToolStripMenuItem.Name = "NächsterWagenToolStripMenuItem"
-        Me.NächsterWagenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Right), System.Windows.Forms.Keys)
-        Me.NächsterWagenToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
-        Me.NächsterWagenToolStripMenuItem.Text = "nächster Wagen"
-        '
-        'VorherigerWagenToolStripMenuItem
-        '
-        Me.VorherigerWagenToolStripMenuItem.Enabled = False
-        Me.VorherigerWagenToolStripMenuItem.Name = "VorherigerWagenToolStripMenuItem"
-        Me.VorherigerWagenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Left), System.Windows.Forms.Keys)
-        Me.VorherigerWagenToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
-        Me.VorherigerWagenToolStripMenuItem.Text = "vorheriger Wagen"
-        '
         'PanelMain
         '
         Me.PanelMain.Controls.Add(Me.PanelTimeline)
@@ -1544,17 +1517,6 @@ Partial Class Frm_Main
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Logfile"
         Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'TBLogfile
-        '
-        Me.TBLogfile.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TBLogfile.Location = New System.Drawing.Point(3, 3)
-        Me.TBLogfile.Multiline = True
-        Me.TBLogfile.Name = "TBLogfile"
-        Me.TBLogfile.ReadOnly = True
-        Me.TBLogfile.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TBLogfile.Size = New System.Drawing.Size(800, 92)
-        Me.TBLogfile.TabIndex = 0
         '
         'PanelEigenschaften
         '
@@ -4724,7 +4686,7 @@ Partial Class Frm_Main
         Me.Spot_PSRichtung.Max = 1.7976931348623157E+308R
         Me.Spot_PSRichtung.Min = -1.7976931348623157E+308R
         Me.Spot_PSRichtung.Name = "Spot_PSRichtung"
-        Me.Spot_PSRichtung.Point = Point3D1
+        Me.Spot_PSRichtung.Point = Point3D19
         Me.Spot_PSRichtung.Size = New System.Drawing.Size(254, 20)
         Me.Spot_PSRichtung.TabIndex = 3
         Me.Spot_PSRichtung.X = 0R
@@ -4736,8 +4698,8 @@ Partial Class Frm_Main
         Me.Spot_CSFarbe.BackColor = System.Drawing.Color.Transparent
         Me.Spot_CSFarbe.Location = New System.Drawing.Point(69, 45)
         Me.Spot_CSFarbe.Name = "Spot_CSFarbe"
-        RgbColor1.SelectedColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Spot_CSFarbe.SelectedColor = RgbColor1
+        RgbColor5.SelectedColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Spot_CSFarbe.SelectedColor = RgbColor5
         Me.Spot_CSFarbe.Size = New System.Drawing.Size(253, 24)
         Me.Spot_CSFarbe.TabIndex = 0
         '
@@ -4756,7 +4718,7 @@ Partial Class Frm_Main
         Me.PointSelector2.Max = 1.7976931348623157E+308R
         Me.PointSelector2.Min = 0R
         Me.PointSelector2.Name = "PointSelector2"
-        Me.PointSelector2.Point = Point3D2
+        Me.PointSelector2.Point = Point3D20
         Me.PointSelector2.Size = New System.Drawing.Size(255, 20)
         Me.PointSelector2.TabIndex = 0
         Me.PointSelector2.X = 0R
@@ -4770,7 +4732,7 @@ Partial Class Frm_Main
         Me.BBox_PSSize.Max = 1.7976931348623157E+308R
         Me.BBox_PSSize.Min = -1.7976931348623157E+308R
         Me.BBox_PSSize.Name = "BBox_PSSize"
-        Me.BBox_PSSize.Point = Point3D3
+        Me.BBox_PSSize.Point = Point3D21
         Me.BBox_PSSize.Size = New System.Drawing.Size(255, 20)
         Me.BBox_PSSize.TabIndex = 23
         Me.BBox_PSSize.X = 0R
@@ -4784,7 +4746,7 @@ Partial Class Frm_Main
         Me.PSPos.Max = 1.7976931348623157E+308R
         Me.PSPos.Min = -1.7976931348623157E+308R
         Me.PSPos.Name = "PSPos"
-        Me.PSPos.Point = Point3D4
+        Me.PSPos.Point = Point3D22
         Me.PSPos.Size = New System.Drawing.Size(255, 20)
         Me.PSPos.TabIndex = 22
         Me.PSPos.X = 0R
@@ -4815,7 +4777,7 @@ Partial Class Frm_Main
         Me.Mesh_PSCenter.Max = 1.7976931348623157E+308R
         Me.Mesh_PSCenter.Min = -1.7976931348623157E+308R
         Me.Mesh_PSCenter.Name = "Mesh_PSCenter"
-        Me.Mesh_PSCenter.Point = Point3D5
+        Me.Mesh_PSCenter.Point = Point3D23
         Me.Mesh_PSCenter.Size = New System.Drawing.Size(255, 20)
         Me.Mesh_PSCenter.TabIndex = 26
         Me.Mesh_PSCenter.X = 0R
@@ -4837,7 +4799,7 @@ Partial Class Frm_Main
         Me.Licht_PSVector.Max = 2.0R
         Me.Licht_PSVector.Min = 0R
         Me.Licht_PSVector.Name = "Licht_PSVector"
-        Me.Licht_PSVector.Point = Point3D6
+        Me.Licht_PSVector.Point = Point3D24
         Me.Licht_PSVector.Size = New System.Drawing.Size(255, 20)
         Me.Licht_PSVector.TabIndex = 58
         Me.Licht_PSVector.X = 0R
@@ -4851,7 +4813,7 @@ Partial Class Frm_Main
         Me.Licht_PSRichtung.Max = 1.0R
         Me.Licht_PSRichtung.Min = -1.0R
         Me.Licht_PSRichtung.Name = "Licht_PSRichtung"
-        Me.Licht_PSRichtung.Point = Point3D7
+        Me.Licht_PSRichtung.Point = Point3D25
         Me.Licht_PSRichtung.Size = New System.Drawing.Size(255, 20)
         Me.Licht_PSRichtung.TabIndex = 57
         Me.Licht_PSRichtung.X = 0R
@@ -4863,8 +4825,8 @@ Partial Class Frm_Main
         Me.Licht_CSFarbe.BackColor = System.Drawing.Color.Transparent
         Me.Licht_CSFarbe.Location = New System.Drawing.Point(70, 126)
         Me.Licht_CSFarbe.Name = "Licht_CSFarbe"
-        RgbColor2.SelectedColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Licht_CSFarbe.SelectedColor = RgbColor2
+        RgbColor6.SelectedColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Licht_CSFarbe.SelectedColor = RgbColor6
         Me.Licht_CSFarbe.Size = New System.Drawing.Size(257, 24)
         Me.Licht_CSFarbe.TabIndex = 22
         '
@@ -4876,7 +4838,7 @@ Partial Class Frm_Main
         Me.Anim_PSRichtung.Max = 360.0R
         Me.Anim_PSRichtung.Min = -360.0R
         Me.Anim_PSRichtung.Name = "Anim_PSRichtung"
-        Me.Anim_PSRichtung.Point = Point3D8
+        Me.Anim_PSRichtung.Point = Point3D26
         Me.Anim_PSRichtung.Size = New System.Drawing.Size(255, 20)
         Me.Anim_PSRichtung.TabIndex = 59
         Me.Anim_PSRichtung.X = 0R
@@ -4891,7 +4853,7 @@ Partial Class Frm_Main
         Me.Anim_PSRotPnt.Max = 1.7976931348623157E+308R
         Me.Anim_PSRotPnt.Min = 0R
         Me.Anim_PSRotPnt.Name = "Anim_PSRotPnt"
-        Me.Anim_PSRotPnt.Point = Point3D9
+        Me.Anim_PSRotPnt.Point = Point3D27
         Me.Anim_PSRotPnt.Size = New System.Drawing.Size(256, 20)
         Me.Anim_PSRotPnt.TabIndex = 39
         Me.Anim_PSRotPnt.X = 0R
@@ -4905,6 +4867,17 @@ Partial Class Frm_Main
         Me.Anim_VSVar.Size = New System.Drawing.Size(226, 20)
         Me.Anim_VSVar.TabIndex = 32
         Me.Anim_VSVar.Variable = ""
+        '
+        'TBLogfile
+        '
+        Me.TBLogfile.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TBLogfile.Location = New System.Drawing.Point(3, 3)
+        Me.TBLogfile.Name = "TBLogfile"
+        Me.TBLogfile.ReadOnly = True
+        Me.TBLogfile.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical
+        Me.TBLogfile.Size = New System.Drawing.Size(800, 92)
+        Me.TBLogfile.TabIndex = 0
+        Me.TBLogfile.Text = ""
         '
         'Frm_Main
         '
@@ -4932,7 +4905,6 @@ Partial Class Frm_Main
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
         Me.TabPage2.ResumeLayout(False)
-        Me.TabPage2.PerformLayout()
         Me.PanelEigenschaften.ResumeLayout(False)
         Me.PanelEigenschaften.PerformLayout()
         Me.PanelEigenschaften1.ResumeLayout(False)
@@ -5323,7 +5295,6 @@ Partial Class Frm_Main
     Friend WithEvents Pfade_DDNachste_0 As ComboBox
     Friend WithEvents Pfade_CBRichtung_0 As CheckBox
     Friend WithEvents Pfade_PVerb0 As Panel
-    Friend WithEvents WagenteilToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem17 As ToolStripSeparator
     Friend WithEvents StatistikToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SuchenToolStripMenuItem As ToolStripMenuItem
@@ -5362,8 +5333,6 @@ Partial Class Frm_Main
     Friend WithEvents LBMeshes As CheckedListBox
     Friend WithEvents VersteckenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RepaintToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents NächsterWagenToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents VorherigerWagenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents FahrerkameraToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents FahrgastkameraToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents InnenlichtToolStripMenuItem As ToolStripMenuItem
@@ -5387,7 +5356,6 @@ Partial Class Frm_Main
     Friend WithEvents SommernormalToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HerbstToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents WinterToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents AlphaAnzeigenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Label74 As Label
     Friend WithEvents Label73 As Label
     Friend WithEvents Kamera_TBVertikal As TextBox
@@ -5461,7 +5429,6 @@ Partial Class Frm_Main
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents BTPanelTimelineClose As Button
     Friend WithEvents TBScriptLog As TextBox
-    Friend WithEvents TBLogfile As TextBox
     Friend WithEvents TimelineLogFensterToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SLTimeline As Splitter
     Friend WithEvents TimelineCursor As Panel
@@ -5483,4 +5450,6 @@ Partial Class Frm_Main
     Friend WithEvents TCProjekte As TabControl
     Friend WithEvents TCMainTP0 As TabPage
     Friend WithEvents TCMainTPPlus As TabPage
+    Friend WithEvents ProjektSchließenToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TBLogfile As RichTextBox
 End Class

@@ -742,7 +742,7 @@ Module Importer
         temp3D.center = New Point3D
 
         For ctLine = 0 To lines.Count - 1
-            Select Case Split(Trim(lines(ctLine)), " ")(0)
+            Select Case Trim(Split(lines(ctLine), "{")(0))
                 Case "FrameTransformMatrix"
                     temp3D.scaleX.X = Replace(Split(Trim(lines(ctLine + 1)), ",")(0), ".", ",")
                     temp3D.scaleX.Z = Replace(Split(Trim(lines(ctLine + 1)), ",")(1), ".", ",")
@@ -796,6 +796,9 @@ Module Importer
                             linesTemp.AddRange({tempV(2) + ctMeshAlt, tempV(3) + ctMeshAlt})
                             linesTemp.AddRange({tempV(3) + ctMeshAlt, tempV(4) + ctMeshAlt})
                             addFaces.Add(i - ctLine - 1)
+                        Else
+                            Log.Add("Meshes mit " & tempV(0) & " Edges pro Face werden nicht unterstützt!", Log.TYPE_ERROR, True)
+                            Return Nothing
                         End If
                     Next
                     ctMeshAlt += ctMesh

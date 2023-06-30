@@ -13,6 +13,7 @@ Public Class Frm_Einst
         Settings.BackupAnlegen = CBBackup.Checked
         Settings.LogDebug = CBLogDebug.Checked
         Settings.o3dAutoConvert = CBautoO3d.Checked
+        Settings.AutoLoadTrailer = CBAutoLoadTrailer.Checked
         Settings.CreatorID = Convert.ToInt32(TBCreatorID.Text)
         Settings.NickName = TBNickname.Text
 
@@ -85,6 +86,7 @@ Public Class Frm_Einst
         CBBackup.Checked = Settings.BackupAnlegen
         CBLogDebug.Checked = Settings.LogDebug
         CBautoO3d.Checked = Settings.o3dAutoConvert
+        CBAutoLoadTrailer.Checked = Settings.AutoLoadTrailer
         TBCreatorID.Text = Convert.ToString(Settings.CreatorID)
         TBNickname.Text = Settings.NickName
         CBGitInMenue.Checked = Settings.GitShowInMenue

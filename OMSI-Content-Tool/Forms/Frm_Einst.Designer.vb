@@ -118,6 +118,7 @@ Partial Class Frm_Einst
         Me.CDColorDriver = New System.Windows.Forms.ColorDialog()
         Me.CDColorAchsen = New System.Windows.Forms.ColorDialog()
         Me.CDColorFenster = New System.Windows.Forms.ColorDialog()
+        Me.CBAutoLoadTrailer = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox11.SuspendLayout()
@@ -351,6 +352,7 @@ Partial Class Frm_Einst
         '
         'GroupBox5
         '
+        Me.GroupBox5.Controls.Add(Me.CBAutoLoadTrailer)
         Me.GroupBox5.Controls.Add(Me.CBautoO3d)
         Me.GroupBox5.Location = New System.Drawing.Point(213, 6)
         Me.GroupBox5.Name = "GroupBox5"
@@ -1032,6 +1034,16 @@ Partial Class Frm_Einst
         '
         Me.CDColor3D.Color = System.Drawing.Color.White
         '
+        'CBAutoLoadTrailer
+        '
+        Me.CBAutoLoadTrailer.AutoSize = True
+        Me.CBAutoLoadTrailer.Location = New System.Drawing.Point(6, 42)
+        Me.CBAutoLoadTrailer.Name = "CBAutoLoadTrailer"
+        Me.CBAutoLoadTrailer.Size = New System.Drawing.Size(160, 17)
+        Me.CBAutoLoadTrailer.TabIndex = 1
+        Me.CBAutoLoadTrailer.Text = "Trailer automatisch mit laden"
+        Me.CBAutoLoadTrailer.UseVisualStyleBackColor = True
+        '
         'Frm_Einst
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1176,4 +1188,5 @@ Partial Class Frm_Einst
     Friend WithEvents DDInternalClipboard As ComboBox
     Friend WithEvents Label24 As Label
     Friend WithEvents Label25 As Label
+    Friend WithEvents CBAutoLoadTrailer As CheckBox
 End Class

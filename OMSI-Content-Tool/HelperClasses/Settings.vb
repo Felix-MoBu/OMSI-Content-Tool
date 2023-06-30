@@ -59,9 +59,9 @@ Module Settings
     Public TexAutoReload As Boolean = False
     Public ShowAllParts As Boolean = False
     Public LogDebug As Boolean = False
-    Public ShowAlpha As Boolean = True
     Public PfadeOrigBreite As Boolean = True
     Public Point3DInternalClipboard As Integer = 0
+    Public AutoLoadTrailer As Boolean = True
 
     Public o3dRemoveSpec As Boolean = False
     Public o3dAutoConvert As Boolean = False
@@ -183,12 +183,12 @@ Module Settings
                             ShowAllParts = intToBool(allLines(linect + 1))
                         Case "[LogDebug]"
                             LogDebug = intToBool(allLines(linect + 1))
-                        Case "[ShowAlpha]"
-                            ShowAlpha = intToBool(allLines(linect + 1))
                         Case "[PfadeOrigBreite]"
                             PfadeOrigBreite = intToBool(allLines(linect + 1))
                         Case "[Point3DInternalClipboard]"
                             Point3DInternalClipboard = allLines(linect + 1)
+                        Case "[AutoLoadTrailer]"
+                            AutoLoadTrailer = intToBool(allLines(linect + 1))
 
                         Case "[o3dRemoveSpec]"
                             o3dRemoveSpec = intToBool(allLines(linect + 1))
@@ -281,9 +281,9 @@ Module Settings
             .AddTag("TexAutoReload", boolToInt(TexAutoReload), True)
             .AddTag("ShowAllParts", boolToInt(ShowAllParts), True)
             .AddTag("LogDebug", boolToInt(LogDebug), True)
-            .AddTag("ShowAlpha", boolToInt(ShowAlpha), True)
             .AddTag("PfadeOrigBreite", boolToInt(PfadeOrigBreite), True)
             .AddTag("Point3DInternalClipboard", Point3DInternalClipboard, True)
+            .AddTag("AutoLoadTrailer", boolToInt(AutoLoadTrailer), True)
 
             .AddTag("o3dRemoveSpec", boolToInt(o3dRemoveSpec), True)
             .AddTag("o3dAutoConvert", boolToInt(o3dAutoConvert), True)
