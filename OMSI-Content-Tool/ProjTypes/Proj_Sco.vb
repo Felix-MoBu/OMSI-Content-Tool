@@ -230,20 +230,30 @@ Public Class Proj_Sco
                     Case "[passengercabin]"
                         cabin = New OMSI_Cabin(New Filename(allLines(linect + 1), filename.path))
                     Case "[new_attachment]"
-                        For i = linect To allLines.Count - 1
-                            If allLines(i).Contains("[") Then
-                                linect += i - 1
-                                Exit For
-                            End If
-                            If allLines(i) = "attach_trans" Then
-                                Dim newAtp As New OMSI_Attachment
-                                With newAtp
+                        Dim newAtta As New OMSI_Attachment
+                        With newAtta
+                            .name = allLines(linect - 1)
+                            For i = linect To allLines.Count - 1
+                                If allLines(i).Contains("[") Then
+                                    linect += i - 1
+                                    Exit For
+                                End If
+                                If allLines(i).Trim() = "attach_trans" Then
                                     .attach_pnt = New Point3D(toSingle(allLines(i + 1)), toSingle(allLines(i + 2)), toSingle(allLines(i + 3)))
-                                End With
-                                attachPnts.Add(newAtp)
-                                Exit For
-                            End If
-                        Next
+                                ElseIf allLines(i).Trim.Substring(0, allLines(i).Trim.Length - 1) = "attach_rot_" Then
+                                    Select Case allLines(i).Trim.Substring(allLines(i).Trim.Length - 1)
+                                        Case "x"
+                                            .attach_rot.X = toSingle(allLines(i + 1))
+                                        Case "y"
+                                            .attach_rot.Y = toSingle(allLines(i + 1))
+                                        Case "z"
+                                            .attach_rot.Z = toSingle(allLines(i + 1))
+                                    End Select
+                                End If
+                            Next
+                            attachPnts.Add(newAtta)
+                        End With
+
                     Case "[traffic_lights_group]"
                         traffic_lights_group = allLines(linect + 1)
                         For i = linect + 1 To allLines.Count - 1
@@ -523,7 +533,12 @@ Public Class Proj_Sco
             End If
 
             For Each attpnt In attachPnts
-                .Add("[new_attachment]", True)
+                If attpnt.name <> "" Then .Add(attpnt.name)
+                .Add("[new_attachment]")
+                If Not attpnt.attach_rot.X = 0 Then .Add("attach_rot_z", attpnt.attach_rot.X)
+                If Not attpnt.attach_rot.Y = 0 Then .Add("attach_rot_z", attpnt.attach_rot.Y)
+                If Not attpnt.attach_rot.Z = 0 Then .Add("attach_rot_z", attpnt.attach_rot.Z)
+
                 .Add("attach_trans")
                 .Add(attpnt.attach_pnt.X)
                 .Add(attpnt.attach_pnt.Y)

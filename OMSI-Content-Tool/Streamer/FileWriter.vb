@@ -17,6 +17,12 @@ Public Class FileWriter
         End If
     End Sub
 
+    Public Sub Add(str As String, val As Double, Optional newLine As Boolean = False)
+        lines.Add(str)
+        lines.Add(Replace(fromDouble(val), ".000", ""))
+        If newLine Then Nl()
+    End Sub
+
     Public Sub Add(str As String, Optional newLine As Boolean = False)
         lines.Add(str)
         If newLine Then Nl()

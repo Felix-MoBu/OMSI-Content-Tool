@@ -974,6 +974,15 @@ Class Frm_Main
                 LBPfade.Items.Add("Pfad_" & i)
             Next
 
+            TVHelper.Nodes(9).Nodes.Clear()
+            For i As Integer = 0 To .attachPnts.count - 1
+                If .attachPnts(i).name <> "" Then
+                    TVHelper.Nodes(9).Nodes.Add(.attachPnts(i).name)
+                Else
+                    TVHelper.Nodes(9).Nodes.Add("AttachPoint_" & i)
+                End If
+            Next
+
             TVHelper.Nodes(10).Nodes.Clear()
             For Each spline In .splinehelpers
                 TVHelper.Nodes(10).Nodes.Add(spline.spline.name)
@@ -4252,9 +4261,16 @@ Class Frm_Main
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, seat.vertices)
                                     GL.DrawElements(PrimitiveType.Triangles, seat.edges.GetUpperBound(0), DrawElementsType.UnsignedInt, seat.edges)
                                     GL.Color3(Color.Black)
-                                    GL.DrawElements(PrimitiveType.Lines, seat.lines.Count, DrawElementsType.UnsignedInt, seat.lines)
+                                    GL.DrawElements(PrimitiveType.Lines, seat.lines.GetUpperBound(0), DrawElementsType.UnsignedInt, seat.lines)
                                 Next
                             End If
+
+                            For Each attPnt In .attachPnts
+                                GL.Color3(Settings.AchsenColor)
+                                GL.VertexPointer(3, VertexPointerType.Double, 0, attPnt.vertices)
+                                GL.DrawElements(PrimitiveType.Triangles, attPnt.edges.GetUpperBound(0), DrawElementsType.UnsignedInt, attPnt.edges)
+                            Next
+
                         Case 2
                             GL.BindTexture(TextureTarget.Texture2D, 0)
                             Dim i As Integer = 0
@@ -4388,7 +4404,7 @@ Class Frm_Main
                                             GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                             GL.DrawElements(PrimitiveType.Triangles, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                                             GL.Color3(Color.Black)
-                                            GL.DrawElements(PrimitiveType.LineLoop, .lines.Count, DrawElementsType.UnsignedInt, .lines)
+                                            GL.DrawElements(PrimitiveType.LineLoop, .lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .lines)
                                         End With
                                     End If
                                 End If
@@ -4473,7 +4489,7 @@ Class Frm_Main
                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                     GL.DrawElements(PrimitiveType.Triangles, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                     GL.Color3(Color.Black)
-                    GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
+                    GL.DrawElements(PrimitiveType.Lines, .lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .lines)
                 End With
             Next
 
@@ -4483,7 +4499,7 @@ Class Frm_Main
                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                     GL.DrawElements(PrimitiveType.Triangles, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                     GL.Color3(Color.Black)
-                    GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
+                    GL.DrawElements(PrimitiveType.Lines, .lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .lines)
                 End With
             End If
         End If
@@ -4511,7 +4527,7 @@ Class Frm_Main
                             GL.Color3(Color.Black)
                         End If
                         GL.VertexPointer(3, VertexPointerType.Double, 0, .dots(i).vertices)
-                        GL.DrawElements(PrimitiveType.TriangleFan, .dots(i).lines.Count, DrawElementsType.UnsignedInt, .dots(i).lines)
+                        GL.DrawElements(PrimitiveType.TriangleFan, .dots(i).lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .dots(i).lines)
                     Next
                     GL.BindTexture(TextureTarget.Texture2D, 0)
                     GL.LineWidth(3)
@@ -4558,19 +4574,19 @@ Class Frm_Main
                         If mesh.ObjIds.Contains(objekt.id) Then
                             GL.Color3(Settings.SelectionColor)
                             GL.LineWidth(2)
-                            GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
+                            GL.DrawElements(PrimitiveType.Lines, .lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .lines)
                             GL.LineWidth(1)
                         Else
                             If Settings.WireframeV Then
                                 GL.Color3(Settings.LineColor3D)
-                                GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
+                                GL.DrawElements(PrimitiveType.Lines, .lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .lines)
                             End If
                         End If
                     Next
                 Else
                     If Settings.WireframeV Then
                         GL.Color3(Settings.LineColor3D)
-                        GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
+                        GL.DrawElements(PrimitiveType.Lines, .lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .lines)
                     End If
                 End If
             End If
