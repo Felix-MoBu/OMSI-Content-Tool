@@ -118,8 +118,10 @@ Class Frm_Main
 
         If Settings.TexAutoReload Then TReloadTextures.Start()
 
-        If Git.isInstalled And Settings.GitShowInMenue Then
-            GitToolStripMenuItem.Visible = True
+        If Settings.GitShowInMenue Then
+            If Git.isInstalled And Settings.GitShowInMenue Then
+                GitToolStripMenuItem.Visible = True
+            End If
         End If
 
 
@@ -252,7 +254,7 @@ Class Frm_Main
                             If mesh.isProtected Then
                                 .Filter = "OMSI-3D (*.o3d)|*.o3d"
                             Else
-                                .Filter = "OMSI-3D (*.o3d)|*.o3d|DirectX (*.x)|*.x|Extensible 3D (*.x3d)|*.x3d"
+                                .Filter = Exporter.FILTER
                                 .FilterIndex = Settings.LastExportFormat
                             End If
 
@@ -291,14 +293,7 @@ Class Frm_Main
         With fd
 
             .Title = "Import"
-            .Filter = "Alle Formate (*.*)|*.*|" &
-                      "OMSI-3D (*.o3d)|*.o3d|" &
-                      "DirectX (*.x)|*.x|" &
-                      "Extensible 3D (*.x3d)|*.x3d|" &
-                      "Modell-Datei (*.cfg)|*.cfg|" &
-                      "Mesh-Eigenschaften (*.txt)|*.txt|" &
-                      "Map-Kachel (*.rdy)|*.rdy|" &
-                      "Hof-Datei (*.hof)|*.hof"
+            .Filter = Importer.FILTER & "|Modell-Datei (*.cfg)|*.cfg|" & "Hof-Datei (*.hof)|*.hof"
             .FilterIndex = Settings.LastImportFormat
             .Multiselect = True
             If actProj.filename.path <> "" Then
@@ -1052,11 +1047,28 @@ Class Frm_Main
         GlMain.Invalidate()
     End Sub
 
+    Private Sub LoadBelPkte(model As OMSI_Model)
+        BelPktToComboBox(Bel_CB0, model.intLichter.Count)
+        BelPktToComboBox(Bel_CB1, model.intLichter.Count)
+        BelPktToComboBox(Bel_CB2, model.intLichter.Count)
+        BelPktToComboBox(Bel_CB3, model.intLichter.Count)
+    End Sub
+
+    Private Sub BelPktToComboBox(ByRef LB As ComboBox, belPktCout As Integer)
+        LB.Items.Clear()
+        For i As Integer = -1 To belPktCout
+            LB.Items.Add(i)
+        Next
+    End Sub
+
     Private Sub LoadProjectBus(Projekt_Bus_temp As Proj_Bus)
         Dim tmp As String = ""
         With Projekt_Bus_temp
 
             PBMain.Value = 0
+
+            LoadBelPkte(.model)
+
 
             TVHelper.Nodes(0).Nodes.Clear()
             For i = 0 To .achsen.Count - 1
@@ -3043,10 +3055,26 @@ Class Frm_Main
 
                 If Not .illumination Is Nothing Then
                     If .illumination.values.Count = 4 Then
-                        Bel_CB0.SelectedIndex = .illumination.values(0) + 1
-                        Bel_CB1.SelectedIndex = .illumination.values(1) + 1
-                        Bel_CB2.SelectedIndex = .illumination.values(2) + 1
-                        Bel_CB3.SelectedIndex = .illumination.values(3) + 1
+                        If .illumination.values(0) + 1 < Bel_CB0.Items.Count Then
+                            Bel_CB0.SelectedIndex = .illumination.values(0) + 1
+                        Else
+                            Bel_CB0.SelectedIndex = 0
+                        End If
+                        If .illumination.values(1) + 1 < Bel_CB1.Items.Count Then
+                            Bel_CB1.SelectedIndex = .illumination.values(1) + 1
+                        Else
+                            Bel_CB1.SelectedIndex = 0
+                        End If
+                        If .illumination.values(2) + 1 < Bel_CB2.Items.Count Then
+                            Bel_CB2.SelectedIndex = .illumination.values(2) + 1
+                        Else
+                            Bel_CB2.SelectedIndex = 0
+                        End If
+                        If .illumination.values(3) + 1 < Bel_CB3.Items.Count Then
+                            Bel_CB3.SelectedIndex = .illumination.values(3) + 1
+                        Else
+                            Bel_CB3.SelectedIndex = 0
+                        End If
                     End If
                 End If
 
@@ -5432,6 +5460,48 @@ Class Frm_Main
                 RecalcVis(Mesh_VSSichtbarkeit.Variable, Convert.ToDouble(Mesh_TBSichtbarkeitVal.Text))
             End If
         End If
+    End Sub
+
+    Public Sub UpArrow()
+        Select Case TCObjekte.SelectedIndex
+            Case 0 'Meshes
+                If LBMeshes.SelectedIndex > 0 Then
+                    LBMeshes.SelectedIndex -= 1
+                End If
+            Case 1 'Helper
+                If TVHelper.SelectedNode.Index > 0 Then
+                    TVHelper.SelectedNode = TVHelper.Nodes(TVHelper.SelectedNode.Index - 1)
+                End If
+            Case 2
+                If LBLichter.SelectedIndex > 0 Then
+                    LBLichter.SelectedIndex -= 1
+                End If
+            Case 3
+                If LBPfade.SelectedIndex > 0 Then
+                    LBPfade.SelectedIndex -= 1
+                End If
+        End Select
+    End Sub
+
+    Public Sub DownArrow()
+        Select Case TCObjekte.SelectedIndex
+            Case 0 'Meshes
+                If LBMeshes.SelectedIndex < LBMeshes.Items.Count - 1 Then
+                    LBMeshes.SelectedIndex += 1
+                End If
+            Case 1 'Helper
+                If TVHelper.SelectedNode.Index < TVHelper.Nodes.Count - 1 Then
+                    TVHelper.SelectedNode = TVHelper.Nodes(TVHelper.SelectedNode.Index + 1)
+                End If
+            Case 2
+                If LBLichter.SelectedIndex < LBLichter.Items.Count - 1 Then
+                    LBLichter.SelectedIndex += 1
+                End If
+            Case 3
+                If LBPfade.SelectedIndex < LBPfade.Items.Count - 1 Then
+                    LBPfade.SelectedIndex += 1
+                End If
+        End Select
     End Sub
 End Class
 

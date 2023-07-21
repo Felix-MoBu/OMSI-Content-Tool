@@ -63,9 +63,9 @@ Public Class Frm_Rep
                             .changed = False
                         End If
                     End With
+                    i += 3
                     repaints.Add(rp)
-                End If
-                If allLines(i) = "[setvar]" Then
+                ElseIf allLines(i) = "[setvar]" Then
                     Dim rv As New OMSI_Rep_Var
                     With rv
                         .name = lastName
@@ -73,6 +73,7 @@ Public Class Frm_Rep
                         .var = allLines(i + 1)
                         .val = allLines(i + 2)
                     End With
+                    i += 2
                     rep_vars.Add(rv)
                 End If
             Next

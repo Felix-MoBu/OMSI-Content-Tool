@@ -14,6 +14,12 @@ Public Class Frm_FindMesh
 
     Private Sub TBSuchen_KeyDown(sender As Object, e As KeyEventArgs) Handles TBSuchen.KeyDown
         Select Case e.KeyCode
+            Case Keys.Up
+                Frm_Main.UpArrow()
+                e.Handled = True
+            Case Keys.Down
+                Frm_Main.DownArrow()
+                e.Handled = True
             Case Keys.Enter
                 suchen()
                 e.Handled = True

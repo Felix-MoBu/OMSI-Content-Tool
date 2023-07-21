@@ -7,7 +7,7 @@ Public Module Git
     Dim gitUrl As String
 
     Public Function isInstalled() As Boolean
-        If Execute("git --version").Split(" ")(0) = "git" Then Return True
+        If Execute("powershell.exe git --version").Split(" ")(0) = "git" Then Return True
         Return False
     End Function
 

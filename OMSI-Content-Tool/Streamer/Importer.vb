@@ -4,6 +4,12 @@ Imports System.IO
 
 Module Importer
     Public ReadOnly KNOWN_FILE_TYPES As String() = {"o3d", "x", "x3d", "sli", "txt", "rdy"}
+    Public ReadOnly FILTER As String = "Alle Formate (*.*)|*.*|" &
+                                        "OMSI-3D (*.o3d)|*.o3d|" &
+                                        "DirectX (*.x)|*.x|" &
+                                        "Extensible 3D (*.x3d)|*.x3d|" &
+                                        "Mesh-Eigenschaften (*.txt)|*.txt|" &
+                                        "Map-Kachel (*.rdy)|*.rdy"
     Public stopImport As Boolean = False
 
 

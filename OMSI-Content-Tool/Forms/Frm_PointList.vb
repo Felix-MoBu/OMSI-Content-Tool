@@ -2,6 +2,7 @@
 
 Public Class Frm_PointList
     Private Sub Frm_PointList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If Frm_Main.actProj.ProjDataBase Is Nothing Then Exit Sub
 
         TB0.Text = Frm_Main.actProj.ProjDataBase.storedPointNames(0)
         PS0.Point = Frm_Main.actProj.ProjDataBase.storedPoints(0)

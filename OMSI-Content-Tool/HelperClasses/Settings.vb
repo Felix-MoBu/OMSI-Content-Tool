@@ -15,7 +15,7 @@ Module Settings
     Public RepToolPfad As String = "C:\Programme\Steam\steamapps\common\OMSI 2\SDK\RepaintTool.exe"
     Public BackupAnlegen As Boolean = False
 
-    Public GitShowInMenue As Boolean = True
+    Public GitShowInMenue As Boolean = False
     Public GitAutoCommit As Boolean = False
     Public LogGit As Boolean = False
 

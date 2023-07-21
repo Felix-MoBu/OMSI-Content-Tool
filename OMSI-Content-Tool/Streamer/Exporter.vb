@@ -1,6 +1,7 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Module Exporter
     Public ReadOnly KNOWN_FILE_TYPES As String() = {"o3d", "x", "x3d"} ', "sli", "txt", "rdy"}
+    Public ReadOnly FILTER As String = "OMSI-3D (*.o3d)|*.o3d|DirectX (*.x)|*.x|Extensible 3D (*.x3d)|*.x3d"
 
     Public Sub write(Objekt As Mesh, filename As Filename)
         Select Case filename.extension
