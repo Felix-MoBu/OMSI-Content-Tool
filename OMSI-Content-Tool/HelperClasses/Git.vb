@@ -1,4 +1,5 @@
-﻿Imports System.Diagnostics.Eventing.Reader
+﻿'by Felix Modellbusse ;) (MoBu) 2023
+Imports System.Diagnostics.Eventing.Reader
 
 Public Module Git
     Dim isRepoInt As Boolean

@@ -17,7 +17,7 @@ Public Class Frm_Einst
         Settings.CreatorID = Convert.ToInt32(TBCreatorID.Text)
         Settings.NickName = TBNickname.Text
 
-        Settings.GitShowInMenue = CBGitInMenue.Checked
+        Settings.UseGit = CBUseGit.Checked
         Settings.GitAutoCommit = CBGitAutoCommit.Checked
         Settings.LogGit = CBLogGit.Checked
 
@@ -89,7 +89,7 @@ Public Class Frm_Einst
         CBAutoLoadTrailer.Checked = Settings.AutoLoadTrailer
         TBCreatorID.Text = Convert.ToString(Settings.CreatorID)
         TBNickname.Text = Settings.NickName
-        CBGitInMenue.Checked = Settings.GitShowInMenue
+        CBUseGit.Checked = Settings.UseGit
         CBGitAutoCommit.Checked = Settings.GitAutoCommit
         DDInternalClipboard.SelectedIndex = Settings.Point3DInternalClipboard
 
@@ -234,7 +234,7 @@ Public Class Frm_Einst
 
     Private Sub BTAnmelden_Click(sender As Object, e As EventArgs) Handles BTAnmelden.Click
         If checkLogin(TBMail.Text, TBPassword.Text) Then
-            Settings.eMail = TBMail.Text
+            Settings.EMail = TBMail.Text
             Log.Add("Im Online-Bereich angemeldet.")
             MsgBox("Anmeldung erfolgreich! Anwendung bitte neu starten.")
             BTAnmelden.Enabled = False
@@ -247,7 +247,7 @@ Public Class Frm_Einst
     End Sub
 
     Private Sub BTAbmelden_Click(sender As Object, e As EventArgs) Handles BTAbmelden.Click
-        Settings.eMail = ""
+        Settings.EMail = ""
         Log.Add("Im Online-Bereich abgemeldet.")
         BTAnmelden.Enabled = True
         BTAbmelden.Enabled = False
@@ -330,7 +330,7 @@ Public Class Frm_Einst
         End If
     End Sub
 
-    Private Sub CBGitInMenue_CheckedChanged(sender As Object, e As EventArgs) Handles CBGitInMenue.CheckedChanged
-        Frm_Main.GitToolStripMenuItem.Visible = CBGitInMenue.Checked
+    Private Sub CBGitInMenue_CheckedChanged(sender As Object, e As EventArgs) Handles CBUseGit.CheckedChanged
+        Frm_Main.GitToolStripMenuItem.Visible = CBUseGit.Checked
     End Sub
 End Class

@@ -37,7 +37,7 @@ Partial Class Frm_Einst
         Me.GroupBox10 = New System.Windows.Forms.GroupBox()
         Me.CBLogGit = New System.Windows.Forms.CheckBox()
         Me.CBGitAutoCommit = New System.Windows.Forms.CheckBox()
-        Me.CBGitInMenue = New System.Windows.Forms.CheckBox()
+        Me.CBUseGit = New System.Windows.Forms.CheckBox()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.TBNickname = New System.Windows.Forms.TextBox()
         Me.Label20 = New System.Windows.Forms.Label()
@@ -45,6 +45,7 @@ Partial Class Frm_Einst
         Me.Label15 = New System.Windows.Forms.Label()
         Me.BTEinstReset = New System.Windows.Forms.Button()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.CBAutoLoadTrailer = New System.Windows.Forms.CheckBox()
         Me.CBautoO3d = New System.Windows.Forms.CheckBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.CBLogDebug = New System.Windows.Forms.CheckBox()
@@ -118,7 +119,6 @@ Partial Class Frm_Einst
         Me.CDColorDriver = New System.Windows.Forms.ColorDialog()
         Me.CDColorAchsen = New System.Windows.Forms.ColorDialog()
         Me.CDColorFenster = New System.Windows.Forms.ColorDialog()
-        Me.CBAutoLoadTrailer = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox11.SuspendLayout()
@@ -258,7 +258,7 @@ Partial Class Frm_Einst
         '
         Me.GroupBox10.Controls.Add(Me.CBLogGit)
         Me.GroupBox10.Controls.Add(Me.CBGitAutoCommit)
-        Me.GroupBox10.Controls.Add(Me.CBGitInMenue)
+        Me.GroupBox10.Controls.Add(Me.CBUseGit)
         Me.GroupBox10.Location = New System.Drawing.Point(214, 162)
         Me.GroupBox10.Name = "GroupBox10"
         Me.GroupBox10.Size = New System.Drawing.Size(199, 126)
@@ -286,15 +286,15 @@ Partial Class Frm_Einst
         Me.CBGitAutoCommit.Text = "Auto Commit beim speichern"
         Me.CBGitAutoCommit.UseVisualStyleBackColor = True
         '
-        'CBGitInMenue
+        'CBUseGit
         '
-        Me.CBGitInMenue.AutoSize = True
-        Me.CBGitInMenue.Location = New System.Drawing.Point(6, 21)
-        Me.CBGitInMenue.Name = "CBGitInMenue"
-        Me.CBGitInMenue.Size = New System.Drawing.Size(152, 30)
-        Me.CBGitInMenue.TabIndex = 0
-        Me.CBGitInMenue.Text = "Git im Menüband anzeigen" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(wenn installiert)"
-        Me.CBGitInMenue.UseVisualStyleBackColor = True
+        Me.CBUseGit.AutoSize = True
+        Me.CBUseGit.Location = New System.Drawing.Point(6, 21)
+        Me.CBUseGit.Name = "CBUseGit"
+        Me.CBUseGit.Size = New System.Drawing.Size(101, 30)
+        Me.CBUseGit.TabIndex = 0
+        Me.CBUseGit.Text = "Git verwenden " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(wenn installiert)"
+        Me.CBUseGit.UseVisualStyleBackColor = True
         '
         'GroupBox6
         '
@@ -360,6 +360,16 @@ Partial Class Frm_Einst
         Me.GroupBox5.TabIndex = 4
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Import / Export"
+        '
+        'CBAutoLoadTrailer
+        '
+        Me.CBAutoLoadTrailer.AutoSize = True
+        Me.CBAutoLoadTrailer.Location = New System.Drawing.Point(6, 42)
+        Me.CBAutoLoadTrailer.Name = "CBAutoLoadTrailer"
+        Me.CBAutoLoadTrailer.Size = New System.Drawing.Size(160, 17)
+        Me.CBAutoLoadTrailer.TabIndex = 1
+        Me.CBAutoLoadTrailer.Text = "Trailer automatisch mit laden"
+        Me.CBAutoLoadTrailer.UseVisualStyleBackColor = True
         '
         'CBautoO3d
         '
@@ -1034,16 +1044,6 @@ Partial Class Frm_Einst
         '
         Me.CDColor3D.Color = System.Drawing.Color.White
         '
-        'CBAutoLoadTrailer
-        '
-        Me.CBAutoLoadTrailer.AutoSize = True
-        Me.CBAutoLoadTrailer.Location = New System.Drawing.Point(6, 42)
-        Me.CBAutoLoadTrailer.Name = "CBAutoLoadTrailer"
-        Me.CBAutoLoadTrailer.Size = New System.Drawing.Size(160, 17)
-        Me.CBAutoLoadTrailer.TabIndex = 1
-        Me.CBAutoLoadTrailer.Text = "Trailer automatisch mit laden"
-        Me.CBAutoLoadTrailer.UseVisualStyleBackColor = True
-        '
         'Frm_Einst
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1181,7 +1181,7 @@ Partial Class Frm_Einst
     Friend WithEvents Label23 As Label
     Friend WithEvents CDColorFenster As ColorDialog
     Friend WithEvents GroupBox10 As GroupBox
-    Friend WithEvents CBGitInMenue As CheckBox
+    Friend WithEvents CBUseGit As CheckBox
     Friend WithEvents CBGitAutoCommit As CheckBox
     Friend WithEvents CBLogGit As CheckBox
     Friend WithEvents GroupBox11 As GroupBox

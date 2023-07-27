@@ -1,6 +1,5 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Option Strict On
-'by Felix Modellbusse ;) (MoBu) 2019
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Public Class FileWriter

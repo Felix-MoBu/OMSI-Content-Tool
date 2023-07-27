@@ -1,4 +1,5 @@
-﻿Imports System.Configuration
+﻿'by Felix Modellbusse ;) (MoBu) 2023
+Imports System.Configuration
 Imports System.Text
 
 Module Settings
@@ -15,7 +16,7 @@ Module Settings
     Public RepToolPfad As String = "C:\Programme\Steam\steamapps\common\OMSI 2\SDK\RepaintTool.exe"
     Public BackupAnlegen As Boolean = False
 
-    Public GitShowInMenue As Boolean = False
+    Public UseGit As Boolean = False
     Public GitAutoCommit As Boolean = False
     Public LogGit As Boolean = False
 
@@ -113,8 +114,8 @@ Module Settings
                         Case "[BackupAnlegen]"
                             BackupAnlegen = intToBool(allLines(linect + 1))
 
-                        Case "[GitShowInMenue]"
-                            GitShowInMenue = intToBool(allLines(linect + 1))
+                        Case "[UseGit]"
+                            UseGit = intToBool(allLines(linect + 1))
                         Case "[GitAutoCommit]"
                             GitAutoCommit = intToBool(allLines(linect + 1))
                         Case "[LogGit]"
@@ -230,7 +231,7 @@ Module Settings
             .AddTag("RepToolPfad", RepToolPfad, True)
             .AddTag("BackupAnlegen", boolToInt(BackupAnlegen), True)
 
-            .AddTag("GitShowInMenue", boolToInt(GitShowInMenue), True)
+            .AddTag("UseGit", boolToInt(UseGit), True)
             .AddTag("GitAutoCommit", boolToInt(GitAutoCommit), True)
             .AddTag("LogGit", boolToInt(LogGit), True)
 

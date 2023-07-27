@@ -118,8 +118,8 @@ Class Frm_Main
 
         If Settings.TexAutoReload Then TReloadTextures.Start()
 
-        If Settings.GitShowInMenue Then
-            If Git.isInstalled And Settings.GitShowInMenue Then
+        If Settings.UseGit Then
+            If Git.isInstalled And Settings.UseGit Then
                 GitToolStripMenuItem.Visible = True
             End If
         End If
@@ -601,7 +601,7 @@ Class Frm_Main
 
         Select Case TCObjekte.SelectedIndex
             Case 0
-                saveMeshProbs(getSelectedMesh)
+                saveMeshProps(getSelectedMesh)
             Case 2
                 saveLightProps(LBLichter.SelectedIndex)
         End Select
@@ -957,12 +957,7 @@ Class Frm_Main
             loadModelPrefs(.model)
             showModel(.model.meshes)
 
-            TVHelper.Nodes(7).Nodes.Clear()
-            If Not .cabin Is Nothing Then
-                For i = 0 To .cabin.passPos.Count - 1
-                    TVHelper.Nodes(7).Nodes.Add("Platz " & i)
-                Next
-            End If
+            loadCabinPrefs(.cabin)
 
             LBPfade.Items.Clear()
             For i = 0 To .ki_paths.Count - 1
@@ -1324,6 +1319,7 @@ Class Frm_Main
 
     Public Sub loadCabinPrefs(cabin As OMSI_Cabin)
         TVHelper.Nodes(7).Nodes.Clear()
+        TVHelper.Nodes(7).Nodes.Add("Fahrer")
         If Not cabin Is Nothing Then
             For i = 0 To cabin.passPos.Count - 1
                 TVHelper.Nodes(7).Nodes.Add("Platz " & i)
@@ -2106,7 +2102,7 @@ Class Frm_Main
 
     Private Sub Frm_Main_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         If GBAllgemein.Top > 10 Then
-            Log.Add("Eigenschaften-Panel: Item-Position größer 10!", Log.TYPE_ERROR, True)
+            MsgBox("Eigenschaften-Panel: Item-Position größer 10!", MsgBoxStyle.Exclamation)
             Me.Close()
             Exit Sub
         End If
@@ -2560,6 +2556,62 @@ Class Frm_Main
         End If
     End Sub
 
+    ' ####  Sitze  ####
+
+    Private Sub showSeatPrefs(seat As OMSI_Seat)
+        If seat Is Nothing Then Exit Sub
+        Seats_CBStehplatz.Checked = False
+
+        With seat               'Load
+            PSPos.Point = .position
+            Seats_TBRichtung.Text = .rot
+            Seats_TBSitzhoehe.Text = .sitheight
+            If .sitheight = 0 Then Seats_CBStehplatz.Checked = True
+            showIllumination(.illumination)
+        End With
+    End Sub
+
+    Private Function getSelectedSeat() As OMSI_Seat
+        If TVHelper.SelectedNode.FullPath.Contains("\") Then
+            If TVHelper.SelectedNode.FullPath.Split("\")(0) = TVHelper.Nodes(7).Text And TVHelper.SelectedNode.Index < actProj.cabin.passPos.Count Then
+                If TVHelper.SelectedNode.Index = 0 Then       'Fahrersitz
+                    Return actProj.cabin.driverPos
+                Else                                          'Fahrgäste
+                    Return actProj.cabin.passPos(TVHelper.SelectedNode.Index - 1)
+                End If
+            End If
+        End If
+
+        Return Nothing
+    End Function
+
+    Private Sub Seats_CBStehplatz_CheckedChanged(sender As Object, e As EventArgs) Handles Seats_CBStehplatz.CheckedChanged
+        Seats_TBSitzhoehe.Enabled = Not Seats_CBStehplatz.Checked
+        If Seats_CBStehplatz.Checked Then Seats_TBSitzhoehe.Text = "0"
+        If Not getSelectedSeat() Is Nothing Then getSelectedSeat.sitheight = toSingle(Seats_TBSitzhoehe.Text)
+        GlMain.Invalidate()
+    End Sub
+
+    Private Sub Seats_TBRichtung_KeyPress(sender As Object, e As Windows.Forms.KeyPressEventArgs) Handles Seats_TBRichtung.KeyPress
+        If Helper.NumbersOnly(e, sender, True, Double.MinValue, Double.MaxValue) Then
+            If Not getSelectedSeat() Is Nothing Then
+                getSelectedSeat.rot = toSingle(Seats_TBRichtung.Text)
+            End If
+            e.Handled = True
+            GlMain.Invalidate()
+        End If
+    End Sub
+
+    Private Sub Seats_TBSitzhoehe_KeyPress(sender As Object, e As Windows.Forms.KeyPressEventArgs) Handles Seats_TBSitzhoehe.KeyPress
+        If Helper.NumbersOnly(e, sender, True, Double.MinValue, Double.MaxValue) Then
+            If Not getSelectedSeat() Is Nothing Then
+                getSelectedSeat.sitheight = toSingle(Seats_TBSitzhoehe.Text)
+            End If
+            e.Handled = True
+            GlMain.Invalidate()
+        End If
+    End Sub
+
 
     ' #### TV Helper ####
 
@@ -2583,7 +2635,7 @@ Class Frm_Main
         End If
 
         If TVHelper.SelectedNode.FullPath.Contains("\") Then
-            Select Case TVHelper.SelectedNode.FullPath.Split("\")(0)
+            Select Case TVHelper.SelectedNode.FullPath.Split("\")(0) 
                 Case TVHelper.Nodes(0).Text     'Achsen
                     showSettings({GBAchse})
                     With actProj.achsen(index)
@@ -2667,7 +2719,11 @@ Class Frm_Main
                 Case TVHelper.Nodes(7).Text     'Sitz-/Stehplatz
                     showSettings({GBPlatz, GBBel})
                     With actProj
-                        PSPos.Point = .cabin.passPos(index).position
+                        If index = 0 Then       'Fahrersitz
+                            showSeatPrefs(.cabin.driverPos)
+                        Else                    'Fahrgäste
+                            showSeatPrefs(.cabin.passPos(index - 1))
+                        End If
                     End With
 
                 Case TVHelper.Nodes(10).Text     'Splinehelper
@@ -2965,7 +3021,7 @@ Class Frm_Main
         selectedMeshesChanged = True
         If Not selectedMesh Is Nothing Then
             If Not getProjType() = Proj_Sli.TYPE Then
-                saveMeshProbs(lastSelectedMesh)
+                saveMeshProps(lastSelectedMesh)
                 showMeshProps(selectedMesh)
                 getOCTProj.LBMeshesSelected = LBMeshes.SelectedIndex
             Else
@@ -3014,6 +3070,8 @@ Class Frm_Main
                 Mesh_NUMin.Value = Convert.ToDecimal(.lodMin)
                 Mesh_NUMax.Value = Convert.ToDecimal(.lodMax)
                 Mesh_TBMeshident.Text = .meshIdent
+                Mesh_CBIsShadow.Checked = .isShadow
+                Mesh_CBSmoothSkin.Checked = .smoothSkin
 
                 'Parent
                 Parent_CBParent.Text = .animParent
@@ -3047,36 +3105,7 @@ Class Frm_Main
                     AnimDetails(mesh, 0)
                 End If
 
-                'Innenbeleuchtung
-                Bel_CB0.SelectedIndex = 0
-                Bel_CB1.SelectedIndex = 0
-                Bel_CB2.SelectedIndex = 0
-                Bel_CB3.SelectedIndex = 0
-
-                If Not .illumination Is Nothing Then
-                    If .illumination.values.Count = 4 Then
-                        If .illumination.values(0) + 1 < Bel_CB0.Items.Count Then
-                            Bel_CB0.SelectedIndex = .illumination.values(0) + 1
-                        Else
-                            Bel_CB0.SelectedIndex = 0
-                        End If
-                        If .illumination.values(1) + 1 < Bel_CB1.Items.Count Then
-                            Bel_CB1.SelectedIndex = .illumination.values(1) + 1
-                        Else
-                            Bel_CB1.SelectedIndex = 0
-                        End If
-                        If .illumination.values(2) + 1 < Bel_CB2.Items.Count Then
-                            Bel_CB2.SelectedIndex = .illumination.values(2) + 1
-                        Else
-                            Bel_CB2.SelectedIndex = 0
-                        End If
-                        If .illumination.values(3) + 1 < Bel_CB3.Items.Count Then
-                            Bel_CB3.SelectedIndex = .illumination.values(3) + 1
-                        Else
-                            Bel_CB3.SelectedIndex = 0
-                        End If
-                    End If
-                End If
+                showIllumination(.illumination)
 
                 If .lodMin > lodVal Or .lodMax < lodVal Then
                     MsgBox("Das Objekt wir auf Grund der LOD Filterung nicht angezeigt. Der Filter kann unter Ansicht -> LOD-Filter verändert werden.")
@@ -3085,7 +3114,41 @@ Class Frm_Main
         End If
     End Sub
 
-    Private Sub saveMeshProbs(mesh As OMSI_Mesh)
+    Private Sub showIllumination(illumination As OMSI_Illumination)
+        'Innenbeleuchtung
+        Bel_CB0.SelectedIndex = 0
+        Bel_CB1.SelectedIndex = 0
+        Bel_CB2.SelectedIndex = 0
+        Bel_CB3.SelectedIndex = 0
+
+        If Not illumination Is Nothing Then
+            If illumination.values.Count = 4 Then
+                If illumination.values(0) + 1 < Bel_CB0.Items.Count Then
+                    Bel_CB0.SelectedIndex = illumination.values(0) + 1
+                Else
+                    Bel_CB0.SelectedIndex = 0
+                End If
+                If illumination.values(1) + 1 < Bel_CB1.Items.Count Then
+                    Bel_CB1.SelectedIndex = illumination.values(1) + 1
+                Else
+                    Bel_CB1.SelectedIndex = 0
+                End If
+                If illumination.values(2) + 1 < Bel_CB2.Items.Count Then
+                    Bel_CB2.SelectedIndex = illumination.values(2) + 1
+                Else
+                    Bel_CB2.SelectedIndex = 0
+                End If
+                If illumination.values(3) + 1 < Bel_CB3.Items.Count Then
+                    Bel_CB3.SelectedIndex = illumination.values(3) + 1
+                Else
+                    Bel_CB3.SelectedIndex = 0
+                End If
+            End If
+        End If
+    End Sub
+
+
+    Private Sub saveMeshProps(mesh As OMSI_Mesh)
         If Not mesh Is Nothing Then
             With mesh
                 'Allgemein
@@ -3100,6 +3163,8 @@ Class Frm_Main
                 .lodMin = Mesh_NUMin.Value
                 .lodMax = Mesh_NUMax.Value
                 .meshIdent = Mesh_TBMeshident.Text
+                .isShadow = Mesh_CBIsShadow.Checked
+                .smoothSkin = Mesh_CBSmoothSkin.Checked
 
                 'Animation
                 .animParent = Anim_TBAnimGrp.Text
@@ -3708,6 +3773,11 @@ Class Frm_Main
                                 getSelectedSpiegel.position = PSPos.Point
                             End If
 
+                        Case TVHelper.Nodes(7).Text     'Sitze
+                            If Not getSelectedSeat() Is Nothing Then
+                                getSelectedSeat.position = PSPos.Point
+                            End If
+
                         Case TVHelper.Nodes(11).Text    'Spot
                             If Not getSelectedSpot() Is Nothing Then
                                 getSelectedSpot.position = New Point3D(PSPos.Point)
@@ -3789,6 +3859,14 @@ Class Frm_Main
 
     Private Sub Mesh_VSSichtbarkeit_Changed(sender As Object, e As EventArgs) Handles Mesh_VSSichtbarkeit.Changed
         getSelectedMesh.visibleVar = Mesh_VSSichtbarkeit.Variable
+    End Sub
+
+    Private Sub Mesh_CBIsShadow_CheckedChanged(sender As Object, e As EventArgs) Handles Mesh_CBIsShadow.CheckedChanged
+        getSelectedMesh.isShadow = Mesh_CBIsShadow.Checked
+    End Sub
+
+    Private Sub Mesh_CBSmoothSkin_CheckedChanged(sender As Object, e As EventArgs) Handles Mesh_CBSmoothSkin.CheckedChanged
+        getSelectedMesh.smoothSkin = Mesh_CBSmoothSkin.Checked
     End Sub
 
 
@@ -4415,7 +4493,7 @@ Class Frm_Main
                             Next
 
 
-                            If Not .bbox Is Nothing Then
+                            If Not .bbox Is Nothing Then            'Boundingbox
                                 With .bbox
                                     GL.Color3(Color.Black)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
@@ -4423,8 +4501,8 @@ Class Frm_Main
                                 End With
                             End If
 
-                            GL.DepthFunc(DepthFunction.Less)    'Im Vordergrund Zeichnen abschalten
-                            If Not .model.spots Is Nothing Then
+                            GL.DepthFunc(DepthFunction.Less)        'Im Vordergrund Zeichnen abschalten
+                            If Not .model.spots Is Nothing Then     'Spots
                                 If InStr(TVHelper.SelectedNode.FullPath, TVHelper.Nodes(11).Text & "\") Then
                                     If TVHelper.SelectedNode.Index < .model.spots.Count Then
                                         With .model.spots(TVHelper.SelectedNode.Index)
@@ -4510,7 +4588,7 @@ Class Frm_Main
                 With cabin.passPos(i)
                     GL.Color3(Settings.PaxColor)
                     If InStr(TVHelper.SelectedNode.FullPath, TVHelper.Nodes(7).Text & "\") Then
-                        If TVHelper.SelectedNode.Index = i Then
+                        If TVHelper.SelectedNode.Index = i + 1 Then
                             GL.Color3(Settings.SelectionColor)
                         End If
                     End If
@@ -4524,6 +4602,9 @@ Class Frm_Main
             If Not cabin.driverPos Is Nothing Then
                 With cabin.driverPos
                     GL.Color3(Settings.DriverColor)
+                    If TVHelper.SelectedNode.Index = 0 Then
+                        GL.Color3(Settings.SelectionColor)
+                    End If
                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                     GL.DrawElements(PrimitiveType.Triangles, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                     GL.Color3(Color.Black)
