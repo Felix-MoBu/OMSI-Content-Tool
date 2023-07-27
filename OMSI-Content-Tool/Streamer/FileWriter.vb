@@ -1,6 +1,5 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Option Strict On
-'by Felix Modellbusse ;) (MoBu) 2019
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Public Class FileWriter
@@ -15,6 +14,12 @@ Public Class FileWriter
             lines.Add("Diese Datei wurde mit dem " & My.Application.Info.Title & " erstellt/bearbeitet (zuletzt: " & FormatDateTime(Now) & ")")
             Nl()
         End If
+    End Sub
+
+    Public Sub Add(str As String, val As Double, Optional newLine As Boolean = False)
+        lines.Add(str)
+        lines.Add(Replace(fromDouble(val), ".000", ""))
+        If newLine Then Nl()
     End Sub
 
     Public Sub Add(str As String, Optional newLine As Boolean = False)

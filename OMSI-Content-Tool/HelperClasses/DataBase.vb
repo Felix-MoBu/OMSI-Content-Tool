@@ -97,23 +97,19 @@ Public Class DataBase
             Dim newFile As New FileWriter(filename)
             With newFile
                 If version <> 0 Then
-                    .Add("[version]")
-                    .Add(version, True)
+                    .AddTag("version", version, True)
                 End If
 
                 If proj_version <> 0 Then
-                    .Add("[proj_version]")
-                    .Add(proj_version, True)
+                    .AddTag("proj_version", proj_version, True)
                 End If
 
                 If creatorID <> 0 Then
-                    .Add("[creator_id]")
-                    .Add(creatorID, True)
+                    .AddTag("creator_id", creatorID, True)
                 End If
 
                 If contentID <> 0 Then
-                    .Add("[content_id]")
-                    .Add(contentID, True)
+                    .AddTag("content_id", contentID, True)
                 End If
 
                 If Not selectedRepaint Is Nothing Then
@@ -129,8 +125,7 @@ Public Class DataBase
                 Next
 
                 If lastVars.Count > 0 Then
-                    .Add("[lastvars]")
-                    .Add(todoList.Count)
+                    .AddTag("lastvars", todoList.Count)
                     For lastVarsct As Integer = 0 To lastVars.Count - 1
                         .Add(lastVars(lastVarsct))
                     Next

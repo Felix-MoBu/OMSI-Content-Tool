@@ -1,4 +1,5 @@
-﻿Imports System.Diagnostics.Eventing.Reader
+﻿'by Felix Modellbusse ;) (MoBu) 2023
+Imports System.Diagnostics.Eventing.Reader
 
 Public Module Git
     Dim isRepoInt As Boolean
@@ -7,7 +8,7 @@ Public Module Git
     Dim gitUrl As String
 
     Public Function isInstalled() As Boolean
-        If Execute("git --version").Split(" ")(0) = "git" Then Return True
+        If Execute("powershell.exe git --version").Split(" ")(0) = "git" Then Return True
         Return False
     End Function
 

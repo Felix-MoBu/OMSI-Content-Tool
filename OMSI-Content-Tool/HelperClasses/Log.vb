@@ -13,19 +13,25 @@ Module Log
         Select Case type
             Case TYPE_WARNUNG
                 typeS = "Warnung"
+                Frm_Main.TBLogfile.SelectionColor = Color.Violet
             Case TYPE_ERROR
                 typeS = "Error!"
+                Frm_Main.TBLogfile.SelectionColor = Color.Red
             Case TYPE_DEBUG
                 If Not Settings.LogDebug Then Exit Sub
                 typeS = "DEBUG"
+                Frm_Main.TBLogfile.SelectionColor = Color.Blue
             Case TYPE_GIT
                 If Not Settings.LogGit Then Exit Sub
                 typeS = "GIT"
+                Frm_Main.TBLogfile.SelectionColor = Color.DarkOrange
             Case Else
                 typeS = "Info"
         End Select
         My.Computer.FileSystem.WriteAllText(Application.StartupPath & logfile, vbCrLf & typeS & vbTab & "(" & TimeString & ") - " & addText, True)
         Frm_Main.TBLogfile.AppendText(typeS & vbTab & "(" & TimeString & ") - " & addText & vbCrLf)
+        Frm_Main.TBLogfile.SelectionColor = Color.Black
+        Frm_Main.TBLogfile.ScrollToCaret()
 
         If popup Then
             If type = TYPE_ERROR Then

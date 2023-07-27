@@ -70,7 +70,6 @@ Class Frm_Main
     Dim PanelEigenschaften_height As Integer
     Dim PanelObjecte_size As Point
     Dim meshesDragStart As Integer = 0
-    Dim vorherigesProj As Filename
 
     Dim dotTexture As Material
     Dim softDotTexture As Material
@@ -119,8 +118,10 @@ Class Frm_Main
 
         If Settings.TexAutoReload Then TReloadTextures.Start()
 
-        If Git.isInstalled And Settings.GitShowInMenue Then
-            GitToolStripMenuItem.Visible = True
+        If Settings.UseGit Then
+            If Git.isInstalled And Settings.UseGit Then
+                GitToolStripMenuItem.Visible = True
+            End If
         End If
 
 
@@ -173,7 +174,7 @@ Class Frm_Main
     End Sub
 
 
-    Private Sub addOCTProj(project As OCTProjekt)
+    Public Sub addOCTProj(project As OCTProjekt)
         OpenProjects.Add(project)
         actProj = OpenProjects.Last.actProj
         If actProj.filename.name <> "" Then
@@ -253,7 +254,7 @@ Class Frm_Main
                             If mesh.isProtected Then
                                 .Filter = "OMSI-3D (*.o3d)|*.o3d"
                             Else
-                                .Filter = "OMSI-3D (*.o3d)|*.o3d|DirectX (*.x)|*.x|Extensible 3D (*.x3d)|*.x3d"
+                                .Filter = Exporter.FILTER
                                 .FilterIndex = Settings.LastExportFormat
                             End If
 
@@ -292,14 +293,7 @@ Class Frm_Main
         With fd
 
             .Title = "Import"
-            .Filter = "Alle Formate (*.*)|*.*|" &
-                      "OMSI-3D (*.o3d)|*.o3d|" &
-                      "DirectX (*.x)|*.x|" &
-                      "Extensible 3D (*.x3d)|*.x3d|" &
-                      "Modell-Datei (*.cfg)|*.cfg|" &
-                      "Mesh-Eigenschaften (*.txt)|*.txt|" &
-                      "Map-Kachel (*.rdy)|*.rdy|" &
-                      "Hof-Datei (*.hof)|*.hof"
+            .Filter = Importer.FILTER & "|Modell-Datei (*.cfg)|*.cfg|" & "Hof-Datei (*.hof)|*.hof"
             .FilterIndex = Settings.LastImportFormat
             .Multiselect = True
             If actProj.filename.path <> "" Then
@@ -607,7 +601,7 @@ Class Frm_Main
 
         Select Case TCObjekte.SelectedIndex
             Case 0
-                saveMeshProbs(getSelectedMesh)
+                saveMeshProps(getSelectedMesh)
             Case 2
                 saveLightProps(LBLichter.SelectedIndex)
         End Select
@@ -786,23 +780,25 @@ Class Frm_Main
         resetTextures()
         getOCTProj.alleMeshes = New List(Of Mesh)
         LBMeshes.Items.Clear()
+        TCObjekte.TabPages(0).Text = "Meshes"
+        resetTVHelper()
+        LBLichter.Items.Clear()
+        LBPfade.Items.Clear()
+        TCProjekte.SelectedTab.Text = "Neues Projekt"
         OpenProjects(TCProjekte.SelectedIndex).reset()
     End Sub
 
-    Public Sub ProjNew(proj As Object)
-        'Select Case proj.type
-        '    Case Proj_Bus.TYPE
-        '        Projekt_Bus = proj
-        '    Case Proj_Sco.TYPE
-        '        Projekt_Sco = proj
-        '    Case Proj_Ovh.TYPE
-        '        Projekt_Ovh = proj
-        '    Case Proj_Sli.TYPE
-        '        Projekt_Sli = proj
-        '    Case Proj_Emt.TYPE
-        '        Projekt_Emt = proj
-        'End Select
-        Log.Add("Derzeit nicht verfügbar!", Log.TYPE_DEBUG, True)
+    Private Sub resetTVHelper()
+
+        For i As Integer = 0 To TVHelper.Nodes.Count - 1
+            If i = 2 Or i = 8 Then
+                For n As Integer = 0 To TVHelper.Nodes(i).Nodes.Count - 1
+                    TVHelper.Nodes(i).Nodes(n).Nodes.Clear()
+                Next
+            Else
+                TVHelper.Nodes(i).Nodes.Clear()
+            End If
+        Next
     End Sub
 
 
@@ -869,43 +865,50 @@ Class Frm_Main
         End With
     End Sub
 
-    Private Sub resetProj()
-        OpenProjects(TCProjekte.SelectedIndex).reset()
+    Private Sub resetProj(Optional ProjIndex As Integer = -1)
+        If ProjIndex = -1 Then ProjIndex = TCProjekte.SelectedIndex
+
+        OpenProjects(ProjIndex).reset()
         resetTextures()
         getOCTProj.alleMeshes = New List(Of Mesh)
         getOCTProj.alleTexturen = New List(Of String)
         getOCTProj.alleVarValues = New Dictionary(Of String, Single)
         HofDateienToolStripMenuItem.Enabled = False     'Nur Busse haben Hof-Dateien
-        NächsterWagenToolStripMenuItem.Enabled = False  'Nur Busse haben Wagenteile
-        VorherigerWagenToolStripMenuItem.Enabled = False
         RepaintToolStripMenuItem.Enabled = False        'Splines haben keine Repaints
 
         Text = My.Application.Info.Title
     End Sub
 
-    Private Sub ProjÖffnen(filename As String)
+    Private Sub ProjÖffnen(filename As String, Optional ProjIndex As Integer = -1)
         Dim newProj As Object
-        resetProj()
+
+        If ProjIndex = -1 Then ProjIndex = TCProjekte.SelectedIndex
+        resetProj(ProjIndex)
 
         Select Case LCase(filename.Substring(filename.Length - 3))
             Case "bus"
                 clearProject()
                 newProj = New Proj_Bus(filename)
-                OpenProjects(TCProjekte.SelectedIndex) = New OCTProjekt(newProj)
-                actProj = OpenProjects(TCProjekte.SelectedIndex).actProj
+                OpenProjects(ProjIndex) = New OCTProjekt(newProj)
+                actProj = OpenProjects(ProjIndex).actProj
                 Settings.OpenPath = getFilePath(filename)
+                If newProj.couple_back_file <> "" Then
+                    TCProjekte.TabPages.Add("   +   ")
+                    OpenProjects.Add(New OCTProjekt)
+                    ProjÖffnen(newProj.couple_back_file.ToString, OpenProjects.Count - 1)
+                End If
                 LoadProjectBus(newProj)
                 RepaintToolStripMenuItem.Enabled = True
             Case "sco"
                 clearProject()
-                OpenProjects(TCProjekte.SelectedIndex) = New OCTProjekt(New Proj_Sco(filename))
-                actProj = OpenProjects(TCProjekte.SelectedIndex).actProj
+                OpenProjects(ProjIndex) = New OCTProjekt(New Proj_Sco(filename))
+                actProj = OpenProjects(ProjIndex).actProj
                 Settings.OpenPath = getFilePath(filename)
                 LoadProjectSco()
             Case "sli"
                 clearProject()
-                OpenProjects(TCProjekte.SelectedIndex) = New OCTProjekt(New Proj_Sli(filename))
-                actProj = OpenProjects(TCProjekte.SelectedIndex).actProj
+                OpenProjects(ProjIndex) = New OCTProjekt(New Proj_Sli(filename))
+                actProj = OpenProjects(ProjIndex).actProj
                 Settings.OpenPath = getFilePath(filename)
                 LoadProjectSli()
             Case Else
@@ -921,7 +924,7 @@ Class Frm_Main
 
         If Not Importer.stopImport Then
             Text = filename & " - " & My.Application.Info.Title
-            TCProjekte.SelectedTab.Text = actProj.filename.name
+            TCProjekte.TabPages(ProjIndex).Text = actProj.filename.name
         End If
         Importer.stopImport = False
     End Sub
@@ -954,16 +957,20 @@ Class Frm_Main
             loadModelPrefs(.model)
             showModel(.model.meshes)
 
-            TVHelper.Nodes(7).Nodes.Clear()
-            If Not .cabin Is Nothing Then
-                For i = 0 To .cabin.passPos.Count - 1
-                    TVHelper.Nodes(7).Nodes.Add("Platz " & i)
-                Next
-            End If
+            loadCabinPrefs(.cabin)
 
             LBPfade.Items.Clear()
             For i = 0 To .ki_paths.Count - 1
                 LBPfade.Items.Add("Pfad_" & i)
+            Next
+
+            TVHelper.Nodes(9).Nodes.Clear()
+            For i As Integer = 0 To .attachPnts.count - 1
+                If .attachPnts(i).name <> "" Then
+                    TVHelper.Nodes(9).Nodes.Add(.attachPnts(i).name)
+                Else
+                    TVHelper.Nodes(9).Nodes.Add("AttachPoint_" & i)
+                End If
             Next
 
             TVHelper.Nodes(10).Nodes.Clear()
@@ -1035,11 +1042,28 @@ Class Frm_Main
         GlMain.Invalidate()
     End Sub
 
+    Private Sub LoadBelPkte(model As OMSI_Model)
+        BelPktToComboBox(Bel_CB0, model.intLichter.Count)
+        BelPktToComboBox(Bel_CB1, model.intLichter.Count)
+        BelPktToComboBox(Bel_CB2, model.intLichter.Count)
+        BelPktToComboBox(Bel_CB3, model.intLichter.Count)
+    End Sub
+
+    Private Sub BelPktToComboBox(ByRef LB As ComboBox, belPktCout As Integer)
+        LB.Items.Clear()
+        For i As Integer = -1 To belPktCout
+            LB.Items.Add(i)
+        Next
+    End Sub
+
     Private Sub LoadProjectBus(Projekt_Bus_temp As Proj_Bus)
         Dim tmp As String = ""
         With Projekt_Bus_temp
 
             PBMain.Value = 0
+
+            LoadBelPkte(.model)
+
 
             TVHelper.Nodes(0).Nodes.Clear()
             For i = 0 To .achsen.Count - 1
@@ -1070,18 +1094,12 @@ Class Frm_Main
             Next
 
             TVHelper.Nodes(3).Nodes.Clear()
-            NächsterWagenToolStripMenuItem.Enabled = False
-            VorherigerWagenToolStripMenuItem.Enabled = False
             If .couple_back Then
                 TVHelper.Nodes(3).Nodes.Add("Heck")
-                WagenteilToolStripMenuItem.Visible = True
-                NächsterWagenToolStripMenuItem.Enabled = True
             End If
 
             If .couple_front Then
                 TVHelper.Nodes(3).Nodes.Add("Front")
-                WagenteilToolStripMenuItem.Visible = True
-                VorherigerWagenToolStripMenuItem.Enabled = True
             End If
 
             Kuppl_DDNextVehicle.Items.Clear()
@@ -1105,12 +1123,15 @@ Class Frm_Main
 
             loadCabinPrefs(.cabin)
 
-            TVHelper.Nodes(8).Nodes.Clear()
+            For i = 0 To TVHelper.Nodes(8).Nodes.Count - 1
+                TVHelper.Nodes(8).Nodes(i).Nodes.Clear()
+            Next
+
             For i = 0 To .ticketblöcke.Count - 1
                 If .ticketblöcke(i).name <> "" Then
-                    TVHelper.Nodes(8).Nodes.Add(.ticketblöcke(i).name)
+                    TVHelper.Nodes(8).Nodes(1).Nodes.Add(.ticketblöcke(i).name)
                 Else
-                    TVHelper.Nodes(8).Nodes.Add("Ticket " & i)
+                    TVHelper.Nodes(8).Nodes(1).Nodes.Add("Ticket " & i)
                 End If
             Next
 
@@ -1298,6 +1319,7 @@ Class Frm_Main
 
     Public Sub loadCabinPrefs(cabin As OMSI_Cabin)
         TVHelper.Nodes(7).Nodes.Clear()
+        TVHelper.Nodes(7).Nodes.Add("Fahrer")
         If Not cabin Is Nothing Then
             For i = 0 To cabin.passPos.Count - 1
                 TVHelper.Nodes(7).Nodes.Add("Platz " & i)
@@ -1402,6 +1424,14 @@ Class Frm_Main
         If exitApplication() Then Me.Close()
     End Sub
 
+    Private Sub ProjektSchließenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProjektSchließenToolStripMenuItem.Click
+        If OpenProjects.Count = 1 Then
+            OpenProjects(0) = New OCTProjekt
+            actProj = OpenProjects(0).actProj
+            clearProject()
+        End If
+    End Sub
+
     Public Sub EigenschaftenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EigenschaftenToolStripMenuItem.Click
         Select Case getProjType()
             Case Proj_Emt.TYPE
@@ -1427,12 +1457,6 @@ Class Frm_Main
     End Sub
 
     Private Sub GitterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GitterToolStripMenuItem.Click
-        sender.checked = Not sender.checked
-        savePositions()
-        GlMain.Invalidate()
-    End Sub
-
-    Private Sub AlphaAnzeigenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AlphaAnzeigenToolStripMenuItem.Click
         sender.checked = Not sender.checked
         savePositions()
         GlMain.Invalidate()
@@ -1919,7 +1943,6 @@ Class Frm_Main
 
         Settings.WireframeV = WireframeToolStripMenuItem.Checked
         Settings.GitterV = GitterToolStripMenuItem.Checked
-        Settings.ShowAlpha = AlphaAnzeigenToolStripMenuItem.Checked
         ObjekteToolStripMenuItem.Checked = PanelObjekte.Visible
         TextureToolStripMenuItem.Checked = PanelTexture.Visible
         TimelineLogFensterToolStripMenuItem.Checked = PanelTimeline.Visible
@@ -1964,7 +1987,6 @@ Class Frm_Main
 
         WireframeToolStripMenuItem.Checked = Settings.WireframeV
         GitterToolStripMenuItem.Checked = Settings.GitterV
-        AlphaAnzeigenToolStripMenuItem.Checked = Settings.ShowAlpha
         ObjekteToolStripMenuItem.Checked = PanelObjekte.Visible
         TextureToolStripMenuItem.Checked = PanelTexture.Visible
         TimelineLogFensterToolStripMenuItem.Checked = PanelTimeline.Visible
@@ -2080,7 +2102,7 @@ Class Frm_Main
 
     Private Sub Frm_Main_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         If GBAllgemein.Top > 10 Then
-            Log.Add("Eigenschaften-Panel: Item-Position größer 10!", Log.TYPE_ERROR, True)
+            MsgBox("Eigenschaften-Panel: Item-Position größer 10!", MsgBoxStyle.Exclamation)
             Me.Close()
             Exit Sub
         End If
@@ -2367,23 +2389,6 @@ Class Frm_Main
         End If
     End Sub
 
-    Private Sub NächsterWagenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NächsterWagenToolStripMenuItem.Click
-        If Not actProj.couple_back_file Is Nothing Then
-            vorherigesProj = actProj.filename
-            ProjÖffnen(actProj.couple_back_file.ToString)
-        Else
-            MsgBox("Es wurde noch kein Fahrzeugteil angekuppelt!")
-        End If
-    End Sub
-
-    Private Sub VorherigerWagenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VorherigerWagenToolStripMenuItem.Click
-        If Not vorherigesProj Is Nothing Then
-            ProjÖffnen(vorherigesProj)
-        Else
-            MsgBox("Diese Funktion ist nicht verfügbar wenn der Wagen davor nicht geladen war!")
-        End If
-    End Sub
-
     '###  Kameras  ###
 
     Private Sub FahrerkameraToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FahrerkameraToolStripMenuItem.Click
@@ -2551,6 +2556,62 @@ Class Frm_Main
         End If
     End Sub
 
+    ' ####  Sitze  ####
+
+    Private Sub showSeatPrefs(seat As OMSI_Seat)
+        If seat Is Nothing Then Exit Sub
+        Seats_CBStehplatz.Checked = False
+
+        With seat               'Load
+            PSPos.Point = .position
+            Seats_TBRichtung.Text = .rot
+            Seats_TBSitzhoehe.Text = .sitheight
+            If .sitheight = 0 Then Seats_CBStehplatz.Checked = True
+            showIllumination(.illumination)
+        End With
+    End Sub
+
+    Private Function getSelectedSeat() As OMSI_Seat
+        If TVHelper.SelectedNode.FullPath.Contains("\") Then
+            If TVHelper.SelectedNode.FullPath.Split("\")(0) = TVHelper.Nodes(7).Text And TVHelper.SelectedNode.Index < actProj.cabin.passPos.Count Then
+                If TVHelper.SelectedNode.Index = 0 Then       'Fahrersitz
+                    Return actProj.cabin.driverPos
+                Else                                          'Fahrgäste
+                    Return actProj.cabin.passPos(TVHelper.SelectedNode.Index - 1)
+                End If
+            End If
+        End If
+
+        Return Nothing
+    End Function
+
+    Private Sub Seats_CBStehplatz_CheckedChanged(sender As Object, e As EventArgs) Handles Seats_CBStehplatz.CheckedChanged
+        Seats_TBSitzhoehe.Enabled = Not Seats_CBStehplatz.Checked
+        If Seats_CBStehplatz.Checked Then Seats_TBSitzhoehe.Text = "0"
+        If Not getSelectedSeat() Is Nothing Then getSelectedSeat.sitheight = toSingle(Seats_TBSitzhoehe.Text)
+        GlMain.Invalidate()
+    End Sub
+
+    Private Sub Seats_TBRichtung_KeyPress(sender As Object, e As Windows.Forms.KeyPressEventArgs) Handles Seats_TBRichtung.KeyPress
+        If Helper.NumbersOnly(e, sender, True, Double.MinValue, Double.MaxValue) Then
+            If Not getSelectedSeat() Is Nothing Then
+                getSelectedSeat.rot = toSingle(Seats_TBRichtung.Text)
+            End If
+            e.Handled = True
+            GlMain.Invalidate()
+        End If
+    End Sub
+
+    Private Sub Seats_TBSitzhoehe_KeyPress(sender As Object, e As Windows.Forms.KeyPressEventArgs) Handles Seats_TBSitzhoehe.KeyPress
+        If Helper.NumbersOnly(e, sender, True, Double.MinValue, Double.MaxValue) Then
+            If Not getSelectedSeat() Is Nothing Then
+                getSelectedSeat.sitheight = toSingle(Seats_TBSitzhoehe.Text)
+            End If
+            e.Handled = True
+            GlMain.Invalidate()
+        End If
+    End Sub
+
 
     ' #### TV Helper ####
 
@@ -2574,7 +2635,7 @@ Class Frm_Main
         End If
 
         If TVHelper.SelectedNode.FullPath.Contains("\") Then
-            Select Case TVHelper.SelectedNode.FullPath.Split("\")(0)
+            Select Case TVHelper.SelectedNode.FullPath.Split("\")(0) 
                 Case TVHelper.Nodes(0).Text     'Achsen
                     showSettings({GBAchse})
                     With actProj.achsen(index)
@@ -2632,7 +2693,6 @@ Class Frm_Main
                             Kuppl_TBDown.Text = .couple_front_char.Y
                             Kuppl_TBUp.Text = .couple_front_char.Z
                             Kuppl_DDKupplType.SelectedIndex = boolToInt(.couple_front_type)
-                            VorherigerWagenToolStripMenuItem.Enabled = True
 
                         ElseIf TVHelper.SelectedNode.Text = "Heck" Then
                             Kuppl_LBFront.Visible = False
@@ -2640,7 +2700,6 @@ Class Frm_Main
                             PSPos.Point = .couple_back_point
                             If Not .couple_back_file Is Nothing Then Kuppl_DDNextVehicle.SelectedItem = .couple_back_file.name
                             Kuppl_DDRichtung.SelectedIndex = boolToInt(.couple_back_dir)
-                            NächsterWagenToolStripMenuItem.Enabled = True
                         End If
                     End With
 
@@ -2660,7 +2719,11 @@ Class Frm_Main
                 Case TVHelper.Nodes(7).Text     'Sitz-/Stehplatz
                     showSettings({GBPlatz, GBBel})
                     With actProj
-                        PSPos.Point = .cabin.passPos(index).position
+                        If index = 0 Then       'Fahrersitz
+                            showSeatPrefs(.cabin.driverPos)
+                        Else                    'Fahrgäste
+                            showSeatPrefs(.cabin.passPos(index - 1))
+                        End If
                     End With
 
                 Case TVHelper.Nodes(10).Text     'Splinehelper
@@ -2705,11 +2768,9 @@ Class Frm_Main
                     If index = 0 Then
                         actProj.couple_front = False
                         actProj.couple_front_sound = False
-                        VorherigerWagenToolStripMenuItem.Enabled = False
                     Else
                         actProj.couple_back = False
                         actProj.couple_back_file.name = ""
-                        NächsterWagenToolStripMenuItem.Enabled = False
                     End If
 
                 Case TVHelper.Nodes(4).Text     'Innenlichter
@@ -2957,10 +3018,10 @@ Class Frm_Main
 
     Private Sub LBMeshes_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBMeshes.SelectedIndexChanged
         Dim selectedMesh As OMSI_Mesh = getSelectedMesh()
-        Dim selectedMeshesChanged As Boolean = True
+        selectedMeshesChanged = True
         If Not selectedMesh Is Nothing Then
             If Not getProjType() = Proj_Sli.TYPE Then
-                saveMeshProbs(lastSelectedMesh)
+                saveMeshProps(lastSelectedMesh)
                 showMeshProps(selectedMesh)
                 getOCTProj.LBMeshesSelected = LBMeshes.SelectedIndex
             Else
@@ -3009,6 +3070,8 @@ Class Frm_Main
                 Mesh_NUMin.Value = Convert.ToDecimal(.lodMin)
                 Mesh_NUMax.Value = Convert.ToDecimal(.lodMax)
                 Mesh_TBMeshident.Text = .meshIdent
+                Mesh_CBIsShadow.Checked = .isShadow
+                Mesh_CBSmoothSkin.Checked = .smoothSkin
 
                 'Parent
                 Parent_CBParent.Text = .animParent
@@ -3042,20 +3105,7 @@ Class Frm_Main
                     AnimDetails(mesh, 0)
                 End If
 
-                'Innenbeleuchtung
-                Bel_CB0.SelectedIndex = 0
-                Bel_CB1.SelectedIndex = 0
-                Bel_CB2.SelectedIndex = 0
-                Bel_CB3.SelectedIndex = 0
-
-                If Not .illumination Is Nothing Then
-                    If .illumination.values.Count = 4 Then
-                        Bel_CB0.SelectedIndex = .illumination.values(0) + 1
-                        Bel_CB1.SelectedIndex = .illumination.values(1) + 1
-                        Bel_CB2.SelectedIndex = .illumination.values(2) + 1
-                        Bel_CB3.SelectedIndex = .illumination.values(3) + 1
-                    End If
-                End If
+                showIllumination(.illumination)
 
                 If .lodMin > lodVal Or .lodMax < lodVal Then
                     MsgBox("Das Objekt wir auf Grund der LOD Filterung nicht angezeigt. Der Filter kann unter Ansicht -> LOD-Filter verändert werden.")
@@ -3064,7 +3114,41 @@ Class Frm_Main
         End If
     End Sub
 
-    Private Sub saveMeshProbs(mesh As OMSI_Mesh)
+    Private Sub showIllumination(illumination As OMSI_Illumination)
+        'Innenbeleuchtung
+        Bel_CB0.SelectedIndex = 0
+        Bel_CB1.SelectedIndex = 0
+        Bel_CB2.SelectedIndex = 0
+        Bel_CB3.SelectedIndex = 0
+
+        If Not illumination Is Nothing Then
+            If illumination.values.Count = 4 Then
+                If illumination.values(0) + 1 < Bel_CB0.Items.Count Then
+                    Bel_CB0.SelectedIndex = illumination.values(0) + 1
+                Else
+                    Bel_CB0.SelectedIndex = 0
+                End If
+                If illumination.values(1) + 1 < Bel_CB1.Items.Count Then
+                    Bel_CB1.SelectedIndex = illumination.values(1) + 1
+                Else
+                    Bel_CB1.SelectedIndex = 0
+                End If
+                If illumination.values(2) + 1 < Bel_CB2.Items.Count Then
+                    Bel_CB2.SelectedIndex = illumination.values(2) + 1
+                Else
+                    Bel_CB2.SelectedIndex = 0
+                End If
+                If illumination.values(3) + 1 < Bel_CB3.Items.Count Then
+                    Bel_CB3.SelectedIndex = illumination.values(3) + 1
+                Else
+                    Bel_CB3.SelectedIndex = 0
+                End If
+            End If
+        End If
+    End Sub
+
+
+    Private Sub saveMeshProps(mesh As OMSI_Mesh)
         If Not mesh Is Nothing Then
             With mesh
                 'Allgemein
@@ -3079,6 +3163,8 @@ Class Frm_Main
                 .lodMin = Mesh_NUMin.Value
                 .lodMax = Mesh_NUMax.Value
                 .meshIdent = Mesh_TBMeshident.Text
+                .isShadow = Mesh_CBIsShadow.Checked
+                .smoothSkin = Mesh_CBSmoothSkin.Checked
 
                 'Animation
                 .animParent = Anim_TBAnimGrp.Text
@@ -3094,6 +3180,7 @@ Class Frm_Main
     End Sub
 
     Private Sub AnimDetails(mesh As OMSI_Mesh, id As Integer)
+        If mesh.animations.Count - 1 < id Then Exit Sub
         With mesh.animations(id)
             If .anim_type = OMSI_Anim.TYPE_ROTATION Then
                 Anim_RBDrehen.Checked = True
@@ -3175,7 +3262,9 @@ Class Frm_Main
 
     Private Sub Anim_PSRotPnt_Changed(sender As Object, e As EventArgs) Handles Anim_PSRotPnt.Changed
         If Anim_PSRotPnt.Enabled Then
-            getSelectedAnim.origin_trans = Anim_PSRotPnt.Point
+            If Not getSelectedAnim() Is Nothing Then
+                getSelectedAnim.origin_trans = Anim_PSRotPnt.Point
+            End If
         End If
     End Sub
 
@@ -3684,6 +3773,11 @@ Class Frm_Main
                                 getSelectedSpiegel.position = PSPos.Point
                             End If
 
+                        Case TVHelper.Nodes(7).Text     'Sitze
+                            If Not getSelectedSeat() Is Nothing Then
+                                getSelectedSeat.position = PSPos.Point
+                            End If
+
                         Case TVHelper.Nodes(11).Text    'Spot
                             If Not getSelectedSpot() Is Nothing Then
                                 getSelectedSpot.position = New Point3D(PSPos.Point)
@@ -3765,6 +3859,14 @@ Class Frm_Main
 
     Private Sub Mesh_VSSichtbarkeit_Changed(sender As Object, e As EventArgs) Handles Mesh_VSSichtbarkeit.Changed
         getSelectedMesh.visibleVar = Mesh_VSSichtbarkeit.Variable
+    End Sub
+
+    Private Sub Mesh_CBIsShadow_CheckedChanged(sender As Object, e As EventArgs) Handles Mesh_CBIsShadow.CheckedChanged
+        getSelectedMesh.isShadow = Mesh_CBIsShadow.Checked
+    End Sub
+
+    Private Sub Mesh_CBSmoothSkin_CheckedChanged(sender As Object, e As EventArgs) Handles Mesh_CBSmoothSkin.CheckedChanged
+        getSelectedMesh.smoothSkin = Mesh_CBSmoothSkin.Checked
     End Sub
 
 
@@ -4065,8 +4167,8 @@ Class Frm_Main
 
     Private Sub GlMain_Load(sender As Object, e As EventArgs) Handles GlMain.Load
         GL.ClearColor(Settings.BackColor3D)
-        'GL.Enable(EnableCap.DepthTest) 'Enable correct Z Drawings
-        'GL.DepthFunc(DepthFunction.Less) 'Enable correct Z Drawings
+        GL.Enable(EnableCap.DepthTest) 'Enable correct Z Drawings
+        GL.DepthFunc(DepthFunction.Less) 'Enable correct Z Drawings
 
         GL.Enable(EnableCap.Texture2D)
         GL.Enable(EnableCap.Blend)
@@ -4265,9 +4367,16 @@ Class Frm_Main
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, seat.vertices)
                                     GL.DrawElements(PrimitiveType.Triangles, seat.edges.GetUpperBound(0), DrawElementsType.UnsignedInt, seat.edges)
                                     GL.Color3(Color.Black)
-                                    GL.DrawElements(PrimitiveType.Lines, seat.lines.Count, DrawElementsType.UnsignedInt, seat.lines)
+                                    GL.DrawElements(PrimitiveType.Lines, seat.lines.GetUpperBound(0), DrawElementsType.UnsignedInt, seat.lines)
                                 Next
                             End If
+
+                            For Each attPnt In .attachPnts
+                                GL.Color3(Settings.AchsenColor)
+                                GL.VertexPointer(3, VertexPointerType.Double, 0, attPnt.vertices)
+                                GL.DrawElements(PrimitiveType.Triangles, attPnt.edges.GetUpperBound(0), DrawElementsType.UnsignedInt, attPnt.edges)
+                            Next
+
                         Case 2
                             GL.BindTexture(TextureTarget.Texture2D, 0)
                             Dim i As Integer = 0
@@ -4384,7 +4493,7 @@ Class Frm_Main
                             Next
 
 
-                            If Not .bbox Is Nothing Then
+                            If Not .bbox Is Nothing Then            'Boundingbox
                                 With .bbox
                                     GL.Color3(Color.Black)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
@@ -4392,8 +4501,8 @@ Class Frm_Main
                                 End With
                             End If
 
-                            GL.DepthFunc(DepthFunction.Less)    'Im Vordergrund Zeichnen abschalten
-                            If Not .model.spots Is Nothing Then
+                            GL.DepthFunc(DepthFunction.Less)        'Im Vordergrund Zeichnen abschalten
+                            If Not .model.spots Is Nothing Then     'Spots
                                 If InStr(TVHelper.SelectedNode.FullPath, TVHelper.Nodes(11).Text & "\") Then
                                     If TVHelper.SelectedNode.Index < .model.spots.Count Then
                                         With .model.spots(TVHelper.SelectedNode.Index)
@@ -4401,7 +4510,7 @@ Class Frm_Main
                                             GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                                             GL.DrawElements(PrimitiveType.Triangles, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                                             GL.Color3(Color.Black)
-                                            GL.DrawElements(PrimitiveType.LineLoop, .lines.Count, DrawElementsType.UnsignedInt, .lines)
+                                            GL.DrawElements(PrimitiveType.LineLoop, .lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .lines)
                                         End With
                                     End If
                                 End If
@@ -4479,24 +4588,27 @@ Class Frm_Main
                 With cabin.passPos(i)
                     GL.Color3(Settings.PaxColor)
                     If InStr(TVHelper.SelectedNode.FullPath, TVHelper.Nodes(7).Text & "\") Then
-                        If TVHelper.SelectedNode.Index = i Then
+                        If TVHelper.SelectedNode.Index = i + 1 Then
                             GL.Color3(Settings.SelectionColor)
                         End If
                     End If
                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                     GL.DrawElements(PrimitiveType.Triangles, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                     GL.Color3(Color.Black)
-                    GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
+                    GL.DrawElements(PrimitiveType.Lines, .lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .lines)
                 End With
             Next
 
             If Not cabin.driverPos Is Nothing Then
                 With cabin.driverPos
                     GL.Color3(Settings.DriverColor)
+                    If TVHelper.SelectedNode.Index = 0 Then
+                        GL.Color3(Settings.SelectionColor)
+                    End If
                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
                     GL.DrawElements(PrimitiveType.Triangles, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
                     GL.Color3(Color.Black)
-                    GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
+                    GL.DrawElements(PrimitiveType.Lines, .lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .lines)
                 End With
             End If
         End If
@@ -4524,7 +4636,7 @@ Class Frm_Main
                             GL.Color3(Color.Black)
                         End If
                         GL.VertexPointer(3, VertexPointerType.Double, 0, .dots(i).vertices)
-                        GL.DrawElements(PrimitiveType.TriangleFan, .dots(i).lines.Count, DrawElementsType.UnsignedInt, .dots(i).lines)
+                        GL.DrawElements(PrimitiveType.TriangleFan, .dots(i).lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .dots(i).lines)
                     Next
                     GL.BindTexture(TextureTarget.Texture2D, 0)
                     GL.LineWidth(3)
@@ -4547,12 +4659,7 @@ Class Frm_Main
         With objekt
             If .visible And Not .tempHidden Then
                 For i = 0 To .subObjekte.Count - 1
-                    'GL.Color3(Color.White)
-                    If Settings.ShowAlpha Then
-                        GL.Color4(1, 1, 1, .texturen(i).alpha)
-                    Else
-                        GL.Color3(Color.White)
-                    End If
+                    GL.Color3(Color.White)
 
                     If Not origTexturen.Contains(.texturen(i).filename, StringComparer.OrdinalIgnoreCase) Then '-> Hier CaseInsensitiveComparer einfügen!
                         GL.BindTexture(TextureTarget.Texture2D, .texturen(i).id)
@@ -4576,19 +4683,19 @@ Class Frm_Main
                         If mesh.ObjIds.Contains(objekt.id) Then
                             GL.Color3(Settings.SelectionColor)
                             GL.LineWidth(2)
-                            GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
+                            GL.DrawElements(PrimitiveType.Lines, .lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .lines)
                             GL.LineWidth(1)
                         Else
                             If Settings.WireframeV Then
                                 GL.Color3(Settings.LineColor3D)
-                                GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
+                                GL.DrawElements(PrimitiveType.Lines, .lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .lines)
                             End If
                         End If
                     Next
                 Else
                     If Settings.WireframeV Then
                         GL.Color3(Settings.LineColor3D)
-                        GL.DrawElements(PrimitiveType.Lines, .lines.Count, DrawElementsType.UnsignedInt, .lines)
+                        GL.DrawElements(PrimitiveType.Lines, .lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .lines)
                     End If
                 End If
             End If
@@ -5405,9 +5512,11 @@ Class Frm_Main
                         LBMeshes.Items.Add(mesh.filename.name)
                         LBMeshes.SetItemChecked(LBMeshes.Items.Count - 1, True)
                     Next
-                    LBMeshes.SelectedIndex = .LBMeshesSelected
+                    If .LBMeshesSelected > -1 Then
+                        LBMeshes.SelectedIndex = .LBMeshesSelected
+                    End If
                 End If
-            Else
+                Else
                 Dim i As Integer = 0
                 For Each subobjekt In actProj.subobjekte
                     LBMeshes.Items.Add(actProj.filename.name & "_" & i)
@@ -5432,6 +5541,48 @@ Class Frm_Main
                 RecalcVis(Mesh_VSSichtbarkeit.Variable, Convert.ToDouble(Mesh_TBSichtbarkeitVal.Text))
             End If
         End If
+    End Sub
+
+    Public Sub UpArrow()
+        Select Case TCObjekte.SelectedIndex
+            Case 0 'Meshes
+                If LBMeshes.SelectedIndex > 0 Then
+                    LBMeshes.SelectedIndex -= 1
+                End If
+            Case 1 'Helper
+                If TVHelper.SelectedNode.Index > 0 Then
+                    TVHelper.SelectedNode = TVHelper.Nodes(TVHelper.SelectedNode.Index - 1)
+                End If
+            Case 2
+                If LBLichter.SelectedIndex > 0 Then
+                    LBLichter.SelectedIndex -= 1
+                End If
+            Case 3
+                If LBPfade.SelectedIndex > 0 Then
+                    LBPfade.SelectedIndex -= 1
+                End If
+        End Select
+    End Sub
+
+    Public Sub DownArrow()
+        Select Case TCObjekte.SelectedIndex
+            Case 0 'Meshes
+                If LBMeshes.SelectedIndex < LBMeshes.Items.Count - 1 Then
+                    LBMeshes.SelectedIndex += 1
+                End If
+            Case 1 'Helper
+                If TVHelper.SelectedNode.Index < TVHelper.Nodes.Count - 1 Then
+                    TVHelper.SelectedNode = TVHelper.Nodes(TVHelper.SelectedNode.Index + 1)
+                End If
+            Case 2
+                If LBLichter.SelectedIndex < LBLichter.Items.Count - 1 Then
+                    LBLichter.SelectedIndex += 1
+                End If
+            Case 3
+                If LBPfade.SelectedIndex < LBPfade.Items.Count - 1 Then
+                    LBPfade.SelectedIndex += 1
+                End If
+        End Select
     End Sub
 End Class
 

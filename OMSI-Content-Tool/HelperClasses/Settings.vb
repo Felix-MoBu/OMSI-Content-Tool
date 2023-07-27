@@ -1,4 +1,5 @@
-﻿Imports System.Configuration
+﻿'by Felix Modellbusse ;) (MoBu) 2023
+Imports System.Configuration
 Imports System.Text
 
 Module Settings
@@ -15,7 +16,7 @@ Module Settings
     Public RepToolPfad As String = "C:\Programme\Steam\steamapps\common\OMSI 2\SDK\RepaintTool.exe"
     Public BackupAnlegen As Boolean = False
 
-    Public GitShowInMenue As Boolean = True
+    Public UseGit As Boolean = False
     Public GitAutoCommit As Boolean = False
     Public LogGit As Boolean = False
 
@@ -59,9 +60,9 @@ Module Settings
     Public TexAutoReload As Boolean = False
     Public ShowAllParts As Boolean = False
     Public LogDebug As Boolean = False
-    Public ShowAlpha As Boolean = True
     Public PfadeOrigBreite As Boolean = True
     Public Point3DInternalClipboard As Integer = 0
+    Public AutoLoadTrailer As Boolean = True
 
     Public o3dRemoveSpec As Boolean = False
     Public o3dAutoConvert As Boolean = False
@@ -113,8 +114,8 @@ Module Settings
                         Case "[BackupAnlegen]"
                             BackupAnlegen = intToBool(allLines(linect + 1))
 
-                        Case "[GitShowInMenue]"
-                            GitShowInMenue = intToBool(allLines(linect + 1))
+                        Case "[UseGit]"
+                            UseGit = intToBool(allLines(linect + 1))
                         Case "[GitAutoCommit]"
                             GitAutoCommit = intToBool(allLines(linect + 1))
                         Case "[LogGit]"
@@ -183,12 +184,12 @@ Module Settings
                             ShowAllParts = intToBool(allLines(linect + 1))
                         Case "[LogDebug]"
                             LogDebug = intToBool(allLines(linect + 1))
-                        Case "[ShowAlpha]"
-                            ShowAlpha = intToBool(allLines(linect + 1))
                         Case "[PfadeOrigBreite]"
                             PfadeOrigBreite = intToBool(allLines(linect + 1))
                         Case "[Point3DInternalClipboard]"
                             Point3DInternalClipboard = allLines(linect + 1)
+                        Case "[AutoLoadTrailer]"
+                            AutoLoadTrailer = intToBool(allLines(linect + 1))
 
                         Case "[o3dRemoveSpec]"
                             o3dRemoveSpec = intToBool(allLines(linect + 1))
@@ -230,7 +231,7 @@ Module Settings
             .AddTag("RepToolPfad", RepToolPfad, True)
             .AddTag("BackupAnlegen", boolToInt(BackupAnlegen), True)
 
-            .AddTag("GitShowInMenue", boolToInt(GitShowInMenue), True)
+            .AddTag("UseGit", boolToInt(UseGit), True)
             .AddTag("GitAutoCommit", boolToInt(GitAutoCommit), True)
             .AddTag("LogGit", boolToInt(LogGit), True)
 
@@ -281,9 +282,9 @@ Module Settings
             .AddTag("TexAutoReload", boolToInt(TexAutoReload), True)
             .AddTag("ShowAllParts", boolToInt(ShowAllParts), True)
             .AddTag("LogDebug", boolToInt(LogDebug), True)
-            .AddTag("ShowAlpha", boolToInt(ShowAlpha), True)
             .AddTag("PfadeOrigBreite", boolToInt(PfadeOrigBreite), True)
             .AddTag("Point3DInternalClipboard", Point3DInternalClipboard, True)
+            .AddTag("AutoLoadTrailer", boolToInt(AutoLoadTrailer), True)
 
             .AddTag("o3dRemoveSpec", boolToInt(o3dRemoveSpec), True)
             .AddTag("o3dAutoConvert", boolToInt(o3dAutoConvert), True)

@@ -1,7 +1,9 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Option Strict On
 
+Imports System.Dynamic
 Imports OpenTK
+Imports OpenTK.Graphics.OpenGL
 
 Public Class Point3D
     Public X As Double
@@ -36,6 +38,16 @@ Public Class Point3D
         Me.X = Pnt.X * scale
         Me.Y = Pnt.Y * scale
         Me.Z = Pnt.Z * scale
+    End Sub
+
+    Public Sub New(list As Double(), startIndex As Integer)
+        If list.Count < startIndex + 3 Or startIndex < 0 Then
+            Log.Add("Fehler beim Versuch einen 3D-Punkt aus einer Liste zu generieren. Index außerhalb der Liste", Log.TYPE_DEBUG)
+            Exit Sub
+        End If
+        Me.X = list(startIndex)
+        Me.Y = list(startIndex + 1)
+        Me.Z = list(startIndex + 2)
     End Sub
 
     Public Shared Operator <>(ByVal obj1 As Point3D, ByVal obj2 As Point3D) As Boolean

@@ -140,7 +140,7 @@ Public Class Frm_Neu
         End Select
 
         Proj_temp.filename = New Filename(TBName.Text, TBSpeicherort.Text)
-        Frm_Main.ProjNew(Proj_temp)
+        Frm_Main.addOCTProj(New OCTProjekt(Proj_temp))
         Frm_Main.addProjectlist(Proj_temp.filename.ToString)
 
         Frm_Main.EigenschaftenToolStripMenuItem_Click(New Object, Nothing)

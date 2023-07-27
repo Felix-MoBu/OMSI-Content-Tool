@@ -15,8 +15,8 @@ Public Class OMSI_Cabin
     Public ticketSaleInd As Integer
     Public ticketSalePnt As New Point3D
 
-    Public ticketSaleMoneyPnts As New List(Of OMSI_TicketPnt)
-    Public ticketSaleChangePnts As New List(Of OMSI_TicketPnt)
+    Public ticketSaleMoneyPnt As OMSI_TicketPnt
+    Public ticketSaleChangePnt As OMSI_TicketPnt
 
     Public driverPos As OMSI_Seat
     Public passPos As New List(Of OMSI_Seat)
@@ -53,6 +53,7 @@ Public Class OMSI_Cabin
                                     doors(doors.Count - 1).noticketsale = True
                             End Select
                         Next
+
                     Case "[exit]"
                         doors.Add(New OMSI_Door(allLines(linect + 1), OMSI_Door.IS_EXIT))
                         For i = linect + 2 To allLines.Count - 1
@@ -64,56 +65,61 @@ Public Class OMSI_Cabin
                                 doors(doors.Count - 1).withButton = True
                             End If
                         Next
+
                     Case "[linkToPrevVeh]"
                         linkToPrevVeh = allLines(linect + 1)
+
                     Case "[linkToNextVeh]"
                         linkToNextVeh = allLines(linect + 1)
+
                     Case "[stamper]"
                         stamperInd = allLines(linect + 1)
                         stamperPnt = New Point3D(-Replace(allLines(linect + 2), ".", ","), Replace(allLines(linect + 3), ".", ","), Replace(allLines(linect + 4), ".", ","))
                         linect += 4
+
                     Case "[ticket_sale]"
                         ticketSaleInd = allLines(linect + 1)
                         ticketSalePnt = New Point3D(-Replace(allLines(linect + 2), ".", ","), Replace(allLines(linect + 3), ".", ","), Replace(allLines(linect + 4), ".", ","))
                         linect += 4
+
                     Case "[ticket_sale_money_point]"
-                        Dim newTSMP As New OMSI_TicketPnt
-                        With newTSMP
+                        ticketSaleMoneyPnt = New OMSI_TicketPnt
+                        With ticketSaleMoneyPnt
                             .position = New Point3D(Replace(allLines(linect + 1), ".", ","), Replace(allLines(linect + 2), ".", ","), Replace(allLines(linect + 3), ".", ","))
                             .variationX = Replace(allLines(linect + 4), ".", ",")
                             .variationY = Replace(allLines(linect + 5), ".", ",")
                         End With
-                        ticketSaleMoneyPnts.Add(newTSMP)
                         linect += 5
+
                     Case "[ticket_sale_money_point_2]"
-                        Dim newTSMP As New OMSI_TicketPnt
-                        With newTSMP
+                        ticketSaleMoneyPnt = New OMSI_TicketPnt
+                        With ticketSaleMoneyPnt
                             .position = New Point3D(Replace(allLines(linect + 1), ".", ","), Replace(allLines(linect + 2), ".", ","), Replace(allLines(linect + 3), ".", ","))
                             .variationX = Replace(allLines(linect + 4), ".", ",")
                             .variationY = Replace(allLines(linect + 5), ".", ",")
                             .anim = allLines(linect + 6)
                         End With
-                        ticketSaleMoneyPnts.Add(newTSMP)
                         linect += 6
+
                     Case "[ticket_sale_change_point]"
-                        Dim newTSCP As New OMSI_TicketPnt
-                        With newTSCP
+                        Dim ticketSaleChangePnt As New OMSI_TicketPnt
+                        With ticketSaleChangePnt
                             .position = New Point3D(Replace(allLines(linect + 1), ".", ","), Replace(allLines(linect + 2), ".", ","), Replace(allLines(linect + 3), ".", ","))
                             .variationX = Replace(allLines(linect + 4), ".", ",")
                             .variationY = Replace(allLines(linect + 5), ".", ",")
                         End With
-                        ticketSaleChangePnts.Add(newTSCP)
                         linect += 5
+
                     Case "[ticket_sale_change_point_2]"
-                        Dim newTSCP As New OMSI_TicketPnt
-                        With newTSCP
+                        Dim ticketSaleChangePnt As New OMSI_TicketPnt
+                        With ticketSaleChangePnt
                             .position = New Point3D(Replace(allLines(linect + 1), ".", ","), Replace(allLines(linect + 2), ".", ","), Replace(allLines(linect + 3), ".", ","))
                             .variationX = Replace(allLines(linect + 4), ".", ",")
                             .variationY = Replace(allLines(linect + 5), ".", ",")
                             .anim = allLines(linect + 6)
                         End With
-                        ticketSaleChangePnts.Add(newTSCP)
                         linect += 6
+
                     Case "[drivpos]"
                         Dim tmpSeat As New OMSI_Seat
                         With tmpSeat
@@ -121,7 +127,6 @@ Public Class OMSI_Cabin
                             .sitheight = Replace(allLines(linect + 4), ".", ",")
                             .rot = Replace(allLines(linect + 5), ".", ",")
                         End With
-
                         linect += 5
 
                         For i = linect + 1 To allLines.Count - 1
@@ -144,8 +149,8 @@ Public Class OMSI_Cabin
                                 End If
                             End If
                         Next
-
                         driverPos = tmpSeat
+
                     Case "[passpos]"
                         Dim tmpSeat As New OMSI_Seat
                         With tmpSeat
@@ -268,35 +273,42 @@ Public Class OMSI_Cabin
                 .Add(ticketSalePnt.Z, True)
             End If
 
-            For Each MoneyPoint In ticketSaleMoneyPnts
-                .Add("[ticket_sale_money_point]")
-                .Add(MoneyPoint.position.X)
-                .Add(MoneyPoint.position.X)
-                .Add(MoneyPoint.position.X)
-                .Add(MoneyPoint.variationX)
-                .Add(MoneyPoint.variationY)
-                If MoneyPoint.anim <> "" Then
-                    .Add(MoneyPoint.anim, True)
+            If Not ticketSaleMoneyPnt Is Nothing Then
+                If ticketSaleMoneyPnt.anim = "" Then
+                    .Add("[ticket_sale_money_point]")
+                Else
+                    .Add("[ticket_sale_money_point_2]")
+                End If
+                .Add(ticketSaleMoneyPnt.position.X)
+                .Add(ticketSaleMoneyPnt.position.X)
+                .Add(ticketSaleMoneyPnt.position.X)
+                .Add(ticketSaleMoneyPnt.variationX)
+                .Add(ticketSaleMoneyPnt.variationY)
+                If ticketSaleMoneyPnt.anim <> "" Then
+                    .Add(ticketSaleMoneyPnt.anim, True)
                 Else
                     .Add(vbCrLf)
                 End If
-            Next
+            End If
 
 
-            For Each ChangePoint In ticketSaleChangePnts
-                .Add("[ticket_sale_money_point]")
-                .Add(ChangePoint.position.X)
-                .Add(ChangePoint.position.X)
-                .Add(ChangePoint.position.X)
-                .Add(ChangePoint.variationX)
-                .Add(ChangePoint.variationY)
-                If ChangePoint.anim <> "" Then
-                    .Add(ChangePoint.anim, True)
+            If Not ticketSaleChangePnt Is Nothing Then
+                If ticketSaleChangePnt.anim = "" Then
+                    .Add("[ticket_sale_money_point]")
+                Else
+                    .Add("[ticket_sale_money_point_2]")
+                End If
+                .Add(ticketSaleChangePnt.position.X)
+                .Add(ticketSaleChangePnt.position.X)
+                .Add(ticketSaleChangePnt.position.X)
+                .Add(ticketSaleChangePnt.variationX)
+                .Add(ticketSaleChangePnt.variationY)
+                If ticketSaleChangePnt.anim <> "" Then
+                    .Add(ticketSaleChangePnt.anim, True)
                 Else
                     .Add(vbCrLf)
                 End If
-            Next
-
+            End If
             If Not driverPos Is Nothing Then
                 .teilüberschrift("Fahrersitz")
 
