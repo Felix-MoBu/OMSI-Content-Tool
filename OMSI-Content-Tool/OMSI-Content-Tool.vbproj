@@ -41,6 +41,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>OMSI-Content-Tool.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -524,12 +525,8 @@
     </Content>
     <Content Include="Resources\ocdb.ico" />
     <Content Include="Resources\OCT.ico" />
-    <Content Include="Librarys\OpenTK.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Librarys\OpenTK.GLControl.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Librarys\OpenTK.dll" />
+    <Content Include="Librarys\OpenTK.GLControl.dll" />
     <Content Include="Resources\Bus.bmp" />
     <None Include="Resources\Image_Background.jpg" />
     <None Include="Resources\pink2.png" />
