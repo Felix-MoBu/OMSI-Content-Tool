@@ -27,50 +27,56 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_A8AC77EB1650FA858F9C95AD8FC0D99B"
+        "MsmKey" = "8:_A0C532080AB7D214A04808C11F6B3B36"
         "OwnerKey" = "8:_3F714A2C2AF64DBB84E5597701375823"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_A8AC77EB1650FA858F9C95AD8FC0D99B"
-        "OwnerKey" = "8:_E07EBADBE0DB46DC4602594D73D2DBAF"
+        "MsmKey" = "8:_A0C532080AB7D214A04808C11F6B3B36"
+        "OwnerKey" = "8:_F429AC25BD3A6FBB4D497EBD14E643AB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_E07EBADBE0DB46DC4602594D73D2DBAF"
+        "MsmKey" = "8:_B54697BED10A437F8AE86E25CDE36093"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F429AC25BD3A6FBB4D497EBD14E643AB"
         "OwnerKey" = "8:_3F714A2C2AF64DBB84E5597701375823"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_FFDA6A14F9084590BF7EE7B33C5150C2"
+        "MsmKey" = "8:_FB6E9D3F66664A7DB00B63E0B5746A99"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0BEE2A40C31ACB63BEE510BD4C81835A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_3F714A2C2AF64DBB84E5597701375823"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E07EBADBE0DB46DC4602594D73D2DBAF"
+        "OwnerKey" = "8:_F429AC25BD3A6FBB4D497EBD14E643AB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A8AC77EB1650FA858F9C95AD8FC0D99B"
+        "OwnerKey" = "8:_A0C532080AB7D214A04808C11F6B3B36"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_0BEE2A40C31ACB63BEE510BD4C81835A"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -91,6 +97,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -107,6 +129,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -167,14 +205,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A8AC77EB1650FA858F9C95AD8FC0D99B"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A0C532080AB7D214A04808C11F6B3B36"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_A8AC77EB1650FA858F9C95AD8FC0D99B"
+                    "_A0C532080AB7D214A04808C11F6B3B36"
                     {
                     "Name" = "8:OpenTK.dll"
                     "Attributes" = "3:512"
@@ -198,14 +236,34 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E07EBADBE0DB46DC4602594D73D2DBAF"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B54697BED10A437F8AE86E25CDE36093"
+            {
+            "SourcePath" = "8:..\\OMSI-Content-Tool\\help.html"
+            "TargetName" = "8:help.html"
+            "Tag" = "8:"
+            "Folder" = "8:_12D9F4993C8148E39D2E6144F5F68200"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F429AC25BD3A6FBB4D497EBD14E643AB"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:OpenTK.GLControl, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E07EBADBE0DB46DC4602594D73D2DBAF"
+                    "_F429AC25BD3A6FBB4D497EBD14E643AB"
                     {
                     "Name" = "8:OpenTK.GLControl.dll"
                     "Attributes" = "3:512"
@@ -229,9 +287,9 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FFDA6A14F9084590BF7EE7B33C5150C2"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FB6E9D3F66664A7DB00B63E0B5746A99"
             {
-            "SourcePath" = "8:..\\OMSI-Content-Tool\\OCT.ico"
+            "SourcePath" = "8:..\\OMSI-Content-Tool\\Resources\\OCT.ico"
             "TargetName" = "8:OCT.ico"
             "Tag" = "8:"
             "Folder" = "8:_12D9F4993C8148E39D2E6144F5F68200"
@@ -268,7 +326,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_12D9F4993C8148E39D2E6144F5F68200"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFiles64Folder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -315,7 +373,7 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:OMSI-Content-Tool_Setup"
+        "ProductName" = "8:OMSI-Content-Tool"
         "ProductCode" = "8:{D17909A9-0E5F-418B-AA66-D08BA252359A}"
         "PackageCode" = "8:{71CD8FCA-1355-4BB5-A2E2-983D0B1E892C}"
         "UpgradeCode" = "8:{014C69F4-C901-4134-9252-434FA364A359}"
@@ -329,16 +387,16 @@
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:OMSI-Content-Tool_Setup"
-        "Subject" = "8:"
+        "Subject" = "8:0.6.0"
         "ARPCONTACT" = "8:Felix MoBu"
         "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:Programm zu erstellen von OMSI Mods und Addons"
+        "ARPCOMMENTS" = "8:Programm zum erstellen von OMSI Mods und Addons"
         "ARPURLINFOABOUT" = "8:"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
-        "TargetPlatform" = "3:0"
+        "TargetPlatform" = "3:1"
         "PreBuildEvent" = "8:"
         "PostBuildEvent" = "8:"
         "RunPostBuildEvent" = "3:0"
@@ -448,7 +506,7 @@
             "Target" = "8:_3F714A2C2AF64DBB84E5597701375823"
             "Folder" = "8:_0A537C8E24B14DE790AF7F3BDDE9E876"
             "WorkingFolder" = "8:_12D9F4993C8148E39D2E6144F5F68200"
-            "Icon" = "8:_FFDA6A14F9084590BF7EE7B33C5150C2"
+            "Icon" = "8:_FB6E9D3F66664A7DB00B63E0B5746A99"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_1B3452486E54445EBEC8B1481C5B8F18"
@@ -462,7 +520,7 @@
             "Target" = "8:_3F714A2C2AF64DBB84E5597701375823"
             "Folder" = "8:_0246DCBFB2334DCD82E198249163070A"
             "WorkingFolder" = "8:_12D9F4993C8148E39D2E6144F5F68200"
-            "Icon" = "8:_FFDA6A14F9084590BF7EE7B33C5150C2"
+            "Icon" = "8:_FB6E9D3F66664A7DB00B63E0B5746A99"
             "Feature" = "8:"
             }
         }

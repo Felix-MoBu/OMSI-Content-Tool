@@ -122,8 +122,12 @@ Public Module Git
     End Sub
 
     Private Function Execute(command As String) As String
-        Log.Add(command, TYPE_GIT)
-        Return gitShell.Exec(command).StdOut.ReadAll()
+        If UseGit Then
+            Log.Add(command, TYPE_GIT)
+            Return gitShell.Exec(command).StdOut.ReadAll()
+        Else
+            Return ""
+        End If
     End Function
 
     Public Function getPath() As String

@@ -1,5 +1,5 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
-'Option Strict On   'No Way of doing this shit!
+'Option Explicits On   'No Way of doing this shit!
 
 Imports System.ComponentModel
 Imports System.ComponentModel.Design
@@ -1322,7 +1322,11 @@ Class Frm_Main
         TVHelper.Nodes(7).Nodes.Add("Fahrer")
         If Not cabin Is Nothing Then
             For i = 0 To cabin.passPos.Count - 1
-                TVHelper.Nodes(7).Nodes.Add("Platz " & i)
+                If cabin.passPos(i).Name <> "" Then
+                    TVHelper.Nodes(7).Nodes.Add(cabin.passPos(i).Name)
+                Else
+                    TVHelper.Nodes(7).Nodes.Add("Platz " & i)
+                End If
             Next
         End If
         doorsRecalc()
@@ -1806,40 +1810,59 @@ Class Frm_Main
     End Sub
 
     Private Sub SitzplatzToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SitzplatzToolStripMenuItem.Click
-        If getProjType() = Proj_Bus.TYPE Then
+        If getProjType() = Proj_Bus.TYPE Or getProjType() = Proj_Sco.TYPE Then
 
             Dim cabincount As Integer = 0
             If actProj.cabin Is Nothing Then
                 actProj.cabin = New OMSI_Cabin
             Else
                 cabincount = actProj.cabin.passPos.Count
-
             End If
+
+            Dim newSeat = New OMSI_Seat()
+            newSeat.position = New Point3D
+            newSeat.Name = InputBox("Neuen Platz benennen:", "Neuer Platz", "Platz_" & cabincount)
+
+            actProj.cabin.passPos.Add(newSeat)
+            TVHelper.Nodes(7).Nodes.Add(newSeat.Name)
+
+            GlMain.Invalidate()
+        Else
+            MsgBox("Es kann kein Sitz-/Stehplatz zum Projekt hinzugefügt werden.")
         End If
     End Sub
 
     Private Sub PfadToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PfadToolStripMenuItem.Click
-        If getProjType() = Proj_Bus.TYPE Then
+        Select Case getProjType()
+            Case Proj_Bus.TYPE
+                Dim pathcount As Integer = 0
+                If actProj.paths Is Nothing Then
+                    actProj.paths = New OMSI_Paths
+                Else
+                    pathcount = actProj.paths.pathPoints.Count
+                End If
 
-            Dim pathcount As Integer = 0
-            If actProj.paths Is Nothing Then
-                actProj.paths = New OMSI_Paths
-            Else
-                pathcount = actProj.paths.pathPoints.Count
-            End If
+                Dim newName As String = InputBox("Pfadpunkt benennen:", "Neuer Pfadpunkt", "Punkt_" & pathcount)
 
-            Dim newName As String = InputBox("Pfadpunkt benennen:", "Neuer Pfadpunkt", "Punkt_" & pathcount)
+                If newName = "" Then
+                    Exit Sub
+                End If
 
-            If newName = "" Then
-                Exit Sub
-            End If
+                actProj.paths.pathPoints.Add(New Point3D)
+                actProj.paths.recalc()
 
-            actProj.paths.pathPoints.Add(New Point3D)
-            actProj.paths.recalc()
+                LBPfade.Items.Add(newName)
+                Pfade_DDNachste_0.Items.Add(newName)
+            Case Proj_Sco.TYPE
 
-            LBPfade.Items.Add(newName)
-            Pfade_DDNachste_0.Items.Add(newName)
-        End If
+
+            Case Proj_Sli.TYPE
+
+
+            Case Else
+                MsgBox("Es kann kein Pfad(punkt) zum Projekt hinzugefügt werden.")
+        End Select
+        GlMain.Invalidate()
     End Sub
 
     Public Sub RepaintToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RepaintToolStripMenuItem.Click
@@ -4453,6 +4476,8 @@ Class Frm_Main
 
 
                             For i As Integer = 0 To .pax_cam_list.Count - 1
+                                GL.VertexPointer(3, VertexPointerType.Double, 0, {0, 0, 0})
+                                GL.TexCoordPointer(2, TexCoordPointerType.Double, 0, {0, 0})
                                 GL.Color3(Settings.CamPaxColor)
                                 If TVHelper.SelectedNode.FullPath.Contains("Fahrgastkameras\") And i = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
                                 With .pax_cam_list(i)
@@ -4462,6 +4487,8 @@ Class Frm_Main
                             Next
 
                             If .couple_back Then
+                                GL.VertexPointer(3, VertexPointerType.Double, 0, {0, 0, 0})
+                                GL.TexCoordPointer(2, TexCoordPointerType.Double, 0, {0, 0})
                                 GL.Color3(Settings.AchsenColor)
                                 If TVHelper.SelectedNode.FullPath.Contains("Kupplungspunkte\") Then GL.Color3(Settings.SelectionColor)
                                 If Not .couple_back_sphere Is Nothing Then

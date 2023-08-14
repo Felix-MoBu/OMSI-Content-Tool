@@ -157,6 +157,7 @@ Public Class OMSI_Cabin
                             .position = New Point3D(Replace(allLines(linect + 1), ".", ","), Replace(allLines(linect + 2), ".", ","), Replace(allLines(linect + 3), ".", ","))
                             .sitheight = Replace(allLines(linect + 4), ".", ",")
                             .rot = Replace(allLines(linect + 5), ".", ",")
+                            .Name = allLines(linect - 1)
                         End With
                         linect += 5
                         For i = linect + 1 To allLines.Count - 1
