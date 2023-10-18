@@ -28,6 +28,7 @@ Public Class Frm_Einst
         'Page "OMSI"
         Settings.OmsiPfad = TBOmsiPfad.Text
         Settings.RepToolPfad = TBRepTool.Text
+        Settings.ScriptConsole = TBScriptConsole.Text
 
         'Page "Darstellung"
         Settings.BackColor3D = TBColor3D.BackColor
@@ -96,6 +97,7 @@ Public Class Frm_Einst
         'Page "OMSI"
         TBOmsiPfad.Text = Settings.OmsiPfad
         TBRepTool.Text = Settings.RepToolPfad
+        TBScriptConsole.Text = Settings.ScriptConsole
         CBLogGit.Checked = Settings.LogGit
 
         'Page "Darstellung"
@@ -151,6 +153,14 @@ Public Class Frm_Einst
         fd.Multiselect = False
         If fd.ShowDialog() = DialogResult.OK Then
             TBRepTool.Text = fd.FileName
+        End If
+    End Sub
+
+    Private Sub BTScriptConsoleSuchen_Click(sender As Object, e As EventArgs) Handles BTScriptConsoleSuchen.Click
+        Dim fd As New OpenFileDialog
+        fd.InitialDirectory = TBScriptConsole.Text
+        If fd.ShowDialog() = DialogResult.OK Then
+            TBScriptConsole.Text = fd.FileName
         End If
     End Sub
 

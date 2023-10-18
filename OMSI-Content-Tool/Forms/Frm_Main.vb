@@ -5611,5 +5611,13 @@ Class Frm_Main
                 End If
         End Select
     End Sub
+
+    Private Sub ConsoleExternAusführToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsoleExternAusführToolStripMenuItem.Click
+        If System.IO.File.Exists(Settings.ScriptConsole) Then
+            Process.Start(Settings.ScriptConsole)
+        Else
+            MsgBox("Das Programm kann unter dem angegebenen Pfad nicht gefunden werden: " & Settings.ScriptConsole)
+        End If
+    End Sub
 End Class
 

@@ -14,6 +14,7 @@ Module Settings
     Public OpenPath As String = "C:\"
     Public OmsiPfad As String = "C:\Programme\Steam\steamapps\common\OMSI 2"
     Public RepToolPfad As String = "C:\Programme\Steam\steamapps\common\OMSI 2\SDK\RepaintTool.exe"
+    Public ScriptConsole As String = "C:\Programme\Steam\steamapps\common\OMSI 2\SDK\OMSI Script Console.exe"
     Public BackupAnlegen As Boolean = False
 
     Public UseGit As Boolean = False
@@ -111,6 +112,8 @@ Module Settings
                             OmsiPfad = allLines(linect + 1)
                         Case "[RepToolPfad]"
                             RepToolPfad = allLines(linect + 1)
+                        Case "[ScriptConsole]"
+                            ScriptConsole = allLines(linect + 1)
                         Case "[BackupAnlegen]"
                             BackupAnlegen = intToBool(allLines(linect + 1))
 
@@ -229,6 +232,7 @@ Module Settings
             .AddTag("OpenPath", OpenPath, True)
             .AddTag("OmsiPfad", OmsiPfad, True)
             .AddTag("RepToolPfad", RepToolPfad, True)
+            .AddTag("ScriptConsole", ScriptConsole, True)
             .AddTag("BackupAnlegen", boolToInt(BackupAnlegen), True)
 
             .AddTag("UseGit", boolToInt(UseGit), True)

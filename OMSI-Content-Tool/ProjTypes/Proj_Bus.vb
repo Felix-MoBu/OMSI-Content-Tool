@@ -9,6 +9,7 @@ Public Class Proj_Bus
     Public filename As Filename
     Public changed As Boolean = True '#####  Wieder raus nehmen!  ######
 
+    Public fahrbar As Boolean = True
     Public hersteller As String
     Public typ As String
     Public anstrich As String
@@ -96,6 +97,11 @@ Public Class Proj_Bus
             Dim allLines As String() = System.IO.File.ReadAllLines(filename, Encoding.GetEncoding(1252))
 
             For linect = 0 To allLines.Count - 1
+                If allLines(linect) = vbTab & "[friendlyname]" Or allLines(linect) = " [friendlyname]" Then
+                    fahrbar = False
+                    allLines(linect) = "[friendlyname]"
+                End If
+
                 Select Case allLines(linect)
                     Case "[friendlyname]"
                         hersteller = allLines(linect + 1)

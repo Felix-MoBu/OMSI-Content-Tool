@@ -37,6 +37,7 @@ Public Class Frm_Eig_Bus
             TBTyp.Text = .typ
             TBAnstrich.Text = .anstrich
             TBBeschreibung.Text = Join(.beschreibung.ToArray, vbCrLf)
+            CBFahrbar.Checked = .fahrbar
 
             TBBaujahr.Text = .baujahr
             TBLaufleistung.Text = .laufleistung
@@ -224,9 +225,10 @@ Public Class Frm_Eig_Bus
             End If
 
 
-                .hersteller = TBHersteller.Text
+            .hersteller = TBHersteller.Text
             .typ = TBTyp.Text
             .anstrich = TBAnstrich.Text
+            .fahrbar = CBFahrbar.Checked
 
             .baujahr = TBBaujahr.Text
             .laufleistung = TBLaufleistung.Text

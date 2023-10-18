@@ -119,6 +119,9 @@ Partial Class Frm_Einst
         Me.CDColorDriver = New System.Windows.Forms.ColorDialog()
         Me.CDColorAchsen = New System.Windows.Forms.ColorDialog()
         Me.CDColorFenster = New System.Windows.Forms.ColorDialog()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.BTScriptConsoleSuchen = New System.Windows.Forms.Button()
+        Me.TBScriptConsole = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox11.SuspendLayout()
@@ -464,6 +467,9 @@ Partial Class Frm_Einst
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.Label26)
+        Me.TabPage2.Controls.Add(Me.BTScriptConsoleSuchen)
+        Me.TabPage2.Controls.Add(Me.TBScriptConsole)
         Me.TabPage2.Controls.Add(Me.Label14)
         Me.TabPage2.Controls.Add(Me.BTRepToolSuchen)
         Me.TabPage2.Controls.Add(Me.TBRepTool)
@@ -475,7 +481,7 @@ Partial Class Frm_Einst
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage2.Size = New System.Drawing.Size(646, 324)
         Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "OMSI"
+        Me.TabPage2.Text = "Pfade / Tools"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
         'Label14
@@ -483,9 +489,9 @@ Partial Class Frm_Einst
         Me.Label14.AutoSize = True
         Me.Label14.Location = New System.Drawing.Point(6, 38)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(97, 13)
+        Me.Label14.Size = New System.Drawing.Size(68, 13)
         Me.Label14.TabIndex = 6
-        Me.Label14.Text = "Repaint-Toop-Pfad"
+        Me.Label14.Text = "Repaint-Tool"
         '
         'BTRepToolSuchen
         '
@@ -1044,6 +1050,31 @@ Partial Class Frm_Einst
         '
         Me.CDColor3D.Color = System.Drawing.Color.White
         '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(7, 65)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(75, 13)
+        Me.Label26.TabIndex = 9
+        Me.Label26.Text = "Script-Console"
+        '
+        'BTScriptConsoleSuchen
+        '
+        Me.BTScriptConsoleSuchen.Location = New System.Drawing.Point(555, 63)
+        Me.BTScriptConsoleSuchen.Name = "BTScriptConsoleSuchen"
+        Me.BTScriptConsoleSuchen.Size = New System.Drawing.Size(84, 23)
+        Me.BTScriptConsoleSuchen.TabIndex = 8
+        Me.BTScriptConsoleSuchen.Text = "Durchsuchen"
+        Me.BTScriptConsoleSuchen.UseVisualStyleBackColor = True
+        '
+        'TBScriptConsole
+        '
+        Me.TBScriptConsole.Location = New System.Drawing.Point(104, 62)
+        Me.TBScriptConsole.Name = "TBScriptConsole"
+        Me.TBScriptConsole.Size = New System.Drawing.Size(445, 20)
+        Me.TBScriptConsole.TabIndex = 7
+        '
         'Frm_Einst
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1189,4 +1220,7 @@ Partial Class Frm_Einst
     Friend WithEvents Label24 As Label
     Friend WithEvents Label25 As Label
     Friend WithEvents CBAutoLoadTrailer As CheckBox
+    Friend WithEvents Label26 As Label
+    Friend WithEvents BTScriptConsoleSuchen As Button
+    Friend WithEvents TBScriptConsole As TextBox
 End Class

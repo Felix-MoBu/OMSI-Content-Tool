@@ -52,6 +52,7 @@ Partial Class Frm_Eig_Bus
         Me.TBBaujahr = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.CBScriptshare = New System.Windows.Forms.CheckBox()
         Me.BTCabinDel = New System.Windows.Forms.Button()
         Me.BTPfadeDel = New System.Windows.Forms.Button()
         Me.BTAISoundDel = New System.Windows.Forms.Button()
@@ -113,7 +114,7 @@ Partial Class Frm_Eig_Bus
         Me.GroupBox9 = New System.Windows.Forms.GroupBox()
         Me.DDAIType = New System.Windows.Forms.ComboBox()
         Me.Label31 = New System.Windows.Forms.Label()
-        Me.CBScriptshare = New System.Windows.Forms.CheckBox()
+        Me.CBFahrbar = New System.Windows.Forms.CheckBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -231,6 +232,7 @@ Partial Class Frm_Eig_Bus
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.CBFahrbar)
         Me.GroupBox1.Controls.Add(Me.Label9)
         Me.GroupBox1.Controls.Add(Me.DDSprache)
         Me.GroupBox1.Controls.Add(Me.TBHersteller)
@@ -452,6 +454,18 @@ Partial Class Frm_Eig_Bus
         Me.GroupBox5.TabIndex = 16
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Verweise"
+        '
+        'CBScriptshare
+        '
+        Me.CBScriptshare.AutoSize = True
+        Me.CBScriptshare.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.CBScriptshare.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CBScriptshare.Location = New System.Drawing.Point(6, 161)
+        Me.CBScriptshare.Name = "CBScriptshare"
+        Me.CBScriptshare.Size = New System.Drawing.Size(79, 17)
+        Me.CBScriptshare.TabIndex = 20
+        Me.CBScriptshare.Text = "Scriptshare"
+        Me.CBScriptshare.UseVisualStyleBackColor = True
         '
         'BTCabinDel
         '
@@ -1071,17 +1085,17 @@ Partial Class Frm_Eig_Bus
         Me.Label31.TabIndex = 0
         Me.Label31.Text = "Gruppe"
         '
-        'CBScriptshare
+        'CBFahrbar
         '
-        Me.CBScriptshare.AutoSize = True
-        Me.CBScriptshare.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.CBScriptshare.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CBScriptshare.Location = New System.Drawing.Point(6, 161)
-        Me.CBScriptshare.Name = "CBScriptshare"
-        Me.CBScriptshare.Size = New System.Drawing.Size(79, 17)
-        Me.CBScriptshare.TabIndex = 20
-        Me.CBScriptshare.Text = "Scriptshare"
-        Me.CBScriptshare.UseVisualStyleBackColor = True
+        Me.CBFahrbar.AutoSize = True
+        Me.CBFahrbar.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.CBFahrbar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CBFahrbar.Location = New System.Drawing.Point(350, 73)
+        Me.CBFahrbar.Name = "CBFahrbar"
+        Me.CBFahrbar.Size = New System.Drawing.Size(99, 17)
+        Me.CBFahrbar.TabIndex = 10
+        Me.CBFahrbar.Text = "Spielerfahrzeug"
+        Me.CBFahrbar.UseVisualStyleBackColor = True
         '
         'Frm_Eig_Bus
         '
@@ -1222,4 +1236,5 @@ Partial Class Frm_Eig_Bus
     Friend WithEvents BTSoudDel As Button
     Friend WithEvents BTModellDel As Button
     Friend WithEvents CBScriptshare As CheckBox
+    Friend WithEvents CBFahrbar As CheckBox
 End Class
