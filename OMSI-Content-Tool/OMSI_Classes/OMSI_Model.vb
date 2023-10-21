@@ -172,6 +172,9 @@ Public Class OMSI_Model
                                 .position.X = toSingle(allLines(linect + 6))
                                 .position.Y = toSingle(allLines(linect + 7))
                                 .position.Z = toSingle(allLines(linect + 8))
+                                If meshes.Count > 0 Then
+                                    .parent = meshes(meshes.Count - 1).filename.name
+                                End If
                             End With
                             intLichter.Add(intLicht)
                             linect += 8
@@ -222,10 +225,10 @@ Public Class OMSI_Model
 
                                         Case "[illumination_interior]"
                                             .illumination = New OMSI_Illumination
-                                            .illumination.values.Add(allLines(i + 1))
-                                            .illumination.values.Add(allLines(i + 2))
-                                            .illumination.values.Add(allLines(i + 3))
-                                            .illumination.values.Add(allLines(i + 4))
+                                            .illumination.addValidated(allLines(i + 1))
+                                            .illumination.addValidated(allLines(i + 2))
+                                            .illumination.addValidated(allLines(i + 3))
+                                            .illumination.addValidated(allLines(i + 4))
                                             i += 4
 
                                         Case "[mouseevent]"
@@ -532,19 +535,6 @@ Public Class OMSI_Model
                 .Add(spot.outerCone, True)
             Next
 
-            For Each intLicht In intLichter
-                If intLicht.name <> "" Then .Add(intLicht.name)
-                .Add("[interiorlight]")
-                .Add(intLicht.var)
-                .Add(intLicht.reichweite)
-                .Add(intLicht.color.R)
-                .Add(intLicht.color.G)
-                .Add(intLicht.color.B)
-                .Add(intLicht.position.X)
-                .Add(intLicht.position.Y)
-                .Add(intLicht.position.Z, True)
-            Next
-
             If meshes.Count > 0 Then
                 .teilüberschrift("Meshes")
                 For Each mesh In meshes
@@ -590,6 +580,21 @@ Public Class OMSI_Model
                             .Add(licht.timeconst)
                             If licht.bitmap <> "" Then .Add(licht.bitmap)
                             .Add(vbCrLf)
+                        End If
+                    Next
+
+                    For Each intLicht In intLichter
+                        If intLicht.parent = mesh.filename.name Then
+                            If intLicht.name <> "" Then .Add(intLicht.name)
+                            .Add("[interiorlight]")
+                            .Add(intLicht.var)
+                            .Add(intLicht.reichweite)
+                            .Add(intLicht.color.R)
+                            .Add(intLicht.color.G)
+                            .Add(intLicht.color.B)
+                            .Add(intLicht.position.X)
+                            .Add(intLicht.position.Y)
+                            .Add(intLicht.position.Z, True)
                         End If
                     Next
 

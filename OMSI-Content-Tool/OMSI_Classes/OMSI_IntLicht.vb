@@ -5,6 +5,7 @@ Public Class OMSI_IntLicht
     Public reichweite As Double
     Public color As New RGBColor
     Public position_int As New Point3D
+    Public parent As String
 
     Public vertices As Double()
     Public edges As Integer() = {0, 1, 2, 3, 4, 5, 6, 1, 0, 7, 8, 9, 10, 11, 12, 7,

@@ -21,6 +21,14 @@ Public Class OCTProjekt
     Public LBPfade As ListBox.ObjectCollection
     Public LBPfadeSelected As Integer = 0
 
+    Public Structure ProjType
+        Const Emt = 0
+        Const Bus = 1
+        Const Ovh = 2
+        Const Sco = 3
+        Const Sli = 4
+    End Structure
+
     Public Sub New()
         Projekt_Emt = New Proj_Emt
     End Sub
