@@ -82,7 +82,7 @@ Public Class Filename
             End If
             If projectpath.Substring(projectpath.Length - 1) = "\" Then projectpath = projectpath.Substring(0, projectpath.Length - 1)
             Me.path = projectpath
-            If filename.Length + 1 > projectpath.Length Then
+            If filename.Contains(projectpath) Then
                 Me.name = filename.Substring(projectpath.Length + 1)
             End If
         Else

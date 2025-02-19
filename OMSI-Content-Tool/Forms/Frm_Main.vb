@@ -1392,6 +1392,8 @@ Class Frm_Main
         getOCTProj.addVarValues(OMSI_SYS_VARS.ToList, 0)
 
         For Each file In varlists
+            If Not My.Computer.FileSystem.FileExists(filename.path & "\" & file) Then Continue For
+
             Dim lines() As String = Split(My.Computer.FileSystem.ReadAllText(filename.path & "\" & file), vbCrLf)
             For Each line In lines
                 If Trim(line) <> "" Then                         'Leerzeilen überspringen
@@ -3114,7 +3116,7 @@ Class Frm_Main
                     Mat_CBTex.SelectedIndex = 0
                     'Mat_CBTextTex.SelectedItem = Projekt_Bus.model.TextTexturen(Mat_CBTex.SelectedIndex).name
                 Else
-                    Mat_CBTextTex.SelectedIndex = 0
+                    Mat_CBTextTex.SelectedIndex = -1
                 End If
 
                 'Animation
@@ -4802,20 +4804,16 @@ Class Frm_Main
 
     Private Sub Mat_CBTex_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Mat_CBTex.SelectedIndexChanged
         DDAlleTexturen.Text = sender.text
+        Mat_CBTextTex.Text = ""
+        Mat_CBAlpha.SelectedIndex = 0
+
+        If getSelectedMesh() Is Nothing Then Exit Sub
+
         For Each material In getSelectedMesh.materials
             If Mat_CBTex.SelectedIndex = material.index Then
                 With material
-                    If .texTex Then
-                        Mat_CBTextTex.Text = actProj.model.TextTexturen(.texTexVal).name
-                    Else
-                        Mat_CBTextTex.Text = ""
-                    End If
-
-                    If .alpha <= 2 And .alpha >= 0 Then
-                        Mat_CBAlpha.SelectedIndex = .alpha
-                    Else
-                        Mat_CBAlpha.SelectedIndex = 0
-                    End If
+                    If .texTex Then Mat_CBTextTex.Text = actProj.model.TextTexturen(.texTexVal).name
+                    If .alpha <= 2 And .alpha >= 0 Then Mat_CBAlpha.SelectedIndex = .alpha
 
                     Mat_TBAlphascale.Text = .alphascale
                     Mat_CBZCheck.Checked = .zCheck
@@ -5543,7 +5541,7 @@ Class Frm_Main
                         LBMeshes.SelectedIndex = .LBMeshesSelected
                     End If
                 End If
-                Else
+            Else
                 Dim i As Integer = 0
                 For Each subobjekt In actProj.subobjekte
                     LBMeshes.Items.Add(actProj.filename.name & "_" & i)
