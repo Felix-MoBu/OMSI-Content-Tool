@@ -1,5 +1,6 @@
 ﻿'by Felix Modellbusse ;) (MoBu) 2019
 Option Strict On
+Imports System.Text
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Public Class FileWriter
@@ -127,7 +128,7 @@ Public Class FileWriter
                 .CreateDirectory(filename.path & "\" & Split(filename.name, "\")(0))
             End If
 
-            .WriteAllText(filename, Join(lines.ToArray, vbCrLf), addToFile, System.Text.Encoding.ASCII)
+            .WriteAllText(filename, Join(lines.ToArray, vbCrLf), addToFile, Encoding.GetEncoding(1252))
             Return lines.Count
         End With
     End Function

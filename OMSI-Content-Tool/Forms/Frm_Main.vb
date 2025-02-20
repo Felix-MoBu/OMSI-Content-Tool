@@ -5538,7 +5538,12 @@ Class Frm_Main
                         LBMeshes.SetItemChecked(LBMeshes.Items.Count - 1, True)
                     Next
                     If .LBMeshesSelected > -1 Then
-                        LBMeshes.SelectedIndex = .LBMeshesSelected
+                        If LBMeshes.Items.Count > 0 Then
+                            LBMeshes.SelectedIndex = .LBMeshesSelected
+                        Else
+                            LBMeshes.SelectedIndex = -1
+                        End If
+
                     End If
                 End If
             Else
