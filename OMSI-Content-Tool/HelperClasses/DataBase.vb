@@ -148,7 +148,7 @@ Public Class DataBase
                         If storedPointNames.Count > i Then
                             PointName = storedPointNames(i)
                         End If
-                        .Add(storedPoints(i).asString(";") & ";" & PointName)
+                        .Add(storedPoints(i).toString() & ";" & PointName)
                     Next
                 End If
             End With

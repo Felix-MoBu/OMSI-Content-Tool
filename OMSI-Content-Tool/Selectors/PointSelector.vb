@@ -118,7 +118,7 @@ Public Class PointSelector
                     Frm_Main.Clipboard3D = intPoint
                 Else
                     Dim separators As String() = {vbTab, vbNewLine, ";"}
-                    My.Computer.Clipboard.SetText(Point.asString(separators(Settings.Point3DInternalClipboard - 1)))
+                    My.Computer.Clipboard.SetText(Point.toString(separators(Settings.Point3DInternalClipboard - 1)))
                 End If
 
                 'Dim newEventarg As KeyPressEventArgs

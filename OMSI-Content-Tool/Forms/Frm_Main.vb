@@ -2744,10 +2744,12 @@ Class Frm_Main
                 Case TVHelper.Nodes(7).Text     'Sitz-/Stehplatz
                     showSettings({GBPlatz, GBBel})
                     With actProj
-                        If index = 0 Then       'Fahrersitz
-                            showSeatPrefs(.cabin.driverPos)
-                        Else                    'Fahrgäste
-                            showSeatPrefs(.cabin.passPos(index - 1))
+                        If Not .cabin Is Nothing Then
+                            If index = 0 Then       'Fahrersitz
+                                showSeatPrefs(.cabin.driverPos)
+                            Else                    'Fahrgäste
+                                showSeatPrefs(.cabin.passPos(index - 1))
+                            End If
                         End If
                     End With
 
@@ -3879,18 +3881,22 @@ Class Frm_Main
     End Sub
 
     Private Sub Mesh_VSKlickevent_Changed(sender As Object, e As EventArgs) Handles Mesh_VSKlickevent.Changed
+        If getSelectedMesh() Is Nothing Then Exit Sub
         getSelectedMesh.mouseEvent = Mesh_VSKlickevent.Variable
     End Sub
 
     Private Sub Mesh_VSSichtbarkeit_Changed(sender As Object, e As EventArgs) Handles Mesh_VSSichtbarkeit.Changed
+        If getSelectedMesh() Is Nothing Then Exit Sub
         getSelectedMesh.visibleVar = Mesh_VSSichtbarkeit.Variable
     End Sub
 
     Private Sub Mesh_CBIsShadow_CheckedChanged(sender As Object, e As EventArgs) Handles Mesh_CBIsShadow.CheckedChanged
+        If getSelectedMesh() Is Nothing Then Exit Sub
         getSelectedMesh.isShadow = Mesh_CBIsShadow.Checked
     End Sub
 
     Private Sub Mesh_CBSmoothSkin_CheckedChanged(sender As Object, e As EventArgs) Handles Mesh_CBSmoothSkin.CheckedChanged
+        If getSelectedMesh() Is Nothing Then Exit Sub
         getSelectedMesh.smoothSkin = Mesh_CBSmoothSkin.Checked
     End Sub
 
@@ -4240,52 +4246,58 @@ Class Frm_Main
             lookat = Matrix4.LookAt(Convert.ToSingle(0.0000001), Convert.ToSingle(0.000001), 0, 0, 0, 0, 0, 1, 0) 'Setup camera
             GL.LoadMatrix(lookat)
             If viewPoint = 1 Then
-                With actProj.driver_cam_list(selectedDriverCam)
-                    'Spiegelberechnung nur in der Fahreransicht
-                    If mirrorRender Then
-                        With actProj.spiegel(1) 'mirrorID
-                            GL.Translate(New Vector3(- .position.X, - .position.Y, - .position.Z))
-                            'GL.Translate(New Vector3(-1, 0, 0))
-                            'GL.Rotate(-(.rotX - 90), 0, 1, 0)
-                            'GL.Rotate(-(.rotY + 90), 0, 0, 1)
+
+                If actProj.driver_cam_list.Count = 0 Then
+                    viewPoint = 4
+                Else
+                    If actProj.driver_cam_list.Count <= selectedDriverCam Then selectedDriverCam = actProj.driver_cam_list.Count - 1
+                    With actProj.driver_cam_list(selectedDriverCam)
+                        'Spiegelberechnung nur in der Fahreransicht
+                        If mirrorRender Then
+                            With actProj.spiegel(1) 'mirrorID
+                                GL.Translate(New Vector3(.position.X, - .position.Y, .position.Z))
+                                'GL.Translate(New Vector3(-1, 0, 0))
+                                'GL.Rotate(-(.rotX - 90), 0, 1, 0)
+                                'GL.Rotate(-(.rotY + 90), 0, 0, 1)
 
 
-                            'GL.Translate(New Vector3(0, -6, -2))
-                            GL.Rotate(90 + .rotY, 0, 0, 1)
-                            GL.Rotate(90, 0, 1, 0)
-
-                        End With
-                    Else
-                        For i As Integer = 0 To actProj.spiegel.Count - 1
-                            GlMain_Paint(GlMain, Nothing, True, i)
-
-                            With actProj.spiegel(1) 'i
-
-                                GL.Rotate(-90, 0, 1, 0) '-90
-                                GL.Rotate(-(.rotY + 90), 0, 0, 1) '45
-                                'GL.Translate(New Vector3(0, 6, 2))
-
-                                'GL.Rotate(.rotY + 90, 0, 0, 1)
-                                'GL.Rotate(.rotX - 90, 0, 1, 0)
-                                'GL.Translate(New Vector3(1, 0, 0))
-                                GL.Translate(New Vector3(.position.X, .position.Y, .position.Z))
+                                'GL.Translate(New Vector3(0, -6, -2))
+                                GL.Rotate(90 + .rotY, 0, 0, 1)
+                                GL.Rotate(90, 0, 1, 0)
 
                             End With
-                        Next
+                        Else
+                            For i As Integer = 0 To actProj.spiegel.Count - 1
+                                GlMain_Paint(GlMain, Nothing, True, i)
 
-                        GL.Rotate(.rotY + 90, 0, 0, 1)
-                        GL.Rotate(.rotX - 90, 0, 1, 0)
+                                With actProj.spiegel(1) 'i
 
-                        GL.Translate(New Vector3(actProj.position.X, actProj.position.Y, actProj.position.Z))
-                    End If
+                                    GL.Rotate(-90, 0, 1, 0) '-90
+                                    GL.Rotate(-(.rotY + 90), 0, 0, 1) '45
+                                    'GL.Translate(New Vector3(0, 6, 2))
+
+                                    'GL.Rotate(.rotY + 90, 0, 0, 1)
+                                    'GL.Rotate(.rotX - 90, 0, 1, 0)
+                                    'GL.Translate(New Vector3(1, 0, 0))
+                                    GL.Translate(New Vector3(.position.X, - .position.Z, .position.Y))
+
+                                End With
+                            Next
+
+                            GL.Rotate(.rotY + 90, 0, 0, 1)
+                            GL.Rotate(.rotX - 90, 0, 1, 0)
+
+                            GL.Translate(New Vector3(.position.X, - .position.Z, .position.Y))
+                        End If
 
 
-                End With
+                    End With
+                End If
             ElseIf viewPoint = 2 Then
                 With actProj.pax_cam_list(selectedPassCam)
                     GL.Rotate(.rotY + 90, 0, 0, 1)
                     GL.Rotate(.rotX - 90, 0, 1, 0)
-                    GL.Translate(New Vector3(actProj.position.X, actProj.position.Y, actProj.position.Z))
+                    GL.Translate(New Vector3(.position.X, - .position.Z, .position.Y))
                 End With
             End If
         Else
@@ -4359,7 +4371,7 @@ Class Frm_Main
                                 End If
 
                                 GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                GL.DrawElements(PrimitiveType.TriangleFan, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
+                                GL.DrawElements(PrimitiveType.TriangleFan, .edges.Length, DrawElementsType.UnsignedInt, .edges)
                             End With
                             i += 1
                         Next
@@ -4390,7 +4402,7 @@ Class Frm_Main
                                     GL.Color3(Settings.PaxColor)
 
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, seat.vertices)
-                                    GL.DrawElements(PrimitiveType.Triangles, seat.edges.GetUpperBound(0), DrawElementsType.UnsignedInt, seat.edges)
+                                    GL.DrawElements(PrimitiveType.Triangles, seat.edges.Length, DrawElementsType.UnsignedInt, seat.edges)
                                     GL.Color3(Color.Black)
                                     GL.DrawElements(PrimitiveType.Lines, seat.lines.GetUpperBound(0), DrawElementsType.UnsignedInt, seat.lines)
                                 Next
@@ -4399,7 +4411,7 @@ Class Frm_Main
                             For Each attPnt In .attachPnts
                                 GL.Color3(Settings.AchsenColor)
                                 GL.VertexPointer(3, VertexPointerType.Double, 0, attPnt.vertices)
-                                GL.DrawElements(PrimitiveType.Triangles, attPnt.edges.GetUpperBound(0), DrawElementsType.UnsignedInt, attPnt.edges)
+                                GL.DrawElements(PrimitiveType.Triangles, attPnt.edges.Length, DrawElementsType.UnsignedInt, attPnt.edges)
                             Next
 
                         Case 2
@@ -4415,7 +4427,7 @@ Class Frm_Main
                                     End If
 
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                    GL.DrawElements(PrimitiveType.Triangles, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
+                                    GL.DrawElements(PrimitiveType.Triangles, .edges.Length, DrawElementsType.UnsignedInt, .edges)
                                 End With
                                 i += 1
                             Next
@@ -4428,7 +4440,7 @@ Class Frm_Main
                                     End If
                                     With path
                                         GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                        GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
+                                        GL.DrawElements(PrimitiveType.Lines, .edges.Length, DrawElementsType.UnsignedInt, .edges)
                                     End With
                                     GL.Color3(Color.Black)
                                     i += 1
@@ -4458,7 +4470,7 @@ Class Frm_Main
                                             GL.Color3(Settings.AchsenColor)
                                         End If
                                         GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                        GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
+                                        GL.DrawElements(PrimitiveType.Lines, .edges.Length, DrawElementsType.UnsignedInt, .edges)
                                     End With
                                 Next
                             End If
@@ -4472,7 +4484,7 @@ Class Frm_Main
                                 If TVHelper.SelectedNode.FullPath.Contains("Fahrerkameras\") And index = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
                                 With .driver_cam_list(index)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                    GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
+                                    GL.DrawElements(PrimitiveType.Lines, .edges.Length, DrawElementsType.UnsignedInt, .edges)
                                 End With
                             Next
 
@@ -4484,7 +4496,7 @@ Class Frm_Main
                                 If TVHelper.SelectedNode.FullPath.Contains("Fahrgastkameras\") And i = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
                                 With .pax_cam_list(i)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                    GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
+                                    GL.DrawElements(PrimitiveType.Lines, .edges.Length, DrawElementsType.UnsignedInt, .edges)
                                 End With
                             Next
 
@@ -4496,7 +4508,7 @@ Class Frm_Main
                                 If Not .couple_back_sphere Is Nothing Then
                                     With .couple_back_sphere
                                         GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                        GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
+                                        GL.DrawElements(PrimitiveType.Lines, .edges.Length, DrawElementsType.UnsignedInt, .edges)
                                     End With
                                 End If
                             End If
@@ -4507,7 +4519,7 @@ Class Frm_Main
                                 If InStr(TVHelper.SelectedNode.FullPath, "Achsen\") And i = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
                                 With .achsen(i)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                    GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
+                                    GL.DrawElements(PrimitiveType.Lines, .edges.Length, DrawElementsType.UnsignedInt, .edges)
                                 End With
                             Next
 
@@ -4517,7 +4529,7 @@ Class Frm_Main
                                 If TVHelper.SelectedNode.FullPath.Contains("Spiegel\") And i = TVHelper.SelectedNode.Index Then GL.Color3(Settings.SelectionColor)
                                 With .spiegel(i)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                    GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
+                                    GL.DrawElements(PrimitiveType.Lines, .edges.Length, DrawElementsType.UnsignedInt, .edges)
                                 End With
                             Next
 
@@ -4526,7 +4538,7 @@ Class Frm_Main
                                 With .bbox
                                     GL.Color3(Color.Black)
                                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                    GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
+                                    GL.DrawElements(PrimitiveType.Lines, .edges.Length, DrawElementsType.UnsignedInt, .edges)
                                 End With
                             End If
 
@@ -4537,7 +4549,7 @@ Class Frm_Main
                                         With .model.spots(TVHelper.SelectedNode.Index)
                                             GL.Color3(.color.R, .color.G, .color.B)
                                             GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                            GL.DrawElements(PrimitiveType.Triangles, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
+                                            GL.DrawElements(PrimitiveType.Triangles, .edges.Length, DrawElementsType.UnsignedInt, .edges)
                                             GL.Color3(Color.Black)
                                             GL.DrawElements(PrimitiveType.LineLoop, .lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .lines)
                                         End With
@@ -4566,7 +4578,7 @@ Class Frm_Main
                                 End If
 
                                 GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                                GL.DrawElements(PrimitiveType.TriangleFan, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
+                                GL.DrawElements(PrimitiveType.TriangleFan, .edges.Length, DrawElementsType.UnsignedInt, .edges)
                             End With
                             i += 1
                         Next
@@ -4622,7 +4634,7 @@ Class Frm_Main
                         End If
                     End If
                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                    GL.DrawElements(PrimitiveType.Triangles, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
+                    GL.DrawElements(PrimitiveType.Triangles, .edges.Length, DrawElementsType.UnsignedInt, .edges)
                     GL.Color3(Color.Black)
                     GL.DrawElements(PrimitiveType.Lines, .lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .lines)
                 End With
@@ -4635,7 +4647,7 @@ Class Frm_Main
                         GL.Color3(Settings.SelectionColor)
                     End If
                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                    GL.DrawElements(PrimitiveType.Triangles, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
+                    GL.DrawElements(PrimitiveType.Triangles, .edges.Length, DrawElementsType.UnsignedInt, .edges)
                     GL.Color3(Color.Black)
                     GL.DrawElements(PrimitiveType.Lines, .lines.GetUpperBound(0), DrawElementsType.UnsignedInt, .lines)
                 End With
@@ -4650,7 +4662,7 @@ Class Frm_Main
 
                     GL.Color3(Color.Pink)
                     GL.VertexPointer(3, VertexPointerType.Double, 0, .vertices)
-                    GL.DrawElements(PrimitiveType.Lines, .edges.GetUpperBound(0), DrawElementsType.UnsignedInt, .edges)
+                    GL.DrawElements(PrimitiveType.Lines, .edges.Length, DrawElementsType.UnsignedInt, .edges)
 
                     GL.Color3(Color.Black)
                     GL.PointSize(20)
@@ -4673,7 +4685,7 @@ Class Frm_Main
                     For Each arrow In .arrows
                         GL.Color3(Color.Pink)
                         GL.VertexPointer(3, VertexPointerType.Double, 0, arrow.vertices)
-                        GL.DrawElements(PrimitiveType.Triangles, arrow.edges.GetUpperBound(0), DrawElementsType.UnsignedInt, arrow.edges)
+                        GL.DrawElements(PrimitiveType.Triangles, arrow.edges.Length, DrawElementsType.UnsignedInt, arrow.edges)
                     Next
                 End If
             End With

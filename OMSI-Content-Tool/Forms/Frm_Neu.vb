@@ -63,7 +63,14 @@ Public Class Frm_Neu
 
     Private Sub BTDurchsuchen_Click(sender As Object, e As EventArgs) Handles BTDurchsuchen.Click
         Dim fd As New FolderBrowserDialog
-        fd.SelectedPath = TBSpeicherort.Text
+        If TBSpeicherort.Text <> "" Then
+            fd.SelectedPath = TBSpeicherort.Text
+        ElseIf Frm_Main.actProj.filename.path <> "" Then
+            fd.SelectedPath = Frm_Main.actProj.filename.path
+        Else
+            fd.SelectedPath = Settings.OmsiPfad
+        End If
+
         If fd.ShowDialog Then
             TBSpeicherort.Text = fd.SelectedPath
         End If
@@ -138,6 +145,22 @@ Public Class Frm_Neu
             Case Proj_Sli.TYPE
                 Proj_temp = New Proj_Sli
         End Select
+
+        Dim meshRelativePath As String
+        If InStr(Frm_Main.actProj.filename.path, TBSpeicherort.Text) Then
+            meshRelativePath = Frm_Main.actProj.filename.path.Replace(TBSpeicherort.Text, "")
+            If InStr(meshRelativePath, "\Model") = 1 Then
+                meshRelativePath = meshRelativePath.Substring(7)
+            End If
+        End If
+
+        If meshRelativePath <> "" Then
+            For Each mesh In Proj_temp.model.meshes
+                mesh.filename.path = mesh.filename.path.Replace(meshRelativePath, "")
+                mesh.filename.name = meshRelativePath + "\" + mesh.filename.name
+            Next
+        End If
+
 
         Proj_temp.filename = New Filename(TBName.Text, TBSpeicherort.Text)
         Frm_Main.addOCTProj(New OCTProjekt(Proj_temp))

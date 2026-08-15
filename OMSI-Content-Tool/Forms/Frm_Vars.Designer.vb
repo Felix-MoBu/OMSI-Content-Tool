@@ -46,7 +46,7 @@ Partial Class Frm_Vars
         Me.LBAlleVars.Name = "LBAlleVars"
         Me.LBAlleVars.ScrollAlwaysVisible = True
         Me.LBAlleVars.Size = New System.Drawing.Size(200, 381)
-        Me.LBAlleVars.TabIndex = 1
+        Me.LBAlleVars.TabIndex = 2
         '
         'Label1
         '
@@ -73,7 +73,7 @@ Partial Class Frm_Vars
         Me.LBLetzteVars.Name = "LBLetzteVars"
         Me.LBLetzteVars.ScrollAlwaysVisible = True
         Me.LBLetzteVars.Size = New System.Drawing.Size(200, 381)
-        Me.LBLetzteVars.TabIndex = 4
+        Me.LBLetzteVars.TabIndex = 3
         '
         'Label3
         '
@@ -90,7 +90,7 @@ Partial Class Frm_Vars
         Me.BTKeine.Location = New System.Drawing.Point(343, 23)
         Me.BTKeine.Name = "BTKeine"
         Me.BTKeine.Size = New System.Drawing.Size(75, 23)
-        Me.BTKeine.TabIndex = 7
+        Me.BTKeine.TabIndex = 1
         Me.BTKeine.Text = "KEINE"
         Me.BTKeine.UseVisualStyleBackColor = True
         '

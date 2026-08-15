@@ -44,7 +44,7 @@ Partial Class Frm_Listen
         Me.LBOrdner.Location = New System.Drawing.Point(12, 36)
         Me.LBOrdner.Name = "LBOrdner"
         Me.LBOrdner.Size = New System.Drawing.Size(250, 485)
-        Me.LBOrdner.TabIndex = 0
+        Me.LBOrdner.TabIndex = 2
         '
         'BTHinzu
         '
@@ -77,21 +77,21 @@ Partial Class Frm_Listen
         Me.TBOrdnerFiltern.Location = New System.Drawing.Point(50, 10)
         Me.TBOrdnerFiltern.Name = "TBOrdnerFiltern"
         Me.TBOrdnerFiltern.Size = New System.Drawing.Size(212, 20)
-        Me.TBOrdnerFiltern.TabIndex = 4
+        Me.TBOrdnerFiltern.TabIndex = 0
         '
         'TBAusgFiltern
         '
         Me.TBAusgFiltern.Location = New System.Drawing.Point(393, 10)
         Me.TBAusgFiltern.Name = "TBAusgFiltern"
         Me.TBAusgFiltern.Size = New System.Drawing.Size(215, 20)
-        Me.TBAusgFiltern.TabIndex = 6
+        Me.TBAusgFiltern.TabIndex = 1
         '
         'BTÜbernehmen
         '
         Me.BTÜbernehmen.Location = New System.Drawing.Point(523, 527)
         Me.BTÜbernehmen.Name = "BTÜbernehmen"
         Me.BTÜbernehmen.Size = New System.Drawing.Size(85, 23)
-        Me.BTÜbernehmen.TabIndex = 8
+        Me.BTÜbernehmen.TabIndex = 4
         Me.BTÜbernehmen.Text = "Übernehmen"
         Me.BTÜbernehmen.UseVisualStyleBackColor = True
         '
@@ -100,7 +100,7 @@ Partial Class Frm_Listen
         Me.BTAbbrechen.Location = New System.Drawing.Point(432, 527)
         Me.BTAbbrechen.Name = "BTAbbrechen"
         Me.BTAbbrechen.Size = New System.Drawing.Size(85, 23)
-        Me.BTAbbrechen.TabIndex = 9
+        Me.BTAbbrechen.TabIndex = 5
         Me.BTAbbrechen.Text = "Abbrechen"
         Me.BTAbbrechen.UseVisualStyleBackColor = True
         '

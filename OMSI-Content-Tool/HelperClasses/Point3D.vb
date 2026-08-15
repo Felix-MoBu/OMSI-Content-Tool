@@ -109,7 +109,7 @@ Public Class Point3D
         toList.Add(Me.Z)
     End Function
 
-    Public Function asString(separator As String) As String
+    Public Function toString(Optional separator As String = ";") As String
         Return X & separator & Y & separator & Z
     End Function
 

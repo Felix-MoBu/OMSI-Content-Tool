@@ -104,4 +104,8 @@ Public Class Frm_Vars
         TBFilter.Text = ""
         Me.Hide()
     End Sub
+
+    Private Sub TBFilter_KeyDown(sender As Object, e As KeyEventArgs) Handles TBFilter.KeyDown, LBAlleVars.KeyDown
+        If e.KeyCode = Keys.Escape Then Me.Close()
+    End Sub
 End Class

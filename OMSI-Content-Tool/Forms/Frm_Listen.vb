@@ -220,4 +220,8 @@ Public Class Frm_Listen
                 End If
         End Select
     End Sub
+
+    Private Sub TBOrdnerFiltern_KeyDown(sender As Object, e As KeyEventArgs) Handles TBOrdnerFiltern.KeyDown, TBAusgFiltern.KeyDown, LBOrdner.KeyDown
+        If e.KeyCode = Keys.Escape Then Me.Close()
+    End Sub
 End Class
